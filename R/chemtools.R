@@ -4,8 +4,7 @@
 #' types of \link{quantities} (\link{volume}, \link{concentration}, etc.) and full
 #' support for \link{metric} scaling.
 #' 
-#' @name chemtools-package
-#' @aliases chemtools
+#' @name chemtools
 #' @docType package
 #' @title chemtools package
 #' @author Sebastian Kopf

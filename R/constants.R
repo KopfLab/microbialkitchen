@@ -18,8 +18,15 @@
 # physical constants
 .chemtools_R_in_L_bar_per_K_mol <- 0.08314462 # ideal gas constant in the units used as base units by chemtools (L bar K-1 mol-1)
 
-#' Retrieve a physical constant used by chemtools
-#' @name name of the constant
+#' Constants
+#' 
+#' List and retrieve constants used in chemtools.
+#' 
+#' @name constants
+NULL 
+ 
+#' @describeIn constants get the value of a constant
+#' @param name name of the constant
 #' @export
 get_constant <- function(name) {
   c_name <- paste0(".chemtools_", name)
@@ -27,6 +34,8 @@ get_constant <- function(name) {
   return(get(c_name, env = .GlobalEnv))
 }
 
+#' @describeIn constants list all constants
+#' @export
 constants <- function() {
   vars <- ls(pattern = "\\.chemtools_.+", all.names = T, envir = .GlobalEnv)
   vals <- sapply(vars, get, envir = .GlobalEnv, USE.NAMES = F)

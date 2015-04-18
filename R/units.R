@@ -4,9 +4,11 @@
 #' These functions make it easy to keep track of different quantities in
 #' chemical calculations. Metric prefixes are fully supported, i.e. any
 #' unit can be combined with standard \link{metric} scaling (mL, nmol, µM, etc.)
-#' 
+#' @name quantities
+#' @aliases quantity
+NULL
+
 #' @describeIn quantities universal function for generating a quantity (will try to guess which type from the unit)
-#' @aliases quantities quantity
 #' @param x the numeric value of the quantity, can be a single value or a vector
 #' @param unit the unit of the quantity
 #' @param scale_to_best_metric whether to automatically scale to the best metric prefix
@@ -136,8 +138,10 @@ temperature <- function(x, unit) {
 #' 
 #' These functions simplify converting between different metric prefixes.
 #' 
+#' @name metric
+NULL
+
 #' @describeIn metric scale to a specific metrix prefix (from whatever the quantity is currently in)
-#' @aliases metric
 #' @param q the \link{quantity} to scale
 #' @param prefix a metric prefix (p, n, µ, m, k, M, etc.)
 #' @family functions
