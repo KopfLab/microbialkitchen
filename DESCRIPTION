@@ -1,0 +1,21 @@
+Package: chemtools
+Type: Package
+Title: Simplifies routine lab chem calculations.
+Version: 0.1
+Date: 2015-04-17
+Author: Sebastian Kopf <sebastian.kopf@colorado.edu>
+Maintainer: Sebastian Kopf <sebastian.kopf@colorado.edu>
+Description: Helps with concentration calculations of gases and solutes in lab
+    situations.
+License: GPL-3
+LazyLoad: yes
+Suggests:
+    testthat
+Roxygen: list(wrap = FALSE)
+VignetteBuilder: knitr
+Collate:
+    'utils.R'
+    'units.R'
+    'classes.R'
+    'chemtools.R'
+    'zzz.R'
