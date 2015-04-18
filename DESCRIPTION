@@ -16,6 +16,7 @@ VignetteBuilder: knitr
 Collate:
     'utils.R'
     'units.R'
+    'constants.R'
     'classes.R'
     'chemtools.R'
     'zzz.R'

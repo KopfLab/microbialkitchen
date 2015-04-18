@@ -18,5 +18,7 @@ setClass("Volume", contains = "Quantity",
          prototype = prototype(new("Quantity", numeric(), unit = "L")))
 
 setClass("Pressure", contains = "Quantity", 
-         prototype = prototype(new("Quantity", numeric(), unit = "Pa")))
+         prototype = prototype(new("Quantity", numeric(), unit = "bar")))
 
+setClass("Temperature", contains = "Quantity", 
+         prototype = prototype(new("Quantity", numeric(), unit = "K")))
