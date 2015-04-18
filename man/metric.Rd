@@ -32,7 +32,8 @@ if the quantity has a vector of values, scales to the best metric prefix for the
 }}
 \seealso{
 Other functions: \code{\link{amount}},
-  \code{\link{concentration}}, \code{\link{pressure}},
+  \code{\link{concentration}}, \code{\link{mass}},
+  \code{\link{molecular_weight}}, \code{\link{pressure}},
   \code{\link{qty}}, \code{\link{quantities}},
   \code{\link{quantity}}, \code{\link{temperature}},
   \code{\link{volume}}

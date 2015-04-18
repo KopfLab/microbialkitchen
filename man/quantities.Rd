@@ -3,6 +3,8 @@
 \name{quantities}
 \alias{amount}
 \alias{concentration}
+\alias{mass}
+\alias{molecular_weight}
 \alias{pressure}
 \alias{qty}
 \alias{quantities}
@@ -14,6 +16,10 @@
 qty(x, unit, scale_to_best_metric = TRUE)
 
 amount(x, unit, scale_to_best_metric = TRUE)
+
+mass(x, unit, scale_to_best_metric = TRUE)
+
+molecular_weight(x, unit, scale_to_best_metric = FALSE)
 
 concentration(x, unit, scale_to_best_metric = TRUE)
 
@@ -42,8 +48,14 @@ unit can be combined with standard \link{metric} scaling (mL, nmol, µM, etc.)
 \item \code{amount}: generate an amount (base unit \code{mol} but also understands \code{mole},
 all metric prefixes allowed)
 
-\item \code{concentration}: generate a molarity (base unit \code{M} but also understands \code{mol/L},
+\item \code{mass}: generate a mass (base unit \code{g},
 all metric prefixes allowed)
+
+\item \code{molecular_weight}: generate a molecular weight (base unit \code{g/mol},
+all metric prefixes allowed in the numerator)
+
+\item \code{concentration}: generate a molarity (base unit \code{M} but also understands \code{mol/L},
+all metric prefixes allowed in the numerator)
 
 \item \code{volume}: generate a volume (base unit \code{L} but also understands \code{l},
 all metric prefixes allowed)

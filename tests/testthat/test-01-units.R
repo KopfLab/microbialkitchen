@@ -32,6 +32,19 @@ test_that("Testing that units work and can be interconverted", {
   expect_equal(amount(1000, "nmol", scale_to_best_metric = T)@unit, "µmol")
   expect_equal(amount(1000, "nmol", scale_to_best_metric = T)@.Data, 1)
   
+  # mass
+  expect_error(mass(1, "J"), "not a known mass unit")
+  expect_is(mass(1, "mg"), "Mass")
+  expect_equal(mass(1, "kg")@unit, "kg")
+  expect_equal(mass(0.01, "g")@unit, "mg")
+  expect_equal(mass(0.01, "g")@.Data, 10)
+
+  # molecular weight
+  expect_error(molecular_weight(1, "J"), "not a known molecular weight unit")
+  expect_is(molecular_weight(1, "g/mol"), "MolecularWeight")
+  expect_equal(molecular_weight(1257, "g/mol")@unit, "g/mol") # by default no automatic scaling!
+  expect_equal(molecular_weight(1257, "g/mol")@.Data, 1257)
+  
   # volume
   expect_error(volume(1, "mM"), "not a known volume unit")
   expect_is(volume(1, "mL"), "Volume")
@@ -66,5 +79,8 @@ test_that("Testing that units work and can be interconverted", {
   expect_equal(qty(1500, "pmol")@unit, "nmol")
   expect_equal(qty(1500, "pmol")@.Data, 1.5)
   expect_equal(qty(30, "C")@.Data, 303.15)
+  expect_equal(qty(1250, "µg")@unit, "mg")
+  expect_equal(qty(1250, "µg")@.Data, 1.25)
+  expect_equal(qty(1250, "g/mol")@.Data, 1250)
 })
   

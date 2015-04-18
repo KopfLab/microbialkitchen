@@ -11,6 +11,12 @@ setMethod("show", "Quantity", function(object) {
 setClass("Amount", contains = "Quantity", 
          prototype = prototype(new("Quantity", numeric(), unit = "mol")))
 
+setClass("Mass", contains = "Quantity", 
+         prototype = prototype(new("Quantity", numeric(), unit = "g")))
+
+setClass("MolecularWeight", contains = "Quantity", 
+         prototype = prototype(new("Quantity", numeric(), unit = "g/mol")))
+
 setClass("Molarity", contains = "Quantity", 
          prototype = prototype(new("Quantity", numeric(), unit = "M")))
 

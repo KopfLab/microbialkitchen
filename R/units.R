@@ -22,8 +22,10 @@ qty <- function(x, unit, scale_to_best_metric = TRUE) {
   if (!is.null(r <- tryCatch(concentration(x, unit, scale_to_best_metric), error = function(e){}))) return(r)
   if (!is.null(r <- tryCatch(volume(x, unit, scale_to_best_metric), error = function(e){}))) return(r)
   if (!is.null(r <- tryCatch(amount(x, unit, scale_to_best_metric), error = function(e){}))) return(r)
+  if (!is.null(r <- tryCatch(mass(x, unit, scale_to_best_metric), error = function(e){}))) return(r)
   if (!is.null(r <- tryCatch(pressure(x, unit, scale_to_best_metric), error = function(e){}))) return(r)
   if (!is.null(r <- tryCatch(temperature(x, unit), error = function(e){}))) return(r)
+  if (!is.null(r <- tryCatch(molecular_weight(x, unit, FALSE), error = function(e){}))) return(r)
   stop("Could not determine the appropriate quantity for unit ", unit)
 }
 
@@ -43,9 +45,32 @@ amount <- function(x, unit, scale_to_best_metric = TRUE) {
   return(q)
 }
 
+#' @describeIn quantities generate a mass (base unit \code{g}, 
+#' all metric prefixes allowed)
+#' @export
+mass <- function(x, unit, scale_to_best_metric = TRUE) {
+  primary_units <- paste0(names(.metric_prefix), "g")
+  if (! unit %in% primary_units) stop("not a known mass unit: ", unit)
+  
+  q <- new("Mass", x, unit = unit)
+  if (scale_to_best_metric) q <- best_metric(q)
+  return(q)
+}
+
+#' @describeIn quantities generate a molecular weight (base unit \code{g/mol}, 
+#' all metric prefixes allowed in the numerator)
+#' @export
+molecular_weight <- function(x, unit, scale_to_best_metric = FALSE) {
+  primary_units <- paste0(names(.metric_prefix), "g/mol")
+  if (! unit %in% primary_units) stop("not a known molecular weight unit: ", unit)
+  
+  q <- new("MolecularWeight", x, unit = unit)
+  if (scale_to_best_metric) q <- best_metric(q)
+  return(q)
+}
 
 #' @describeIn quantities generate a molarity (base unit \code{M} but also understands \code{mol/L}, 
-#' all metric prefixes allowed)
+#' all metric prefixes allowed in the numerator)
 #' @export
 concentration <- function(x, unit, scale_to_best_metric = TRUE) {
   primary_units <- paste0(names(.metric_prefix), "M")
