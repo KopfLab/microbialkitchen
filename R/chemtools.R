@@ -15,6 +15,7 @@ NULL
 #' @include constants.R
 #' @include classes.R
 #' @include units.R
+#' @include arithmetic.R
 NULL
 
 # constants

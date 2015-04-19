@@ -1,4 +1,3 @@
-
 #' Quantities
 #' 
 #' These functions make it easy to keep track of different quantities in
@@ -6,6 +5,7 @@
 #' unit can be combined with standard \link{metric} scaling (mL, nmol, µM, etc.)
 #' @name quantities
 #' @aliases quantity
+#' @include classes.R
 NULL
 
 #' @describeIn quantities universal function for generating a quantity (will try to guess which type from the unit)
@@ -175,14 +175,13 @@ scale_metric <- function (q, prefix = "") {
 
   if (!inherits(q, "Quantity")) stop("not a known type of quantity: ", class(q))
   if (! prefix %in% names(.metric_prefix)) stop("not a known metric prefix: ", prefix)
-  base_unit <- new(class(q))@unit
-  if (! grepl(paste0(base_unit, "$"), q@unit)) stop("not a valid unit: ", q@unit) # this should never happen
-  q_prefix <- sub(paste0(base_unit, "$"), "", q@unit)
+  q_prefix <- get_prefix(q)
   
   # conversion
-  q@.Data <- (.metric_prefix[[which(names(.metric_prefix)==q_prefix)]]/   # complication required because of unity unit with "" name
-                .metric_prefix[[which(names(.metric_prefix)==prefix)]]) * q@.Data
-  q@unit <- paste0(prefix, base_unit)
+  scale_factor <- .metric_prefix[[which(names(.metric_prefix)==q_prefix)]]/ # complication required because of unity unit with "" name
+               .metric_prefix[[which(names(.metric_prefix)==prefix)]]
+  q@.Data <- scale_factor * q@.Data
+  q@unit <- paste0(prefix, get_base_unit(q))
   return(q)
 }
 
@@ -190,7 +189,7 @@ scale_metric <- function (q, prefix = "") {
 #' if the quantity has a vector of values, scales to the best metric prefix for the median of all values
 #' @export
 best_metric <- function(q) {
-  ideal <- max(1, which( median(base_metric(q))/.metric_prefix >= 1))
+  ideal <- max(1, which( median(abs(base_metric(q)))/.metric_prefix >= 1))
   scale_metric(q, names(.metric_prefix)[ideal])
 }
 
@@ -201,3 +200,16 @@ base_metric <- function(q) {
   scale_metric(q, prefix = "")
 }
 
+# Get the base unit of a quantiy
+get_base_unit <- function(q) {
+  return(new(class(q))@unit)
+}
+
+# Get the prefix of a quantity
+get_prefix <- function(q) {
+  base_unit <- get_base_unit(q)
+  if (! grepl(paste0(base_unit, "$"), q@unit)) 
+    stop("not a valid unit: ", q@unit) # this should never happen
+  return(sub(paste0(base_unit, "$"), "", q@unit))
+}
+  

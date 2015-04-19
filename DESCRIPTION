@@ -14,9 +14,9 @@ Suggests:
 Roxygen: list(wrap = FALSE)
 VignetteBuilder: knitr
 Collate:
+    'classes.R'
+    'arithmetic.R'
     'utils.R'
     'units.R'
     'constants.R'
-    'classes.R'
     'chemtools.R'
-    'zzz.R'

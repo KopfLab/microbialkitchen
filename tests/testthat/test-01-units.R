@@ -21,6 +21,7 @@ test_that("Testing that units work and can be interconverted", {
   expect_equal(scale_metric(concentration(1, "µM"), "")@.Data, 1e-6)
   expect_equal(base_metric(concentration(1, "kM"))@.Data, 1e3)
   expect_equal(best_metric(concentration(0.2, "M"))@unit, "mM")
+  expect_equal(best_metric(concentration(-5000, "nM"))@unit, "µM")
   expect_equal(best_metric(concentration(c(100, 1200, 1500), "pM"))@unit, "nM")
   
   # amout
