@@ -14,9 +14,12 @@ Suggests:
 Roxygen: list(wrap = FALSE)
 VignetteBuilder: knitr
 Collate:
+    'aquasys.R'
     'classes.R'
     'arithmetic.R'
     'utils.R'
     'units.R'
     'constants.R'
     'chemtools.R'
+    'components.R'
+    'parameters.R'
