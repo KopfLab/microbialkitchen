@@ -3,7 +3,7 @@ context("Units")
 test_that("Testing that units work and can be interconverted", {
   
   # constants
-  expect_error(get_constant("bla"), "not specified")
+  expect_error(ct_get_constant("bla"), "not specified")
   
   # concentration objects
   expect_error(concentration(1, "J"), "not a known concentration unit")
@@ -57,7 +57,7 @@ test_that("Testing that units work and can be interconverted", {
   expect_equal(pressure(1, "mbar")@unit, "mbar")
   expect_equal(pressure(1, "atm")@.Data, 1.01325)
   expect_equal(pressure(0.1, "MPa")@.Data, 1)
-  expect_equal(pressure(1, "kPa", scale_to_best_metric = FALSE)@.Data, get_constant("bar_per_pa"))
+  expect_equal(pressure(1, "kPa", scale_to_best_metric = FALSE)@.Data, ct_get_constant("bar_per_pa"))
   expect_equal(pressure(1, "kPa", scale_to_best_metric = FALSE)@unit, "kbar")
   expect_equal(pressure(760, "Torr")@unit, "bar")
   expect_equal(pressure(760, "Torr")@.Data, 1.01325)

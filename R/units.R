@@ -32,8 +32,9 @@ qty <- function(x, unit, scale_to_best_metric = TRUE) {
 #' all metric prefixes allowed)
 #' @export
 amount <- function(x, unit, scale_to_best_metric = TRUE) {
-  primary_units <- paste0(names(.metric_prefix), "mol")
-  secondary_units <- paste0(names(.metric_prefix), "mole")
+  prefix <- ct_get_constant("metric_prefix")
+  primary_units <- paste0(names(prefix), "mol")
+  secondary_units <- paste0(names(prefix), "mole")
   if (! unit %in% c(primary_units, secondary_units)) stop("not a known amount unit: ", unit)
   
   if (unit %in% secondary_units)
@@ -48,7 +49,8 @@ amount <- function(x, unit, scale_to_best_metric = TRUE) {
 #' all metric prefixes allowed)
 #' @export
 mass <- function(x, unit, scale_to_best_metric = TRUE) {
-  primary_units <- paste0(names(.metric_prefix), "g")
+  prefix <- ct_get_constant("metric_prefix")
+  primary_units <- paste0(names(prefix), "g")
   if (! unit %in% primary_units) stop("not a known mass unit: ", unit)
   
   q <- new("Mass", x, unit = unit)
@@ -60,7 +62,8 @@ mass <- function(x, unit, scale_to_best_metric = TRUE) {
 #' all metric prefixes allowed in the numerator)
 #' @export
 molecular_weight <- function(x, unit, scale_to_best_metric = FALSE) {
-  primary_units <- paste0(names(.metric_prefix), "g/mol")
+  prefix <- ct_get_constant("metric_prefix")
+  primary_units <- paste0(names(prefix), "g/mol")
   if (! unit %in% primary_units) stop("not a known molecular weight unit: ", unit)
   
   q <- new("MolecularWeight", x, unit = unit)
@@ -72,8 +75,9 @@ molecular_weight <- function(x, unit, scale_to_best_metric = FALSE) {
 #' all metric prefixes allowed in the numerator)
 #' @export
 concentration <- function(x, unit, scale_to_best_metric = TRUE) {
-  primary_units <- paste0(names(.metric_prefix), "M")
-  secondary_units <- paste0(names(.metric_prefix), "mol/L")
+  prefix <- ct_get_constant("metric_prefix")
+  primary_units <- paste0(names(prefix), "M")
+  secondary_units <- paste0(names(prefix), "mol/L")
   if (! unit %in% c(primary_units, secondary_units)) stop("not a known concentration unit: ", unit)
   
   if (unit %in% secondary_units)
@@ -88,8 +92,9 @@ concentration <- function(x, unit, scale_to_best_metric = TRUE) {
 #' all metric prefixes allowed)
 #' @export
 volume <- function(x, unit, scale_to_best_metric = TRUE) {
-  primary_units <- paste0(names(.metric_prefix), "L")
-  secondary_units <- paste0(names(.metric_prefix), "l")
+  prefix <- ct_get_constant("metric_prefix")
+  primary_units <- paste0(names(prefix), "L")
+  secondary_units <- paste0(names(prefix), "l")
   if (! unit %in% c(primary_units, secondary_units)) stop("not a known volume unit: ", unit)
   
   if (unit %in% secondary_units)
@@ -105,8 +110,9 @@ volume <- function(x, unit, scale_to_best_metric = TRUE) {
 #' \code{mTorr} are also supported and will be automatically converted to \code{bar}). 
 #' @export
 pressure <- function(x, unit, scale_to_best_metric = TRUE) {
-  primary_units <- paste0(names(.metric_prefix), "bar")
-  secondary_units <- paste0(names(.metric_prefix), "Pa")
+  prefix <- ct_get_constant("metric_prefix")
+  primary_units <- paste0(names(prefix), "bar")
+  secondary_units <- paste0(names(prefix), "Pa")
   alternative_units <- c("atm", "psi", "Torr", "mTorr")
   if (! unit %in% c(primary_units, secondary_units, alternative_units)) 
     stop("not a known pressure unit: ", unit)
@@ -118,14 +124,14 @@ pressure <- function(x, unit, scale_to_best_metric = TRUE) {
   }
   
   if (unit %in% alternative_units) {
-    c_factor <- get_constant(paste0("bar_per_", unit))
+    c_factor <- ct_get_constant(paste0("bar_per_", unit))
     x <- x * c_factor
     unit <- "bar"
   }
   
   # pascal
   if (unit %in% secondary_units) {
-    x <- x * get_constant("bar_per_pa")
+    x <- x * ct_get_constant("bar_per_pa")
     unit <- primary_units[secondary_units == unit]
   }
   
@@ -138,18 +144,19 @@ pressure <- function(x, unit, scale_to_best_metric = TRUE) {
 #' \code{C} and \code{F} and converts them to Kelvin)
 #' @export
 temperature <- function(x, unit) {
-  primary_units <- paste0(names(.metric_prefix), "K")
+  prefix <- ct_get_constant("metric_prefix")
+  primary_units <- paste0(names(prefix), "K")
   alternative_units <- c("C", "F")
   if (! unit %in% c(primary_units, alternative_units)) 
     stop("not a known temperature unit: ", unit)
   
   # alternative units
   if (unit == "C") {
-    x <- x - get_constant("celsius_kelvin_offset")
+    x <- x - ct_get_constant("celsius_kelvin_offset")
     unit <- "K"
   } else if (unit == "F") {
-    x <- (x - get_constant("fahrenheit_celsius_offset"))/get_constant("fahrenheit_celsius_slope") - 
-      get_constant("celsius_kelvin_offset") 
+    x <- (x - ct_get_constant("fahrenheit_celsius_offset"))/ct_get_constant("fahrenheit_celsius_slope") - 
+      ct_get_constant("celsius_kelvin_offset") 
     unit <- "K"
   }
   
@@ -172,13 +179,14 @@ NULL
 #' @export
 scale_metric <- function (q, prefix = "") {
 
+  metric_prefix <- ct_get_constant("metric_prefix")
   if (!inherits(q, "Quantity")) stop("not a known type of quantity: ", class(q))
-  if (! prefix %in% names(.metric_prefix)) stop("not a known metric prefix: ", prefix)
+  if (! prefix %in% names(metric_prefix)) stop("not a known metric prefix: ", prefix)
   q_prefix <- get_prefix(q)
   
   # conversion
-  scale_factor <- .metric_prefix[[which(names(.metric_prefix)==q_prefix)]]/ # complication required because of unity unit with "" name
-               .metric_prefix[[which(names(.metric_prefix)==prefix)]]
+  scale_factor <- metric_prefix[[which(names(metric_prefix)==q_prefix)]]/ # complication required because of unity unit with "" name
+               metric_prefix[[which(names(metric_prefix)==prefix)]]
   q@.Data <- scale_factor * q@.Data
   q@unit <- paste0(prefix, get_base_unit(q))
   return(q)
@@ -188,8 +196,9 @@ scale_metric <- function (q, prefix = "") {
 #' if the quantity has a vector of values, scales to the best metric prefix for the median of all values
 #' @export
 best_metric <- function(q) {
-  ideal <- max(1, which( median(abs(base_metric(q)))/.metric_prefix >= 1))
-  scale_metric(q, names(.metric_prefix)[ideal])
+  prefix <- ct_get_constant("metric_prefix")
+  ideal <- max(1, which( median(abs(base_metric(q)))/prefix >= 1))
+  scale_metric(q, names(prefix)[ideal])
 }
 
 
