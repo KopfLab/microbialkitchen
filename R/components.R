@@ -1,4 +1,3 @@
-#' @include classes.R
 
 #' @export
 is.component <- function(x) inherits(x, "Component")

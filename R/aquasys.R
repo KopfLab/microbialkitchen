@@ -1,3 +1,7 @@
+# make sure classes are loaded before everything else
+#' @include classes.R
+NULL
+
 #' Reports whether x is any aquasys object (system, parameter or component)
 #' @export
 is.aquasys <- function(x) inherits(x, "aquasys")

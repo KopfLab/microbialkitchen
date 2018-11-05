@@ -5,7 +5,6 @@
 #' unit can be combined with standard \link{metric} scaling (mL, nmol, µM, etc.)
 #' @name quantities
 #' @aliases quantity
-#' @include classes.R
 NULL
 
 #' @describeIn quantities universal function for generating a quantity (will try to guess which type from the unit)

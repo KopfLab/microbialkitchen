@@ -7,19 +7,20 @@ Author: Sebastian Kopf <sebastian.kopf@colorado.edu>
 Maintainer: Sebastian Kopf <sebastian.kopf@colorado.edu>
 Description: Helps with concentration calculations of gases and solutes in lab
     situations.
-License: GPL-3
-LazyLoad: yes
 Suggests:
     testthat
-Roxygen: list(wrap = FALSE)
+License: GPL (>= 2) 
+Encoding: UTF-8
+LazyData: true
 VignetteBuilder: knitr
-Collate:
-    'aquasys.R'
+RoxygenNote: 6.1.0
+Collate: 
     'classes.R'
+    'aquasys.R'
     'arithmetic.R'
-    'utils.R'
-    'units.R'
-    'constants.R'
-    'chemtools.R'
     'components.R'
+    'constants.R'
+    'package.R'
     'parameters.R'
+    'units.R'
+    'utils.R'
