@@ -4,9 +4,8 @@
 \name{mediatools-package}
 \alias{mediatools}
 \alias{mediatools-package}
-\title{mediatools: Simplifies routine lab chem calculations.}
+\title{mediatools: Simplify lab media calculations.}
 \description{
-Helps with concentration calculations of gases and solutes in lab
-    situations.
+Package to help with culturing media calculations.
 }
 \keyword{internal}

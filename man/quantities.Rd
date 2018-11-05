@@ -2,7 +2,6 @@
 % Please edit documentation in R/units.R
 \name{quantities}
 \alias{quantities}
-\alias{quantity}
 \alias{qty}
 \alias{get_qty_units}
 \title{Quantities}

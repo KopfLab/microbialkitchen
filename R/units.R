@@ -7,7 +7,6 @@ NULL
 #' 
 #' The \code{qty} function makes it easy to keep track of different quantities in chemical calculations. Metric prefixes are fully supported, i.e. any unit can be combined with standard \link{metric} scaling (mL, nmol, µM, etc.). Some quantities can also be used in common \link{arithmetic} operations.
 #' @name quantities
-#' @aliases quantity
 NULL
 
 #' @describeIn quantities generate a quantity object
@@ -36,7 +35,7 @@ qty <- function(x, unit, scale_to_best_metric = TRUE) {
 #' @name quantities
 NULL
 cht_amount <- function(x, unit, scale_to_best_metric = TRUE) {
-  prefix <- cht_get_constant("metric_prefix")
+  prefix <- get_mediatools_constant("metric_prefix")
   primary_units <- paste0(names(prefix), "mol")
   secondary_units <- paste0(names(prefix), "mole")
   if (! unit %in% c(primary_units, secondary_units)) stop("not a known amount unit: ", unit)
@@ -44,8 +43,8 @@ cht_amount <- function(x, unit, scale_to_best_metric = TRUE) {
   if (unit %in% secondary_units)
     unit <- primary_units[secondary_units == unit]
   
-  q <- new("Amount", x, unit = unit)
-  if (scale_to_best_metric) q <- cht_best_metric(q)
+  q <- new("MediaToolsAmount", x, unit = unit)
+  if (scale_to_best_metric) q <- best_metric(q)
   return(q)
 }
 
@@ -53,12 +52,12 @@ cht_amount <- function(x, unit, scale_to_best_metric = TRUE) {
 #' @name quantities
 NULL
 mass <- function(x, unit, scale_to_best_metric = TRUE) {
-  prefix <- cht_get_constant("metric_prefix")
+  prefix <- get_mediatools_constant("metric_prefix")
   primary_units <- paste0(names(prefix), "g")
   if (! unit %in% primary_units) stop("not a known mass unit: ", unit)
   
-  q <- new("Mass", x, unit = unit)
-  if (scale_to_best_metric) q <- cht_best_metric(q)
+  q <- new("MediaToolsMass", x, unit = unit)
+  if (scale_to_best_metric) q <- best_metric(q)
   return(q)
 }
 
@@ -66,12 +65,12 @@ mass <- function(x, unit, scale_to_best_metric = TRUE) {
 #' @name quantities
 NULL
 molecular_weight <- function(x, unit, scale_to_best_metric = FALSE) {
-  prefix <- cht_get_constant("metric_prefix")
+  prefix <- get_mediatools_constant("metric_prefix")
   primary_units <- paste0(names(prefix), "g/mol")
   if (! unit %in% primary_units) stop("not a known molecular weight unit: ", unit)
   
-  q <- new("MolecularWeight", x, unit = unit)
-  if (scale_to_best_metric) q <- cht_best_metric(q)
+  q <- new("MediaToolsMolecularWeight", x, unit = unit)
+  if (scale_to_best_metric) q <- best_metric(q)
   return(q)
 }
 
@@ -79,7 +78,7 @@ molecular_weight <- function(x, unit, scale_to_best_metric = FALSE) {
 #' @name quantities
 NULL
 molarity <- function(x, unit, scale_to_best_metric = TRUE) {
-  prefix <- cht_get_constant("metric_prefix")
+  prefix <- get_mediatools_constant("metric_prefix")
   primary_units <- paste0(names(prefix), "M")
   secondary_units <- paste0(names(prefix), "mol/L")
   if (! unit %in% c(primary_units, secondary_units)) stop("not a known concentration (molarity) unit: ", unit)
@@ -87,8 +86,8 @@ molarity <- function(x, unit, scale_to_best_metric = TRUE) {
   if (unit %in% secondary_units)
     unit <- primary_units[secondary_units == unit]
   
-  q <- new("Molarity", x, unit = unit)
-  if (scale_to_best_metric) q <- cht_best_metric(q)
+  q <- new("MediaToolsMolarity", x, unit = unit)
+  if (scale_to_best_metric) q <- best_metric(q)
   return(q)
 }
 
@@ -96,7 +95,7 @@ molarity <- function(x, unit, scale_to_best_metric = TRUE) {
 #' @name quantities
 NULL
 density <- function(x, unit, scale_to_best_metric = TRUE) {
-  prefix <- cht_get_constant("metric_prefix")
+  prefix <- get_mediatools_constant("metric_prefix")
   primary_units <- paste0(names(prefix), "g/L")
   secondary_units <- paste0(names(prefix), "g/l")
   if (! unit %in% c(primary_units, secondary_units)) stop("not a known concentration (density) unit: ", unit)
@@ -104,8 +103,8 @@ density <- function(x, unit, scale_to_best_metric = TRUE) {
   if (unit %in% secondary_units)
     unit <- primary_units[secondary_units == unit]
   
-  q <- new("Density", x, unit = unit)
-  if (scale_to_best_metric) q <- cht_best_metric(q)
+  q <- new("MediaToolsDensity", x, unit = unit)
+  if (scale_to_best_metric) q <- best_metric(q)
   return(q)
 }
 
@@ -113,7 +112,7 @@ density <- function(x, unit, scale_to_best_metric = TRUE) {
 #' @name quantities
 NULL
 volume <- function(x, unit, scale_to_best_metric = TRUE) {
-  prefix <- cht_get_constant("metric_prefix")
+  prefix <- get_mediatools_constant("metric_prefix")
   primary_units <- paste0(names(prefix), "L")
   secondary_units <- paste0(names(prefix), "l")
   if (! unit %in% c(primary_units, secondary_units)) stop("not a known volume unit: ", unit)
@@ -121,8 +120,8 @@ volume <- function(x, unit, scale_to_best_metric = TRUE) {
   if (unit %in% secondary_units)
     unit <- primary_units[secondary_units == unit]
   
-  q <- new("Volume", x, unit = unit)
-  if (scale_to_best_metric) q <- cht_best_metric(q)
+  q <- new("MediaToolsVolume", x, unit = unit)
+  if (scale_to_best_metric) q <- best_metric(q)
   return(q)
 }
 
@@ -130,7 +129,7 @@ volume <- function(x, unit, scale_to_best_metric = TRUE) {
 #' @name quantities
 NULL
 pressure <- function(x, unit, scale_to_best_metric = TRUE) {
-  prefix <- cht_get_constant("metric_prefix")
+  prefix <- get_mediatools_constant("metric_prefix")
   primary_units <- paste0(names(prefix), "bar")
   secondary_units <- paste0(names(prefix), "Pa")
   alternative_units <- c("atm", "psi", "Torr", "mTorr")
@@ -144,19 +143,19 @@ pressure <- function(x, unit, scale_to_best_metric = TRUE) {
   }
   
   if (unit %in% alternative_units) {
-    c_factor <- cht_get_constant(paste0("bar_per_", unit))
+    c_factor <- get_mediatools_constant(paste0("bar_per_", unit))
     x <- x * c_factor
     unit <- "bar"
   }
   
   # pascal
   if (unit %in% secondary_units) {
-    x <- x * cht_get_constant("bar_per_pa")
+    x <- x * get_mediatools_constant("bar_per_pa")
     unit <- primary_units[secondary_units == unit]
   }
   
-  q <- new("Pressure", x, unit = unit)
-  if (scale_to_best_metric) q <- cht_best_metric(q)
+  q <- new("MediaToolsPressure", x, unit = unit)
+  if (scale_to_best_metric) q <- best_metric(q)
   return(q)
 }
 
@@ -164,7 +163,7 @@ pressure <- function(x, unit, scale_to_best_metric = TRUE) {
 #' @name quantities
 NULL
 temperature <- function(x, unit) {
-  prefix <- cht_get_constant("metric_prefix")
+  prefix <- get_mediatools_constant("metric_prefix")
   primary_units <- paste0(names(prefix), "K")
   alternative_units <- c("C", "F")
   if (! unit %in% c(primary_units, alternative_units)) 
@@ -172,36 +171,36 @@ temperature <- function(x, unit) {
   
   # alternative units
   if (unit == "C") {
-    x <- x - cht_get_constant("celsius_kelvin_offset")
+    x <- x - get_mediatools_constant("celsius_kelvin_offset")
     unit <- "K"
   } else if (unit == "F") {
-    x <- (x - cht_get_constant("fahrenheit_celsius_offset"))/cht_get_constant("fahrenheit_celsius_slope") - 
-      cht_get_constant("celsius_kelvin_offset") 
+    x <- (x - get_mediatools_constant("fahrenheit_celsius_offset"))/get_mediatools_constant("fahrenheit_celsius_slope") - 
+      get_mediatools_constant("celsius_kelvin_offset") 
     unit <- "K"
   }
   
-  new("Temperature", x, unit = unit)
+  new("MediaToolsTemperature", x, unit = unit)
 }
 
 # S4 methods ========================
 
 # allow quantity replication
 #' @export
-rep.Quantity <- function(x, ...) {
+rep.MediaToolsQuantity <- function(x, ...) {
   x@.Data <- rep(x@.Data, ...)
   return(x)
 }
 
 # preserve quantity info on subsetting
 #' @export
-`[.Quantity` <- function(x, ...) {
+`[.MediaToolsQuantity` <- function(x, ...) {
   x@.Data <- `[`(x@.Data, ...)
   return(x)
 }
 
 # preserve quantity info on subsetting
 #' @export
-`[[.Quantity` <- function(x, ...) {
+`[[.MediaToolsQuantity` <- function(x, ...) {
   x@.Data <- `[[`(x@.Data, ...)
   return(x)
 }
@@ -209,9 +208,9 @@ rep.Quantity <- function(x, ...) {
 # make sure the units are displayed inside dplyr data frame representations
 # note: not using shorts to keep the types easier defined
 #' @export
-type_sum.Quantity <- function(x) {
-  # shorts <- c(Amount = "amt", Mass = "m", MolecularWeight = "MW", Molarity = "C",
-  #             Density = "C", Volume = "V", Pressure = "P", Temperature = "T")
+type_sum.MediaToolsQuantity <- function(x) {
+  # shorts <- c(MediaToolsAmount = "amt", MediaToolsMass = "m", MediaToolsMolecularWeight = "MW", MediaToolsMolarity = "C",
+  #             MediaToolsDensity = "C", MediaToolsVolume = "V", MediaToolsPressure = "P", MediaToolsTemperature = "T")
   # qclass <- class(x)[1]
   # if (!qclass %in% names(shorts))
   #   stop("no type sum short available for the objects of type ", qclass, call. = FALSE)
@@ -222,12 +221,12 @@ type_sum.Quantity <- function(x) {
 
 #' Concatenate quantities
 #' 
-#' Concatenate multiple quantity vectors or values. They must all be of the same type (i.e. you cannot combine e.g. a Temperature and a Weight value). The concatenated values will be scaled according to \code{\link{best_metric}}. Note that the regular `c()` operator automatically calls this function if the first argument is a Quantity object.
+#' Concatenate multiple quantity vectors or values. They must all be of the same type (i.e. you cannot combine e.g. a temperature and a mass value). The concatenated values will be scaled according to \code{\link{best_metric}}. Note that the regular `c()` operator automatically calls this function if the first argument is a quantity object.
 #' @examples 
-#' cht_c_qty(qty(5, "g"), qty(c(10, 20), "mg")) # Mass [mg]: 5000, 10, 20
+#' c_qty(qty(5, "g"), qty(c(10, 20), "mg")) # MediaToolsMass [mg]: 5000, 10, 20
 #' c(qty(5, "g"), qty(c(10, 20), "mg")) # same (shortcut for the above)
 #' @export
-cht_c_qty <- function(...) {
+c_qty <- function(...) {
   qs <- list(...)
   # safety check that all quantities are the same classes
   classes <- purrr::map_chr(qs, ~class(.x)[1])
@@ -236,15 +235,15 @@ cht_c_qty <- function(...) {
                  glue::glue_collapse(unique(classes), sep = ", ", last = " and ")), call. = FALSE)
   }
   # combine quantities making sure metric scaling is appropriate
-  purrr::map(qs, ~as.numeric(cht_base_metric(.x))) %>% 
+  purrr::map(qs, ~as.numeric(base_metric(.x))) %>% 
     unlist() %>% 
     qty(get_base_unit(qs[[1]]))
 }
 
 # preserve quantity info on combination
 #' @export
-c.Quantity <- function(...) {
-  cht_c_qty(...)
+c.MediaToolsQuantity <- function(...) {
+  c_qty(...)
 }
 
 # unit retrieval ====================
@@ -253,10 +252,10 @@ c.Quantity <- function(...) {
 #' @param q quantity or list of quantities
 #' @export
 get_qty_units <- function(q) {
-  if (methods::is(q, "Quantity")) 
+  if (methods::is(q, "MediaToolsQuantity")) 
     return(q@unit)
   else if (is.list(q))
-    return(purrr::map_chr(q, ~if(methods::is(.x, "Quantity")) { .x@unit } else { NA_character_ }))
+    return(purrr::map_chr(q, ~if(methods::is(.x, "MediaToolsQuantity")) { .x@unit } else { NA_character_ }))
   else
     return(NA_character_)
 }
@@ -275,10 +274,10 @@ NULL
 #' @param prefix a metric prefix (p, n, µ, m, k, M, etc.)
 #' @family functions
 #' @export
-cht_scale_metric <- function (q, prefix = "") {
+scale_metric <- function (q, prefix = "") {
 
-  metric_prefix <- cht_get_constant("metric_prefix")
-  if (!inherits(q, "Quantity")) stop("not a known type of quantity: ", class(q))
+  metric_prefix <- get_mediatools_constant("metric_prefix")
+  if (!inherits(q, "MediaToolsQuantity")) stop("not a known type of quantity: ", class(q))
   if (! prefix %in% names(metric_prefix)) stop("not a known metric prefix: ", prefix)
   q_prefix <- get_prefix(q)
   
@@ -293,19 +292,19 @@ cht_scale_metric <- function (q, prefix = "") {
 #' @describeIn metric convert to best metric prefix (i.e. one that gives at least 1 significant digit before the decimal), 
 #' if the quantity has a vector of values, scales to the best metric prefix for the median of all values
 #' @export
-cht_best_metric <- function(q) {
-  prefix <- cht_get_constant("metric_prefix")
+best_metric <- function(q) {
+  prefix <- get_mediatools_constant("metric_prefix")
   ideal <-
     if (length(q) == 0 || all(is.na(q)) || all(is.infinite(q))) which(names(prefix) == "")
-    else max(1, which( median(abs(as.numeric(cht_base_metric(q))), na.rm = TRUE)/prefix >= 1))
-  cht_scale_metric(q, names(prefix)[ideal])
+    else max(1, which( median(abs(as.numeric(base_metric(q))), na.rm = TRUE)/prefix >= 1))
+  scale_metric(q, names(prefix)[ideal])
 }
 
 
 #' @describeIn metric convert to base metric prefix of mediatools (i.e. to mol, L, etc.)
 #' @export
-cht_base_metric <- function(q) {
-  cht_scale_metric(q, prefix = "")
+base_metric <- function(q) {
+  scale_metric(q, prefix = "")
 }
 
 # Get the base unit of a quantiy

@@ -1,14 +1,14 @@
 Package: mediatools
 Type: Package
-Title: Simplifies routine lab chem calculations.
-Version: 0.1
-Date: 2015-04-17
+Title: Simplify lab media calculations.
+Version: 0.2.0.9999
+Date: 2018-11-04
 Author: Sebastian Kopf <sebastian.kopf@colorado.edu>
 Maintainer: Sebastian Kopf <sebastian.kopf@colorado.edu>
-Description: Helps with concentration calculations of gases and solutes in lab
-    situations.
+Description: Package to help with culturing media calculations.
 Imports:
     methods,
+    magrittr,
     purrr,
     dplyr,
     stringr,

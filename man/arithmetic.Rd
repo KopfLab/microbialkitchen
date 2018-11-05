@@ -21,12 +21,12 @@ mass / volume = density, mass / density = volume, density * volume = mass
 mass / MW = amount, mass / amount = MW, amount * MW = mass
 }
 \description{
-These arithmetic operators for quantities in mediatools keep track of units in standard operations (i.e. they ALL take the SI prefix into consideration). Also note that all operations that result in a new quantity object automatically scale the new value using \code{\link{cht_best_metric}}.
+These arithmetic operators for quantities in mediatools keep track of units in standard operations (i.e. they ALL take the SI prefix into consideration). Also note that all operations that result in a new quantity object automatically scale the new value using \code{\link{best_metric}}.
 }
 \details{
 \code{qty ==, !=, <, <=, >, >= qty} allows the comparison of quantities that are the same type (e.g. all mass).
 
-\code{qty +- qty} allows the addition/subtraction of quantities that are the same type (e.g. all mass). Note that this operation also scales the new value using \code{\link{cht_best_metric}}.
+\code{qty +- qty} allows the addition/subtraction of quantities that are the same type (e.g. all mass). Note that this operation also scales the new value using \code{\link{best_metric}}.
 
 \code{qty / qty} divide quantities of the same type. Returns plain numeric (i.e. the units are divided out).
 

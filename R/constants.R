@@ -38,7 +38,7 @@ NULL
 #' @describeIn constants get the value of a constant
 #' @param name name of the constant
 #' @export
-cht_get_constant <- function(name) {
+get_mediatools_constant <- function(name) {
   value <- getOption(paste0("mediatools_", name))
   if (is.null(value)) stop("constant ", name, " is not specified")
   return(value)
@@ -46,7 +46,7 @@ cht_get_constant <- function(name) {
 
 #' @describeIn constants list all constants
 #' @export
-cht_constants <- function() {
+get_mediatools_constants <- function() {
   opts <- options() %>% {.[names(.) %>% str_detect("^mediatools_")]}
   data_frame(
     constant = names(opts) %>% str_replace("^mediatools_", ""),

@@ -9,7 +9,7 @@ test_that("Testing that standard vector operations are working", {
   expect_equal(qty(1:5, "g")[-c(1:5)], qty(numeric(0), "g"))
   
   # combining
-  expect_equal(cht_c_qty(qty(5, "g"), qty(c(10, 20), "mg")), qty(c(5000, 10, 20), "mg"))
+  expect_equal(c_qty(qty(5, "g"), qty(c(10, 20), "mg")), qty(c(5000, 10, 20), "mg"))
   expect_equal(c(qty(5, "g"), qty(c(10, 20), "mg")), qty(c(5000, 10, 20), "mg"))
   expect_equal(c(qty(NA, "g"), qty(c(10, 20), "mg")), qty(c(NA, 10, 20), "mg"))
   expect_equal(c(qty(numeric(0), "g"), qty(c(10, 20), "mg")), qty(c(10, 20), "mg"))

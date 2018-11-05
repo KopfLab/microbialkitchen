@@ -1,33 +1,33 @@
-setClass("Quantity", 
+setClass("MediaToolsQuantity", 
          representation(unit = "character"), contains = "numeric",
          prototype = prototype(numeric(), unit = ""))
 
-setMethod("show", "Quantity", function(object) {
+setMethod("show", "MediaToolsQuantity", function(object) {
   validObject(object)
   cat(class(object), " [", object@unit, "]\n", sep="")
   print(object@.Data)
 })
 
-setClass("Amount", contains = "Quantity", 
-         prototype = prototype(new("Quantity", numeric(), unit = "mol")))
+setClass("MediaToolsAmount", contains = "MediaToolsQuantity", 
+         prototype = prototype(new("MediaToolsQuantity", numeric(), unit = "mol")))
 
-setClass("Mass", contains = "Quantity", 
-         prototype = prototype(new("Quantity", numeric(), unit = "g")))
+setClass("MediaToolsMass", contains = "MediaToolsQuantity", 
+         prototype = prototype(new("MediaToolsQuantity", numeric(), unit = "g")))
 
-setClass("MolecularWeight", contains = "Quantity", 
-         prototype = prototype(new("Quantity", numeric(), unit = "g/mol")))
+setClass("MediaToolsMolecularWeight", contains = "MediaToolsQuantity", 
+         prototype = prototype(new("MediaToolsQuantity", numeric(), unit = "g/mol")))
 
-setClass("Molarity", contains = "Quantity", 
-         prototype = prototype(new("Quantity", numeric(), unit = "M")))
+setClass("MediaToolsMolarity", contains = "MediaToolsQuantity", 
+         prototype = prototype(new("MediaToolsQuantity", numeric(), unit = "M")))
 
-setClass("Density", contains = "Quantity", 
-         prototype = prototype(new("Quantity", numeric(), unit = "g/L")))
+setClass("MediaToolsDensity", contains = "MediaToolsQuantity", 
+         prototype = prototype(new("MediaToolsQuantity", numeric(), unit = "g/L")))
 
-setClass("Volume", contains = "Quantity", 
-         prototype = prototype(new("Quantity", numeric(), unit = "L")))
+setClass("MediaToolsVolume", contains = "MediaToolsQuantity", 
+         prototype = prototype(new("MediaToolsQuantity", numeric(), unit = "L")))
 
-setClass("Pressure", contains = "Quantity", 
-         prototype = prototype(new("Quantity", numeric(), unit = "bar")))
+setClass("MediaToolsPressure", contains = "MediaToolsQuantity", 
+         prototype = prototype(new("MediaToolsQuantity", numeric(), unit = "bar")))
 
-setClass("Temperature", contains = "Quantity", 
-         prototype = prototype(new("Quantity", numeric(), unit = "K")))
+setClass("MediaToolsTemperature", contains = "MediaToolsQuantity", 
+         prototype = prototype(new("MediaToolsQuantity", numeric(), unit = "K")))

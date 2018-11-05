@@ -2,13 +2,13 @@
 % Please edit documentation in R/constants.R
 \name{constants}
 \alias{constants}
-\alias{cht_get_constant}
-\alias{cht_constants}
+\alias{get_mediatools_constant}
+\alias{get_mediatools_constants}
 \title{Constants}
 \usage{
-cht_get_constant(name)
+get_mediatools_constant(name)
 
-cht_constants()
+get_mediatools_constants()
 }
 \arguments{
 \item{name}{name of the constant}
@@ -18,8 +18,8 @@ List and retrieve constants used in mediatools.
 }
 \section{Functions}{
 \itemize{
-\item \code{cht_get_constant}: get the value of a constant
+\item \code{get_mediatools_constant}: get the value of a constant
 
-\item \code{cht_constants}: list all constants
+\item \code{get_mediatools_constants}: list all constants
 }}
 
