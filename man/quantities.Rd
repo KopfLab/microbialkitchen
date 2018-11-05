@@ -3,37 +3,13 @@
 \name{quantities}
 \alias{quantities}
 \alias{quantity}
-\alias{cht_qty}
 \alias{qty}
-\alias{cht_amount}
-\alias{cht_mass}
-\alias{cht_molecular_weight}
-\alias{cht_concentration}
-\alias{cht_volume}
-\alias{cht_pressure}
-\alias{cht_temperature}
-\alias{cht_get_units}
+\alias{get_qty_units}
 \title{Quantities}
 \usage{
-cht_qty(x, unit, scale_to_best_metric = TRUE)
-
 qty(x, unit, scale_to_best_metric = TRUE)
 
-cht_amount(x, unit, scale_to_best_metric = TRUE)
-
-cht_mass(x, unit, scale_to_best_metric = TRUE)
-
-cht_molecular_weight(x, unit, scale_to_best_metric = FALSE)
-
-cht_concentration(x, unit, scale_to_best_metric = TRUE)
-
-cht_volume(x, unit, scale_to_best_metric = TRUE)
-
-cht_pressure(x, unit, scale_to_best_metric = TRUE)
-
-cht_temperature(x, unit)
-
-cht_get_units(q)
+get_qty_units(q)
 }
 \arguments{
 \item{x}{the numeric value of the quantity, can be a single value or a vector}
@@ -45,46 +21,36 @@ cht_get_units(q)
 \item{q}{quantity or list of quantities}
 }
 \description{
-These functions make it easy to keep track of different quantities in
-chemical calculations. Metric prefixes are fully supported, i.e. any
-unit can be combined with standard \link{metric} scaling (mL, nmol, µM, etc.).
-Some quantities can also be used in common \link{arithmetic} operations.
+The \code{qty} function makes it easy to keep track of different quantities in chemical calculations. Metric prefixes are fully supported, i.e. any unit can be combined with standard \link{metric} scaling (mL, nmol, µM, etc.). Some quantities can also be used in common \link{arithmetic} operations.
+}
+\details{
+\emph{amount}: base unit \code{mol} but also understands \code{mole}, all metric prefixes allowed
+
+\emph{mass}: base unit \code{g}, all metric prefixes allowed
+
+\emph{molecular weight}: base unit \code{g/mol}, all metric prefixes allowed in the numerator
+
+\emph{concentration (molarity)}: base unit \code{M} but also understands \code{mol/L}, all metric prefixes allowed in the numerator
+
+\emph{concentration (density)}: base unit \code{g/L} but also understands \code{g/l}, all metric prefixes allowed in the numerator
+
+\emph{volume}: base unit \code{L} but also understands \code{l}, all metric prefixes allowed
+
+\emph{pressure}: base unit \code{bar} but also understands \code{Pa}, all metric prefixes allowed, the common non-metric units \code{atm} and \code{psi}, \code{Torr} and \code{mTorr} are also supported and will be automatically converted to \code{bar}
+
+\emph{temperature}: base unit \code{K} but also understands \code{C} and \code{F} and converts them to Kelvin
 }
 \section{Functions}{
 \itemize{
-\item \code{cht_qty}: universal function for generating a quantity (will try to guess which type from the unit)
+\item \code{qty}: generate a quantity object
 
-\item \code{qty}: convenience alias for \code{\link{cht_qty}}
-
-\item \code{cht_amount}: generate an amount (base unit \code{mol} but also understands \code{mole}, 
-all metric prefixes allowed)
-
-\item \code{cht_mass}: generate a mass (base unit \code{g}, 
-all metric prefixes allowed)
-
-\item \code{cht_molecular_weight}: generate a molecular weight (base unit \code{g/mol}, 
-all metric prefixes allowed in the numerator)
-
-\item \code{cht_concentration}: generate a molarity (base unit \code{M} but also understands \code{mol/L}, 
-all metric prefixes allowed in the numerator)
-
-\item \code{cht_volume}: generate a volume (base unit \code{L} but also understands \code{l}, 
-all metric prefixes allowed)
-
-\item \code{cht_pressure}: generate a pressure (base unit \code{bar} but also understands \code{Pa}, 
-all metric prefixes allowed, the common non-metric units \code{atm} and \code{psi}, \code{Torr} and
-\code{mTorr} are also supported and will be automatically converted to \code{bar}).
-
-\item \code{cht_temperature}: generate a temperature (base unit \code{K} but also understands
-\code{C} and \code{F} and converts them to Kelvin)
-
-\item \code{cht_get_units}: get units from a quantity or list of quantities (returns NA for objects that are not quantities)
+\item \code{get_qty_units}: get units from a quantity or list of quantities (returns NA for objects that are not quantities)
 }}
 
 \examples{
-cht_qty(0.045, "mmol/L")
-cht_qty(6, "psi")
-cht_qty(30, "C")
+qty(0.045, "mmol/L")
+qty(6, "psi")
+qty(30, "C")
 }
 \seealso{
 Other functions: \code{\link{metric}}

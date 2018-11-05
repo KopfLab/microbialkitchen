@@ -25,8 +25,8 @@ class_check <- function(operation, e1, e2) {
 #' @details
 #' \code{qty ==, !=, <, <=, >, >= qty} allows the comparison of quantities that are the same type (e.g. all mass).
 #' @examples 
-#' cht_qty(1, "g") == cht_qty(1000, "mg") # TRUE
-#' cht_qty(2, "mg") < cht_qty(5, "ng")  # FALSE
+#' qty(1, "g") == qty(1000, "mg") # TRUE
+#' qty(2, "mg") < qty(5, "ng")  # FALSE
 #' @name arithmetic 
 NULL
 
@@ -66,7 +66,7 @@ setMethod("!=", signature(e1 = "Quantity", e2 = "Quantity"), function(e1, e2) {
 #' @details
 #' \code{qty +- qty} allows the addition/subtraction of quantities that are the same type (e.g. all mass). Note that this operation also scales the new value using \code{\link{cht_best_metric}}.
 #' @examples 
-#' cht_qty(1000, "mg") + cht_qty(999, "g") # 1 kg
+#' qty(1000, "mg") + qty(999, "g") # 1 kg
 #' @name arithmetic 
 NULL
 
@@ -83,7 +83,7 @@ setMethod("-", signature(e1 = "Quantity", e2 = "Quantity"), function(e1, e2)  e1
 #' @details
 #' \code{qty / qty} divide quantities of the same type. Returns plain numeric (i.e. the units are divided out).
 #' @examples 
-#' cht_qty(5, "mg") / cht_qty(1, "g") # 0.005
+#' qty(5, "mg") / qty(1, "g") # 0.005
 #' @name arithmetic 
 NULL
 
@@ -98,7 +98,7 @@ setMethod("/", signature(e1 = "Quantity", e2 = "Quantity"), function(e1, e2) {
 #' @details
 #' \code{qty / number} divide quantity by a plain number. Returns the quantity automatically rescaled to the best metric.
 #' @examples 
-#' cht_qty(5, "mg") / 1e6 # 5 ng
+#' qty(5, "mg") / 1e6 # 5 ng
 #' @name arithmetic 
 NULL
 
@@ -118,7 +118,7 @@ setMethod("/", signature(e1 = "numeric", e2 = "Quantity"), function(e1, e2) {
 #' @details
 #' \code{qty * number} multiply a quantity by a plain number (either way around is valid). Returns the quantity automatically rescaled to the best metric.
 #' @examples 
-#' cht_qty(5, "mg") * 1e6 # 5 kg
+#' qty(5, "mg") * 1e6 # 5 kg
 #' @name arithmetic 
 NULL
 
@@ -144,15 +144,15 @@ setMethod("*", signature(e1 = "numeric", e2 = "Quantity"), function(e1, e2) {
 #' @details \code{amount / molarity} divide an amount by a molarity to create a volume. 
 #' @details \code{molarity * volume} multiply a molarity by a volume (or the other way around) to create an amount.  
 #' @examples 
-#' cht_qty(5, "nmol") / cht_qty(50, "mL") # 100 nM
-#' cht_qty(5, "nmol") / cht_qty(100, "nM") # 50 mL
-#' cht_qty(100, "nM") * cht_qty(50, "mL") # 5 nmol
+#' qty(5, "nmol") / qty(50, "mL") # 100 nM
+#' qty(5, "nmol") / qty(100, "nM") # 50 mL
+#' qty(100, "nM") * qty(50, "mL") # 5 nmol
 #' @name arithmetic 
 NULL
 
 # amount / volume = molarity
 setMethod("/", signature(e1 = "Amount", e2 = "Volume"), function(e1, e2) {
-  return (cht_concentration( e1@.Data / cht_base_metric(e2)@.Data, paste0(e1@unit, "/L") ))
+  return (cht_molarity( e1@.Data / cht_base_metric(e2)@.Data, paste0(e1@unit, "/L") ))
 })
 
 # amount / molarity = volume
@@ -171,9 +171,9 @@ setMethod("*", signature(e1 = "Molarity", e2 = "Volume"), function(e1, e2) e2 * 
 #' @details \code{mass / amount} divice a mass by an amount (mols) to create a molecular weight.
 #' @details \code{amount * MW} multiply an amount (mols) by a molecular weight to create a mass.
 #' @examples 
-#' cht_qty(10, "g") / qty (50, "g/mol") # 200 mM 
-#' cht_qty(10, "g") / cht_qty(200, "mmol") # 50 g/mol
-#' cht_qty(200, "mmol") * qty (50, "g/mol") # 10 g
+#' qty(10, "g") / qty (50, "g/mol") # 200 mM 
+#' qty(10, "g") / qty(200, "mmol") # 50 g/mol
+#' qty(200, "mmol") * qty (50, "g/mol") # 10 g
 #' @name arithmetic 
 NULL
 

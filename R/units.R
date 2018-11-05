@@ -5,26 +5,23 @@ NULL
 
 #' Quantities
 #' 
-#' These functions make it easy to keep track of different quantities in
-#' chemical calculations. Metric prefixes are fully supported, i.e. any
-#' unit can be combined with standard \link{metric} scaling (mL, nmol, µM, etc.).
-#' Some quantities can also be used in common \link{arithmetic} operations.
+#' The \code{qty} function makes it easy to keep track of different quantities in chemical calculations. Metric prefixes are fully supported, i.e. any unit can be combined with standard \link{metric} scaling (mL, nmol, µM, etc.). Some quantities can also be used in common \link{arithmetic} operations.
 #' @name quantities
 #' @aliases quantity
 NULL
 
-#' @describeIn quantities universal function for generating a quantity (will try to guess which type from the unit)
+#' @describeIn quantities generate a quantity object
 #' @param x the numeric value of the quantity, can be a single value or a vector
 #' @param unit the unit of the quantity
 #' @param scale_to_best_metric whether to automatically scale to the best metric prefix
 #' @examples
-#' cht_qty(0.045, "mmol/L")
-#' cht_qty(6, "psi")
-#' cht_qty(30, "C")
+#' qty(0.045, "mmol/L")
+#' qty(6, "psi")
+#' qty(30, "C")
 #' @export
 #' @family functions
-cht_qty <- function(x, unit, scale_to_best_metric = TRUE) {
-  if (!is.null(r <- tryCatch(cht_concentration(x, unit, scale_to_best_metric), error = function(e){}))) return(r)
+qty <- function(x, unit, scale_to_best_metric = TRUE) {
+  if (!is.null(r <- tryCatch(cht_molarity(x, unit, scale_to_best_metric), error = function(e){}))) return(r)
   if (!is.null(r <- tryCatch(cht_volume(x, unit, scale_to_best_metric), error = function(e){}))) return(r)
   if (!is.null(r <- tryCatch(cht_amount(x, unit, scale_to_best_metric), error = function(e){}))) return(r)
   if (!is.null(r <- tryCatch(cht_mass(x, unit, scale_to_best_metric), error = function(e){}))) return(r)
@@ -34,13 +31,9 @@ cht_qty <- function(x, unit, scale_to_best_metric = TRUE) {
   stop("Could not determine the appropriate quantity for unit ", unit)
 }
 
-#' @describeIn quantities convenience alias for \code{\link{cht_qty}}
-#' @export
-qty <- cht_qty
-
-#' @describeIn quantities generate an amount (base unit \code{mol} but also understands \code{mole}, 
-#' all metric prefixes allowed)
-#' @export
+#' @details \emph{amount}: base unit \code{mol} but also understands \code{mole}, all metric prefixes allowed
+#' @name quantities
+NULL
 cht_amount <- function(x, unit, scale_to_best_metric = TRUE) {
   prefix <- cht_get_constant("metric_prefix")
   primary_units <- paste0(names(prefix), "mol")
@@ -55,9 +48,9 @@ cht_amount <- function(x, unit, scale_to_best_metric = TRUE) {
   return(q)
 }
 
-#' @describeIn quantities generate a mass (base unit \code{g}, 
-#' all metric prefixes allowed)
-#' @export
+#' @details \emph{mass}: base unit \code{g}, all metric prefixes allowed
+#' @name quantities
+NULL
 cht_mass <- function(x, unit, scale_to_best_metric = TRUE) {
   prefix <- cht_get_constant("metric_prefix")
   primary_units <- paste0(names(prefix), "g")
@@ -68,9 +61,9 @@ cht_mass <- function(x, unit, scale_to_best_metric = TRUE) {
   return(q)
 }
 
-#' @describeIn quantities generate a molecular weight (base unit \code{g/mol}, 
-#' all metric prefixes allowed in the numerator)
-#' @export
+#' @details \emph{molecular weight}: base unit \code{g/mol}, all metric prefixes allowed in the numerator
+#' @name quantities
+NULL
 cht_molecular_weight <- function(x, unit, scale_to_best_metric = FALSE) {
   prefix <- cht_get_constant("metric_prefix")
   primary_units <- paste0(names(prefix), "g/mol")
@@ -81,14 +74,14 @@ cht_molecular_weight <- function(x, unit, scale_to_best_metric = FALSE) {
   return(q)
 }
 
-#' @describeIn quantities generate a molarity (base unit \code{M} but also understands \code{mol/L}, 
-#' all metric prefixes allowed in the numerator)
-#' @export
-cht_concentration <- function(x, unit, scale_to_best_metric = TRUE) {
+#' @details \emph{concentration (molarity)}: base unit \code{M} but also understands \code{mol/L}, all metric prefixes allowed in the numerator
+#' @name quantities
+NULL
+cht_molarity <- function(x, unit, scale_to_best_metric = TRUE) {
   prefix <- cht_get_constant("metric_prefix")
   primary_units <- paste0(names(prefix), "M")
   secondary_units <- paste0(names(prefix), "mol/L")
-  if (! unit %in% c(primary_units, secondary_units)) stop("not a known concentration unit: ", unit)
+  if (! unit %in% c(primary_units, secondary_units)) stop("not a known concentration (molarity) unit: ", unit)
   
   if (unit %in% secondary_units)
     unit <- primary_units[secondary_units == unit]
@@ -98,9 +91,26 @@ cht_concentration <- function(x, unit, scale_to_best_metric = TRUE) {
   return(q)
 }
 
-#' @describeIn quantities generate a volume (base unit \code{L} but also understands \code{l}, 
-#' all metric prefixes allowed)
-#' @export
+#' @details \emph{concentration (density)}: base unit \code{g/L} but also understands \code{g/l}, all metric prefixes allowed in the numerator
+#' @name quantities
+NULL
+cht_density <- function(x, unit, scale_to_best_metric = TRUE) {
+  prefix <- cht_get_constant("metric_prefix")
+  primary_units <- paste0(names(prefix), "g/L")
+  secondary_units <- paste0(names(prefix), "g/l")
+  if (! unit %in% c(primary_units, secondary_units)) stop("not a known concentration (density) unit: ", unit)
+  
+  if (unit %in% secondary_units)
+    unit <- primary_units[secondary_units == unit]
+  
+  q <- new("Density", x, unit = unit)
+  if (scale_to_best_metric) q <- cht_best_metric(q)
+  return(q)
+}
+
+#' @details \emph{volume}: base unit \code{L} but also understands \code{l}, all metric prefixes allowed
+#' @name quantities
+NULL
 cht_volume <- function(x, unit, scale_to_best_metric = TRUE) {
   prefix <- cht_get_constant("metric_prefix")
   primary_units <- paste0(names(prefix), "L")
@@ -115,10 +125,9 @@ cht_volume <- function(x, unit, scale_to_best_metric = TRUE) {
   return(q)
 }
 
-#' @describeIn quantities generate a pressure (base unit \code{bar} but also understands \code{Pa}, 
-#' all metric prefixes allowed, the common non-metric units \code{atm} and \code{psi}, \code{Torr} and
-#' \code{mTorr} are also supported and will be automatically converted to \code{bar}). 
-#' @export
+#' @details \emph{pressure}: base unit \code{bar} but also understands \code{Pa}, all metric prefixes allowed, the common non-metric units \code{atm} and \code{psi}, \code{Torr} and \code{mTorr} are also supported and will be automatically converted to \code{bar}
+#' @name quantities
+NULL
 cht_pressure <- function(x, unit, scale_to_best_metric = TRUE) {
   prefix <- cht_get_constant("metric_prefix")
   primary_units <- paste0(names(prefix), "bar")
@@ -150,9 +159,9 @@ cht_pressure <- function(x, unit, scale_to_best_metric = TRUE) {
   return(q)
 }
 
-#' @describeIn quantities generate a temperature (base unit \code{K} but also understands
-#' \code{C} and \code{F} and converts them to Kelvin)
-#' @export
+#' @details \emph{temperature}: base unit \code{K} but also understands \code{C} and \code{F} and converts them to Kelvin
+#' @name quantities
+NULL
 cht_temperature <- function(x, unit) {
   prefix <- cht_get_constant("metric_prefix")
   primary_units <- paste0(names(prefix), "K")
@@ -242,7 +251,7 @@ c.Quantity <- function(...) {
 #' @describeIn quantities get units from a quantity or list of quantities (returns NA for objects that are not quantities)
 #' @param q quantity or list of quantities
 #' @export
-cht_get_units <- function(q) {
+get_qty_units <- function(q) {
   if (methods::is(q, "Quantity")) 
     return(q@unit)
   else if (is.list(q))

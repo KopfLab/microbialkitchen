@@ -61,10 +61,10 @@ aquasys <- function(...) UseMethod("aquasys")
 aquasys.default <- function(...) {
   # defaults
   sys <- parameter(
-      temperature = cht_qty(25, "C"),
-      solution.volume = cht_qty(1, "L"),
-      headspace.volume = cht_qty(Inf, "L", scale = F),
-      headspace.pressure = cht_qty(1, "atm")
+      temperature = qty(25, "C"),
+      solution.volume = qty(1, "L"),
+      headspace.volume = qty(Inf, "L", scale = F),
+      headspace.pressure = qty(1, "atm")
     ) + parameter(...)
 
   sys$components <- list(

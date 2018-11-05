@@ -5,24 +5,30 @@ test_that("Testing that units work and can be metric scaled", {
   # constants
   expect_error(cht_get_constant("bla"), "not specified")
   
-  # concentration objects
-  expect_error(cht_concentration(1, "J"), "not a known concentration unit")
-  expect_is(cht_concentration(1, "mM"), "Molarity")
-  expect_equal(cht_concentration(1, "mM")@unit, "mM")
-  expect_equal(cht_concentration(1, "mmol/L")@unit, "mM")
+  # concentration (molarity) objects
+  expect_error(cht_molarity(1, "J"), "not a known concentration")
+  expect_is(cht_molarity(1, "mM"), "Molarity")
+  expect_equal(cht_molarity(1, "mM")@unit, "mM")
+  expect_equal(cht_molarity(1, "mmol/L")@unit, "mM")
   
   # metric conversion
   expect_error(cht_scale_metric(1, "p"), "not a known type of quantity")
-  expect_error(cht_scale_metric(cht_concentration(1, "mM"), "x"), "not a known metric prefix")
-  expect_error({a <- cht_concentration(1, "mM"); a@unit <- "J"; cht_scale_metric(a, "m")}, "not a valid unit")
-  expect_equal(cht_scale_metric(cht_concentration(1, "mM"), "n")@unit, "nM")
-  expect_equal(cht_scale_metric(cht_concentration(1, "mM"), "n")@.Data, 1e6)
-  expect_equal(cht_scale_metric(cht_concentration(1, "M"), "m")@.Data, 1e3)
-  expect_equal(cht_scale_metric(cht_concentration(1, "µM"), "")@.Data, 1e-6)
-  expect_equal(cht_base_metric(cht_concentration(1, "kM"))@.Data, 1e3)
-  expect_equal(cht_best_metric(cht_concentration(0.2, "M"))@unit, "mM")
-  expect_equal(cht_best_metric(cht_concentration(-5000, "nM"))@unit, "µM")
-  expect_equal(cht_best_metric(cht_concentration(c(100, 1200, 1500), "pM"))@unit, "nM")
+  expect_error(cht_scale_metric(cht_molarity(1, "mM"), "x"), "not a known metric prefix")
+  expect_error({a <- cht_molarity(1, "mM"); a@unit <- "J"; cht_scale_metric(a, "m")}, "not a valid unit")
+  expect_equal(cht_scale_metric(cht_molarity(1, "mM"), "n")@unit, "nM")
+  expect_equal(cht_scale_metric(cht_molarity(1, "mM"), "n")@.Data, 1e6)
+  expect_equal(cht_scale_metric(cht_molarity(1, "M"), "m")@.Data, 1e3)
+  expect_equal(cht_scale_metric(cht_molarity(1, "µM"), "")@.Data, 1e-6)
+  expect_equal(cht_base_metric(cht_molarity(1, "kM"))@.Data, 1e3)
+  expect_equal(cht_best_metric(cht_molarity(0.2, "M"))@unit, "mM")
+  expect_equal(cht_best_metric(cht_molarity(-5000, "nM"))@unit, "µM")
+  expect_equal(cht_best_metric(cht_molarity(c(100, 1200, 1500), "pM"))@unit, "nM")
+  
+  # density
+  expect_error(cht_density(1, "J"), "not a known concentration")
+  expect_is(cht_density(1, "g/L"), "Density")
+  expect_equal(cht_density(1, "mg/L")@unit, "mg/L")
+  expect_equal(cht_density(1, "ng/l")@unit, "ng/L")
   
   # amout
   expect_error(cht_amount(1, "J"), "not a known amount unit")
@@ -73,29 +79,29 @@ test_that("Testing that units work and can be metric scaled", {
   expect_equal(cht_temperature(50, "F")@.Data, 283.15)
   
   # general quantity
-  expect_error(cht_qty(1, "kBla"), "Could not determine the appropriate quantity")
-  expect_is(cht_qty(1, "nM"), "Molarity")
-  expect_is(cht_qty(1, "L"), "Volume")
-  expect_is(cht_qty(1, "pmol"), "Amount")
-  expect_equal(cht_qty(1500, "pmol")@unit, "nmol")
-  expect_equal(cht_qty(1500, "pmol", scale_to_best_metric = FALSE)@unit, "pmol")
-  expect_equal(cht_qty(1500, "pmol")@.Data, 1.5)
-  expect_equal(cht_qty(30, "C")@.Data, 303.15)
-  expect_equal(cht_qty(1250, "µg")@unit, "mg")
-  expect_equal(cht_qty(1250, "µg")@.Data, 1.25)
-  expect_equal(cht_qty(1250, "g/mol")@.Data, 1250)
-  expect_equal(cht_qty(NA_real_, "mg")@unit, "g")
-  expect_equal(cht_qty(numeric(0), "mg")@unit, "g")
+  expect_error(qty(1, "kBla"), "Could not determine the appropriate quantity")
+  expect_is(qty(1, "nM"), "Molarity")
+  expect_is(qty(1, "L"), "Volume")
+  expect_is(qty(1, "pmol"), "Amount")
+  expect_equal(qty(1500, "pmol")@unit, "nmol")
+  expect_equal(qty(1500, "pmol", scale_to_best_metric = FALSE)@unit, "pmol")
+  expect_equal(qty(1500, "pmol")@.Data, 1.5)
+  expect_equal(qty(30, "C")@.Data, 303.15)
+  expect_equal(qty(1250, "µg")@unit, "mg")
+  expect_equal(qty(1250, "µg")@.Data, 1.25)
+  expect_equal(qty(1250, "g/mol")@.Data, 1250)
+  expect_equal(qty(NA_real_, "mg")@unit, "g")
+  expect_equal(qty(numeric(0), "mg")@unit, "g")
   
   # get units
-  expect_equal(1 %>% cht_get_units(), NA_character_)
-  expect_equal(cht_qty(1, "mg") %>% cht_get_units(), "mg")
+  expect_equal(1 %>% get_qty_units(), NA_character_)
+  expect_equal(qty(1, "mg") %>% get_qty_units(), "mg")
   expect_equal(
-    list(a=cht_qty(1, "mg"), b = 2) %>% cht_get_units(),
+    list(a=qty(1, "mg"), b = 2) %>% get_qty_units(),
     c(a = "mg", b = NA_character_)
   )
   expect_equal(
-    data.frame(a=cht_qty(1, "mg"), b = 2) %>% cht_get_units(),
+    data.frame(a=qty(1, "mg"), b = 2) %>% get_qty_units(),
     c(a = "mg", b = NA_character_)
   )
 })

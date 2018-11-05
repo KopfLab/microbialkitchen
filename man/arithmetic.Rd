@@ -45,16 +45,16 @@ These arithmetic operators for quantities in chemtools keep track of units in st
 \code{amount * MW} multiply an amount (mols) by a molecular weight to create a mass.
 }
 \examples{
-cht_qty(1, "g") == cht_qty(1000, "mg") # TRUE
-cht_qty(2, "mg") < cht_qty(5, "ng")  # FALSE
-cht_qty(1000, "mg") + cht_qty(999, "g") # 1 kg
-cht_qty(5, "mg") / cht_qty(1, "g") # 0.005
-cht_qty(5, "mg") / 1e6 # 5 ng
-cht_qty(5, "mg") * 1e6 # 5 kg
-cht_qty(5, "nmol") / cht_qty(50, "mL") # 100 nM
-cht_qty(5, "nmol") / cht_qty(100, "nM") # 50 mL
-cht_qty(100, "nM") * cht_qty(50, "mL") # 5 nmol
-cht_qty(10, "g") / qty (50, "g/mol") # 200 mM 
-cht_qty(10, "g") / cht_qty(200, "mmol") # 50 g/mol
-cht_qty(200, "mmol") * qty (50, "g/mol") # 10 g
+qty(1, "g") == qty(1000, "mg") # TRUE
+qty(2, "mg") < qty(5, "ng")  # FALSE
+qty(1000, "mg") + qty(999, "g") # 1 kg
+qty(5, "mg") / qty(1, "g") # 0.005
+qty(5, "mg") / 1e6 # 5 ng
+qty(5, "mg") * 1e6 # 5 kg
+qty(5, "nmol") / qty(50, "mL") # 100 nM
+qty(5, "nmol") / qty(100, "nM") # 50 mL
+qty(100, "nM") * qty(50, "mL") # 5 nmol
+qty(10, "g") / qty (50, "g/mol") # 200 mM 
+qty(10, "g") / qty(200, "mmol") # 50 g/mol
+qty(200, "mmol") * qty (50, "g/mol") # 10 g
 }
