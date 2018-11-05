@@ -4,6 +4,7 @@
 \alias{quantities}
 \alias{quantity}
 \alias{cht_qty}
+\alias{qty}
 \alias{cht_amount}
 \alias{cht_mass}
 \alias{cht_molecular_weight}
@@ -11,9 +12,12 @@
 \alias{cht_volume}
 \alias{cht_pressure}
 \alias{cht_temperature}
+\alias{cht_get_units}
 \title{Quantities}
 \usage{
 cht_qty(x, unit, scale_to_best_metric = TRUE)
+
+qty(x, unit, scale_to_best_metric = TRUE)
 
 cht_amount(x, unit, scale_to_best_metric = TRUE)
 
@@ -28,6 +32,8 @@ cht_volume(x, unit, scale_to_best_metric = TRUE)
 cht_pressure(x, unit, scale_to_best_metric = TRUE)
 
 cht_temperature(x, unit)
+
+cht_get_units(q)
 }
 \arguments{
 \item{x}{the numeric value of the quantity, can be a single value or a vector}
@@ -35,6 +41,8 @@ cht_temperature(x, unit)
 \item{unit}{the unit of the quantity}
 
 \item{scale_to_best_metric}{whether to automatically scale to the best metric prefix}
+
+\item{q}{quantity or list of quantities}
 }
 \description{
 These functions make it easy to keep track of different quantities in
@@ -45,6 +53,8 @@ Some quantities can also be used in common \link{arithmetic} operations.
 \section{Functions}{
 \itemize{
 \item \code{cht_qty}: universal function for generating a quantity (will try to guess which type from the unit)
+
+\item \code{qty}: convenience alias for \code{\link{cht_qty}}
 
 \item \code{cht_amount}: generate an amount (base unit \code{mol} but also understands \code{mole}, 
 all metric prefixes allowed)
@@ -67,6 +77,8 @@ all metric prefixes allowed, the common non-metric units \code{atm} and \code{ps
 
 \item \code{cht_temperature}: generate a temperature (base unit \code{K} but also understands
 \code{C} and \code{F} and converts them to Kelvin)
+
+\item \code{cht_get_units}: get units from a quantity or list of quantities (returns NA for objects that are not quantities)
 }}
 
 \examples{

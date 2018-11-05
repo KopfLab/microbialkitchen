@@ -7,14 +7,23 @@ Author: Sebastian Kopf <sebastian.kopf@colorado.edu>
 Maintainer: Sebastian Kopf <sebastian.kopf@colorado.edu>
 Description: Helps with concentration calculations of gases and solutes in lab
     situations.
+Imports:
+    methods,
+    purrr,
+    dplyr,
+    stringr
 Suggests:
-    testthat
+    testthat,
+    knitr,
+    rmarkdown,
+    tidyverse,
+    webchem
 License: GPL (>= 2) 
 Encoding: UTF-8
 LazyData: true
 VignetteBuilder: knitr
 RoxygenNote: 6.1.0
-Collate: 
+Collate:
     'classes.R'
     'aquasys.R'
     'arithmetic.R'

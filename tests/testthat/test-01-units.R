@@ -1,6 +1,6 @@
 context("Units")
 
-test_that("Testing that units work and can be interconverted", {
+test_that("Testing that units work and can be metric scaled", {
   
   # constants
   expect_error(cht_get_constant("bla"), "not specified")
@@ -83,5 +83,17 @@ test_that("Testing that units work and can be interconverted", {
   expect_equal(cht_qty(1250, "µg")@unit, "mg")
   expect_equal(cht_qty(1250, "µg")@.Data, 1.25)
   expect_equal(cht_qty(1250, "g/mol")@.Data, 1250)
+  
+  # get units
+  expect_equal(1 %>% cht_get_units(), NA_character_)
+  expect_equal(cht_qty(1, "mg") %>% cht_get_units(), "mg")
+  expect_equal(
+    list(a=cht_qty(1, "mg"), b = 2) %>% cht_get_units(),
+    c(a = "mg", b = NA_character_)
+  )
+  expect_equal(
+    data.frame(a=cht_qty(1, "mg"), b = 2) %>% cht_get_units(),
+    c(a = "mg", b = NA_character_)
+  )
 })
   

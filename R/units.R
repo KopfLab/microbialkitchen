@@ -29,6 +29,10 @@ cht_qty <- function(x, unit, scale_to_best_metric = TRUE) {
   stop("Could not determine the appropriate quantity for unit ", unit)
 }
 
+#' @describeIn quantities convenience alias for \code{\link{cht_qty}}
+#' @export
+qty <- cht_qty
+
 #' @describeIn quantities generate an amount (base unit \code{mol} but also understands \code{mole}, 
 #' all metric prefixes allowed)
 #' @export
@@ -162,6 +166,20 @@ cht_temperature <- function(x, unit) {
   }
   
   new("Temperature", x, unit = unit)
+}
+
+# unit retrieval ====================
+
+#' @describeIn quantities get units from a quantity or list of quantities (returns NA for objects that are not quantities)
+#' @param q quantity or list of quantities
+#' @export
+cht_get_units <- function(q) {
+  if (methods::is(q, "Quantity")) 
+    return(q@unit)
+  else if (is.list(q))
+    return(purrr::map_chr(q, ~if(methods::is(.x, "Quantity")) { .x@unit } else { NA_character_ }))
+  else
+    return(NA_character_)
 }
 
 # metric conversions ======================

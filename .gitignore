@@ -16,3 +16,4 @@ packrat/src*/
 .Rproj.user
 # test compilations
 .local/
+inst/doc
