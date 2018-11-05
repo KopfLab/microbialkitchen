@@ -1,39 +1,16 @@
-# This is the start of a makefile, currently still rather incomplete
+# tools for active package development
 
-# inspired by code from https://github.com/yihui/knitr/master/Makefile
-PKGNAME := $(shell sed -n "s/Package: *\([^ ]*\)/\1/p" DESCRIPTION)
-PKGVERS := $(shell sed -n "s/Version: *\([^ ]*\)/\1/p" DESCRIPTION)
-PKGSRC  := $(shell basename `pwd`)
-
-all: docu install check
+all: vignettes docu check
 
 docu:
-	Rscript -e "require(devtools); devtools::build_vignettes()"
-	rm -f inst/doc/$(PKGNAME)_$(PKGVERS).pdf
-	# for just the functions, use this
-	# R CMD Rd2pdf --title='$(PKGNAME) Package' --no-preview -o inst/doc/$(PKGNAME)_$(PKGVERS).pdf man/*.Rd
-	# for the whole package
-	 R CMD Rd2pdf --no-preview -o inst/doc/$(PKGNAME)_$(PKGVERS).pdf . 
+	Rscript -e "devtools::document(roclets=c('rd', 'collate', 'namespace'))"
+	Rscript -e "pkgdown::build_site()"
 
-build:
-	cd ..;\
-	R CMD build --no-manual $(PKGSRC)
+vignettes:
+	Rscript -e "devtools::build_vignettes()"
 
-install: build
-	cd ..;\
-	R CMD INSTALL $(PKGNAME)_$(PKGVERS).tar.gz
+check:
+	Rscript -e "devtools::check()"
 
-check: build
-	cd ..;\
-	R CMD check $(PKGNAME)_$(PKGVERS).tar.gz --as-cran
-
-local-install:
-	rm -rf .local
-	mkdir .local
-	R CMD Install --library=.local .
-
-autotest: local-install
-
-	R -q -e "library($(PKGNAME), lib.loc = '.local')" \
-          -e "library(testthat)" \
-          -e "auto_test_package(pkg='.')"
+auto_test:
+	R -q -e "rm(list = ls()); testthat::auto_test_package()"
