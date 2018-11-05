@@ -2,16 +2,16 @@
 % Please edit documentation in R/units.R
 \name{metric}
 \alias{metric}
-\alias{scale_metric}
-\alias{best_metric}
-\alias{base_metric}
+\alias{cht_scale_metric}
+\alias{cht_best_metric}
+\alias{cht_base_metric}
 \title{Metric prefixes}
 \usage{
-scale_metric(q, prefix = "")
+cht_scale_metric(q, prefix = "")
 
-best_metric(q)
+cht_best_metric(q)
 
-base_metric(q)
+cht_base_metric(q)
 }
 \arguments{
 \item{q}{the \link{quantity} to scale}
@@ -23,12 +23,12 @@ These functions simplify converting between different metric prefixes.
 }
 \section{Functions}{
 \itemize{
-\item \code{scale_metric}: scale to a specific metrix prefix (from whatever the quantity is currently in)
+\item \code{cht_scale_metric}: scale to a specific metrix prefix (from whatever the quantity is currently in)
 
-\item \code{best_metric}: convert to best metric prefix (i.e. one that gives at least 1 significant digit before the decimal), 
+\item \code{cht_best_metric}: convert to best metric prefix (i.e. one that gives at least 1 significant digit before the decimal), 
 if the quantity has a vector of values, scales to the best metric prefix for the median of all values
 
-\item \code{base_metric}: convert to base metric prefix of chemtools (i.e. to mol, L, etc.)
+\item \code{cht_base_metric}: convert to base metric prefix of chemtools (i.e. to mol, L, etc.)
 }}
 
 \seealso{

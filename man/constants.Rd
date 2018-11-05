@@ -2,13 +2,13 @@
 % Please edit documentation in R/constants.R
 \name{constants}
 \alias{constants}
-\alias{ct_get_constant}
-\alias{ct_constants}
+\alias{cht_get_constant}
+\alias{cht_constants}
 \title{Constants}
 \usage{
-ct_get_constant(name)
+cht_get_constant(name)
 
-ct_constants()
+cht_constants()
 }
 \arguments{
 \item{name}{name of the constant}
@@ -18,8 +18,8 @@ List and retrieve constants used in chemtools.
 }
 \section{Functions}{
 \itemize{
-\item \code{ct_get_constant}: get the value of a constant
+\item \code{cht_get_constant}: get the value of a constant
 
-\item \code{ct_constants}: list all constants
+\item \code{cht_constants}: list all constants
 }}
 

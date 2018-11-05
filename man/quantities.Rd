@@ -3,31 +3,31 @@
 \name{quantities}
 \alias{quantities}
 \alias{quantity}
-\alias{qty}
-\alias{amount}
-\alias{mass}
-\alias{molecular_weight}
-\alias{concentration}
-\alias{volume}
-\alias{pressure}
-\alias{temperature}
+\alias{cht_qty}
+\alias{cht_amount}
+\alias{cht_mass}
+\alias{cht_molecular_weight}
+\alias{cht_concentration}
+\alias{cht_volume}
+\alias{cht_pressure}
+\alias{cht_temperature}
 \title{Quantities}
 \usage{
-qty(x, unit, scale_to_best_metric = TRUE)
+cht_qty(x, unit, scale_to_best_metric = TRUE)
 
-amount(x, unit, scale_to_best_metric = TRUE)
+cht_amount(x, unit, scale_to_best_metric = TRUE)
 
-mass(x, unit, scale_to_best_metric = TRUE)
+cht_mass(x, unit, scale_to_best_metric = TRUE)
 
-molecular_weight(x, unit, scale_to_best_metric = FALSE)
+cht_molecular_weight(x, unit, scale_to_best_metric = FALSE)
 
-concentration(x, unit, scale_to_best_metric = TRUE)
+cht_concentration(x, unit, scale_to_best_metric = TRUE)
 
-volume(x, unit, scale_to_best_metric = TRUE)
+cht_volume(x, unit, scale_to_best_metric = TRUE)
 
-pressure(x, unit, scale_to_best_metric = TRUE)
+cht_pressure(x, unit, scale_to_best_metric = TRUE)
 
-temperature(x, unit)
+cht_temperature(x, unit)
 }
 \arguments{
 \item{x}{the numeric value of the quantity, can be a single value or a vector}
@@ -39,39 +39,40 @@ temperature(x, unit)
 \description{
 These functions make it easy to keep track of different quantities in
 chemical calculations. Metric prefixes are fully supported, i.e. any
-unit can be combined with standard \link{metric} scaling (mL, nmol, µM, etc.)
+unit can be combined with standard \link{metric} scaling (mL, nmol, µM, etc.).
+Some quantities can also be used in common \link{arithmetic} operations.
 }
 \section{Functions}{
 \itemize{
-\item \code{qty}: universal function for generating a quantity (will try to guess which type from the unit)
+\item \code{cht_qty}: universal function for generating a quantity (will try to guess which type from the unit)
 
-\item \code{amount}: generate an amount (base unit \code{mol} but also understands \code{mole}, 
+\item \code{cht_amount}: generate an amount (base unit \code{mol} but also understands \code{mole}, 
 all metric prefixes allowed)
 
-\item \code{mass}: generate a mass (base unit \code{g}, 
+\item \code{cht_mass}: generate a mass (base unit \code{g}, 
 all metric prefixes allowed)
 
-\item \code{molecular_weight}: generate a molecular weight (base unit \code{g/mol}, 
+\item \code{cht_molecular_weight}: generate a molecular weight (base unit \code{g/mol}, 
 all metric prefixes allowed in the numerator)
 
-\item \code{concentration}: generate a molarity (base unit \code{M} but also understands \code{mol/L}, 
+\item \code{cht_concentration}: generate a molarity (base unit \code{M} but also understands \code{mol/L}, 
 all metric prefixes allowed in the numerator)
 
-\item \code{volume}: generate a volume (base unit \code{L} but also understands \code{l}, 
+\item \code{cht_volume}: generate a volume (base unit \code{L} but also understands \code{l}, 
 all metric prefixes allowed)
 
-\item \code{pressure}: generate a pressure (base unit \code{bar} but also understands \code{Pa}, 
+\item \code{cht_pressure}: generate a pressure (base unit \code{bar} but also understands \code{Pa}, 
 all metric prefixes allowed, the common non-metric units \code{atm} and \code{psi}, \code{Torr} and
 \code{mTorr} are also supported and will be automatically converted to \code{bar}).
 
-\item \code{temperature}: generate a temperature (base unit \code{K} but also understands
+\item \code{cht_temperature}: generate a temperature (base unit \code{K} but also understands
 \code{C} and \code{F} and converts them to Kelvin)
 }}
 
 \examples{
-qty(0.045, "mmol/L")
-qty(6, "psi")
-qty(30, "C")
+cht_qty(0.045, "mmol/L")
+cht_qty(6, "psi")
+cht_qty(30, "C")
 }
 \seealso{
 Other functions: \code{\link{metric}}

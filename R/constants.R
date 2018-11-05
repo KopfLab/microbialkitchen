@@ -38,7 +38,7 @@ NULL
 #' @describeIn constants get the value of a constant
 #' @param name name of the constant
 #' @export
-ct_get_constant <- function(name) {
+cht_get_constant <- function(name) {
   value <- getOption(paste0("chemtools_", name))
   if (is.null(value)) stop("constant ", name, " is not specified")
   return(value)
@@ -46,7 +46,7 @@ ct_get_constant <- function(name) {
 
 #' @describeIn constants list all constants
 #' @export
-ct_constants <- function() {
+cht_constants <- function() {
   opts <- options() %>% {.[names(.) %>% str_detect("^chemtools_")]}
   data_frame(
     constant = names(opts) %>% str_replace("^chemtools_", ""),
