@@ -4,7 +4,7 @@ test_that("Testing parameter operations", {
   
   # setting up parameter system
   expect_error(parameter(nonexistent = 5), "not a valid parameter")  
-  expect_error(parameter(solution.volume = cht_temperature(1, "C")), "must be a Volume")
+  expect_error(parameter(solution.volume = temperature(1, "C")), "must be a Volume")
   expect_is(ps <- parameter(
     solution.volume = qty(1, "L"),
     headspace.volume = qty(10, "mL"),

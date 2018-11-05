@@ -152,12 +152,12 @@ NULL
 
 # amount / volume = molarity
 setMethod("/", signature(e1 = "Amount", e2 = "Volume"), function(e1, e2) {
-  return (cht_molarity( e1@.Data / cht_base_metric(e2)@.Data, paste0(e1@unit, "/L") ))
+  return (molarity( e1@.Data / cht_base_metric(e2)@.Data, paste0(e1@unit, "/L") ))
 })
 
 # amount / molarity = volume
 setMethod("/", signature(e1 = "Amount", e2 = "Molarity"), function(e1, e2) {
-  return (cht_volume( cht_scale_metric(e1, get_prefix(e2))@.Data / e2@.Data, "L" ))
+  return (volume( cht_scale_metric(e1, get_prefix(e2))@.Data / e2@.Data, "L" ))
 })
 
 # volume * molarity = amount
@@ -165,6 +165,35 @@ setMethod("*", signature(e1 = "Volume", e2 = "Molarity"), function(e1, e2) {
   return (cht_amount( cht_base_metric(e1)@.Data * cht_base_metric(e2)@.Data, "mol", scale = TRUE))
 })
 setMethod("*", signature(e1 = "Molarity", e2 = "Volume"), function(e1, e2) e2 * e1)
+
+
+#' @usage mass / volume = density, mass / density = volume, density * volume = mass
+#' @details \code{mass / volume} divide a mass by a volume to create a density (concentration).
+#' @details \code{mass / density} divide a mass by a density to create a volume. 
+#' @details \code{density * volume} multiply a density by a volume (or the other way around) to create a mass.  
+#' @examples 
+#' qty(5, "ng") / qty(50, "mL") # 100 ng/L
+#' qty(5, "ng") / qty(100, "ng/L") # 50 mL
+#' qty(100, "ng/L") * qty(50, "mL") # 5 ng
+#' @name arithmetic 
+NULL
+
+# amount / volume = molarity
+setMethod("/", signature(e1 = "Mass", e2 = "Volume"), function(e1, e2) {
+  return (density( e1@.Data / cht_base_metric(e2)@.Data, paste0(e1@unit, "/L") ))
+})
+
+# amount / molarity = volume
+setMethod("/", signature(e1 = "Mass", e2 = "Density"), function(e1, e2) {
+  return (volume( cht_scale_metric(e1, get_prefix(e2))@.Data / e2@.Data, "L" ))
+})
+
+# volume * molarity = amount
+setMethod("*", signature(e1 = "Volume", e2 = "Density"), function(e1, e2) {
+  return (mass( cht_base_metric(e1)@.Data * cht_base_metric(e2)@.Data, "g", scale = TRUE))
+})
+setMethod("*", signature(e1 = "Density", e2 = "Volume"), function(e1, e2) e2 * e1)
+
 
 #' @usage mass / MW = amount, mass / amount = MW, amount * MW = mass
 #' @details \code{mass / MW} divide a mass by a molecular weight to create an amount (mols).
@@ -184,12 +213,12 @@ setMethod("/", signature(e1 = "Mass", e2 = "MolecularWeight"), function(e1, e2) 
 
 # mass / amount = MW
 setMethod("/", signature(e1 = "Mass", e2 = "Amount"), function(e1, e2) {
-  return (cht_molecular_weight( cht_base_metric(e1)@.Data / cht_base_metric(e2)@.Data, "g/mol", scale = FALSE) )
+  return (molecular_weight( cht_base_metric(e1)@.Data / cht_base_metric(e2)@.Data, "g/mol", scale = FALSE) )
 })
 
 # amount * MW = mass
 setMethod("*", signature(e1 = "Amount", e2 = "MolecularWeight"), function(e1, e2) {
-  return (cht_mass( cht_base_metric(e1)@.Data * cht_base_metric(e2)@.Data, "g", scale = TRUE))
+  return (mass( cht_base_metric(e1)@.Data * cht_base_metric(e2)@.Data, "g", scale = TRUE))
 })
 setMethod("*", signature(e1 = "MolecularWeight", e2 = "Amount"), function(e1, e2) e2 * e1)
 

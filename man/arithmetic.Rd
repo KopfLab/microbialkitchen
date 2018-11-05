@@ -16,6 +16,8 @@ qty * number
 
 amount / volume = molarity, amount / molarity = volume, molarity * volume = amount
 
+mass / volume = density, mass / density = volume, density * volume = mass
+
 mass / MW = amount, mass / amount = MW, amount * MW = mass
 }
 \description{
@@ -38,6 +40,12 @@ These arithmetic operators for quantities in chemtools keep track of units in st
 
 \code{molarity * volume} multiply a molarity by a volume (or the other way around) to create an amount.
 
+\code{mass / volume} divide a mass by a volume to create a density (concentration).
+
+\code{mass / density} divide a mass by a density to create a volume.
+
+\code{density * volume} multiply a density by a volume (or the other way around) to create a mass.
+
 \code{mass / MW} divide a mass by a molecular weight to create an amount (mols).
 
 \code{mass / amount} divice a mass by an amount (mols) to create a molecular weight.
@@ -54,6 +62,9 @@ qty(5, "mg") * 1e6 # 5 kg
 qty(5, "nmol") / qty(50, "mL") # 100 nM
 qty(5, "nmol") / qty(100, "nM") # 50 mL
 qty(100, "nM") * qty(50, "mL") # 5 nmol
+qty(5, "ng") / qty(50, "mL") # 100 ng/L
+qty(5, "ng") / qty(100, "ng/L") # 50 mL
+qty(100, "ng/L") * qty(50, "mL") # 5 ng
 qty(10, "g") / qty (50, "g/mol") # 200 mM 
 qty(10, "g") / qty(200, "mmol") # 50 g/mol
 qty(200, "mmol") * qty (50, "g/mol") # 10 g

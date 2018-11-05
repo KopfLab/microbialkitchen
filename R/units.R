@@ -21,13 +21,14 @@ NULL
 #' @export
 #' @family functions
 qty <- function(x, unit, scale_to_best_metric = TRUE) {
-  if (!is.null(r <- tryCatch(cht_molarity(x, unit, scale_to_best_metric), error = function(e){}))) return(r)
-  if (!is.null(r <- tryCatch(cht_volume(x, unit, scale_to_best_metric), error = function(e){}))) return(r)
+  if (!is.null(r <- tryCatch(molarity(x, unit, scale_to_best_metric), error = function(e){}))) return(r)
+  if (!is.null(r <- tryCatch(density(x, unit, scale_to_best_metric), error = function(e){}))) return(r)
+  if (!is.null(r <- tryCatch(volume(x, unit, scale_to_best_metric), error = function(e){}))) return(r)
   if (!is.null(r <- tryCatch(cht_amount(x, unit, scale_to_best_metric), error = function(e){}))) return(r)
-  if (!is.null(r <- tryCatch(cht_mass(x, unit, scale_to_best_metric), error = function(e){}))) return(r)
-  if (!is.null(r <- tryCatch(cht_pressure(x, unit, scale_to_best_metric), error = function(e){}))) return(r)
-  if (!is.null(r <- tryCatch(cht_temperature(x, unit), error = function(e){}))) return(r)
-  if (!is.null(r <- tryCatch(cht_molecular_weight(x, unit, FALSE), error = function(e){}))) return(r)
+  if (!is.null(r <- tryCatch(mass(x, unit, scale_to_best_metric), error = function(e){}))) return(r)
+  if (!is.null(r <- tryCatch(pressure(x, unit, scale_to_best_metric), error = function(e){}))) return(r)
+  if (!is.null(r <- tryCatch(temperature(x, unit), error = function(e){}))) return(r)
+  if (!is.null(r <- tryCatch(molecular_weight(x, unit, FALSE), error = function(e){}))) return(r)
   stop("Could not determine the appropriate quantity for unit ", unit)
 }
 
@@ -51,7 +52,7 @@ cht_amount <- function(x, unit, scale_to_best_metric = TRUE) {
 #' @details \emph{mass}: base unit \code{g}, all metric prefixes allowed
 #' @name quantities
 NULL
-cht_mass <- function(x, unit, scale_to_best_metric = TRUE) {
+mass <- function(x, unit, scale_to_best_metric = TRUE) {
   prefix <- cht_get_constant("metric_prefix")
   primary_units <- paste0(names(prefix), "g")
   if (! unit %in% primary_units) stop("not a known mass unit: ", unit)
@@ -64,7 +65,7 @@ cht_mass <- function(x, unit, scale_to_best_metric = TRUE) {
 #' @details \emph{molecular weight}: base unit \code{g/mol}, all metric prefixes allowed in the numerator
 #' @name quantities
 NULL
-cht_molecular_weight <- function(x, unit, scale_to_best_metric = FALSE) {
+molecular_weight <- function(x, unit, scale_to_best_metric = FALSE) {
   prefix <- cht_get_constant("metric_prefix")
   primary_units <- paste0(names(prefix), "g/mol")
   if (! unit %in% primary_units) stop("not a known molecular weight unit: ", unit)
@@ -77,7 +78,7 @@ cht_molecular_weight <- function(x, unit, scale_to_best_metric = FALSE) {
 #' @details \emph{concentration (molarity)}: base unit \code{M} but also understands \code{mol/L}, all metric prefixes allowed in the numerator
 #' @name quantities
 NULL
-cht_molarity <- function(x, unit, scale_to_best_metric = TRUE) {
+molarity <- function(x, unit, scale_to_best_metric = TRUE) {
   prefix <- cht_get_constant("metric_prefix")
   primary_units <- paste0(names(prefix), "M")
   secondary_units <- paste0(names(prefix), "mol/L")
@@ -94,7 +95,7 @@ cht_molarity <- function(x, unit, scale_to_best_metric = TRUE) {
 #' @details \emph{concentration (density)}: base unit \code{g/L} but also understands \code{g/l}, all metric prefixes allowed in the numerator
 #' @name quantities
 NULL
-cht_density <- function(x, unit, scale_to_best_metric = TRUE) {
+density <- function(x, unit, scale_to_best_metric = TRUE) {
   prefix <- cht_get_constant("metric_prefix")
   primary_units <- paste0(names(prefix), "g/L")
   secondary_units <- paste0(names(prefix), "g/l")
@@ -111,7 +112,7 @@ cht_density <- function(x, unit, scale_to_best_metric = TRUE) {
 #' @details \emph{volume}: base unit \code{L} but also understands \code{l}, all metric prefixes allowed
 #' @name quantities
 NULL
-cht_volume <- function(x, unit, scale_to_best_metric = TRUE) {
+volume <- function(x, unit, scale_to_best_metric = TRUE) {
   prefix <- cht_get_constant("metric_prefix")
   primary_units <- paste0(names(prefix), "L")
   secondary_units <- paste0(names(prefix), "l")
@@ -128,7 +129,7 @@ cht_volume <- function(x, unit, scale_to_best_metric = TRUE) {
 #' @details \emph{pressure}: base unit \code{bar} but also understands \code{Pa}, all metric prefixes allowed, the common non-metric units \code{atm} and \code{psi}, \code{Torr} and \code{mTorr} are also supported and will be automatically converted to \code{bar}
 #' @name quantities
 NULL
-cht_pressure <- function(x, unit, scale_to_best_metric = TRUE) {
+pressure <- function(x, unit, scale_to_best_metric = TRUE) {
   prefix <- cht_get_constant("metric_prefix")
   primary_units <- paste0(names(prefix), "bar")
   secondary_units <- paste0(names(prefix), "Pa")
@@ -162,7 +163,7 @@ cht_pressure <- function(x, unit, scale_to_best_metric = TRUE) {
 #' @details \emph{temperature}: base unit \code{K} but also understands \code{C} and \code{F} and converts them to Kelvin
 #' @name quantities
 NULL
-cht_temperature <- function(x, unit) {
+temperature <- function(x, unit) {
   prefix <- cht_get_constant("metric_prefix")
   primary_units <- paste0(names(prefix), "K")
   alternative_units <- c("C", "F")
@@ -295,7 +296,7 @@ cht_scale_metric <- function (q, prefix = "") {
 cht_best_metric <- function(q) {
   prefix <- cht_get_constant("metric_prefix")
   ideal <-
-    if (length(q) == 0 || all(is.na(q))) which(names(prefix) == "")
+    if (length(q) == 0 || all(is.na(q)) || all(is.infinite(q))) which(names(prefix) == "")
     else max(1, which( median(abs(as.numeric(cht_base_metric(q))), na.rm = TRUE)/prefix >= 1))
   cht_scale_metric(q, names(prefix)[ideal])
 }
