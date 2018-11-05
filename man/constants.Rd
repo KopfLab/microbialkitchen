@@ -14,7 +14,7 @@ cht_constants()
 \item{name}{name of the constant}
 }
 \description{
-List and retrieve constants used in chemtools.
+List and retrieve constants used in mediatools.
 }
 \section{Functions}{
 \itemize{

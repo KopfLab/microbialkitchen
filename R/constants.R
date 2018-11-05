@@ -22,15 +22,15 @@
     fahrenheit_celsius_slope = 9/5,
     
     # physical constants
-    R_in_L_bar_per_K_mol = 0.08314462 # ideal gas constant in the units used as base units by chemtools (L bar K-1 mol-1)
+    R_in_L_bar_per_K_mol = 0.08314462 # ideal gas constant in the units used as base units by mediatools (L bar K-1 mol-1)
   )
-  names(opts) <- paste0("chemtools_", names(opts))
+  names(opts) <- paste0("mediatools_", names(opts))
   options(opts)
 }
 
 #' Constants
 #' 
-#' List and retrieve constants used in chemtools.
+#' List and retrieve constants used in mediatools.
 #' 
 #' @name constants
 NULL 
@@ -39,7 +39,7 @@ NULL
 #' @param name name of the constant
 #' @export
 cht_get_constant <- function(name) {
-  value <- getOption(paste0("chemtools_", name))
+  value <- getOption(paste0("mediatools_", name))
   if (is.null(value)) stop("constant ", name, " is not specified")
   return(value)
 }
@@ -47,9 +47,9 @@ cht_get_constant <- function(name) {
 #' @describeIn constants list all constants
 #' @export
 cht_constants <- function() {
-  opts <- options() %>% {.[names(.) %>% str_detect("^chemtools_")]}
+  opts <- options() %>% {.[names(.) %>% str_detect("^mediatools_")]}
   data_frame(
-    constant = names(opts) %>% str_replace("^chemtools_", ""),
+    constant = names(opts) %>% str_replace("^mediatools_", ""),
     key = map(opts, names) %>% map( ~ if (is.null(.x)) { NA_character_ } else { .x }),
     value = map(opts, identity)
   ) %>% unnest(key, value)

@@ -4,7 +4,7 @@ NULL
 
 #' Arithmetic
 #' 
-#' These arithmetic operators for quantities in chemtools keep track of units in standard operations (i.e. they ALL take the SI prefix into consideration). Also note that all operations that result in a new quantity object automatically scale the new value using \code{\link{cht_best_metric}}.
+#' These arithmetic operators for quantities in mediatools keep track of units in standard operations (i.e. they ALL take the SI prefix into consideration). Also note that all operations that result in a new quantity object automatically scale the new value using \code{\link{cht_best_metric}}.
 #' 
 #' @name arithmetic
 NULL

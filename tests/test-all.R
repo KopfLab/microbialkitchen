@@ -1,2 +1,2 @@
 library(testthat)
-test_check("chemtools")
+test_check("mediatools")

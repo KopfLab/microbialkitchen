@@ -1,4 +1,4 @@
-Package: chemtools
+Package: mediatools
 Type: Package
 Title: Simplifies routine lab chem calculations.
 Version: 0.1
@@ -27,11 +27,8 @@ VignetteBuilder: knitr
 RoxygenNote: 6.1.0
 Collate:
     'classes.R'
-    'aquasys.R'
     'arithmetic.R'
-    'components.R'
     'constants.R'
     'package.R'
-    'parameters.R'
     'units.R'
     'utils.R'

@@ -302,7 +302,7 @@ cht_best_metric <- function(q) {
 }
 
 
-#' @describeIn metric convert to base metric prefix of chemtools (i.e. to mol, L, etc.)
+#' @describeIn metric convert to base metric prefix of mediatools (i.e. to mol, L, etc.)
 #' @export
 cht_base_metric <- function(q) {
   cht_scale_metric(q, prefix = "")
