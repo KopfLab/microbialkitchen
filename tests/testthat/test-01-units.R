@@ -78,11 +78,14 @@ test_that("Testing that units work and can be metric scaled", {
   expect_is(cht_qty(1, "L"), "Volume")
   expect_is(cht_qty(1, "pmol"), "Amount")
   expect_equal(cht_qty(1500, "pmol")@unit, "nmol")
+  expect_equal(cht_qty(1500, "pmol", scale_to_best_metric = FALSE)@unit, "pmol")
   expect_equal(cht_qty(1500, "pmol")@.Data, 1.5)
   expect_equal(cht_qty(30, "C")@.Data, 303.15)
   expect_equal(cht_qty(1250, "µg")@unit, "mg")
   expect_equal(cht_qty(1250, "µg")@.Data, 1.25)
   expect_equal(cht_qty(1250, "g/mol")@.Data, 1250)
+  expect_equal(cht_qty(NA_real_, "mg")@unit, "g")
+  expect_equal(cht_qty(numeric(0), "mg")@unit, "g")
   
   # get units
   expect_equal(1 %>% cht_get_units(), NA_character_)

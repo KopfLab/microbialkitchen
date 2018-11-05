@@ -1,5 +1,20 @@
 context("Conversions")
 
+test_that("Testing that standard vector operations are working", {
+  
+  # subsetting
+  expect_equal(qty(1:5, "g")[2:3], qty(2:3, "g"))
+  expect_equal(qty(1:5, "g")[-5], qty(1:4, "g"))
+  expect_equal(qty(1:5, "g")[10], qty(NA_real_, "g"))
+  expect_equal(qty(1:5, "g")[-c(1:5)], qty(numeric(0), "g"))
+  
+  # combining
+  expect_equal(cht_c_qty(qty(5, "g"), qty(c(10, 20), "mg")), qty(c(5000, 10, 20), "mg"))
+  expect_equal(c(qty(5, "g"), qty(c(10, 20), "mg")), qty(c(5000, 10, 20), "mg"))
+  expect_equal(c(qty(NA, "g"), qty(c(10, 20), "mg")), qty(c(NA, 10, 20), "mg"))
+  expect_equal(c(qty(numeric(0), "g"), qty(c(10, 20), "mg")), qty(c(10, 20), "mg"))
+})
+
 test_that("Testing that arithemtic calculations of units are working", {
   
   # comparisons

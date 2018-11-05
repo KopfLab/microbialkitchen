@@ -220,13 +220,13 @@ type_sum.Quantity <- function(x) {
 cht_c_qty <- function(...) {
   qs <- list(...)
   # safety check that all quantities are the same classes
-  classes <- map_chr(qs, ~class(.x)[1])
+  classes <- purrr::map_chr(qs, ~class(.x)[1])
   if (any(classes != classes[1])) {
     stop(sprintf("cannot combine different types quantities (trying to combine %s). ", 
                  glue::glue_collapse(unique(classes), sep = ", ", last = " and ")), call. = FALSE)
   }
   # combine quantities making sure metric scaling is appropriate
-  map(qs, ~as.numeric(cht_base_metric(.x))) %>% 
+  purrr::map(qs, ~as.numeric(cht_base_metric(.x))) %>% 
     unlist() %>% 
     qty(get_base_unit(qs[[1]]))
 }
@@ -285,7 +285,9 @@ cht_scale_metric <- function (q, prefix = "") {
 #' @export
 cht_best_metric <- function(q) {
   prefix <- cht_get_constant("metric_prefix")
-  ideal <- max(1, which( median(abs(cht_base_metric(q)))/prefix >= 1))
+  ideal <-
+    if (length(q) == 0 || all(is.na(q))) which(names(prefix) == "")
+    else max(1, which( median(abs(cht_base_metric(q)), na.rm = TRUE)/prefix >= 1))
   cht_scale_metric(q, names(prefix)[ideal])
 }
 
