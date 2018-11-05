@@ -287,7 +287,7 @@ cht_best_metric <- function(q) {
   prefix <- cht_get_constant("metric_prefix")
   ideal <-
     if (length(q) == 0 || all(is.na(q))) which(names(prefix) == "")
-    else max(1, which( median(abs(cht_base_metric(q)), na.rm = TRUE)/prefix >= 1))
+    else max(1, which( median(abs(as.numeric(cht_base_metric(q))), na.rm = TRUE)/prefix >= 1))
   cht_scale_metric(q, names(prefix)[ideal])
 }
 

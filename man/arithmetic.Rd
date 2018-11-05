@@ -10,6 +10,10 @@ qty + qty, qty - qty
 
 qty / qty
 
+qty / number
+
+qty * number
+
 amount / volume = molarity, amount / molarity = volume, molarity * volume = amount
 
 mass / MW = amount, mass / amount = MW, amount * MW = mass
@@ -23,6 +27,10 @@ These arithmetic operators for quantities in chemtools keep track of units in st
 \code{qty +- qty} allows the addition/subtraction of quantities that are the same type (e.g. all mass). Note that this operation also scales the new value using \code{\link{cht_best_metric}}.
 
 \code{qty / qty} divide quantities of the same type. Returns plain numeric (i.e. the units are divided out).
+
+\code{qty / number} divide quantity by a plain number. Returns the quantity automatically rescaled to the best metric.
+
+\code{qty * number} multiply a quantity by a plain number (either way around is valid). Returns the quantity automatically rescaled to the best metric.
 
 \code{amount / volume} divide an amount by a volume to create a molarity (concentration).
 
@@ -41,6 +49,8 @@ cht_qty(1, "g") == cht_qty(1000, "mg") # TRUE
 cht_qty(2, "mg") < cht_qty(5, "ng")  # FALSE
 cht_qty(1000, "mg") + cht_qty(999, "g") # 1 kg
 cht_qty(5, "mg") / cht_qty(1, "g") # 0.005
+cht_qty(5, "mg") / 1e6 # 5 ng
+cht_qty(5, "mg") * 1e6 # 5 kg
 cht_qty(5, "nmol") / cht_qty(50, "mL") # 100 nM
 cht_qty(5, "nmol") / cht_qty(100, "nM") # 50 mL
 cht_qty(100, "nM") * cht_qty(50, "mL") # 5 nmol

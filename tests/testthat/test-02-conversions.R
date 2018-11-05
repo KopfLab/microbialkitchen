@@ -35,7 +35,7 @@ test_that("Testing that arithemtic calculations of units are working", {
   # division
   expect_error(cht_qty(2, "C") / cht_qty(1, "g"), "division is not implemented for these quantities")
   expect_error(1000 / cht_qty(1, "g"), "division is not implemented for these quantities")
-  expect_equal(cht_qty(1, "g") / 1000, cht_qty(0.001, "g", scale_to_best_metric = FALSE))
+  expect_equal(cht_qty(1, "g") / 1000, cht_qty(1, "mg")) # auto-converts units
   expect_equal(cht_qty(1, "g") / cht_qty(1, "mg"), 1000) # should give plain number
   expect_equal(cht_qty(5, "mM") / cht_qty(1, "M"), 0.005) # should give plain number
   

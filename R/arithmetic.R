@@ -94,6 +94,19 @@ setMethod("/", signature(e1 = "Quantity", e2 = "Quantity"), function(e1, e2) {
     operation_error ("division", e1, e2)
 })
 
+#' @usage qty / number
+#' @details
+#' \code{qty / number} divide quantity by a plain number. Returns the quantity automatically rescaled to the best metric.
+#' @examples 
+#' cht_qty(5, "mg") / 1e6 # 5 ng
+#' @name arithmetic 
+NULL
+
+setMethod("/", signature(e1 = "Quantity", e2 = "numeric"), function(e1, e2) {
+  e1@.Data <- e1@.Data / e2
+  return (cht_best_metric(e1))
+})
+
 # don't allow number / quantity
 setMethod("/", signature(e1 = "numeric", e2 = "Quantity"), function(e1, e2) {
   operation_error ("division", e1, e2)
@@ -101,9 +114,27 @@ setMethod("/", signature(e1 = "numeric", e2 = "Quantity"), function(e1, e2) {
 
 # Multiplication =========================
 
+#' @usage qty * number
+#' @details
+#' \code{qty * number} multiply a quantity by a plain number (either way around is valid). Returns the quantity automatically rescaled to the best metric.
+#' @examples 
+#' cht_qty(5, "mg") * 1e6 # 5 kg
+#' @name arithmetic 
+NULL
+
 # don't allow default quantity * quantity
 setMethod("*", signature(e1 = "Quantity", e2 = "Quantity"), function(e1, e2) {
   operation_error ("multiplication", e1, e2)
+})
+
+# don't allow default quantity * quantity
+setMethod("*", signature(e1 = "Quantity", e2 = "numeric"), function(e1, e2) {
+  e1@.Data <- e1@.Data * e2
+  return (cht_best_metric(e1))
+})
+
+setMethod("*", signature(e1 = "numeric", e2 = "Quantity"), function(e1, e2) {
+  return (e2 * e1)
 })
 
 # Special operations ==============
