@@ -20,6 +20,9 @@ setClass("MolecularWeight", contains = "Quantity",
 setClass("Molarity", contains = "Quantity", 
          prototype = prototype(new("Quantity", numeric(), unit = "M")))
 
+setClass("Density", contains = "Quantity", 
+         prototype = prototype(new("Quantity", numeric(), unit = "g/L")))
+
 setClass("Volume", contains = "Quantity", 
          prototype = prototype(new("Quantity", numeric(), unit = "L")))
 

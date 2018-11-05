@@ -11,7 +11,9 @@ Imports:
     methods,
     purrr,
     dplyr,
-    stringr
+    stringr,
+    glue,
+    CHNOSZ
 Suggests:
     testthat,
     knitr,

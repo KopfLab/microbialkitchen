@@ -1,3 +1,8 @@
+#' @include classes.R
+NULL
+
+# quantities ======
+
 #' Quantities
 #' 
 #' These functions make it easy to keep track of different quantities in
@@ -166,6 +171,70 @@ cht_temperature <- function(x, unit) {
   }
   
   new("Temperature", x, unit = unit)
+}
+
+# S4 methods ========================
+
+# allow quantity replication
+#' @export
+rep.Quantity <- function(x, ...) {
+  x@.Data <- rep(x@.Data, ...)
+  return(x)
+}
+
+# preserve quantity info on subsetting
+#' @export
+`[.Quantity` <- function(x, ...) {
+  x@.Data <- `[`(x@.Data, ...)
+  return(x)
+}
+
+# preserve quantity info on subsetting
+#' @export
+`[[.Quantity` <- function(x, ...) {
+  x@.Data <- `[[`(x@.Data, ...)
+  return(x)
+}
+
+# make sure the units are displayed inside dplyr data frame representations
+# note: not using shorts to keep the types easier defined
+#' @export
+type_sum.Quantity <- function(x) {
+  # shorts <- c(Amount = "amt", Mass = "m", MolecularWeight = "MW", Molarity = "C",
+  #             Density = "C", Volume = "V", Pressure = "P", Temperature = "T")
+  # qclass <- class(x)[1]
+  # if (!qclass %in% names(shorts))
+  #   stop("no type sum short available for the objects of type ", qclass, call. = FALSE)
+  # sprintf("%s [%s]", shorts[qclass], x@unit)
+  sprintf("[%s]", x@unit)
+}
+
+
+#' Concatenate quantities
+#' 
+#' Concatenate multiple quantity vectors or values. They must all be of the same type (i.e. you cannot combine e.g. a Temperature and a Weight value). The concatenated values will be scaled according to \code{\link{best_metric}}. Note that the regular `c()` operator automatically calls this function if the first argument is a Quantity object.
+#' @examples 
+#' cht_c_qty(qty(5, "g"), qty(c(10, 20), "mg")) # Mass [mg]: 5000, 10, 20
+#' c(qty(5, "g"), qty(c(10, 20), "mg")) # same (shortcut for the above)
+#' @export
+cht_c_qty <- function(...) {
+  qs <- list(...)
+  # safety check that all quantities are the same classes
+  classes <- map_chr(qs, ~class(.x)[1])
+  if (any(classes != classes[1])) {
+    stop(sprintf("cannot combine different types quantities (trying to combine %s). ", 
+                 glue::glue_collapse(unique(classes), sep = ", ", last = " and ")), call. = FALSE)
+  }
+  # combine quantities making sure metric scaling is appropriate
+  map(qs, ~as.numeric(cht_base_metric(.x))) %>% 
+    unlist() %>% 
+    qty(get_base_unit(qs[[1]]))
+}
+
+# preserve quantity info on combination
+#' @export
+c.Quantity <- function(...) {
+  cht_c_qty(...)
 }
 
 # unit retrieval ====================
