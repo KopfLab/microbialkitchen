@@ -24,7 +24,7 @@
 </script>
 </head>
 <body>
-    <div class="container template-home">
+    <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -68,13 +68,43 @@
 
       
       </header><div class="row">
-  <div class="contents col-md-9">
-    <div id="mediatools" class="section level1">
+  <div class="col-md-9 contents">
+    
 
+    
+    
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+<div id="mediatools" class="section level1">
+
+
+<div id="about" class="section level2">
+<h2 class="hasAnchor">
+<a href="#about" class="anchor"></a>About</h2>
+<p>The <a href="https://kopflab.github.io/mediatools/">mediatools</a> package is a collection of tools to simplify working with the chemical composition and speciation of defined culture media for microbial physiology and environmental microbiology research. It includes a wide range of general purpose functionality for chemical applications including built-in, data-frame-compatible <a href="https://kopflab.github.io/mediatools/articles/quantities.html">chemical quantities</a> (volume, mass, molarity, temperature, pressure, etc.) that automatically keep track of their units and metric scaling, as well as more specialized tools for the assembly and comparison of culturing media recipes, pH buffering strategies and aqueous speciation. All basic data types and operations are fully implemented, documented and ready to use. However, since the package is still in active development and some syntax and function names may change.</p>
+</div>
+<div id="installation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#installation" class="anchor"></a>Installation</h2>
+<p>You can install <a href="https://kopflab.github.io/mediatools/">mediatools</a> from github with the devtools package.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># install.packages("devtools") </span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"KopfLab/mediatools"</span>)</a></code></pre></div>
+</div>
+<div id="functionality" class="section level2">
+<h2 class="hasAnchor">
+<a href="#functionality" class="anchor"></a>Functionality</h2>
+<ul>
+<li>
+<a href="https://kopflab.github.io/mediatools/reference/">function reference</a> for details on all functions</li>
+<li>
+<a href="https://kopflab.github.io/mediatools/articles/quantities.html">quantities vignette</a> on built-in chemical quantities</li>
+<li>
+<a href="https://kopflab.github.io/mediatools/articles/operations.html">operations vignette</a> on working with quantities</li>
+</ul>
+</div>
 </div>
   </div>
 
-  <div class="col-md-3" id="sidebar">
+  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <div class="links">
 <h2>Links</h2>
 <ul class="list-unstyled">
@@ -97,7 +127,19 @@
 </ul>
 </div>
 
-  </div>
+      <div class="dev-status">
+<h2>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://cran.r-project.org/package=mediatools"><img src="http://www.r-pkg.org/badges/version/mediatools" alt="CRAN_Status_Badge"></a></li>
+<li><a href="/commits"><img src="https://img.shields.io/badge/GitHub-0.2.0.9999-orange.svg?style=flat-square" alt="Git_Hub_Version"></a></li>
+<li><a href="/commits"><img src="https://img.shields.io/badge/updated-2018--11--05-yellowgreen.svg" alt="Last-Update"></a></li>
+<li><a href="https://kopflab.github.io/mediatools/reference/"><img src="https://img.shields.io/badge/docs-online-green.svg" alt="Documentation"></a></li>
+<li><a href="https://travis-ci.org/KopfLab/mediatools"><img src="https://travis-ci.org/KopfLab/mediatools.svg?branch=master" alt="Build Status"></a></li>
+<li><a href="https://ci.appveyor.com/project/KopfLab/mediatools"><img src="https://ci.appveyor.com/api/projects/status/github/KopfLab/mediatools?branch=master&amp;svg=true" alt="AppVeyor Build Status"></a></li>
+</ul>
+</div>
+</div>
+
 </div>
 
 
