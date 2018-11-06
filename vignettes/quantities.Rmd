@@ -1,0 +1,54 @@
+---
+title: "Quantities"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Quantities}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+All quantity data types are accessible via the universal `qty` function. The `qty` function always takes a numeric value (either single value or vector) and a unit that must match one of the supported units. All SI units and metric prefixes are supported as well as a few frequently used non-SI units (e.g. **atm** for pressure, **C** for temperature). However, non-standard units are automatically converted to the corresponding SI unit. Additionally, the `qty` function takes the optional argument `scale_to_best_metric` which determines whether the values should be automatically scaled to the most appropriate metric prefix (e.g. **10 mg** instead of **0.01 g**). By default this is done (i.e. `scale_to_best_metric = TRUE`). If the quantity is a vector, the best scaling is determined based on the median of all values.
+
+Once familiar with the quantities supported by this package, take a look at the [operations vignette](operations.html) to see what you can do with them.
+
+```{r}
+library(mediatools) # load the library
+```
+
+## Temperature
+
+Temperature objects are always stored in Kelvin (the SI unit) but can be generated from a number of units, the following three all generate the same temperature object.
+
+```{r}
+qty(0, "C")
+qty(32, "F")
+qty(273.15, "K")
+```
+
+## Amount
+
+```{r}
+
+```
+
+
+## Mass
+
+## Volume
+
+## Pressure
+
+## Molecular Weight
+
+## Concentration
+
+
+

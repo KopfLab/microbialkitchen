@@ -8,4 +8,16 @@
 \description{
 Package to help with culturing media calculations.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/kopflab/mediatools}
+  \item Report bugs at \url{https://github.com/kopflab/mediatools/issues}
+}
+
+}
+\author{
+\strong{Maintainer}: Sebastian Kopf \email{sebastian.kopf@colorado.edu}
+
+}
 \keyword{internal}

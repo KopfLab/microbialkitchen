@@ -4,7 +4,7 @@ setClass("MediaToolsQuantity",
 
 setMethod("show", "MediaToolsQuantity", function(object) {
   validObject(object)
-  cat(class(object), " [", object@unit, "]\n", sep="")
+  cat(class(object)[1] %>% stringr::str_replace("MediaTools", ""), " [", object@unit, "]\n", sep="")
   print(object@.Data)
 })
 

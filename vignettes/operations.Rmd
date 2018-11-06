@@ -1,0 +1,42 @@
+---
+title: "Operations"
+date: "`r Sys.Date()`"
+output: 
+  rmarkdown::html_vignette:
+vignette: >
+  %\VignetteIndexEntry{Operations}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r, message=FALSE}
+library(tidyverse) # load tidyverse tools
+library(mediatools) # load the library
+```
+
+## Metric Prefixes
+
+
+## Arithmetic
+
+
+## Data Frames
+
+Quantities are fully supported in dplyr type data frames and the units of a quantity are displayed underneath the column headers, e.g. `<[mM]>` to indicate a quantity column that has the units of `mM` (and thus is a molarity).
+
+```{r}
+data_frame(
+  a = qty(5, "g"),
+  b = qty(1:5, "mL") * 1e3
+) 
+```
+
+

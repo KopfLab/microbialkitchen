@@ -1,0 +1,10 @@
+pandoc: 2.2.1
+pkgdown: 1.1.0
+pkgdown_sha: ~
+articles:
+  operations: operations.html
+  quantities: quantities.html
+urls:
+  reference: http://kopflab.github.io/mediatools//reference
+  article: http://kopflab.github.io/mediatools//articles
+

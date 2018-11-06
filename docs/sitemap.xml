@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>http://kopflab.github.io/mediatools//index.html</loc>
+  </url>
+  <url>
+    <loc>http://kopflab.github.io/mediatools//reference/arithmetic.html</loc>
+  </url>
+  <url>
+    <loc>http://kopflab.github.io/mediatools//reference/c_qty.html</loc>
+  </url>
+  <url>
+    <loc>http://kopflab.github.io/mediatools//reference/constants.html</loc>
+  </url>
+  <url>
+    <loc>http://kopflab.github.io/mediatools//reference/mediatools-package.html</loc>
+  </url>
+  <url>
+    <loc>http://kopflab.github.io/mediatools//reference/metric.html</loc>
+  </url>
+  <url>
+    <loc>http://kopflab.github.io/mediatools//reference/quantities.html</loc>
+  </url>
+  <url>
+    <loc>http://kopflab.github.io/mediatools//reference/reexports.html</loc>
+  </url>
+  <url>
+    <loc>http://kopflab.github.io/mediatools//articles/operations.html</loc>
+  </url>
+  <url>
+    <loc>http://kopflab.github.io/mediatools//articles/quantities.html</loc>
+  </url>
+</urlset>
