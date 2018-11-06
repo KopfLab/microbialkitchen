@@ -1,4 +1,8 @@
-^packrat/
-^\.Rprofile$
 ^.*\.Rproj$
 ^\.Rproj\.user$
+README.md
+./*.Rmd
+./*.html
+docs
+^\.travis\.yml$
+^appveyor\.yml$
