@@ -31,13 +31,13 @@ test_that("Testing that units work and can be metric scaled", {
   expect_equal(density(1, "ng/l")@unit, "ng/L")
   
   # amout
-  expect_error(cht_amount(1, "J"), "not a known amount unit")
-  expect_is(cht_amount(1, "mol"), "MediaToolsAmount")
-  expect_equal(cht_amount(1, "nmol")@unit, "nmol")
-  expect_equal(cht_amount(1, "mole")@unit, "mol")
-  expect_equal(cht_amount(1000, "nmol", scale_to_best_metric = F)@unit, "nmol")
-  expect_equal(cht_amount(1000, "nmol", scale_to_best_metric = T)@unit, "µmol")
-  expect_equal(cht_amount(1000, "nmol", scale_to_best_metric = T)@.Data, 1)
+  expect_error(amount(1, "J"), "not a known amount unit")
+  expect_is(amount(1, "mol"), "MediaToolsAmount")
+  expect_equal(amount(1, "nmol")@unit, "nmol")
+  expect_equal(amount(1, "mole")@unit, "mol")
+  expect_equal(amount(1000, "nmol", scale_to_best_metric = F)@unit, "nmol")
+  expect_equal(amount(1000, "nmol", scale_to_best_metric = T)@unit, "µmol")
+  expect_equal(amount(1000, "nmol", scale_to_best_metric = T)@.Data, 1)
   
   # mass
   expect_error(mass(1, "J"), "not a known mass unit")
@@ -51,6 +51,8 @@ test_that("Testing that units work and can be metric scaled", {
   expect_is(molecular_weight(1, "g/mol"), "MediaToolsMolecularWeight")
   expect_equal(molecular_weight(1257, "g/mol")@unit, "g/mol") # by default no automatic scaling!
   expect_equal(molecular_weight(1257, "g/mol")@.Data, 1257)
+  expect_equal(molecular_weight(2, "kDa")@unit, "kg/mol")
+  expect_equal(molecular_weight(2, "kDa")@.Data, 2)
   
   # volume
   expect_error(volume(1, "mM"), "not a known volume unit")
@@ -89,7 +91,7 @@ test_that("Testing that units work and can be metric scaled", {
   expect_equal(qty(30, "C")@.Data, 303.15)
   expect_equal(qty(1250, "µg")@unit, "mg")
   expect_equal(qty(1250, "µg")@.Data, 1.25)
-  expect_equal(qty(1250, "g/mol")@.Data, 1250)
+  expect_equal(qty(1250, "g/mol")@.Data, 1.250)
   expect_equal(qty(NA_real_, "mg")@unit, "g")
   expect_equal(qty(numeric(0), "mg")@unit, "g")
   expect_equal(qty(Inf, "mg")@unit, "g")

@@ -59,7 +59,7 @@ test_that("Testing that arithemtic calculations of units are working", {
   # mass / MW = amount
   expect_equal(qty(5, "mg") / qty(100, "g/mol"), qty(50, "µmol"))
   # mass / amount = MW
-  expect_equal(qty(2, "mg") / qty(1, "µmol"), qty(2000, "g/mol"))
+  expect_equal(qty(1, "mg") / qty(2, "µmol"), qty(500, "g/mol"))
   # amount * MW = mass
   expect_equal(qty(10, "nmol") * qty(50, "g/mol"), qty(500, "ng"))
   

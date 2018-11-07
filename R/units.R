@@ -23,18 +23,18 @@ qty <- function(x, unit, scale_to_best_metric = TRUE) {
   if (!is.null(r <- tryCatch(molarity(x, unit, scale_to_best_metric), error = function(e){}))) return(r)
   if (!is.null(r <- tryCatch(density(x, unit, scale_to_best_metric), error = function(e){}))) return(r)
   if (!is.null(r <- tryCatch(volume(x, unit, scale_to_best_metric), error = function(e){}))) return(r)
-  if (!is.null(r <- tryCatch(cht_amount(x, unit, scale_to_best_metric), error = function(e){}))) return(r)
+  if (!is.null(r <- tryCatch(amount(x, unit, scale_to_best_metric), error = function(e){}))) return(r)
   if (!is.null(r <- tryCatch(mass(x, unit, scale_to_best_metric), error = function(e){}))) return(r)
   if (!is.null(r <- tryCatch(pressure(x, unit, scale_to_best_metric), error = function(e){}))) return(r)
-  if (!is.null(r <- tryCatch(temperature(x, unit), error = function(e){}))) return(r)
-  if (!is.null(r <- tryCatch(molecular_weight(x, unit, FALSE), error = function(e){}))) return(r)
+  if (!is.null(r <- tryCatch(temperature(x, unit, scale_to_best_metric), error = function(e){}))) return(r)
+  if (!is.null(r <- tryCatch(molecular_weight(x, unit, scale_to_best_metric), error = function(e){}))) return(r)
   stop("Could not determine the appropriate quantity for unit ", unit)
 }
 
 #' @details \emph{amount}: base unit \code{mol} but also understands \code{mole}, all metric prefixes allowed
 #' @name quantities
 NULL
-cht_amount <- function(x, unit, scale_to_best_metric = TRUE) {
+amount <- function(x, unit, scale_to_best_metric = TRUE) {
   prefix <- get_mediatools_constant("metric_prefix")
   primary_units <- paste0(names(prefix), "mol")
   secondary_units <- paste0(names(prefix), "mole")
@@ -67,7 +67,11 @@ NULL
 molecular_weight <- function(x, unit, scale_to_best_metric = FALSE) {
   prefix <- get_mediatools_constant("metric_prefix")
   primary_units <- paste0(names(prefix), "g/mol")
-  if (! unit %in% primary_units) stop("not a known molecular weight unit: ", unit)
+  secondary_units <- paste0(names(prefix), "Da")
+  if (! unit %in% c(primary_units, secondary_units)) stop("not a known molecular weight unit: ", unit)
+  
+  if (unit %in% secondary_units)
+    unit <- primary_units[secondary_units == unit]
   
   q <- new("MediaToolsMolecularWeight", x, unit = unit)
   if (scale_to_best_metric) q <- best_metric(q)
@@ -162,7 +166,7 @@ pressure <- function(x, unit, scale_to_best_metric = TRUE) {
 #' @details \emph{temperature}: base unit \code{K} but also understands \code{C} and \code{F} and converts them to Kelvin
 #' @name quantities
 NULL
-temperature <- function(x, unit) {
+temperature <- function(x, unit, scale_to_best_metric = TRUE) {
   prefix <- get_mediatools_constant("metric_prefix")
   primary_units <- paste0(names(prefix), "K")
   alternative_units <- c("C", "F")
@@ -179,7 +183,9 @@ temperature <- function(x, unit) {
     unit <- "K"
   }
   
-  new("MediaToolsTemperature", x, unit = unit)
+  q <- new("MediaToolsTemperature", x, unit = unit)
+  if (scale_to_best_metric) q <- best_metric(q)
+  return(q)
 }
 
 # S4 methods ========================
