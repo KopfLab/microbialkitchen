@@ -26,6 +26,7 @@ qty <- function(x, unit, scale_to_best_metric = TRUE) {
   if (!is.null(r <- tryCatch(amount(x, unit, scale_to_best_metric), error = function(e){}))) return(r)
   if (!is.null(r <- tryCatch(mass(x, unit, scale_to_best_metric), error = function(e){}))) return(r)
   if (!is.null(r <- tryCatch(pressure(x, unit, scale_to_best_metric), error = function(e){}))) return(r)
+  if (!is.null(r <- tryCatch(solubility(x, unit, scale_to_best_metric), error = function(e){}))) return(r)
   if (!is.null(r <- tryCatch(temperature(x, unit, scale_to_best_metric), error = function(e){}))) return(r)
   if (!is.null(r <- tryCatch(molecular_weight(x, unit, scale_to_best_metric), error = function(e){}))) return(r)
   stop("Could not determine the appropriate quantity for unit ", unit)
@@ -159,6 +160,28 @@ pressure <- function(x, unit, scale_to_best_metric = TRUE) {
   }
   
   q <- new("MediaToolsPressure", x, unit = unit)
+  if (scale_to_best_metric) q <- best_metric(q)
+  return(q)
+}
+
+#' @details \emph{Henry's law solubility constant}: base unit \code{M/bar}, all metric prefixes allowed in the numerator, the common non-metric unit \code{M/atm} is also supported and will be automatically converted to \code{M/bar}.
+#' @name quantities
+NULL
+solubility <- function(x, unit, scale_to_best_metric = TRUE) {
+  prefix <- get_mediatools_constant("metric_prefix")
+  primary_units <- paste0(names(prefix), "M/bar")
+  secondary_units <- paste0(names(prefix), "M/atm")
+  if (! unit %in% c(primary_units, secondary_units)) 
+    stop("not a known solubility unit: ", unit)
+  
+  # alternative units
+  if (unit %in% secondary_units) {
+    c_factor <- get_mediatools_constant("bar_per_atm")
+    x <- x / c_factor
+    unit <- primary_units[secondary_units == unit]
+  }
+  
+  q <- new("MediaToolsSolubility", x, unit = unit)
   if (scale_to_best_metric) q <- best_metric(q)
   return(q)
 }

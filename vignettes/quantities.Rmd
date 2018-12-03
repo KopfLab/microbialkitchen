@@ -117,4 +117,11 @@ qty(5, "mg/L")
 qty(5, "mg/l")
 ```
 
+## Solubility
 
+Solubility quantities (i.e. Henry's law solubility constants) use the non-SI but metric unit `"M/bar"` as base unit. However, solubility quantities can also be generated from the common non-metric unit `"M/atm"`, which is automatically converted to `M/bar`. All standard metric prefixes are supported in the numerator for both `"M/bar"` and `"M/atm"`.
+
+```{r}
+qty(5, "mM/bar")
+qty(5, "mM/atm")
+```

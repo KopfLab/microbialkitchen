@@ -29,5 +29,8 @@ setClass("MediaToolsVolume", contains = "MediaToolsQuantity",
 setClass("MediaToolsPressure", contains = "MediaToolsQuantity", 
          prototype = prototype(new("MediaToolsQuantity", numeric(), unit = "bar")))
 
+setClass("MediaToolsSolubility", contains = "MediaToolsQuantity", 
+         prototype = prototype(new("MediaToolsQuantity", numeric(), unit = "M/bar")))
+
 setClass("MediaToolsTemperature", contains = "MediaToolsQuantity", 
          prototype = prototype(new("MediaToolsQuantity", numeric(), unit = "K")))

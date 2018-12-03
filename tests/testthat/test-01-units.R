@@ -72,6 +72,12 @@ test_that("Testing that units work and can be metric scaled", {
   expect_equal(pressure(760, "mTorr")@unit, "mbar")
   expect_equal(pressure(760, "mTorr")@.Data, 1.01325)
   
+  # solubility
+  expect_error(solubility(1, "J"), "not a known solubility unit")
+  expect_is(solubility(1, "mM/bar"), "MediaToolsSolubility")
+  expect_equal(solubility(1, "mM/bar")@unit, "mM/bar")
+  expect_equal(solubility(10, "mM/atm")@.Data, 10/get_mediatools_constant("bar_per_atm"))
+  
   # temperature
   expect_error(temperature(1, "J"), "not a known temperature unit")
   expect_is(temperature(0, "C"), "MediaToolsTemperature")
@@ -83,8 +89,12 @@ test_that("Testing that units work and can be metric scaled", {
   # general quantity
   expect_error(qty(1, "kBla"), "Could not determine the appropriate quantity")
   expect_is(qty(1, "nM"), "MediaToolsMolarity")
+  expect_is(qty(1, "mg/L"), "MediaToolsDensity")
   expect_is(qty(1, "L"), "MediaToolsVolume")
   expect_is(qty(1, "pmol"), "MediaToolsAmount")
+  expect_is(qty(1, "kbar"), "MediaToolsPressure")
+  expect_is(qty(1, "nM/bar"), "MediaToolsSolubility")
+  expect_is(qty(1, "K"), "MediaToolsTemperature")
   expect_equal(qty(1500, "pmol")@unit, "nmol")
   expect_equal(qty(1500, "pmol", scale_to_best_metric = FALSE)@unit, "pmol")
   expect_equal(qty(1500, "pmol")@.Data, 1.5)
