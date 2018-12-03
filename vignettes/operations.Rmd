@@ -15,6 +15,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+options(try.outFile = stdout()) # show error messages in try statements
 ```
 
 ```{r, message=FALSE}
@@ -22,21 +23,126 @@ library(tidyverse) # load tidyverse tools
 library(mediatools) # load the library
 ```
 
-## Metric Prefixes
+## Units & Metric Scaling
+
+All chemical quantities in this package keep track of the units they represent with a base unit as detailed in the [quantities vignette](quantities.html) and a metric prefix. By default, the metric prefix is adjusted automatically to keep numeric values in a range close to 1. However, scaling to a specific prefix is easily achieved.
+
+```{r}
+# automatic scaling
+qty(5000, "g") # automatically scaled to kg
+qty(5000, "g", scale_to_best_metric = FALSE) # stays g
+# specific scaling
+qty(100, "mg") %>% base_metric() # scale to the base unit (here g)
+qty(100, "mM") %>% base_metric() # scale to the base unit (here M)
+qty(100, "mg") %>% scale_metric("k")
+```
 
 
 ## Arithmetic
 
+Several common arithmetic operations are implemented for easy interconversion between quantities. All arithmetic operations also automatically keep track of the units and metric prefixes for correct calculations.
+
+### Addition and Subtraction
+
+Quantities of the same type (e.g. weights, volumes, etc.) can be added or subtracted with proper interpration of the metric prefixes. The resulting quantity will be scaled to the best metric prefix as described above. Attempts to add or subtract non-matching quantities (e.g. weight + volume) or a quantity and a number without units will fail with an error to avoid unexpect behaviour and ambiguous calculations. 
+
+```{r}
+qty(0.003, "g") - qty(2, "mg") + qty(5, "µg") # 1.005 mg
+try(qty(1, "g") + qty(1, "L")) # not allowed
+try(qty(1, "g") + 1) # not allowed
+```
+
+### Multiplication / Division
+
+Quantities can be multipled/divided by a number. The resulting quantity will be scaled to the best metric prefix. This is most commonly used with multiplication/division by 1000.
+
+```{r}
+qty(1, "mg") * 1000 # convert mg into g
+qty(1, "mg") / 1e6 # convert mg into ng
+```
+
+Quantities can also be divided by another quantity of the same type (e.g. a weight by another weight) effectively canceling out the units resulting in a regular number (with the metric prefixes properly taken into consideration).
+
+```{r}
+# how many mg in a kg?
+qty(1, "mg") / qty(1, "kg")
+```
+
+Additional multiplications and divisions are possible for specific combinations of quantities as detailed below. These formulas are each implemented for all three possible arrangements.
+
+#### Amount / Volume = Molarity
+
+```{r}
+qty(5, "nmol") / qty(50, "mL") # calculation molarity
+qty(5, "nmol") / qty(100, "nM") # calculate volume
+qty(100, "nM") * qty(50, "mL") # calculate amount
+```
+
+#### Mass / Volume = Density
+
+```{r}
+qty(5, "ng") / qty(50, "mL") # calculate density
+qty(5, "ng") / qty(100, "ng/L") # calculate volume
+qty(100, "ng/L") * qty(50, "mL") # calculate weight
+```
+
+#### Mass / Molecular Weight = Amount
+
+```{r}
+qty(10, "g") / qty (50, "g/mol") # calculate amount
+qty(10, "g") / qty(200, "mmol") # calculate moleculare weight
+qty(200, "mmol") * qty (50, "g/mol") # calculate mass
+```
+
+### Comparisons
+
+Quantities can be compared with all common logic operators (`>`, `>=`, `<`, `<=`, `==`, `!=`) taking the metric scaling properly into consideration. Attempts to compare non-matching quantities (e.g. weight + volume) or a quantity and a number without units will fail with an error to avoid unexpect behaviour and ambiguous comparisons.
+
+```{r}
+qty(5, "mg") < qty(1, "g")
+qty(5, "mg") > qty(10, "ng")
+qty(5, "mg") == qty(0.005, "g")
+qty(5, "mg") != qty(5, "g")
+try(qty(1, "mg") > qty(1, "L")) # not allowed (different quantities)
+try(qty(1, "mg") == 1) # not allowed (ambiguous comparison)
+```
+
+It is important to note that due to machine errors, the `==` is best avoided in favor of more reliable comparisions such as test that check whether the difference between quantities is smaller than a tiny quantity:
+
+```{r}
+(x <- qty(1, "mg"))
+(y <- x / 3)
+(x2 <- y * 3)
+x == x2 # should be identical but is not because of machine precision
+abs(x - x2) < qty(1, "fg") # absolute difference smaller than 1 femtogram
+```
+
 
 ## Data Frames
 
-Quantities are fully supported in dplyr type data frames and the units of a quantity are displayed underneath the column headers, e.g. `<[mM]>` to indicate a quantity column that has the units of `mM` (and thus is a molarity).
+Quantities are fully supported in dplyr type data frames and the units of a quantity are displayed underneath the column headers, e.g. `<[mM]>` to indicate a quantity column that has the units of `mM` (and thus is a molarity). 
 
 ```{r}
 data_frame(
-  a = qty(5, "g"),
-  b = qty(1:5, "mL") * 1e3
-) 
+  weight = qty(1:5, "mg"),
+  volume = qty(20, "mL")
+)
 ```
+
+This also means that all common arithmetic operations are allowed within data frames.
+
+```{r}
+data_frame(
+  weight = qty(1:5, "mg"),
+  vol = qty(20, "mL"),
+  mw = qty(500, "g/mol"),
+  amount = weight / mw,
+  conc = amount / vol,
+  new_vol = 50 * qty(20, "mL"),
+  new_weight = conc * new_vol * mw,
+  `correct?` = abs(50 * weight - new_weight) < qty(1, "fg")
+)
+```
+
 
 
