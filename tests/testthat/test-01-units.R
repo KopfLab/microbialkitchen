@@ -46,13 +46,13 @@ test_that("Testing that units work and can be metric scaled", {
   expect_equal(mass(0.01, "g")@unit, "mg")
   expect_equal(mass(0.01, "g")@.Data, 10)
 
-  # molecular weight
-  expect_error(molecular_weight(1, "J"), "not a known molecular weight unit")
-  expect_is(molecular_weight(1, "g/mol"), "MediaToolsMolecularWeight")
-  expect_equal(molecular_weight(1257, "g/mol")@unit, "kg/mol") 
-  expect_equal(molecular_weight(1257, "g/mol")@.Data, 1.257)
-  expect_equal(molecular_weight(2, "kDa")@unit, "kg/mol")
-  expect_equal(molecular_weight(2, "kDa")@.Data, 2)
+  # molecular mass
+  expect_error(molecular_mass(1, "J"), "not a known molecular mass unit")
+  expect_is(molecular_mass(1, "g/mol"), "MediaToolsMolecularMass")
+  expect_equal(molecular_mass(1257, "g/mol")@unit, "kg/mol") 
+  expect_equal(molecular_mass(1257, "g/mol")@.Data, 1.257)
+  expect_equal(molecular_mass(2, "kDa")@unit, "kg/mol")
+  expect_equal(molecular_mass(2, "kDa")@.Data, 2)
   
   # volume
   expect_error(volume(1, "mM"), "not a known volume unit")

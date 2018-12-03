@@ -28,7 +28,7 @@ qty <- function(x, unit, scale_to_best_metric = TRUE) {
   if (!is.null(r <- tryCatch(pressure(x, unit, scale_to_best_metric), error = function(e){}))) return(r)
   if (!is.null(r <- tryCatch(solubility(x, unit, scale_to_best_metric), error = function(e){}))) return(r)
   if (!is.null(r <- tryCatch(temperature(x, unit, scale_to_best_metric), error = function(e){}))) return(r)
-  if (!is.null(r <- tryCatch(molecular_weight(x, unit, scale_to_best_metric), error = function(e){}))) return(r)
+  if (!is.null(r <- tryCatch(molecular_mass(x, unit, scale_to_best_metric), error = function(e){}))) return(r)
   stop("Could not determine the appropriate quantity for unit ", unit)
 }
 
@@ -62,19 +62,19 @@ mass <- function(x, unit, scale_to_best_metric = TRUE) {
   return(q)
 }
 
-#' @details \emph{molecular weight}: base unit \code{g/mol}, all metric prefixes allowed in the numerator
+#' @details \emph{molecular mass}: base unit \code{g/mol}, all metric prefixes allowed in the numerator
 #' @name quantities
 NULL
-molecular_weight <- function(x, unit, scale_to_best_metric = TRUE) {
+molecular_mass <- function(x, unit, scale_to_best_metric = TRUE) {
   prefix <- get_mediatools_constant("metric_prefix")
   primary_units <- paste0(names(prefix), "g/mol")
   secondary_units <- paste0(names(prefix), "Da")
-  if (! unit %in% c(primary_units, secondary_units)) stop("not a known molecular weight unit: ", unit)
+  if (! unit %in% c(primary_units, secondary_units)) stop("not a known molecular mass unit: ", unit)
   
   if (unit %in% secondary_units)
     unit <- primary_units[secondary_units == unit]
   
-  q <- new("MediaToolsMolecularWeight", x, unit = unit)
+  q <- new("MediaToolsMolecularMass", x, unit = unit)
   if (scale_to_best_metric) q <- best_metric(q)
   return(q)
 }
@@ -235,16 +235,9 @@ rep.MediaToolsQuantity <- function(x, ...) {
 }
 
 # make sure the units are displayed inside dplyr data frame representations
-# note: not using shorts to keep the types easier defined
 # note: this is not yet supported in paged tables (i.e. knitted data frames display) because rmarkdown:::paged_table_type_sum does not use tibble::type_sum
 #' @export
 type_sum.MediaToolsQuantity <- function(x) {
-  # shorts <- c(MediaToolsAmount = "amt", MediaToolsMass = "m", MediaToolsMolecularWeight = "MW", MediaToolsMolarity = "C",
-  #             MediaToolsDensity = "C", MediaToolsVolume = "V", MediaToolsPressure = "P", MediaToolsTemperature = "T")
-  # qclass <- class(x)[1]
-  # if (!qclass %in% names(shorts))
-  #   stop("no type sum short available for the objects of type ", qclass, call. = FALSE)
-  # sprintf("%s [%s]", shorts[qclass], x@unit)
   return(x@unit)
 }
 

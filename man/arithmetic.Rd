@@ -18,7 +18,7 @@ amount / volume = molarity, amount / molarity = volume, molarity * volume = amou
 
 mass / volume = density, mass / density = volume, density * volume = mass
 
-mass / MW = amount, mass / amount = MW, amount * MW = mass
+mass / molecular mass = amount, mass / amount = molecular mass, amount * molecular mass = mass
 }
 \description{
 These arithmetic operators for quantities in mediatools keep track of units in standard operations (i.e. they ALL take the SI prefix into consideration). Also note that all operations that result in a new quantity object automatically scale the new value using \code{\link{best_metric}}.
@@ -46,11 +46,11 @@ These arithmetic operators for quantities in mediatools keep track of units in s
 
 \code{density * volume} multiply a density by a volume (or the other way around) to create a mass.
 
-\code{mass / MW} divide a mass by a molecular weight to create an amount (mols).
+\code{mass / MW} divide a mass by a molecular mass to create an amount (mols).
 
-\code{mass / amount} divice a mass by an amount (mols) to create a molecular weight.
+\code{mass / amount} divice a mass by an amount (mols) to create a molecular mass.
 
-\code{amount * MW} multiply an amount (mols) by a molecular weight to create a mass.
+\code{amount * MW} multiply an amount (mols) by a molecular mass to create a mass.
 }
 \examples{
 qty(1, "g") == qty(1000, "mg") # TRUE

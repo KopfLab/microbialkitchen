@@ -85,9 +85,9 @@ qty(760, "Torr")
 qty(760000, "mTorr")
 ```
 
-## Molecular Weight
+## Molecular Mass
 
-Molecular weight quantities use gram / mole `"g/mol"` as the base unit and the SI-accepted Dalton `"Da"` as a recognized alternative (1 Da = 1 g/mol). All standard metric prefixes are supported.
+Molecular mass (sometimes also called molar mass or molecular weight) quantities use gram / mole `"g/mol"` as the base unit and the SI-accepted Dalton `"Da"` as a recognized alternative (1 Da = 1 g/mol). All standard metric prefixes are supported.
 
 ```{r}
 qty(257, "g/mol")
@@ -97,7 +97,7 @@ qty(4.2, "kDa")
 
 ## Concentration
 
-The two most common concentration measurements in culturing and media chemistry are amount-based and weight-based concentrations, i.e. amount/volume (molarity) and mass/volume (~density). Both are supported quantities and can be interconverted from one to the other using molecular weights (see the [arithmetic section](operations.html#units-metric-scaling) of the [operations vignette](operations.html) for details).
+The two most common concentration measurements in culturing and media chemistry are amount-based and mass-based concentrations, i.e. amount/volume (molarity) and mass/volume (~density). Both are supported quantities and can be interconverted from one to the other using molecular masses (see the [arithmetic section](operations.html#units-metric-scaling) of the [operations vignette](operations.html) for details).
 
 ### Amount-based (molarity)
 

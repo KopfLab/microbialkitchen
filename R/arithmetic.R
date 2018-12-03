@@ -254,10 +254,10 @@ setMethod("*", signature(e1 = "MediaToolsVolume", e2 = "MediaToolsDensity"), fun
 setMethod("*", signature(e1 = "MediaToolsDensity", e2 = "MediaToolsVolume"), function(e1, e2) e2 * e1)
 
 
-#' @usage mass / MW = amount, mass / amount = MW, amount * MW = mass
-#' @details \code{mass / MW} divide a mass by a molecular weight to create an amount (mols).
-#' @details \code{mass / amount} divice a mass by an amount (mols) to create a molecular weight.
-#' @details \code{amount * MW} multiply an amount (mols) by a molecular weight to create a mass.
+#' @usage mass / molecular mass = amount, mass / amount = molecular mass, amount * molecular mass = mass
+#' @details \code{mass / MW} divide a mass by a molecular mass to create an amount (mols).
+#' @details \code{mass / amount} divice a mass by an amount (mols) to create a molecular mass.
+#' @details \code{amount * MW} multiply an amount (mols) by a molecular mass to create a mass.
 #' @examples 
 #' qty(10, "g") / qty (50, "g/mol") # 200 nmol
 #' qty(10, "g") / qty(200, "mmol") # 50 g/mol
@@ -266,18 +266,18 @@ setMethod("*", signature(e1 = "MediaToolsDensity", e2 = "MediaToolsVolume"), fun
 NULL
 
 # mass / MW = amount
-setMethod("/", signature(e1 = "MediaToolsMass", e2 = "MediaToolsMolecularWeight"), function(e1, e2) {
+setMethod("/", signature(e1 = "MediaToolsMass", e2 = "MediaToolsMolecularMass"), function(e1, e2) {
   return (amount( scale_metric(e1, get_prefix(e2))@.Data / e2@.Data, "mol" ))
 })
 
 # mass / amount = MW
 setMethod("/", signature(e1 = "MediaToolsMass", e2 = "MediaToolsAmount"), function(e1, e2) {
-  return (molecular_weight( base_metric(e1)@.Data / base_metric(e2)@.Data, "g/mol") )
+  return (molecular_mass( base_metric(e1)@.Data / base_metric(e2)@.Data, "g/mol") )
 })
 
 # amount * MW = mass
-setMethod("*", signature(e1 = "MediaToolsAmount", e2 = "MediaToolsMolecularWeight"), function(e1, e2) {
+setMethod("*", signature(e1 = "MediaToolsAmount", e2 = "MediaToolsMolecularMass"), function(e1, e2) {
   return (mass( base_metric(e1)@.Data * base_metric(e2)@.Data, "g"))
 })
-setMethod("*", signature(e1 = "MediaToolsMolecularWeight", e2 = "MediaToolsAmount"), function(e1, e2) e2 * e1)
+setMethod("*", signature(e1 = "MediaToolsMolecularMass", e2 = "MediaToolsAmount"), function(e1, e2) e2 * e1)
 

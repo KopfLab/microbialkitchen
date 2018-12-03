@@ -14,7 +14,7 @@ setClass("MediaToolsAmount", contains = "MediaToolsQuantity",
 setClass("MediaToolsMass", contains = "MediaToolsQuantity", 
          prototype = prototype(new("MediaToolsQuantity", numeric(), unit = "g")))
 
-setClass("MediaToolsMolecularWeight", contains = "MediaToolsQuantity", 
+setClass("MediaToolsMolecularMass", contains = "MediaToolsQuantity", 
          prototype = prototype(new("MediaToolsQuantity", numeric(), unit = "g/mol")))
 
 setClass("MediaToolsMolarity", contains = "MediaToolsQuantity", 

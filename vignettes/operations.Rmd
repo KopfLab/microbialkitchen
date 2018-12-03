@@ -49,7 +49,7 @@ Several common arithmetic operations are implemented for easy interconversion be
 
 ### Addition and Subtraction
 
-Quantities of the same type (e.g. weights, volumes, etc.) can be added or subtracted with proper interpration of the metric prefixes. The resulting quantity will be scaled to the best metric prefix as described above. Attempts to add or subtract non-matching quantities (e.g. weight + volume) or a quantity and a number without units will fail with an error to avoid unexpect behaviour and ambiguous calculations. 
+Quantities of the same type (e.g. masses, volumes, etc.) can be added or subtracted with proper interpration of the metric prefixes. The resulting quantity will be scaled to the best metric prefix as described above. Attempts to add or subtract non-matching quantities (e.g. mass + volume) or a quantity and a number without units will fail with an error to avoid unexpect behaviour and ambiguous calculations. 
 
 ```{r}
 qty(0.003, "g") - qty(2, "mg") + qty(5, "µg") # 1.005 mg
@@ -66,7 +66,7 @@ qty(1, "mg") * 1000 # convert mg into g
 qty(1, "mg") / 1e6 # convert mg into ng
 ```
 
-Quantities can also be divided by another quantity of the same type (e.g. a weight by another weight) effectively canceling out the units resulting in a regular number (with the metric prefixes properly taken into consideration).
+Quantities can also be divided by another quantity of the same type (e.g. a mass by another mass) effectively canceling out the units resulting in a regular number (with the metric prefixes properly taken into consideration).
 
 ```{r}
 # how many mg in a kg?
@@ -88,20 +88,20 @@ qty(100, "nM") * qty(50, "mL") # calculate amount
 ```{r}
 qty(5, "ng") / qty(50, "mL") # calculate density
 qty(5, "ng") / qty(100, "ng/L") # calculate volume
-qty(100, "ng/L") * qty(50, "mL") # calculate weight
+qty(100, "ng/L") * qty(50, "mL") # calculate mass
 ```
 
-#### Mass / Molecular Weight = Amount
+#### Mass / Molecular Mass = Amount
 
 ```{r}
 qty(10, "g") / qty (50, "g/mol") # calculate amount
-qty(10, "g") / qty(200, "mmol") # calculate moleculare weight
+qty(10, "g") / qty(200, "mmol") # calculate molecular mass
 qty(200, "mmol") * qty (50, "g/mol") # calculate mass
 ```
 
 ### Comparisons
 
-Quantities can be compared with all common logic operators (`>`, `>=`, `<`, `<=`, `==`, `!=`) taking the metric scaling properly into consideration. Attempts to compare non-matching quantities (e.g. weight + volume) or a quantity and a number without units will fail with an error to avoid unexpect behaviour and ambiguous comparisons.
+Quantities can be compared with all common logic operators (`>`, `>=`, `<`, `<=`, `==`, `!=`) taking the metric scaling properly into consideration. Attempts to compare non-matching quantities (e.g. mass & volume) or a quantity and a number without units will fail with an error to avoid unexpect behaviour and ambiguous comparisons.
 
 ```{r}
 qty(5, "mg") < qty(1, "g")
@@ -125,7 +125,7 @@ abs(x - x2) < qty(1, "fg") # absolute difference smaller than 1 femtogram
 
 ## Data Frames
 
-Quantities are fully supported in dplyr type data frames and the units of a quantity are displayed underneath the column headers, e.g. `<mg>` to indicate a quantity column that has the units of `mg` (and thus is a weight). 
+Quantities are fully supported in dplyr type data frames and the units of a quantity are displayed underneath the column headers, e.g. `<mg>` to indicate a quantity column that has the units of `mg` (and thus is a mass). 
 
 ```{r}
 data_frame(
@@ -151,7 +151,7 @@ data_frame(
 
 ## Concatenation
 
-Quantities can be concatenated using the regular `c()` function (or the more explicit `c_qty()`) as long as they are the same type of quantity (e.g. all weights). Concatenation make sure that the metric prefix is taken into consideration and scales the new vector to the best metric of the median. 
+Quantities can be concatenated using the regular `c()` function (or the more explicit `c_qty()`) as long as they are the same type of quantity (e.g. all masses). Concatenation make sure that the metric prefix is taken into consideration and scales the new vector to the best metric of the median. 
 
 ```{r}
 c(
