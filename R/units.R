@@ -222,7 +222,7 @@ type_sum.MediaToolsQuantity <- function(x) {
   # if (!qclass %in% names(shorts))
   #   stop("no type sum short available for the objects of type ", qclass, call. = FALSE)
   # sprintf("%s [%s]", shorts[qclass], x@unit)
-  sprintf("[%s]", x@unit)
+  return(x@unit)
 }
 
 
