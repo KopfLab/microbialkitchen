@@ -35,7 +35,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mediatools</a>
-        <span class="label label-danger" data-toggle="tooltip" data-placement="bottom" title="in active development">0.2.0.9999</span>
+        <span class="label label-danger" data-toggle="tooltip" data-placement="bottom" title="in active development">0.2.1.9999</span>
       </span>
     </div>
 
@@ -72,7 +72,7 @@
     <div class="page-header toc-ignore">
       <h1>Quantities</h1>
             
-            <h4 class="date">2018-11-05</h4>
+            <h4 class="date">2018-12-02</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/kopflab/mediatools/blob/master/vignettes/quantities.Rmd"><code>vignettes/quantities.Rmd</code></a></small>
       <div class="hidden name"><code>quantities.Rmd</code></div>
@@ -81,46 +81,139 @@
 
     
     
-<p>All quantity data types are accessible via the universal <code>qty</code> function. The <code>qty</code> function always takes a numeric value (either single value or vector) and a unit that must match one of the supported units. All SI units and metric prefixes are supported as well as a few frequently used non-SI units (e.g. <strong>atm</strong> for pressure, <strong>C</strong> for temperature). However, non-standard units are automatically converted to the corresponding SI unit. Additionally, the <code>qty</code> function takes the optional argument <code>scale_to_best_metric</code> which determines whether the values should be automatically scaled to the most appropriate metric prefix (e.g. <strong>10 mg</strong> instead of <strong>0.01 g</strong>). By default this is done (i.e. <code>scale_to_best_metric = TRUE</code>). If the quantity is a vector, the best scaling is determined based on the median of all values.</p>
+<p>All quantity data types are accessible via the universal <code>qty</code> function. The <code>qty</code> function always takes a numeric value (either single value or vector) and a unit that must match one of the supported units. For al available quantities, the standard SI units and metric prefixes are supported as well as a few frequently used non-SI units (e.g. <strong>atm</strong> for pressure, <strong>C</strong> for temperature). However, non-standard units are automatically converted to the corresponding SI unit. Additionally, the <code>qty</code> function takes the optional argument <code>scale_to_best_metric</code> which determines whether the values should be automatically scaled to the most appropriate metric prefix (e.g. <strong>10 mg</strong> instead of <strong>0.01 g</strong>). By default, this is done (i.e. <code>scale_to_best_metric = TRUE</code>). If the quantity is a vector, the best scaling is determined based on the median of all values.</p>
 <p>Once familiar with the quantities supported by this package, take a look at the <a href="operations.html">operations vignette</a> to see what you can do with them.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(mediatools) <span class="co"># load the library</span></a></code></pre></div>
-<div id="temperature" class="section level2">
-<h2 class="hasAnchor">
-<a href="#temperature" class="anchor"></a>Temperature</h2>
-<p>Temperature objects are always stored in Kelvin (the SI unit) but can be generated from a number of units, the following three all generate the same temperature object.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">0</span>, <span class="st">"C"</span>)</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="co">#&gt; Temperature [K]</span></a>
-<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="co">#&gt; [1] 273.15</span></a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">32</span>, <span class="st">"F"</span>)</a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co">#&gt; Temperature [K]</span></a>
-<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="co">#&gt; [1] 273.15</span></a>
-<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="fl">273.15</span>, <span class="st">"K"</span>)</a>
-<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="co">#&gt; Temperature [K]</span></a>
-<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="co">#&gt; [1] 273.15</span></a></code></pre></div>
-</div>
 <div id="amount" class="section level2">
 <h2 class="hasAnchor">
 <a href="#amount" class="anchor"></a>Amount</h2>
+<p>Amount (=chemical substance) quantities use <code>"mol"</code> as the base unit and <code>"mole"</code> as a recognized alternative. All standard metric prefixes (f, p, n, µ, m, k, M, G, T) are supported.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">1</span>, <span class="st">"mmol"</span>)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="co">#&gt; Amount [mmol]</span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="co">#&gt; [1] 1</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">1</span>, <span class="st">"µmole"</span>)</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co">#&gt; Amount [µmol]</span></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="co">#&gt; [1] 1</span></a></code></pre></div>
+<div id="metric-scaling-example" class="section level4">
+<h4 class="hasAnchor">
+<a href="#metric-scaling-example" class="anchor"></a>Metric scaling example</h4>
+<p>By default quantities are scaled to the most sensible metric prefix (of the median for vector quantities), unless explicitly instructed not to. For more details on scaling, see the <a href="operations.html#units-metric-scaling">units &amp; metric scaling section</a> of the <a href="operations.html">operations vignette</a>.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">1000</span>, <span class="st">"pmol"</span>) <span class="co"># automatic metric scaling</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co">#&gt; Amount [nmol]</span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">#&gt; [1] 1</span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">1000</span>, <span class="st">"pmol"</span>, <span class="dt">scale_to_best_metric =</span> <span class="ot">FALSE</span>) <span class="co"># no scaling, keep the unit</span></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co">#&gt; Amount [pmol]</span></a>
+<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co">#&gt; [1] 1000</span></a>
+<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="kw">c</span>(<span class="fl">0.1</span>, <span class="fl">0.5</span>, <span class="dv">10</span>), <span class="st">"pmol"</span>) <span class="co"># automatic scaling to median</span></a>
+<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co">#&gt; Amount [fmol]</span></a>
+<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="co">#&gt; [1]   100   500 10000</span></a></code></pre></div>
+</div>
 </div>
 <div id="mass" class="section level2">
 <h2 class="hasAnchor">
 <a href="#mass" class="anchor"></a>Mass</h2>
+<p>Mass quantities use the gram <code>"g"</code> as the base unit. All standard metric prefixes are supported.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">10000</span>, <span class="st">"g"</span>)</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co">#&gt; Mass [kg]</span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co">#&gt; [1] 10</span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">5</span>, <span class="st">"mg"</span>)</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">#&gt; Mass [mg]</span></a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co">#&gt; [1] 5</span></a></code></pre></div>
 </div>
 <div id="volume" class="section level2">
 <h2 class="hasAnchor">
 <a href="#volume" class="anchor"></a>Volume</h2>
+<p>Volume quantities use the SI-accepted litre <code>"L"</code> as the base unit because of its common use in chemical applications (as compared to the equivalent dm<span class="math inline">\(^3\)</span> or base unit m<span class="math inline">\(^3\)</span>). Lower case <code>"l"</code> is also recognized. All standard metric prefixes are supported.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">42</span>, <span class="st">"mL"</span>)</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">#&gt; Volume [mL]</span></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#&gt; [1] 42</span></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">42</span>, <span class="st">"ml"</span>)</a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co">#&gt; Volume [mL]</span></a>
+<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="co">#&gt; [1] 42</span></a>
+<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">2000</span>, <span class="st">"nL"</span>)</a>
+<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="co">#&gt; Volume [µL]</span></a>
+<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="co">#&gt; [1] 2</span></a></code></pre></div>
+</div>
+<div id="temperature" class="section level2">
+<h2 class="hasAnchor">
+<a href="#temperature" class="anchor"></a>Temperature</h2>
+<p>Temperature quantities use the SI unit Kelvin (<code>"K"</code>) but can be generated from the alternative units Celsius (<code>"C"</code>) and Fahrenheit (<code>"F"</code>). For example, the following statements all generate the same temperature object. Note that although rarely used in chemical applications for culturing, metric prefixes <em>are</em> supported for the <code>"K"</code> base unit.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">0</span>, <span class="st">"C"</span>)</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="co">#&gt; Temperature [K]</span></a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="co">#&gt; [1] 273.15</span></a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">32</span>, <span class="st">"F"</span>)</a>
+<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="co">#&gt; Temperature [K]</span></a>
+<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="co">#&gt; [1] 273.15</span></a>
+<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="fl">273.15</span>, <span class="st">"K"</span>)</a>
+<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="co">#&gt; Temperature [K]</span></a>
+<a class="sourceLine" id="cb6-9" data-line-number="9"><span class="co">#&gt; [1] 273.15</span></a>
+<a class="sourceLine" id="cb6-10" data-line-number="10"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">273150</span>, <span class="st">"mK"</span>)</a>
+<a class="sourceLine" id="cb6-11" data-line-number="11"><span class="co">#&gt; Temperature [K]</span></a>
+<a class="sourceLine" id="cb6-12" data-line-number="12"><span class="co">#&gt; [1] 273.15</span></a></code></pre></div>
 </div>
 <div id="pressure" class="section level2">
 <h2 class="hasAnchor">
 <a href="#pressure" class="anchor"></a>Pressure</h2>
+<p>Pressure quantities use the non-SI but metric unit <code>"bar"</code> as base unit (1 bar = 100,000 Pa) because of its more common use in chemical and culturing applications. However, pressure quantities can also be generated from the SI unit <code>"Pa"</code> as well as the common non-metric units <code>"atm"</code>, <code>"psi"</code>, <code>"Torr"</code> and <code>"mTorr"</code> which are all automatically converted to <code>bar</code>. All pressure quantities are absolute pressures (i.e. technically <code>psi</code> is <code>psiA</code>, not relative to atmospheric). All standard metric prefixes are supported for the <code>bar</code> base unit.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">1</span>, <span class="st">"bar"</span>)</a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="co">#&gt; Pressure [bar]</span></a>
+<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="co">#&gt; [1] 1</span></a>
+<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">1000</span>, <span class="st">"mbar"</span>)</a>
+<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co">#&gt; Pressure [bar]</span></a>
+<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="co">#&gt; [1] 1</span></a>
+<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">1</span>, <span class="st">"atm"</span>)</a>
+<a class="sourceLine" id="cb7-8" data-line-number="8"><span class="co">#&gt; Pressure [bar]</span></a>
+<a class="sourceLine" id="cb7-9" data-line-number="9"><span class="co">#&gt; [1] 1.01325</span></a>
+<a class="sourceLine" id="cb7-10" data-line-number="10"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="fl">14.7</span>, <span class="st">"psi"</span>) </a>
+<a class="sourceLine" id="cb7-11" data-line-number="11"><span class="co">#&gt; Pressure [bar]</span></a>
+<a class="sourceLine" id="cb7-12" data-line-number="12"><span class="co">#&gt; [1] 1.01353</span></a>
+<a class="sourceLine" id="cb7-13" data-line-number="13"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">760</span>, <span class="st">"Torr"</span>)</a>
+<a class="sourceLine" id="cb7-14" data-line-number="14"><span class="co">#&gt; Pressure [bar]</span></a>
+<a class="sourceLine" id="cb7-15" data-line-number="15"><span class="co">#&gt; [1] 1.01325</span></a>
+<a class="sourceLine" id="cb7-16" data-line-number="16"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">760000</span>, <span class="st">"mTorr"</span>)</a>
+<a class="sourceLine" id="cb7-17" data-line-number="17"><span class="co">#&gt; Pressure [bar]</span></a>
+<a class="sourceLine" id="cb7-18" data-line-number="18"><span class="co">#&gt; [1] 1.01325</span></a></code></pre></div>
 </div>
 <div id="molecular-weight" class="section level2">
 <h2 class="hasAnchor">
 <a href="#molecular-weight" class="anchor"></a>Molecular Weight</h2>
+<p>Molecular weight quantities use gram / mole <code>"g/mol"</code> as the base unit and the SI-accepted Dalton <code>"Da"</code> as a recognized alternative (1 Da = 1 g/mol). All standard metric prefixes are supported.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">257</span>, <span class="st">"g/mol"</span>)</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="co">#&gt; MolecularWeight [g/mol]</span></a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="co">#&gt; [1] 257</span></a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="fl">4.2</span>, <span class="st">"kg/mol"</span>)</a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="co">#&gt; MolecularWeight [kg/mol]</span></a>
+<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="co">#&gt; [1] 4.2</span></a>
+<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="fl">4.2</span>, <span class="st">"kDa"</span>)</a>
+<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="co">#&gt; MolecularWeight [kg/mol]</span></a>
+<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="co">#&gt; [1] 4.2</span></a></code></pre></div>
 </div>
 <div id="concentration" class="section level2">
 <h2 class="hasAnchor">
 <a href="#concentration" class="anchor"></a>Concentration</h2>
+<p>The two most common concentration measurements in culturing and media chemistry are amount-based and weight-based concentrations, i.e. amount/volume (molarity) and mass/volume (~density). Both are supported quantities and can be interconverted from one to the other using molecular weights (see the <a href="operations.html#units-metric-scaling">arithmetic section</a> of the <a href="operations.html">operations vignette</a> for details).</p>
+<div id="amount-based-molarity" class="section level3">
+<h3 class="hasAnchor">
+<a href="#amount-based-molarity" class="anchor"></a>Amount-based (molarity)</h3>
+<p>Amount-based concentration quantities use molar concentration <code>"M"</code> as the base unit with the more explicit <code>mol/L</code> as a recognized alternative (1 mol/L = 1 M). All standard metric prefixes are supported.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">5</span>, <span class="st">"mM"</span>)</a>
+<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="co">#&gt; Molarity [mM]</span></a>
+<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="co">#&gt; [1] 5</span></a>
+<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">5</span>, <span class="st">"mmol/L"</span>)</a>
+<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="co">#&gt; Molarity [mM]</span></a>
+<a class="sourceLine" id="cb9-6" data-line-number="6"><span class="co">#&gt; [1] 5</span></a></code></pre></div>
+</div>
+<div id="weight-based-density" class="section level3">
+<h3 class="hasAnchor">
+<a href="#weight-based-density" class="anchor"></a>Weight-based (density)</h3>
+<p>Weight-based concentration quantities use volumetric mass density <code>"g/L"</code> as the base unit. These are not densities in the solid matter or pure liquid sense (<span class="math inline">\(\rho\)</span>) but rather solute densities in a solution. All standard metric prefixes are supported.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">5</span>, <span class="st">"mg/L"</span>)</a>
+<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="co">#&gt; Density [mg/L]</span></a>
+<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="co">#&gt; [1] 5</span></a>
+<a class="sourceLine" id="cb10-4" data-line-number="4"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">5</span>, <span class="st">"mg/l"</span>)</a>
+<a class="sourceLine" id="cb10-5" data-line-number="5"><span class="co">#&gt; Density [mg/L]</span></a>
+<a class="sourceLine" id="cb10-6" data-line-number="6"><span class="co">#&gt; [1] 5</span></a></code></pre></div>
+</div>
 </div>
   </div>
 
@@ -129,10 +222,10 @@
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li><a href="#temperature">Temperature</a></li>
-      <li><a href="#amount">Amount</a></li>
+<li><a href="#amount">Amount</a></li>
       <li><a href="#mass">Mass</a></li>
       <li><a href="#volume">Volume</a></li>
+      <li><a href="#temperature">Temperature</a></li>
       <li><a href="#pressure">Pressure</a></li>
       <li><a href="#molecular-weight">Molecular Weight</a></li>
       <li><a href="#concentration">Concentration</a></li>

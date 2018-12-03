@@ -120,7 +120,7 @@ abs(x - x2) < qty(1, "fg") # absolute difference smaller than 1 femtogram
 
 ## Data Frames
 
-Quantities are fully supported in dplyr type data frames and the units of a quantity are displayed underneath the column headers, e.g. `<[mM]>` to indicate a quantity column that has the units of `mM` (and thus is a molarity). 
+Quantities are fully supported in dplyr type data frames and the units of a quantity are displayed underneath the column headers, e.g. `<mg>` to indicate a quantity column that has the units of `mg` (and thus is a weight). 
 
 ```{r}
 data_frame(

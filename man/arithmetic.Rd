@@ -65,7 +65,7 @@ qty(100, "nM") * qty(50, "mL") # 5 nmol
 qty(5, "ng") / qty(50, "mL") # 100 ng/L
 qty(5, "ng") / qty(100, "ng/L") # 50 mL
 qty(100, "ng/L") * qty(50, "mL") # 5 ng
-qty(10, "g") / qty (50, "g/mol") # 200 mM 
+qty(10, "g") / qty (50, "g/mol") # 200 nmol
 qty(10, "g") / qty(200, "mmol") # 50 g/mol
 qty(200, "mmol") * qty (50, "g/mol") # 10 g
 }

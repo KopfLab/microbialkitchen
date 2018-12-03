@@ -4,9 +4,9 @@
 \name{mediatools-package}
 \alias{mediatools}
 \alias{mediatools-package}
-\title{mediatools: Simplify lab media calculations.}
+\title{mediatools: Culture media calculations.}
 \description{
-Package to help with culturing media calculations.
+Package to simplify working with defined culture medium.
 }
 \seealso{
 Useful links:
