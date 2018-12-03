@@ -18,7 +18,18 @@ test_that("Testing that standard vector operations are working", {
 test_that("Testing that arithemtic calculations of units are working", {
   
   # comparisons
+  expect_error(qty(2, "C") > 1, "comparison is not implemented for these quantities")
+  expect_error(qty(2, "C") >= 1, "comparison is not implemented for these quantities")
+  expect_error(qty(2, "C") < 1, "comparison is not implemented for these quantities")
+  expect_error(qty(2, "C") <= 1, "comparison is not implemented for these quantities")
+  expect_error(qty(2, "C") == 1, "comparison is not implemented for these quantities")
+  expect_error(qty(2, "C") != 1, "comparison is not implemented for these quantities")
   expect_error(qty(2, "C") > qty(1, "g"), "comparison is not implemented for these quantities")
+  expect_error(qty(2, "C") >= qty(1, "g"), "comparison is not implemented for these quantities")
+  expect_error(qty(2, "C") < qty(1, "g"), "comparison is not implemented for these quantities")
+  expect_error(qty(2, "C") <= qty(1, "g"), "comparison is not implemented for these quantities")
+  expect_error(qty(2, "C") == qty(1, "g"), "comparison is not implemented for these quantities")
+  expect_error(qty(2, "C") != qty(1, "g"), "comparison is not implemented for these quantities")
   expect_true(qty(100, "mg") < qty(1, "g"))
   expect_true(qty(100, "mg") <= qty(0.1, "g"))
   expect_true(qty(100, "mg") > qty(10000, "µg"))
@@ -26,9 +37,13 @@ test_that("Testing that arithemtic calculations of units are working", {
   expect_true(qty(10, "mg") == qty(10000, "µg"))
   expect_false(qty(10, "mg") != qty(10000, "µg"))
   
-  # addition
+  # addition / subtraction
+  expect_error(qty(2, "C") + 1, "addition is not implemented for these quantities")
+  expect_error(1 + qty(2, "C"), "addition is not implemented for these quantities")
   expect_error(qty(2, "C") + qty(1, "g"), "addition is not implemented for these quantities")
-  expect_error(qty(2, "C") - qty(1, "g"), "addition is not implemented for these quantities")
+  expect_error(qty(2, "C") - 1, "subtraction is not implemented for these quantities")
+  expect_error(1 - qty(2, "C"), "subtraction is not implemented for these quantities")
+  expect_error(qty(2, "C") - qty(1, "g"), "subtraction is not implemented for these quantities")
   expect_equal({q <- qty(1, "mg") + qty(5, "µg") - qty(0.0003, "g"); q@unit}, "µg")
   expect_equal(round(q@.Data), 705) # there's a rounding problem wiht machine error otherwise
   
@@ -59,7 +74,7 @@ test_that("Testing that arithemtic calculations of units are working", {
   # mass / MW = amount
   expect_equal(qty(5, "mg") / qty(100, "g/mol"), qty(50, "µmol"))
   # mass / amount = MW
-  expect_equal(qty(1, "mg") / qty(2, "µmol"), qty(500, "g/mol"))
+  expect_equal(qty(2, "mg") / qty(1, "µmol"), qty(2000, "g/mol"))
   # amount * MW = mass
   expect_equal(qty(10, "nmol") * qty(50, "g/mol"), qty(500, "ng"))
   

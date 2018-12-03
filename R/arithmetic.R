@@ -60,6 +60,44 @@ setMethod("!=", signature(e1 = "MediaToolsQuantity", e2 = "MediaToolsQuantity"),
   return (scale_metric(e1, get_prefix(e2))@.Data != e2@.Data)
 })
 
+# the following are not allowed b/c of ambiguity (no unit for second number)
+
+setMethod("<", signature(e1 = "MediaToolsQuantity", e2 = "numeric"), function(e1, e2) 
+  operation_error("comparison", e1, e2))
+
+setMethod("<", signature(e1 = "numeric", e2 = "MediaToolsQuantity"), function(e1, e2) 
+  operation_error("comparison", e1, e2))
+
+setMethod("<=", signature(e1 = "MediaToolsQuantity", e2 = "numeric"), function(e1, e2) 
+  operation_error("comparison", e1, e2))
+
+setMethod("<=", signature(e1 = "numeric", e2 = "MediaToolsQuantity"), function(e1, e2) 
+  operation_error("comparison", e1, e2))
+
+setMethod(">", signature(e1 = "MediaToolsQuantity", e2 = "numeric"), function(e1, e2) 
+  operation_error("comparison", e1, e2))
+
+setMethod(">", signature(e1 = "numeric", e2 = "MediaToolsQuantity"), function(e1, e2) 
+  operation_error("comparison", e1, e2))
+
+setMethod(">=", signature(e1 = "MediaToolsQuantity", e2 = "numeric"), function(e1, e2) 
+  operation_error("comparison", e1, e2))
+
+setMethod(">=", signature(e1 = "numeric", e2 = "MediaToolsQuantity"), function(e1, e2) 
+  operation_error("comparison", e1, e2))
+
+setMethod("==", signature(e1 = "MediaToolsQuantity", e2 = "numeric"), function(e1, e2) 
+  operation_error("comparison", e1, e2))
+
+setMethod("==", signature(e1 = "numeric", e2 = "MediaToolsQuantity"), function(e1, e2) 
+  operation_error("comparison", e1, e2))
+
+setMethod("!=", signature(e1 = "MediaToolsQuantity", e2 = "numeric"), function(e1, e2) 
+  operation_error("comparison", e1, e2))
+
+setMethod("!=", signature(e1 = "numeric", e2 = "MediaToolsQuantity"), function(e1, e2) 
+  operation_error("comparison", e1, e2))
+
 # Addition  ========================
 
 #' @usage qty + qty, qty - qty
@@ -70,12 +108,33 @@ setMethod("!=", signature(e1 = "MediaToolsQuantity", e2 = "MediaToolsQuantity"),
 #' @name arithmetic 
 NULL
 
+
 setMethod("+", signature(e1 = "MediaToolsQuantity", e2 = "MediaToolsQuantity"), function(e1, e2) {
   class_check ("addition", e1, e2)
-  return(best_metric(scale_metric(e1, get_prefix(e2)) + e2@.Data))
+  e1 <- scale_metric(e1, get_prefix(e2))
+  e1@.Data <- e1@.Data + e2@.Data
+  return(best_metric(e1))
 })
 
-setMethod("-", signature(e1 = "MediaToolsQuantity", e2 = "MediaToolsQuantity"), function(e1, e2)  e1 + -1* e2)
+setMethod("-", signature(e1 = "MediaToolsQuantity", e2 = "MediaToolsQuantity"), function(e1, e2)  {
+  class_check ("subtraction", e1, e2)
+  e1 <- scale_metric(e1, get_prefix(e2))
+  e1@.Data <- e1@.Data - e2@.Data
+  return(best_metric(e1))
+})
+
+# the following are not allowed b/c of ambiguity (no unit for second number)
+setMethod("+", signature(e1 = "MediaToolsQuantity", e2 = "numeric"), function(e1, e2) 
+  operation_error("addition", e1, e2))
+
+setMethod("+", signature(e1 = "numeric", e2 = "MediaToolsQuantity"), function(e1, e2) 
+  operation_error("addition", e1, e2))
+
+setMethod("-", signature(e1 = "MediaToolsQuantity", e2 = "numeric"), function(e1, e2) 
+  operation_error("subtraction", e1, e2))
+
+setMethod("-", signature(e1 = "numeric", e2 = "MediaToolsQuantity"), function(e1, e2) 
+  operation_error("subtraction", e1, e2))
 
 # Division =========================
 
@@ -162,7 +221,7 @@ setMethod("/", signature(e1 = "MediaToolsAmount", e2 = "MediaToolsMolarity"), fu
 
 # volume * molarity = amount
 setMethod("*", signature(e1 = "MediaToolsVolume", e2 = "MediaToolsMolarity"), function(e1, e2) {
-  return (amount( base_metric(e1)@.Data * base_metric(e2)@.Data, "mol", scale = TRUE))
+  return (amount( base_metric(e1)@.Data * base_metric(e2)@.Data, "mol"))
 })
 setMethod("*", signature(e1 = "MediaToolsMolarity", e2 = "MediaToolsVolume"), function(e1, e2) e2 * e1)
 
@@ -190,7 +249,7 @@ setMethod("/", signature(e1 = "MediaToolsMass", e2 = "MediaToolsDensity"), funct
 
 # volume * molarity = amount
 setMethod("*", signature(e1 = "MediaToolsVolume", e2 = "MediaToolsDensity"), function(e1, e2) {
-  return (mass( base_metric(e1)@.Data * base_metric(e2)@.Data, "g", scale = TRUE))
+  return (mass( base_metric(e1)@.Data * base_metric(e2)@.Data, "g"))
 })
 setMethod("*", signature(e1 = "MediaToolsDensity", e2 = "MediaToolsVolume"), function(e1, e2) e2 * e1)
 
@@ -200,7 +259,7 @@ setMethod("*", signature(e1 = "MediaToolsDensity", e2 = "MediaToolsVolume"), fun
 #' @details \code{mass / amount} divice a mass by an amount (mols) to create a molecular weight.
 #' @details \code{amount * MW} multiply an amount (mols) by a molecular weight to create a mass.
 #' @examples 
-#' qty(10, "g") / qty (50, "g/mol") # 200 mM 
+#' qty(10, "g") / qty (50, "g/mol") # 200 nmol
 #' qty(10, "g") / qty(200, "mmol") # 50 g/mol
 #' qty(200, "mmol") * qty (50, "g/mol") # 10 g
 #' @name arithmetic 
@@ -213,12 +272,12 @@ setMethod("/", signature(e1 = "MediaToolsMass", e2 = "MediaToolsMolecularWeight"
 
 # mass / amount = MW
 setMethod("/", signature(e1 = "MediaToolsMass", e2 = "MediaToolsAmount"), function(e1, e2) {
-  return (molecular_weight( base_metric(e1)@.Data / base_metric(e2)@.Data, "g/mol", scale = FALSE) )
+  return (molecular_weight( base_metric(e1)@.Data / base_metric(e2)@.Data, "g/mol") )
 })
 
 # amount * MW = mass
 setMethod("*", signature(e1 = "MediaToolsAmount", e2 = "MediaToolsMolecularWeight"), function(e1, e2) {
-  return (mass( base_metric(e1)@.Data * base_metric(e2)@.Data, "g", scale = TRUE))
+  return (mass( base_metric(e1)@.Data * base_metric(e2)@.Data, "g"))
 })
 setMethod("*", signature(e1 = "MediaToolsMolecularWeight", e2 = "MediaToolsAmount"), function(e1, e2) e2 * e1)
 

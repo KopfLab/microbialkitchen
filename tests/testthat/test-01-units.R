@@ -49,8 +49,8 @@ test_that("Testing that units work and can be metric scaled", {
   # molecular weight
   expect_error(molecular_weight(1, "J"), "not a known molecular weight unit")
   expect_is(molecular_weight(1, "g/mol"), "MediaToolsMolecularWeight")
-  expect_equal(molecular_weight(1257, "g/mol")@unit, "g/mol") # by default no automatic scaling!
-  expect_equal(molecular_weight(1257, "g/mol")@.Data, 1257)
+  expect_equal(molecular_weight(1257, "g/mol")@unit, "kg/mol") 
+  expect_equal(molecular_weight(1257, "g/mol")@.Data, 1.257)
   expect_equal(molecular_weight(2, "kDa")@unit, "kg/mol")
   expect_equal(molecular_weight(2, "kDa")@.Data, 2)
   

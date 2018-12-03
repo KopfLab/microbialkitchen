@@ -64,7 +64,7 @@ mass <- function(x, unit, scale_to_best_metric = TRUE) {
 #' @details \emph{molecular weight}: base unit \code{g/mol}, all metric prefixes allowed in the numerator
 #' @name quantities
 NULL
-molecular_weight <- function(x, unit, scale_to_best_metric = FALSE) {
+molecular_weight <- function(x, unit, scale_to_best_metric = TRUE) {
   prefix <- get_mediatools_constant("metric_prefix")
   primary_units <- paste0(names(prefix), "g/mol")
   secondary_units <- paste0(names(prefix), "Da")
@@ -213,6 +213,7 @@ rep.MediaToolsQuantity <- function(x, ...) {
 
 # make sure the units are displayed inside dplyr data frame representations
 # note: not using shorts to keep the types easier defined
+# note: this is not yet supported in paged tables (i.e. knitted data frames display) because rmarkdown:::paged_table_type_sum does not use tibble::type_sum
 #' @export
 type_sum.MediaToolsQuantity <- function(x) {
   # shorts <- c(MediaToolsAmount = "amt", MediaToolsMass = "m", MediaToolsMolecularWeight = "MW", MediaToolsMolarity = "C",
