@@ -88,13 +88,13 @@ test_that("Testing that units work and can be metric scaled", {
   
   # general quantity
   expect_error(qty(1, "kBla"), "Could not determine the appropriate quantity")
-  expect_is(qty(1, "nM"), "MediaToolsMolarity")
-  expect_is(qty(1, "mg/L"), "MediaToolsDensity")
-  expect_is(qty(1, "L"), "MediaToolsVolume")
-  expect_is(qty(1, "pmol"), "MediaToolsAmount")
-  expect_is(qty(1, "kbar"), "MediaToolsPressure")
-  expect_is(qty(1, "nM/bar"), "MediaToolsSolubility")
-  expect_is(qty(1, "K"), "MediaToolsTemperature")
+  expect_true(is_molarity(qty(1, "nM")))
+  expect_true(is_density(qty(1, "mg/L")))
+  expect_true(is_volume(qty(1, "L")))
+  expect_true(is_amount(qty(1, "pmol")))
+  expect_true(is_pressure(qty(1, "kbar")))
+  expect_true(is_solubility(qty(1, "nM/bar")))
+  expect_true(is_temperature(qty(1, "K")))
   expect_equal(qty(1500, "pmol")@unit, "nmol")
   expect_equal(qty(1500, "pmol", scale_to_best_metric = FALSE)@unit, "pmol")
   expect_equal(qty(1500, "pmol")@.Data, 1.5)
@@ -106,6 +106,8 @@ test_that("Testing that units work and can be metric scaled", {
   expect_equal(qty(numeric(0), "mg")@unit, "g")
   expect_equal(qty(Inf, "mg")@unit, "g")
   expect_equal(qty(-Inf, "mg")@unit, "g")
+  expect_true(is_qty(qty(1, "mg")))
+  expect_false(is_qty(1))
   
   # get units
   expect_equal(1 %>% get_qty_units(), NA_character_)
@@ -118,10 +120,6 @@ test_that("Testing that units work and can be metric scaled", {
     data.frame(a=qty(1, "mg"), b = 2) %>% get_qty_units(),
     c(a = "mg", b = NA_character_)
   )
-  
-  # object test
-  expect_true(is_qty(qty(1, "mg")))
-  expect_false(is_qty(1))
   
   # empty / infinite / null vectors (all scale to base unit)
   expect_equal(qty(NA, "mg") %>% get_qty_units(), "g")

@@ -220,6 +220,17 @@ is_qty <- function(x) {
   is(x, "MediaToolsQuantity")
 }
 
+# these are not exported in order to not pollute the namespace but are useful for internal checks
+is_amount <- function(x) is(x, "MediaToolsAmount")
+is_mass <- function(x) is(x, "MediaToolsMass")
+is_molecular_mass <- function(x) is(x, "MediaToolsMolecularMass")
+is_molarity <- function(x) is(x, "MediaToolsMolarity")
+is_density <- function(x) is(x, "MediaToolsDensity")
+is_volume <- function(x) is(x, "MediaToolsVolume")
+is_pressure <- function(x) is(x, "MediaToolsPressure")
+is_solubility <- function(x) is(x, "MediaToolsSolubility")
+is_temperature <- function(x) is(x, "MediaToolsTemperature")
+
 # S4 methods ========================
 
 # allow quantity replication
