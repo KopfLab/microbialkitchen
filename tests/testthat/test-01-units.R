@@ -119,6 +119,10 @@ test_that("Testing that units work and can be metric scaled", {
     c(a = "mg", b = NA_character_)
   )
   
+  # object test
+  expect_true(is_qty(qty(1, "mg")))
+  expect_false(is_qty(1))
+  
   # empty / infinite / null vectors (all scale to base unit)
   expect_equal(qty(NA, "mg") %>% get_qty_units(), "g")
   expect_equal(qty(NA, "mg") %>% as.numeric(), NA_real_)

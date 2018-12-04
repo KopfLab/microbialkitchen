@@ -211,6 +211,15 @@ temperature <- function(x, unit, scale_to_best_metric = TRUE) {
   return(q)
 }
 
+# type checks =================
+
+#' @describeIn quantities check whether something is a quantity
+#' @param q quantity
+#' @export
+is_qty <- function(x) {
+  is(x, "MediaToolsQuantity")
+}
+
 # S4 methods ========================
 
 # allow quantity replication

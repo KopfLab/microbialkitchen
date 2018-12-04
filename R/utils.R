@@ -1,28 +1,12 @@
-# Null default
-# Analog of || from ruby
-#
-# @name nulldefault-infix
-# @author Hadley Wickham
-"%||%" <- function(a, b) {
-  if (!is.null(a)) a else b
+# helper functions that informs about operation error
+operation_error <- function(operation, e1, e2) {
+  stop(sprintf("%s is not implemented for these quantities (trying to use '%s' and '%s'). ", operation, class(e1)[1], class(e2)[1]), call. = FALSE)
 }
 
-
-# "Invert" a list
-# Keys become values, values become keys
-#
-# @param list to invert
-# @author Hadley Wickham
-invert <- function(L) {
-  t1 <- unlist(L)
-  names(t1) <- rep(names(L), lapply(L, length))
-  tapply(names(t1), t1, c)
+class_check <- function(operation, e1, e2) {
+  if (class(e1) != class(e2)) operation_error(operation, e1, e2)
 }
 
-# Inside
-# Return logical vector indicating if x is inside the interval
-#
-# @author Hadley Wickham
-"%inside%" <- function(x, interval) {
-  x >= interval[1] & x <= interval[2]
+require_Class <- function(class, x) {
+  #if ()
 }

@@ -181,4 +181,12 @@ qty(numeric(0), "mg")
 qty(c(10, NA, -Inf, Inf, numeric(0)), "mg")
 ```
 
+## Miscellaneous
+
+To check whether something is a quantity, use the `is_qty()` function.
+
+```{r}
+qty(1, "mg") %>% is_qty() # is a quantity
+1 %>% is_qty() # not a quantity
+```
 
