@@ -118,5 +118,19 @@ test_that("Testing that units work and can be metric scaled", {
     data.frame(a=qty(1, "mg"), b = 2) %>% get_qty_units(),
     c(a = "mg", b = NA_character_)
   )
+  
+  # empty / infinite / null vectors (all scale to base unit)
+  expect_equal(qty(NA, "mg") %>% get_qty_units(), "g")
+  expect_equal(qty(NA, "mg") %>% as.numeric(), NA_real_)
+  expect_equal(qty(Inf, "mg") %>% get_qty_units(), "g")
+  expect_equal(qty(Inf, "mg") %>% as.numeric(), Inf)
+  expect_equal(qty(-Inf, "mg") %>% get_qty_units(), "g")
+  expect_equal(qty(-Inf, "mg") %>% as.numeric(), -Inf)
+  expect_equal(qty(numeric(0), "mg") %>% get_qty_units(), "g")
+  expect_equal(qty(numeric(0), "mg") %>% as.numeric(), numeric(0))
+  
+  # empty / infinite /null vectors with other number
+  expect_equal(qty(c(1, NA, -Inf, Inf), "mg") %>% get_qty_units(), "mg")
+  expect_equal(qty(c(1, NA, -Inf, Inf), "mg") %>% as.numeric(), c(1, NA, -Inf, Inf))
 })
   

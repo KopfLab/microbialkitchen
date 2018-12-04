@@ -316,10 +316,14 @@ scale_metric <- function (q, prefix = "") {
 #' if the quantity has a vector of values, scales to the best metric prefix for the median of all values
 #' @export
 best_metric <- function(q) {
+  if (!inherits(q, "MediaToolsQuantity")) stop("not a known type of quantity: ", class(q))
   prefix <- get_mediatools_constant("metric_prefix")
-  ideal <-
-    if (length(q) == 0 || all(is.na(q)) || all(is.infinite(q))) which(names(prefix) == "")
-    else max(1, which( median(abs(as.numeric(base_metric(q))), na.rm = TRUE)/prefix >= 1))
+  if (length(q) == 0 || all(is.na(q) | is.infinite(q))) {
+    ideal <- which(names(prefix) == "")
+  } else {
+    values <- as.numeric(base_metric(q)) %>% { .[!is.infinite(.)] }
+    ideal <- max(1, which( median(abs(values), na.rm = TRUE)/prefix >= 1))
+  }
   scale_metric(q, names(prefix)[ideal])
 }
 

@@ -161,4 +161,15 @@ c(
 )
 ```
 
+## Missing data
+
+Missing data (`NA`), empty vector (`numeric(0)`) and  infinity placeholders (`Inf`, `-Inf`) are supported in all quantities and work the same as in any other R vectors.
+
+```{r}
+qty(NA, "mg")
+qty(Inf, "mg")
+qty(numeric(0), "mg")
+qty(c(10, NA, -Inf, Inf, numeric(0)), "mg")
+```
+
 
