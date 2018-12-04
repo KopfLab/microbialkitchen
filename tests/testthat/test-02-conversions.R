@@ -77,5 +77,13 @@ test_that("Testing that arithemtic calculations of units are working", {
   expect_equal(qty(2, "mg") / qty(1, "µmol"), qty(2000, "g/mol"))
   # amount * MW = mass
   expect_equal(qty(10, "nmol") * qty(50, "g/mol"), qty(500, "ng"))
+  expect_equal(qty(50, "g/mol") * qty(10, "nmol"), qty(500, "ng"))
+  
+  # molarity / pressure = solubility
+  expect_equal(qty(10, "mM") / qty(200, "mbar"), qty(50, "mM/bar"))
+  # molarity / solubility = pressure
+  expect_equal(qty(10, "mM") / qty(50, "mM/bar"), qty(200, "mbar"))
+  # solubility * pressure = molarity
+  expect_equal(qty(50, "mM/bar") * qty (200, "mbar"), qty(10, "mM"))
   
 })

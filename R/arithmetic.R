@@ -281,3 +281,32 @@ setMethod("*", signature(e1 = "MediaToolsAmount", e2 = "MediaToolsMolecularMass"
 })
 setMethod("*", signature(e1 = "MediaToolsMolecularMass", e2 = "MediaToolsAmount"), function(e1, e2) e2 * e1)
 
+#' @usage molarity / pressure = solubility, solubility * pressure = molarity, molarity / solubility = pressure
+#' @details \code{molarity / pressure} divide a concentration by pressure to create a solubility (M/bar).
+#' @details \code{solubility * pressure} multiply a solubility (M/bar) by pressure (bar) to create molarity (M)
+#' @details \code{molarity / solubility} divide a molarity (M) by a solubility (M/bar) to get partial pressure (bar)
+#' @examples 
+#' qty(10, "mM") / qty(200, "mbar") # 50 mM/bar
+#' qty(10, "mM") / qty(50, "mM/bar") # 200 mbar
+#' qty(50, "mM/bar") * qty (200, "mbar") # 10 mM
+#' @name arithmetic 
+NULL
+
+# molarity / pressure = solubility
+setMethod("/", signature(e1 = "MediaToolsMolarity", e2 = "MediaToolsPressure"), function(e1, e2) {
+  return (solubility( scale_metric(e1, get_prefix(e2))@.Data / e2@.Data, "M/bar" ))
+})
+
+# molarity / solubility = pressure
+setMethod("/", signature(e1 = "MediaToolsMolarity", e2 = "MediaToolsSolubility"), function(e1, e2) {
+  return (pressure( base_metric(e1)@.Data / base_metric(e2)@.Data, "bar") )
+})
+
+# solubility * pressure = molarity
+setMethod("*", signature(e1 = "MediaToolsSolubility", e2 = "MediaToolsPressure"), function(e1, e2) {
+  return (molarity( base_metric(e1)@.Data * base_metric(e2)@.Data, "M"))
+})
+setMethod("*", signature(e1 = "MediaToolsPressure", e2 = "MediaToolsSolubility"), function(e1, e2) e2 * e1)
+
+
+

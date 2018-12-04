@@ -75,7 +75,7 @@ qty(1, "mg") / qty(1, "kg")
 
 Additional multiplications and divisions are possible for specific combinations of quantities as detailed below. These formulas are each implemented for all three possible arrangements.
 
-#### Amount / Volume = Molarity
+#### Molarity = Amount / Volume
 
 ```{r}
 qty(5, "nmol") / qty(50, "mL") # calculation molarity
@@ -83,7 +83,7 @@ qty(5, "nmol") / qty(100, "nM") # calculate volume
 qty(100, "nM") * qty(50, "mL") # calculate amount
 ```
 
-#### Mass / Volume = Density
+#### Density = Mass / Volume
 
 ```{r}
 qty(5, "ng") / qty(50, "mL") # calculate density
@@ -91,13 +91,22 @@ qty(5, "ng") / qty(100, "ng/L") # calculate volume
 qty(100, "ng/L") * qty(50, "mL") # calculate mass
 ```
 
-#### Mass / Molecular Mass = Amount
+#### Amount = Mass / Molecular Mass
 
 ```{r}
 qty(10, "g") / qty (50, "g/mol") # calculate amount
 qty(10, "g") / qty(200, "mmol") # calculate molecular mass
 qty(200, "mmol") * qty (50, "g/mol") # calculate mass
 ```
+
+#### Solubility = Molarity / Pressure
+
+```{r}
+qty(10, "mM") / qty(200, "mbar") # calculate solubility
+qty(10, "mM") / qty(50, "mM/bar") # calculate pressure
+qty(50, "mM/bar") * qty (200, "mbar") # calculate molarity
+```
+
 
 ### Comparisons
 
