@@ -122,7 +122,7 @@ test_that("Testing that units work and can be metric scaled", {
   expect_equal(qty(30, "C") %>% get_qty_value(), 303.15)
   expect_equal(qty(1250, "pg") %>% get_qty_units(), "ng")
   expect_equal(qty(1250, "pg") %>% get_qty_value(), 1.25)
-  expect_equal(qty(1250, "pg") %>% get_qty_test(), "1.25 ng")
+  expect_equal(qty(1250, "pg") %>% get_qty_text(), "1.25 ng")
   expect_equal(qty(1250, "pg") %>% get_qty_value("pg"), 1250)
   expect_equal(qty(1250, "pg") %>% get_qty_text("pg"), "1250 pg")
   expect_equal(qty(1250, "g/mol") %>% get_qty_value(), 1.250)
