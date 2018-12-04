@@ -37,10 +37,44 @@ qty(100, "mM") %>% base_metric() # scale to the base unit (here M)
 qty(100, "mg") %>% scale_metric("k")
 ```
 
-The units of a quantity can be retrieved easily with the `get_qty_units()` function
+The actual numeric value of a quantity can be retrieved via the `get_qty_value()` function which takes an optional parameter to specify which unit the value should be retrieved in (by default it is the unit that the quantity is currently in).
+
+```{r}
+qty(100, "mg") %>% get_qty_value() # returns 100
+qty(0.1, "g") %>% get_qty_value() # returns 100 because the units are "mg"
+qty(0.1, "g") %>% get_qty_value("g") # better to be specific upon retrieval
+qty(0.1, "g") %>% get_qty_value("kg") # can use any valid unit
+qty(0, "C") %>% get_qty_value("F") # or use it for unit conversion
+qty(760, "Torr") %>% get_qty_value("atm") # or use it for unit conversion
+```
+
+To retrieven numeric values as text that includes their units, simply use `get_qty_text()` instead of `get_qty_value()`.
+
+```{r}
+qty(100, "mg") %>% get_qty_text()
+qty(0:10, "C") %>% get_qty_text("F")
+qty(760, "Torr") %>% get_qty_text("atm")
+```
+
+The units of a quantity object can also be retrieved directly with the `get_qty_units()` function for a single quantity, list of quantities as well as entire data frames (see details on the latter in the [data frames section](#data-frames)).
 
 ```{r}
 qty(5000, "g") %>% get_qty_units()
+x <- list(
+  a = qty(5000, "g"),
+  b = 42,
+  c = qty(100, "mbar")
+) 
+x %>% get_qty_units()
+```
+
+For easy construction of plot labels, the function `get_qty_units_with_label()` further provides an easy way to combine labels with the units. By default (for lists and data frames), it uses the names of the list/data frame.
+
+```{r}
+qty(5000, "g") %>% get_qty_units_with_label("weight")
+x %>% get_qty_units_with_label()
+x %>% get_qty_units_with_label("same label")
+x %>% get_qty_units_with_label(c("apple", "banana", "carrot"))
 ```
 
 ## Arithmetic
@@ -110,7 +144,7 @@ qty(50, "mM/bar") * qty (200, "mbar") # calculate molarity
 
 ### Comparisons
 
-Quantities can be compared with all common logic operators (`>`, `>=`, `<`, `<=`, `==`, `!=`) taking the metric scaling properly into consideration. Attempts to compare non-matching quantities (e.g. mass & volume) or a quantity and a number without units will fail with an error to avoid unexpect behaviour and ambiguous comparisons.
+Quantities can be compared with all common logic operators (`>`, `>=`, `<`, `<=`, `==`, `!=`) taking the metric scaling properly into consideration. Attempts to compare non-matching quantities (e.g. mass & volume)  will fail with an error to avoid unexpect behaviour. Comparisons of quantities with numerics are allowed but it is important to be cautious about these since the metric scaling in quantities affects the numeric value.
 
 ```{r}
 qty(5, "mg") < qty(1, "g")
@@ -118,10 +152,12 @@ qty(5, "mg") > qty(10, "ng")
 qty(5, "mg") == qty(0.005, "g")
 qty(5, "mg") != qty(5, "g")
 try(qty(1, "mg") > qty(1, "L")) # not allowed (different quantities)
-try(qty(1, "mg") == 1) # not allowed (ambiguous comparison)
+qty(1, "mg") == 1 # allowed but important to be careful
+qty(0.1, "g") == 0.1 # example of metric scaling affecting the comparison
+qty(0.1, "g") == 100 # example of metric scaling affecting the comparison
 ```
 
-It is important to note that due to machine errors, the `==` is best avoided in favor of more reliable comparisions such as test that check whether the difference between quantities is smaller than a tiny quantity:
+It is important to note that due to machine errors, the `==` is best avoided in favor of more reliable comparisions such as tests that check whether the difference between quantities is smaller than a tiny quantity:
 
 ```{r}
 (x <- qty(1, "mg"))

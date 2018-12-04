@@ -263,15 +263,17 @@ is_temperature <- function(x) is(x, "MediaToolsTemperature")
 
 # value return ======
 
-#' Retrieve quantity value
+#' Get quantity information
 #' 
-#' Get the value of a quantity in the desired unit. By default returns the quantity in the units it is in.
+#' @details \code{get_qty_value}: get the value of a quantity in the desired unit. By default returns the quantity in the units it is in.
+#' @name quantity_info
 #' @inheritParams qty
+#' @family quantities
 #' @export
-get_qty_value <- function(q, unit) UseMethod("get_qty_value", q)
+get_qty_value <- function(q, unit = get_qty_units(q)) UseMethod("get_qty_value", q)
 
 #' @export
-get_qty_value.numeric <- function(q, unit) stop("not a quantity: ", class(q)[1], call. = FALSE)
+get_qty_value.numeric <- function(q, unit = get_qty_units(q)) stop("not a quantity: ", class(q)[1], call. = FALSE)
 
 #' @export
 get_qty_value.MediaToolsQuantity <- function(q, unit = get_qty_units(q)) {
@@ -302,6 +304,13 @@ get_qty_value.MediaToolsTemperature <- function(q, unit = get_qty_units(q)) {
   unit <- unit_conversion$unit
   x <- NextMethod()
   return(unit_conversion$conversion_back(x))
+}
+
+#' @details \code{get_qty_text}: get the value of the quantity in the desired unit as a text string with the unit appended
+#' @rdname quantity_info
+#' @export
+get_qty_text <- function(q, unit = get_qty_units(q)) {
+  paste(get_qty_value(q, unit), unit)
 }
 
 # expand S4 methods ========================
@@ -364,7 +373,8 @@ c.MediaToolsQuantity <- function(...) {
 
 # unit retrieval ====================
 
-#' @describeIn quantities get untis from a quantity, list of quantities or data frame (returns NA for objects/columns that are not quantities)
+#' @details \code{get_qty_units}: get units from a quantity, list of quantities or data frame (returns NA for objects/columns that are not quantities)
+#' @rdname quantity_info
 #' @param q quantity or list of quantities
 #' @export
 get_qty_units <- function(q) {
@@ -376,8 +386,9 @@ get_qty_units <- function(q) {
     return(NA_character_)
 }
 
-#' @describeIn quantities get untis from a quantity, list of quantities or data frame, with a custom label in the format \code{label [units]}. Objects/columns that are not quantities simply return the label with out the [units] part.
+#' @details \code{get_qty_units_with_label} get units from a quantity, list of quantities or data frame, with a custom label in the format \code{label [units]}. Objects/columns that are not quantities simply return the label with out the [units] part.
 #' @param label text label to use with the units - single value or vector of the same length as \code{q}. By default uses the names of \code{q}, which only works if \code{q} is a list or data frame.
+#' @rdname quantity_info
 #' @examples 
 #' # labels with units
 #' get_qty_units_with_label(qty(0.1, "mM"), "concentration")
