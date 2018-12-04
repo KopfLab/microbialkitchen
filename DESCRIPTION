@@ -10,6 +10,7 @@ BugReports: https://github.com/kopflab/mediatools/issues
 Depends: R (>= 3.3.0)
 Imports:
     methods,
+    rlang,
     magrittr,
     purrr,
     dplyr,
@@ -30,8 +31,9 @@ RoxygenNote: 6.1.0
 Collate:
     'classes.R'
     'arithmetic.R'
+    'calculations.R'
     'carbonate_chem.R'
     'constants.R'
     'package.R'
-    'units.R'
+    'quantities.R'
     'utils.R'

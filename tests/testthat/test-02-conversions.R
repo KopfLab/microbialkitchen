@@ -18,12 +18,6 @@ test_that("Testing that standard vector operations are working", {
 test_that("Testing that arithemtic calculations of units are working", {
   
   # comparisons
-  expect_error(qty(2, "C") > 1, "comparison is not implemented for these quantities")
-  expect_error(qty(2, "C") >= 1, "comparison is not implemented for these quantities")
-  expect_error(qty(2, "C") < 1, "comparison is not implemented for these quantities")
-  expect_error(qty(2, "C") <= 1, "comparison is not implemented for these quantities")
-  expect_error(qty(2, "C") == 1, "comparison is not implemented for these quantities")
-  expect_error(qty(2, "C") != 1, "comparison is not implemented for these quantities")
   expect_error(qty(2, "C") > qty(1, "g"), "comparison is not implemented for these quantities")
   expect_error(qty(2, "C") >= qty(1, "g"), "comparison is not implemented for these quantities")
   expect_error(qty(2, "C") < qty(1, "g"), "comparison is not implemented for these quantities")

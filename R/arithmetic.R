@@ -52,42 +52,43 @@ setMethod("!=", signature(e1 = "MediaToolsQuantity", e2 = "MediaToolsQuantity"),
 })
 
 # the following are not allowed b/c of ambiguity (no unit for second number)
+# update: these are used so frequently in other functions (e.g. ggplots), it is difficult to restrict them
 
-setMethod("<", signature(e1 = "MediaToolsQuantity", e2 = "numeric"), function(e1, e2) 
-  operation_error("comparison", e1, e2))
-
-setMethod("<", signature(e1 = "numeric", e2 = "MediaToolsQuantity"), function(e1, e2) 
-  operation_error("comparison", e1, e2))
-
-setMethod("<=", signature(e1 = "MediaToolsQuantity", e2 = "numeric"), function(e1, e2) 
-  operation_error("comparison", e1, e2))
-
-setMethod("<=", signature(e1 = "numeric", e2 = "MediaToolsQuantity"), function(e1, e2) 
-  operation_error("comparison", e1, e2))
-
-setMethod(">", signature(e1 = "MediaToolsQuantity", e2 = "numeric"), function(e1, e2) 
-  operation_error("comparison", e1, e2))
-
-setMethod(">", signature(e1 = "numeric", e2 = "MediaToolsQuantity"), function(e1, e2) 
-  operation_error("comparison", e1, e2))
-
-setMethod(">=", signature(e1 = "MediaToolsQuantity", e2 = "numeric"), function(e1, e2) 
-  operation_error("comparison", e1, e2))
-
-setMethod(">=", signature(e1 = "numeric", e2 = "MediaToolsQuantity"), function(e1, e2) 
-  operation_error("comparison", e1, e2))
-
-setMethod("==", signature(e1 = "MediaToolsQuantity", e2 = "numeric"), function(e1, e2) 
-  operation_error("comparison", e1, e2))
-
-setMethod("==", signature(e1 = "numeric", e2 = "MediaToolsQuantity"), function(e1, e2) 
-  operation_error("comparison", e1, e2))
-
-setMethod("!=", signature(e1 = "MediaToolsQuantity", e2 = "numeric"), function(e1, e2) 
-  operation_error("comparison", e1, e2))
-
-setMethod("!=", signature(e1 = "numeric", e2 = "MediaToolsQuantity"), function(e1, e2) 
-  operation_error("comparison", e1, e2))
+# setMethod("<", signature(e1 = "MediaToolsQuantity", e2 = "numeric"), function(e1, e2) 
+#   operation_error("comparison", e1, e2))
+# 
+# setMethod("<", signature(e1 = "numeric", e2 = "MediaToolsQuantity"), function(e1, e2) 
+#   operation_error("comparison", e1, e2))
+# 
+# setMethod("<=", signature(e1 = "MediaToolsQuantity", e2 = "numeric"), function(e1, e2) 
+#   operation_error("comparison", e1, e2))
+# 
+# setMethod("<=", signature(e1 = "numeric", e2 = "MediaToolsQuantity"), function(e1, e2) 
+#   operation_error("comparison", e1, e2))
+# 
+# setMethod(">", signature(e1 = "MediaToolsQuantity", e2 = "numeric"), function(e1, e2) 
+#   operation_error("comparison", e1, e2))
+# 
+# setMethod(">", signature(e1 = "numeric", e2 = "MediaToolsQuantity"), function(e1, e2) 
+#   operation_error("comparison", e1, e2))
+# 
+# setMethod(">=", signature(e1 = "MediaToolsQuantity", e2 = "numeric"), function(e1, e2) 
+#   operation_error("comparison", e1, e2))
+# 
+# setMethod(">=", signature(e1 = "numeric", e2 = "MediaToolsQuantity"), function(e1, e2) 
+#   operation_error("comparison", e1, e2))
+# 
+# setMethod("==", signature(e1 = "MediaToolsQuantity", e2 = "numeric"), function(e1, e2) 
+#   operation_error("comparison", e1, e2))
+# 
+# setMethod("==", signature(e1 = "numeric", e2 = "MediaToolsQuantity"), function(e1, e2) 
+#   operation_error("comparison", e1, e2))
+# 
+# setMethod("!=", signature(e1 = "MediaToolsQuantity", e2 = "numeric"), function(e1, e2) 
+#   operation_error("comparison", e1, e2))
+# 
+# setMethod("!=", signature(e1 = "numeric", e2 = "MediaToolsQuantity"), function(e1, e2) 
+#   operation_error("comparison", e1, e2))
 
 # Addition  ========================
 

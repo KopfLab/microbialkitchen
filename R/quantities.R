@@ -18,17 +18,17 @@ NULL
 #' qty(6, "psi")
 #' qty(30, "C")
 #' @export
-#' @family functions
+#' @family quantities
 qty <- function(x, unit, scale_to_best_metric = TRUE) {
-  if (!is.null(r <- tryCatch(molarity(x, unit, scale_to_best_metric), error = function(e){}))) return(r)
-  if (!is.null(r <- tryCatch(density(x, unit, scale_to_best_metric), error = function(e){}))) return(r)
-  if (!is.null(r <- tryCatch(volume(x, unit, scale_to_best_metric), error = function(e){}))) return(r)
-  if (!is.null(r <- tryCatch(amount(x, unit, scale_to_best_metric), error = function(e){}))) return(r)
-  if (!is.null(r <- tryCatch(mass(x, unit, scale_to_best_metric), error = function(e){}))) return(r)
-  if (!is.null(r <- tryCatch(pressure(x, unit, scale_to_best_metric), error = function(e){}))) return(r)
-  if (!is.null(r <- tryCatch(solubility(x, unit, scale_to_best_metric), error = function(e){}))) return(r)
-  if (!is.null(r <- tryCatch(temperature(x, unit, scale_to_best_metric), error = function(e){}))) return(r)
-  if (!is.null(r <- tryCatch(molecular_mass(x, unit, scale_to_best_metric), error = function(e){}))) return(r)
+  if (!is(r <- try(molarity(x, unit, scale_to_best_metric), silent = TRUE), "try-error")) return(r)
+  if (!is(r <- try(density(x, unit, scale_to_best_metric), silent = TRUE), "try-error")) return(r)
+  if (!is(r <- try(volume(x, unit, scale_to_best_metric), silent = TRUE), "try-error")) return(r)
+  if (!is(r <- try(amount(x, unit, scale_to_best_metric), silent = TRUE), "try-error")) return(r)
+  if (!is(r <- try(mass(x, unit, scale_to_best_metric), silent = TRUE), "try-error")) return(r)
+  if (!is(r <- try(pressure(x, unit, scale_to_best_metric), silent = TRUE), "try-error")) return(r)
+  if (!is(r <- try(solubility(x, unit, scale_to_best_metric), silent = TRUE), "try-error")) return(r)
+  if (!is(r <- try(temperature(x, unit, scale_to_best_metric), silent = TRUE), "try-error")) return(r)
+  if (!is(r <- try(molecular_mass(x, unit, scale_to_best_metric), silent = TRUE), "try-error")) return(r)
   stop("Could not determine the appropriate quantity for unit ", unit)
 }
 
@@ -134,8 +134,17 @@ volume <- function(x, unit, scale_to_best_metric = TRUE) {
 #' @name quantities
 NULL
 pressure <- function(x, unit, scale_to_best_metric = TRUE) {
+  unit_conversion <- get_pressure_unit_conversion(unit)
+  q <- new("MediaToolsPressure", x * unit_conversion$conversion, unit = unit_conversion$unit)
+  if (scale_to_best_metric) q <- best_metric(q)
+  return(q)
+}
+
+# get conversion for pressure units
+get_pressure_unit_conversion <- function(unit) {
+  conversion <- 1
   prefix <- get_mediatools_constant("metric_prefix")
-  primary_units <- paste0(names(prefix), "bar")
+  primary_units <- paste0(names(prefix), get_base_unit(new("MediaToolsPressure")))
   secondary_units <- paste0(names(prefix), "Pa")
   alternative_units <- c("atm", "psi", "Torr", "mTorr")
   if (! unit %in% c(primary_units, secondary_units, alternative_units)) 
@@ -143,33 +152,40 @@ pressure <- function(x, unit, scale_to_best_metric = TRUE) {
   
   # alternative units
   if (unit == "mTorr") {
-    x <- x/1000
+    conversion <- conversion/1000
     unit <- "Torr"
   }
   
   if (unit %in% alternative_units) {
     c_factor <- get_mediatools_constant(paste0("bar_per_", unit))
-    x <- x * c_factor
+    conversion <- conversion * c_factor
     unit <- "bar"
   }
   
   # pascal
   if (unit %in% secondary_units) {
-    x <- x * get_mediatools_constant("bar_per_pa")
+    conversion <- conversion * get_mediatools_constant("bar_per_pa")
     unit <- primary_units[secondary_units == unit]
   }
   
-  q <- new("MediaToolsPressure", x, unit = unit)
-  if (scale_to_best_metric) q <- best_metric(q)
-  return(q)
+  return(list(unit = unit, conversion = conversion))
 }
 
 #' @details \emph{Henry's law solubility constant}: base unit \code{M/bar}, all metric prefixes allowed in the numerator, the common non-metric unit \code{M/atm} is also supported and will be automatically converted to \code{M/bar}.
 #' @name quantities
 NULL
 solubility <- function(x, unit, scale_to_best_metric = TRUE) {
+  unit_conversion <- get_solubility_unit_conversion(unit)
+  q <- new("MediaToolsSolubility", x * unit_conversion$conversion, unit = unit_conversion$unit)
+  if (scale_to_best_metric) q <- best_metric(q)
+  return(q)
+}
+
+# get conversion for solubility units
+get_solubility_unit_conversion <- function(unit) {
+  conversion <- 1
   prefix <- get_mediatools_constant("metric_prefix")
-  primary_units <- paste0(names(prefix), "M/bar")
+  primary_units <- paste0(names(prefix), get_base_unit(new("MediaToolsSolubility")))
   secondary_units <- paste0(names(prefix), "M/atm")
   if (! unit %in% c(primary_units, secondary_units)) 
     stop("not a known solubility unit: ", unit)
@@ -177,38 +193,51 @@ solubility <- function(x, unit, scale_to_best_metric = TRUE) {
   # alternative units
   if (unit %in% secondary_units) {
     c_factor <- get_mediatools_constant("bar_per_atm")
-    x <- x / c_factor
+    conversion <- conversion / c_factor
     unit <- primary_units[secondary_units == unit]
   }
   
-  q <- new("MediaToolsSolubility", x, unit = unit)
-  if (scale_to_best_metric) q <- best_metric(q)
-  return(q)
+  return(list(unit = unit, conversion = conversion))
 }
 
 #' @details \emph{temperature}: base unit \code{K} but also understands \code{C} and \code{F} and converts them to Kelvin
 #' @name quantities
 NULL
 temperature <- function(x, unit, scale_to_best_metric = TRUE) {
+  unit_conversion <- get_temperature_unit_conversion(unit)
+  q <- new("MediaToolsTemperature", unit_conversion$conversion_fwd(x), unit = unit_conversion$unit)
+  if (scale_to_best_metric) q <- best_metric(q)
+  return(q)
+}
+
+# get conversion for temperature units
+get_temperature_unit_conversion <- function(unit) {
+  conversion_fwd <- function(x) x
+  conversion_back <- function(x) x
   prefix <- get_mediatools_constant("metric_prefix")
-  primary_units <- paste0(names(prefix), "K")
+  primary_units <- paste0(names(prefix), get_base_unit(new("MediaToolsTemperature")))
   alternative_units <- c("C", "F")
   if (! unit %in% c(primary_units, alternative_units)) 
     stop("not a known temperature unit: ", unit)
   
   # alternative units
   if (unit == "C") {
-    x <- x - get_mediatools_constant("celsius_kelvin_offset")
+    conversion_fwd <- function(x) x - get_mediatools_constant("celsius_kelvin_offset")
+    conversion_back <- function(x) x + get_mediatools_constant("celsius_kelvin_offset")
     unit <- "K"
   } else if (unit == "F") {
-    x <- (x - get_mediatools_constant("fahrenheit_celsius_offset"))/get_mediatools_constant("fahrenheit_celsius_slope") - 
-      get_mediatools_constant("celsius_kelvin_offset") 
+    conversion_fwd <- function(x) {
+      (x - get_mediatools_constant("fahrenheit_celsius_offset"))/get_mediatools_constant("fahrenheit_celsius_slope") - 
+        get_mediatools_constant("celsius_kelvin_offset") 
+    }
+    conversion_back <- function(x) {
+      (x + get_mediatools_constant("celsius_kelvin_offset")) * get_mediatools_constant("fahrenheit_celsius_slope") + 
+        get_mediatools_constant("fahrenheit_celsius_offset")
+    }
     unit <- "K"
   }
   
-  q <- new("MediaToolsTemperature", x, unit = unit)
-  if (scale_to_best_metric) q <- best_metric(q)
-  return(q)
+  return(list(unit = unit, conversion_fwd = conversion_fwd, conversion_back = conversion_back))
 }
 
 # type checks =================
@@ -231,7 +260,51 @@ is_pressure <- function(x) is(x, "MediaToolsPressure")
 is_solubility <- function(x) is(x, "MediaToolsSolubility")
 is_temperature <- function(x) is(x, "MediaToolsTemperature")
 
-# S4 methods ========================
+
+# value return ======
+
+#' Retrieve quantity value
+#' 
+#' Get the value of a quantity in the desired unit. By default returns the quantity in the units it is in.
+#' @inheritParams qty
+#' @export
+get_qty_value <- function(q, unit) UseMethod("get_qty_value", q)
+
+#' @export
+get_qty_value.numeric <- function(q, unit) stop("not a quantity: ", class(q)[1], call. = FALSE)
+
+#' @export
+get_qty_value.MediaToolsQuantity <- function(q, unit = get_qty_units(q)) {
+  prefix <- get_unit_prefix(unit, get_base_unit(q))
+  scaling <- get_metric_scale_factor(q, prefix)
+  return(scaling * q@.Data)
+}
+
+#' @export
+get_qty_value.MediaToolsPressure <- function(q, unit = get_qty_units(q)) {
+  unit_conversion <- get_pressure_unit_conversion(unit)
+  unit <- unit_conversion$unit
+  x <- NextMethod()
+  return(x/unit_conversion$conversion)
+}
+
+#' @export
+get_qty_value.MediaToolsSolubility <- function(q, unit = get_qty_units(q)) {
+  unit_conversion <- get_solubility_unit_conversion(unit)
+  unit <- unit_conversion$unit
+  x <- NextMethod()
+  return(x/unit_conversion$conversion)
+}
+
+#' @export
+get_qty_value.MediaToolsTemperature <- function(q, unit = get_qty_units(q)) {
+  unit_conversion <- get_temperature_unit_conversion(unit)
+  unit <- unit_conversion$unit
+  x <- NextMethod()
+  return(unit_conversion$conversion_back(x))
+}
+
+# expand S4 methods ========================
 
 # allow quantity replication
 #' @export
@@ -291,16 +364,37 @@ c.MediaToolsQuantity <- function(...) {
 
 # unit retrieval ====================
 
-#' @describeIn quantities get units from a quantity or list of quantities (returns NA for objects that are not quantities)
+#' @describeIn quantities get untis from a quantity, list of quantities or data frame (returns NA for objects/columns that are not quantities)
 #' @param q quantity or list of quantities
 #' @export
 get_qty_units <- function(q) {
-  if (methods::is(q, "MediaToolsQuantity")) 
+  if (is_qty(q)) 
     return(q@unit)
   else if (is.list(q))
-    return(purrr::map_chr(q, ~if(methods::is(.x, "MediaToolsQuantity")) { .x@unit } else { NA_character_ }))
+    return(purrr::map_chr(q, ~if(is_qty(.x)) { .x@unit } else { NA_character_ }))
   else
     return(NA_character_)
+}
+
+#' @describeIn quantities get untis from a quantity, list of quantities or data frame, with a custom label in the format \code{label [units]}. Objects/columns that are not quantities simply return the label with out the [units] part.
+#' @param label text label to use with the units - single value or vector of the same length as \code{q}. By default uses the names of \code{q}, which only works if \code{q} is a list or data frame.
+#' @examples 
+#' # labels with units
+#' get_qty_units_with_label(qty(0.1, "mM"), "concentration")
+#' 
+#' # make labels with units for data frame columns
+#' x <- data.frame(a = qty(1, "mg"), b = 2, c = qty(100, "mbar"))
+#' get_qty_units_with_label(x, names(x)) 
+#' @export
+get_qty_units_with_label <- function(q, label = names(q)) {
+  units <- get_qty_units(q)
+  if (length(label) == 1 || length(label) == length(units)) {
+    
+  } else {
+    sprintf("incompatible number of labels (%d) provided for units (%d)", length(label), length(units)) %>% 
+      stop(call. = FALSE)
+  }
+  return(ifelse(is.na(units), label, sprintf("%s [%s]", label, units)))
 }
 
 # metric conversions ======================
@@ -312,21 +406,27 @@ get_qty_units <- function(q) {
 #' @name metric
 NULL
 
-#' @describeIn metric scale to a specific metrix prefix (from whatever the quantity is currently in)
-#' @param q the \link{quantity} to scale
-#' @param prefix a metric prefix (p, n, µ, m, k, M, etc.)
-#' @family functions
-#' @export
-scale_metric <- function (q, prefix = "") {
-
+# convenience function to determine metric scaling factor
+get_metric_scale_factor <- function(q, prefix) {
   metric_prefix <- get_mediatools_constant("metric_prefix")
-  if (!inherits(q, "MediaToolsQuantity")) stop("not a known type of quantity: ", class(q))
+  if (!is_qty(q)) stop("not a known type of quantity: ", class(q))
   if (! prefix %in% names(metric_prefix)) stop("not a known metric prefix: ", prefix)
   q_prefix <- get_prefix(q)
+  if (q_prefix == prefix) return(1) # already the requested metric (for speed)
   
   # conversion
   scale_factor <- metric_prefix[[which(names(metric_prefix)==q_prefix)]]/ # complication required because of unity unit with "" name
-               metric_prefix[[which(names(metric_prefix)==prefix)]]
+    metric_prefix[[which(names(metric_prefix)==prefix)]]
+  return(scale_factor)
+}
+
+#' @describeIn metric scale to a specific metrix prefix (from whatever the quantity is currently in)
+#' @param q the \link{quantity} to scale
+#' @param prefix a metric prefix (p, n, µ, m, k, M, etc.)
+#' @family quantities
+#' @export
+scale_metric <- function (q, prefix = "") {
+  scale_factor <- get_metric_scale_factor(q, prefix)
   q@.Data <- scale_factor * q@.Data
   q@unit <- paste0(prefix, get_base_unit(q))
   return(q)
@@ -336,7 +436,7 @@ scale_metric <- function (q, prefix = "") {
 #' if the quantity has a vector of values, scales to the best metric prefix for the median of all values
 #' @export
 best_metric <- function(q) {
-  if (!inherits(q, "MediaToolsQuantity")) stop("not a known type of quantity: ", class(q))
+  if (!is_qty(q)) stop("not a known type of quantity: ", class(q))
   prefix <- get_mediatools_constant("metric_prefix")
   if (length(q) == 0 || all(is.na(q) | is.infinite(q))) {
     ideal <- which(names(prefix) == "")
@@ -344,14 +444,16 @@ best_metric <- function(q) {
     values <- as.numeric(base_metric(q)) %>% { .[!is.infinite(.)] }
     ideal <- max(1, which( median(abs(values), na.rm = TRUE)/prefix >= 1))
   }
-  scale_metric(q, names(prefix)[ideal])
+  return(scale_metric(q, names(prefix)[ideal]))
 }
 
 
 #' @describeIn metric convert to base metric prefix of mediatools (i.e. to mol, L, etc.)
 #' @export
 base_metric <- function(q) {
-  scale_metric(q, prefix = "")
+  if (!is_qty(q)) stop("not a known type of quantity: ", class(q))
+  if (get_prefix(q) == "") return(q) # already base metric (fater this way)
+  else return(scale_metric(q, prefix = ""))
 }
 
 # Get the base unit of a quantiy
@@ -361,9 +463,15 @@ get_base_unit <- function(q) {
 
 # Get the prefix of a quantity
 get_prefix <- function(q) {
-  base_unit <- get_base_unit(q)
-  if (! grepl(paste0(base_unit, "$"), q@unit)) 
-    stop("not a valid unit: ", q@unit) # this should never happen
-  return(sub(paste0(base_unit, "$"), "", q@unit))
+  return(get_unit_prefix(q@unit, get_base_unit(q)))
 }
   
+# Get the prefix from a unit
+get_unit_prefix <- function(unit, base_unit) {
+  if (! grepl(paste0(base_unit, "$"), unit)) {
+    sprintf("not a valid unit for this quantity (base unit '%s'): %s", base_unit, unit) %>%
+      stop(call. = FALSE) 
+  }
+  return(sub(paste0(base_unit, "$"), "", unit))
+}
+
