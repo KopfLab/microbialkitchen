@@ -19,6 +19,8 @@ amount / volume = molarity, amount / molarity = volume, molarity * volume = amou
 mass / volume = density, mass / density = volume, density * volume = mass
 
 mass / molecular mass = amount, mass / amount = molecular mass, amount * molecular mass = mass
+
+molarity / pressure = solubility, solubility * pressure = molarity, molarity / solubility = pressure
 }
 \description{
 These arithmetic operators for quantities in mediatools keep track of units in standard operations (i.e. they ALL take the SI prefix into consideration). Also note that all operations that result in a new quantity object automatically scale the new value using \code{\link{best_metric}}.
@@ -51,6 +53,12 @@ These arithmetic operators for quantities in mediatools keep track of units in s
 \code{mass / amount} divice a mass by an amount (mols) to create a molecular mass.
 
 \code{amount * MW} multiply an amount (mols) by a molecular mass to create a mass.
+
+\code{molarity / pressure} divide a concentration by pressure to create a solubility (M/bar).
+
+\code{solubility * pressure} multiply a solubility (M/bar) by pressure (bar) to create molarity (M)
+
+\code{molarity / solubility} divide a molarity (M) by a solubility (M/bar) to get partial pressure (bar)
 }
 \examples{
 qty(1, "g") == qty(1000, "mg") # TRUE
@@ -68,4 +76,7 @@ qty(100, "ng/L") * qty(50, "mL") # 5 ng
 qty(10, "g") / qty (50, "g/mol") # 200 nmol
 qty(10, "g") / qty(200, "mmol") # 50 g/mol
 qty(200, "mmol") * qty (50, "g/mol") # 10 g
+qty(10, "mM") / qty(200, "mbar") # 50 mM/bar
+qty(10, "mM") / qty(50, "mM/bar") # 200 mbar
+qty(50, "mM/bar") * qty (200, "mbar") # 10 mM
 }

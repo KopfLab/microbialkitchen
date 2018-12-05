@@ -2,6 +2,7 @@ pandoc: 2.2.1
 pkgdown: 1.1.0
 pkgdown_sha: ~
 articles:
+  carbonate_chemistry: carbonate_chemistry.html
   operations: operations.html
   quantities: quantities.html
 urls:

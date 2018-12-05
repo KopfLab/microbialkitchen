@@ -24,6 +24,8 @@ navbar:
     href: articles/quantities.html
   - text: "Operations"
     href: articles/operations.html
+  - text: "Carbonate Chemistry"
+    href: articles/carbonate_chemistry.html
   right:
   - icon: fa-github fa-lg
     href: https://github.com/kopflab/mediatools

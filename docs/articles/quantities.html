@@ -35,7 +35,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mediatools</a>
-        <span class="label label-danger" data-toggle="tooltip" data-placement="bottom" title="in active development">0.2.1.9999</span>
+        <span class="label label-danger" data-toggle="tooltip" data-placement="bottom" title="in active development">0.3.0.9999</span>
       </span>
     </div>
 
@@ -49,6 +49,9 @@
 </li>
 <li>
   <a href="../articles/operations.html">Operations</a>
+</li>
+<li>
+  <a href="../articles/carbonate_chemistry.html">Carbonate Chemistry</a>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
@@ -72,7 +75,7 @@
     <div class="page-header toc-ignore">
       <h1>Quantities</h1>
             
-            <h4 class="date">2018-12-02</h4>
+            <h4 class="date">2018-12-05</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/kopflab/mediatools/blob/master/vignettes/quantities.Rmd"><code>vignettes/quantities.Rmd</code></a></small>
       <div class="hidden name"><code>quantities.Rmd</code></div>
@@ -174,24 +177,24 @@
 <a class="sourceLine" id="cb7-17" data-line-number="17"><span class="co">#&gt; Pressure [bar]</span></a>
 <a class="sourceLine" id="cb7-18" data-line-number="18"><span class="co">#&gt; [1] 1.01325</span></a></code></pre></div>
 </div>
-<div id="molecular-weight" class="section level2">
+<div id="molecular-mass" class="section level2">
 <h2 class="hasAnchor">
-<a href="#molecular-weight" class="anchor"></a>Molecular Weight</h2>
-<p>Molecular weight quantities use gram / mole <code>"g/mol"</code> as the base unit and the SI-accepted Dalton <code>"Da"</code> as a recognized alternative (1 Da = 1 g/mol). All standard metric prefixes are supported.</p>
+<a href="#molecular-mass" class="anchor"></a>Molecular Mass</h2>
+<p>Molecular mass (sometimes also called molar mass or molecular weight) quantities use gram / mole <code>"g/mol"</code> as the base unit and the SI-accepted Dalton <code>"Da"</code> as a recognized alternative (1 Da = 1 g/mol). All standard metric prefixes are supported.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">257</span>, <span class="st">"g/mol"</span>)</a>
-<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="co">#&gt; MolecularWeight [g/mol]</span></a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="co">#&gt; MolecularMass [g/mol]</span></a>
 <a class="sourceLine" id="cb8-3" data-line-number="3"><span class="co">#&gt; [1] 257</span></a>
 <a class="sourceLine" id="cb8-4" data-line-number="4"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="fl">4.2</span>, <span class="st">"kg/mol"</span>)</a>
-<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="co">#&gt; MolecularWeight [kg/mol]</span></a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="co">#&gt; MolecularMass [kg/mol]</span></a>
 <a class="sourceLine" id="cb8-6" data-line-number="6"><span class="co">#&gt; [1] 4.2</span></a>
 <a class="sourceLine" id="cb8-7" data-line-number="7"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="fl">4.2</span>, <span class="st">"kDa"</span>)</a>
-<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="co">#&gt; MolecularWeight [kg/mol]</span></a>
+<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="co">#&gt; MolecularMass [kg/mol]</span></a>
 <a class="sourceLine" id="cb8-9" data-line-number="9"><span class="co">#&gt; [1] 4.2</span></a></code></pre></div>
 </div>
 <div id="concentration" class="section level2">
 <h2 class="hasAnchor">
 <a href="#concentration" class="anchor"></a>Concentration</h2>
-<p>The two most common concentration measurements in culturing and media chemistry are amount-based and weight-based concentrations, i.e. amount/volume (molarity) and mass/volume (~density). Both are supported quantities and can be interconverted from one to the other using molecular weights (see the <a href="operations.html#units-metric-scaling">arithmetic section</a> of the <a href="operations.html">operations vignette</a> for details).</p>
+<p>The two most common concentration measurements in culturing and media chemistry are amount-based and mass-based concentrations, i.e. amount/volume (molarity) and mass/volume (~density). Both are supported quantities and can be interconverted from one to the other using molecular masses (see the <a href="operations.html#units-metric-scaling">arithmetic section</a> of the <a href="operations.html">operations vignette</a> for details).</p>
 <div id="amount-based-molarity" class="section level3">
 <h3 class="hasAnchor">
 <a href="#amount-based-molarity" class="anchor"></a>Amount-based (molarity)</h3>
@@ -215,6 +218,17 @@
 <a class="sourceLine" id="cb10-6" data-line-number="6"><span class="co">#&gt; [1] 5</span></a></code></pre></div>
 </div>
 </div>
+<div id="solubility" class="section level2">
+<h2 class="hasAnchor">
+<a href="#solubility" class="anchor"></a>Solubility</h2>
+<p>Solubility quantities (i.e. Henry’s law solubility constants) use the non-SI but metric unit <code>"M/bar"</code> as base unit. However, solubility quantities can also be generated from the common non-metric unit <code>"M/atm"</code>, which is automatically converted to <code>M/bar</code>. All standard metric prefixes are supported in the numerator for both <code>"M/bar"</code> and <code>"M/atm"</code>.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">5</span>, <span class="st">"mM/bar"</span>)</a>
+<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="co">#&gt; Solubility [mM/bar]</span></a>
+<a class="sourceLine" id="cb11-3" data-line-number="3"><span class="co">#&gt; [1] 5</span></a>
+<a class="sourceLine" id="cb11-4" data-line-number="4"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">5</span>, <span class="st">"mM/atm"</span>)</a>
+<a class="sourceLine" id="cb11-5" data-line-number="5"><span class="co">#&gt; Solubility [mM/bar]</span></a>
+<a class="sourceLine" id="cb11-6" data-line-number="6"><span class="co">#&gt; [1] 4.934616</span></a></code></pre></div>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -227,8 +241,9 @@
       <li><a href="#volume">Volume</a></li>
       <li><a href="#temperature">Temperature</a></li>
       <li><a href="#pressure">Pressure</a></li>
-      <li><a href="#molecular-weight">Molecular Weight</a></li>
+      <li><a href="#molecular-mass">Molecular Mass</a></li>
       <li><a href="#concentration">Concentration</a></li>
+      <li><a href="#solubility">Solubility</a></li>
       </ul>
 </div>
       </div>

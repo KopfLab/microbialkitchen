@@ -4,8 +4,8 @@
 # mediatools
 
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/mediatools)](https://cran.r-project.org/package=mediatools)
-[![Git\_Hub\_Version](https://img.shields.io/badge/GitHub-0.2.0.9999-orange.svg?style=flat-square)](/commits)
-[![Last-Update](https://img.shields.io/badge/updated-2018--11--05-yellowgreen.svg)](/commits)
+[![Git\_Hub\_Version](https://img.shields.io/badge/GitHub-0.3.0.9999-orange.svg?style=flat-square)](/commits)
+[![Last-Update](https://img.shields.io/badge/updated-2018--12--05-yellowgreen.svg)](/commits)
 [![Documentation](https://img.shields.io/badge/docs-online-green.svg)](https://kopflab.github.io/mediatools/reference/)
 [![Build
 Status](https://travis-ci.org/KopfLab/mediatools.svg?branch=master)](https://travis-ci.org/KopfLab/mediatools)
@@ -42,10 +42,14 @@ devtools::install_github("KopfLab/mediatools")
 ## Functionality
 
   - [function
-    reference](https://kopflab.github.io/mediatools/reference/)
+    reference](https://kopflab.github.io/mediatools/reference/) for
+    details on all functions
   - [quantities
     vignette](https://kopflab.github.io/mediatools/articles/quantities.html)
     on built-in chemical quantities
   - [operations
     vignette](https://kopflab.github.io/mediatools/articles/operations.html)
+    on working with quantities
+  - [carbonate chemistry
+    vignette](https://kopflab.github.io/mediatools/articles/carbonate_chemistry.html)
     on working with quantities

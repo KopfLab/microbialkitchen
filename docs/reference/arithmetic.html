@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mediatools</a>
-        <span class="label label-danger" data-toggle="tooltip" data-placement="bottom" title="in active development">0.2.1.9999</span>
+        <span class="label label-danger" data-toggle="tooltip" data-placement="bottom" title="in active development">0.3.0.9999</span>
       </span>
     </div>
 
@@ -85,6 +85,9 @@
 </li>
 <li>
   <a href="../articles/operations.html">Operations</a>
+</li>
+<li>
+  <a href="../articles/carbonate_chemistry.html">Carbonate Chemistry</a>
 </li>
       </ul>
       
@@ -132,7 +135,9 @@ amount / volume = molarity, amount / molarity = volume, molarity * volume = amou
 
 mass / volume = density, mass / density = volume, density * volume = mass
 
-mass / MW = amount, mass / amount = MW, amount * MW = mass</pre>
+mass / molecular mass = amount, mass / amount = molecular mass, amount * molecular mass = mass
+
+molarity / pressure = solubility, solubility * pressure = molarity, molarity / solubility = pressure</pre>
         
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
@@ -147,9 +152,12 @@ mass / MW = amount, mass / amount = MW, amount * MW = mass</pre>
 <p><code>mass / volume</code> divide a mass by a volume to create a density (concentration).</p>
 <p><code>mass / density</code> divide a mass by a density to create a volume.</p>
 <p><code>density * volume</code> multiply a density by a volume (or the other way around) to create a mass.</p>
-<p><code>mass / MW</code> divide a mass by a molecular weight to create an amount (mols).</p>
-<p><code>mass / amount</code> divice a mass by an amount (mols) to create a molecular weight.</p>
-<p><code>amount * MW</code> multiply an amount (mols) by a molecular weight to create a mass.</p>
+<p><code>mass / MW</code> divide a mass by a molecular mass to create an amount (mols).</p>
+<p><code>mass / amount</code> divice a mass by an amount (mols) to create a molecular mass.</p>
+<p><code>amount * MW</code> multiply an amount (mols) by a molecular mass to create a mass.</p>
+<p><code>molarity / pressure</code> divide a concentration by pressure to create a solubility (M/bar).</p>
+<p><code>solubility * pressure</code> multiply a solubility (M/bar) by pressure (bar) to create molarity (M)</p>
+<p><code>molarity / solubility</code> divide a molarity (M) by a solubility (M/bar) to get partial pressure (bar)</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -163,8 +171,11 @@ mass / MW = amount, mass / amount = MW, amount * MW = mass</pre>
 #&gt; [1] 100</div><div class='input'><span class='fu'><a href='quantities.html'>qty</a></span>(<span class='fl'>5</span>, <span class='st'>"ng"</span>) / <span class='fu'><a href='quantities.html'>qty</a></span>(<span class='fl'>100</span>, <span class='st'>"ng/L"</span>) <span class='co'># 50 mL</span></div><div class='output co'>#&gt; Volume [mL]
 #&gt; [1] 50</div><div class='input'><span class='fu'><a href='quantities.html'>qty</a></span>(<span class='fl'>100</span>, <span class='st'>"ng/L"</span>) * <span class='fu'><a href='quantities.html'>qty</a></span>(<span class='fl'>50</span>, <span class='st'>"mL"</span>) <span class='co'># 5 ng</span></div><div class='output co'>#&gt; Mass [ng]
 #&gt; [1] 5</div><div class='input'><span class='fu'><a href='quantities.html'>qty</a></span>(<span class='fl'>10</span>, <span class='st'>"g"</span>) / <span class='fu'><a href='quantities.html'>qty</a></span> (<span class='fl'>50</span>, <span class='st'>"g/mol"</span>) <span class='co'># 200 nmol</span></div><div class='output co'>#&gt; Amount [mmol]
-#&gt; [1] 200</div><div class='input'><span class='fu'><a href='quantities.html'>qty</a></span>(<span class='fl'>10</span>, <span class='st'>"g"</span>) / <span class='fu'><a href='quantities.html'>qty</a></span>(<span class='fl'>200</span>, <span class='st'>"mmol"</span>) <span class='co'># 50 g/mol</span></div><div class='output co'>#&gt; MolecularWeight [g/mol]
+#&gt; [1] 200</div><div class='input'><span class='fu'><a href='quantities.html'>qty</a></span>(<span class='fl'>10</span>, <span class='st'>"g"</span>) / <span class='fu'><a href='quantities.html'>qty</a></span>(<span class='fl'>200</span>, <span class='st'>"mmol"</span>) <span class='co'># 50 g/mol</span></div><div class='output co'>#&gt; MolecularMass [g/mol]
 #&gt; [1] 50</div><div class='input'><span class='fu'><a href='quantities.html'>qty</a></span>(<span class='fl'>200</span>, <span class='st'>"mmol"</span>) * <span class='fu'><a href='quantities.html'>qty</a></span> (<span class='fl'>50</span>, <span class='st'>"g/mol"</span>) <span class='co'># 10 g</span></div><div class='output co'>#&gt; Mass [g]
+#&gt; [1] 10</div><div class='input'><span class='fu'><a href='quantities.html'>qty</a></span>(<span class='fl'>10</span>, <span class='st'>"mM"</span>) / <span class='fu'><a href='quantities.html'>qty</a></span>(<span class='fl'>200</span>, <span class='st'>"mbar"</span>) <span class='co'># 50 mM/bar</span></div><div class='output co'>#&gt; Solubility [mM/bar]
+#&gt; [1] 50</div><div class='input'><span class='fu'><a href='quantities.html'>qty</a></span>(<span class='fl'>10</span>, <span class='st'>"mM"</span>) / <span class='fu'><a href='quantities.html'>qty</a></span>(<span class='fl'>50</span>, <span class='st'>"mM/bar"</span>) <span class='co'># 200 mbar</span></div><div class='output co'>#&gt; Pressure [mbar]
+#&gt; [1] 200</div><div class='input'><span class='fu'><a href='quantities.html'>qty</a></span>(<span class='fl'>50</span>, <span class='st'>"mM/bar"</span>) * <span class='fu'><a href='quantities.html'>qty</a></span> (<span class='fl'>200</span>, <span class='st'>"mbar"</span>) <span class='co'># 10 mM</span></div><div class='output co'>#&gt; Molarity [mM]
 #&gt; [1] 10</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

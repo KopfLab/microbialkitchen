@@ -41,6 +41,7 @@ calculate_ideal_gas_amount <- function(pressure, temperature, volume) {
 #' @param temperature temperature quantity
 #' @family calculations
 #' @return solubility quantity
+#' @export
 calculate_solubility <- function(gas, temperature) {
   
   # consider storing more centrally for easy modification/extension?
