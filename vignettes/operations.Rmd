@@ -48,12 +48,16 @@ qty(0, "C") %>% get_qty_value("F") # or use it for unit conversion
 qty(760, "Torr") %>% get_qty_value("atm") # or use it for unit conversion
 ```
 
-To retrieven numeric values as text that includes their units, simply use `get_qty_text()` instead of `get_qty_value()`.
+To retrieven numeric values as text that includes their units, simply use `get_qty_text()` instead of `get_qty_value()`. This also works well using a lists of quantities to generate e.g. axis tick mark labels with the ideal unit.
 
 ```{r}
+# get quantity with unit
 qty(100, "mg") %>% get_qty_text()
 qty(0:10, "C") %>% get_qty_text("F")
 qty(760, "Torr") %>% get_qty_text("atm")
+
+# use list e.g. for axis tick mark labels
+10^(-9:0) %>% map(qty, "M") %>% map_chr(get_qty_text)
 ```
 
 The units of a quantity object can also be retrieved directly with the `get_qty_units()` function for a single quantity, list of quantities as well as entire data frames (see details on the latter in the [data frames section](#data-frames)).
@@ -68,7 +72,7 @@ x <- list(
 x %>% get_qty_units()
 ```
 
-For easy construction of plot labels, the function `get_qty_units_with_label()` further provides an easy way to combine labels with the units. By default (for lists and data frames), it uses the names of the list/data frame.
+For easy construction of plot axis or legend labels, the function `get_qty_units_with_label()` further provides an easy way to combine labels with the units. By default (for lists and data frames), it uses the names of the list variable/data frame columns (see details on the latter in the [data frames section](#data-frames)).
 
 ```{r}
 qty(5000, "g") %>% get_qty_units_with_label("weight")
@@ -182,7 +186,7 @@ data_frame(
 This also means that all common arithmetic operations are allowed within data frames.
 
 ```{r}
-data_frame(
+df <- data_frame(
   weight = qty(1:5, "mg"),
   vol = qty(20, "mL"),
   mw = qty(500, "g/mol"),
@@ -192,7 +196,16 @@ data_frame(
   new_weight = conc * new_vol * mw,
   `correct?` = abs(50 * weight - new_weight) < qty(1, "fg")
 )
+df
 ```
+
+To get the quantities' units or full labels, simply use `get_qty_units()` and `get_qty_units_with_label()`
+
+```{r}
+df %>% get_qty_units()
+df %>% get_qty_units_with_label()
+```
+
 
 ## Concatenation
 
