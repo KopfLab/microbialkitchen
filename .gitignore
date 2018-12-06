@@ -40,4 +40,5 @@ packrat/src/
 !documents/*
 # allow rendered html files in docs
 !docs/**/*.html
+!docs/**/*.png
 inst/doc
