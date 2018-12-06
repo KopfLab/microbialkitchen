@@ -2,7 +2,7 @@ Package: mediatools
 Type: Package
 Title: Culture media calculations.
 Description: Package to simplify working with defined culture medium.
-Version: 0.3.0.9999
+Version: 0.3.1.9999
 Authors@R: person("Sebastian", "Kopf", email = "sebastian.kopf@colorado.edu",
     role = c("aut", "cre"))
 URL: https://github.com/kopflab/mediatools
