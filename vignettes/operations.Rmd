@@ -37,13 +37,15 @@ qty(100, "mM") %>% base_metric() # scale to the base unit (here M)
 qty(100, "mg") %>% scale_metric("k")
 ```
 
-The actual numeric value of a quantity can be retrieved via the `get_qty_value()` function which takes an optional parameter to specify which unit the value should be retrieved in (by default it is the unit that the quantity is currently in).
+The actual numeric value of a quantity can be retrieved via the `get_qty_value()` function which takes an optional parameter to specify which unit the value should be retrieved in (by default it is the unit that the quantity is currently in). Additionally, a transformation function can be specified for easy log or other transformations.
 
 ```{r}
 qty(100, "mg") %>% get_qty_value() # returns 100
 qty(0.1, "g") %>% get_qty_value() # returns 100 because the units are "mg"
 qty(0.1, "g") %>% get_qty_value("g") # better to be specific upon retrieval
+qty(0.1, "g") %>% get_qty_value("g", log10) # applies a log10 transform
 qty(0.1, "g") %>% get_qty_value("kg") # can use any valid unit
+qty(0.1, "g") %>% get_qty_value("kg", sqrt) # and any transformation
 qty(0, "C") %>% get_qty_value("F") # or use it for unit conversion
 qty(760, "Torr") %>% get_qty_value("atm") # or use it for unit conversion
 ```

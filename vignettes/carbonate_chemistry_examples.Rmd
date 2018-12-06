@@ -30,6 +30,8 @@ library(mediatools)
 
 # CO2 solubility
 
+[See equations](carbonate_chemistry_equations.html#co_2-solubility).
+
 ```{r "henry", fig.width=8, fig.height=6}
 solubilities <- data_frame(
   temperature = seq(from = 0, to = 40, by = 5) %>% qty("C"),
@@ -47,15 +49,17 @@ ggplot(solubilities) +
 
 # Speciation
 
+[See equations](carbonate_chemistry_equations.html#speciation).
+
 ```{r "speciation", fig.width=8, fig.height=6}
 # calculate
 df_speciation <- 
   data_frame(
     pH = seq(3, 14, by = 0.1),
     DIC = qty(10, "mM"),
-    `H2CO3*` = calculate_carbonic_acid(pH, DIC = DIC, temp = temperature),
-    HCO3 = calculate_bicarbonate(pH, DIC = DIC, temp = temperature),
-    CO3 = calculate_carbonate(pH, DIC = DIC, temp = temperature)
+    `H2CO3*` = calculate_carbonic_acid(pH, DIC = DIC),
+    HCO3 = calculate_bicarbonate(pH, DIC = DIC),
+    CO3 = calculate_carbonate(pH, DIC = DIC)
   ) 
 
 # visualize
@@ -75,6 +79,8 @@ df_speciation %>%
 
 
 # Open system
+
+[See equations](carbonate_chemistry_equations.html#open-system).
 
 ## CO2 only
 
@@ -311,17 +317,172 @@ p %+% df_pH_switch %+%
 
 # Closed system
 
-Work in progres...
+[See equations](carbonate_chemistry_equations.html#closed-system).
 
 ## CO2 consumption
+
+Scenario: media is equilibrated with an initial CO2 pressure and adjusted to a specific starting pH (which requires the appropriate addition of alkalinity) in presence or absence of a pH buffer. Then the vessel is closed off and has a starting total inorganic carbon from its headspace and liquid that can then be consumed. Here a few parameters are explored but additional variation will arise from changes in buffer concentration, pKa and the proportion of headspace to liquid.
+
+```{r "CO2 consumption", fig.width = 9, fig.height=8}
+df_CO2_consumption <-
+  crossing(
+    data_frame(
+      # initial medium
+      pH_start = 7,
+      pCO2_start = qty(c(0.4, 50, 200), "mbar")
+    ),
+    data_frame(
+      # buffer
+      buffer = qty(c(0, 50), "mM"),
+      pKa = 7.5
+    )
+  ) %>% 
+  mutate(
+    # required alkalinity for pH
+    pH_start = 7,
+    alkalinity = calculate_open_system_alkalinity(
+      pH = pH_start, pCO2 = pCO2_start, 
+      buffer = buffer, buffer_pKa = pKa),
+    # close off
+    V_liquid = qty(10, "mL"),
+    V_gas = qty(10, "mL"),
+    TIC_start = calculate_closed_system_TIC(pH = pH_start, pCO2 = pCO2_start, V_liquid = V_liquid, V_gas = V_gas)
+  ) %>% 
+  # range of TIC used up (%)
+  crossing(TIC_used = seq(0, 1, by = 0.01)) %>% 
+  # calculation of system at each point
+  mutate(
+    TIC = TIC_start * (1-TIC_used),
+    pH = calculate_closed_system_pH(
+      TIC = TIC, V_liquid = V_liquid, V_gas = V_gas, 
+      alkalinity = alkalinity, buffer = buffer, buffer_pKa = pKa),
+    pCO2 = calculate_closed_system_pCO2(pH = pH, TIC = TIC, V_liquid = V_liquid, V_gas = V_gas),
+    DIC = calculate_DIC(pH, pCO2 = pCO2),
+    `H2CO3*` = calculate_carbonic_acid(pH, DIC = DIC),
+    HCO3 = calculate_bicarbonate(pH, DIC = DIC),
+    CO3 = calculate_carbonate(pH, DIC = DIC)
+  )
+
+# visualize
+df_CO2_consumption %>% 
+  # convert units in preparation for gathering
+  mutate(
+    pCO2_start = get_qty_text(pCO2_start, "mbar") %>% as_factor(),
+    buffer = get_qty_text(buffer, "mM") %>% paste0(" (pKa=", pKa, ")") %>% as_factor()
+  ) %>% 
+  mutate_if(is_molarity, get_qty_value, "M", log10) %>% 
+  mutate_if(is_pressure, get_qty_value, "bar", log10) %>% 
+  gather(var, val, pH, pCO2, DIC, `H2CO3*`, HCO3, CO3) %>% 
+  # avoid extremes
+  filter(!(var == "pCO2" & val < -7), !(var == "H2CO3*" & val < -8)) %>% 
+  # make sensible panels
+  mutate(panel = case_when(var %in% c("pH", "pCO2") ~ var, TRUE ~ "inorganic carbon")) %>% 
+  ggplot() +
+  aes(TIC_used, val, color = var, linetype = buffer) +
+  geom_line() +
+  scale_x_continuous("TIC consumed", labels = scales::percent, expand = c(0, 0)) +
+  scale_y_continuous(
+    breaks = c(-12:0, 7:14),
+    labels = function(labels,...) {
+    if (max(labels, na.rm = TRUE) == -1) { # pCO2
+      return(make_qty_text_labeller(qty(1, "bar"))(10^labels))
+    } else if (min(labels, na.rm = TRUE) == 7) { # pH
+      return(labels)
+    } else { # inorganic carbon
+      return(make_qty_text_labeller(qty(1, "M"))(10^labels))
+    }
+    labels
+  }, expand = c(0, 0)) +
+  facet_grid(panel ~ pCO2_start, scales = "free_y") +
+  theme_bw() + theme(panel.grid.minor = element_blank()) +
+  labs(y = "", color = "", title = "CO2 consumption in closed system")
+```
 
 
 ## CO2 production
 
+Scenario: media with organic substrate (e.g. a sugar) is adjusted to an initial starting pH (which requires the appropriate addition of alkalinity) in presence or absence of a pH buffer. Then the vessel is closed off and CO2 is produced from the organic substrate (assuming the entire organic pool is respirable).
+
+```{r "CO2 consumption", fig.width = 9, fig.height=8}
+df_CO2_production <-
+  crossing(
+    data_frame(
+      # initial medium
+      pH_start = 7,
+      Corg = qty(c(1, 10, 100), "mM") # respirable carbon molarity
+    ),
+    data_frame(
+      # buffer
+      buffer = qty(c(0, 50), "mM"),
+      pKa = 7.5
+    )
+  ) %>% 
+  mutate(
+    # required alkalinity for pH adjustment
+    pH_start = 7,
+    pCO2_start = qty(0.4, "mbar"), # atmospheric
+    alkalinity = calculate_open_system_alkalinity(
+      pH = pH_start, pCO2 = pCO2_start, 
+      buffer = buffer, buffer_pKa = pKa),
+    # close off
+    V_liquid = qty(10, "mL"),
+    V_gas = qty(10, "mL"),
+    TIC_start = calculate_closed_system_TIC(pH = pH_start, pCO2 = pCO2_start, V_liquid = V_liquid, V_gas = V_gas)
+  ) %>% 
+  # range of organics respired (%)
+  crossing(Corg_used = seq(0, 1, by = 0.01)) %>% 
+  # calculation of system at each point
+  mutate(
+    TIC = TIC_start + Corg * V_liquid * Corg_used,
+    pH = calculate_closed_system_pH(
+      TIC = TIC, V_liquid = V_liquid, V_gas = V_gas, 
+      alkalinity = alkalinity, buffer = buffer, buffer_pKa = pKa),
+    pCO2 = calculate_closed_system_pCO2(pH = pH, TIC = TIC, V_liquid = V_liquid, V_gas = V_gas),
+    DIC = calculate_DIC(pH, pCO2 = pCO2),
+    `H2CO3*` = calculate_carbonic_acid(pH, DIC = DIC),
+    HCO3 = calculate_bicarbonate(pH, DIC = DIC),
+    CO3 = calculate_carbonate(pH, DIC = DIC)
+  )
+
+# visualize
+df_CO2_production %>% 
+  # convert units in preparation for gathering
+  mutate(
+    Corg = get_qty_text(Corg, "mM") %>% paste("organic carbon") %>% as_factor(),
+    buffer = get_qty_text(buffer, "mM") %>% paste0(" (pKa=", pKa, ")") %>% as_factor()
+  ) %>% 
+  mutate_if(is_molarity, get_qty_value, "M", log10) %>% 
+  mutate_if(is_pressure, get_qty_value, "bar", log10) %>% 
+  gather(var, val, pH, pCO2, `H2CO3*`, HCO3, CO3) %>% 
+  # avoid extremes
+  filter(!(var == "pCO2" & val < -7), !(var == "H2CO3*" & val < -8)) %>% 
+  # make sensible panels
+  mutate(panel = case_when(var %in% c("pH", "pCO2") ~ var, TRUE ~ "inorganic carbon")) %>% 
+  ggplot() +
+  aes(Corg_used, val, color = var, linetype = buffer) +
+  geom_line() +
+  scale_x_continuous("Organic C consumed", labels = scales::percent, expand = c(0, 0)) +
+  scale_y_continuous(
+    breaks = c(-12:0, 1:7),
+    labels = function(labels,...) {
+      if (max(labels, na.rm = TRUE) == 0) { # pCO2
+        return(make_qty_text_labeller(qty(1, "bar"))(10^labels))
+      } else if (max(labels, na.rm = TRUE) == 7) { # pH
+        return(labels)
+      } else { # inorganic carbon
+        return(make_qty_text_labeller(qty(1, "M"))(10^labels))
+      }
+  }, expand = c(0, 0)) +
+  facet_grid(panel ~ Corg, scales = "free_y") +
+  theme_bw() + theme(panel.grid.minor = element_blank()) +
+  labs(y = "", color = "", title = "CO2 production in closed system")
+```
 
 ## CO2 loss through headspace exchange
 
+Coming soon...
 
 ## CO2 gain through headspace exchange
 
+Coming soon...
 

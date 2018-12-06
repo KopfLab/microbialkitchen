@@ -147,6 +147,8 @@ $$
 
 The above equations also hold for closed systems at equlibratium except that mass balance constraints (total inorganic carbon = **TIC**) must be taken into consideration for the gas phase in addition to the liquid phase. This is rarely a relevant environmental scenario but frequently applicable in laboratory settings.
 
+Note: alkalinity is a conservative quantity so although TIC will change with microbial production and consumption, the alkalinity will stay the same as long as there is no mineral precipitation. 
+
 ## Limited volume vessel
 
 Note: this is a typical culturing scenario - certain amount of headspace and liquid with an initial infusion of CO$_2$ that gets equilibrated in the vessel. Note that at relatively high partial pressures and/or large headspaces, this scenario is well approximated by the open system solutions. The charge balance / alkalinity constraints remain the same as in the open system:
