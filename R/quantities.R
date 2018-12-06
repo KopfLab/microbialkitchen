@@ -297,42 +297,43 @@ is_temperature <- function(q) is(q, "MediaToolsTemperature")
 #' @details \code{get_qty_value}: get the value of a quantity in the desired unit. By default returns the quantity in the units it is in.
 #' @name quantity_info
 #' @inheritParams qty
+#' @param transform whether to transform the value with an additional function once in the desired units. Common transformation examples are log10 and log (natural log) but custom transformations are also possible. Default is NO transformation (\link[identity]).
 #' @family quantity functions
 #' @export
-get_qty_value <- function(q, unit = get_qty_units(q)) UseMethod("get_qty_value", q)
+get_qty_value <- function(q, unit = get_qty_units(q), transform = identity) UseMethod("get_qty_value", q)
 
 #' @export
-get_qty_value.numeric <- function(q, unit = get_qty_units(q)) stop("not a quantity: ", class(q)[1], call. = FALSE)
+get_qty_value.numeric <- function(q, unit = get_qty_units(q), transform = identity) stop("not a quantity: ", class(q)[1], call. = FALSE)
 
 #' @export
-get_qty_value.MediaToolsQuantity <- function(q, unit = get_qty_units(q)) {
+get_qty_value.MediaToolsQuantity <- function(q, unit = get_qty_units(q), transform = identity) {
   prefix <- get_unit_prefix(unit, get_base_unit(q))
   scaling <- get_metric_scale_factor(q, prefix)
-  return(scaling * q@.Data)
+  return(transform(q@.Data * scaling))
 }
 
 #' @export
-get_qty_value.MediaToolsPressure <- function(q, unit = get_qty_units(q)) {
+get_qty_value.MediaToolsPressure <- function(q, unit = get_qty_units(q), transform = identity) {
   unit_conversion <- get_pressure_unit_conversion(unit)
-  unit <- unit_conversion$unit
-  x <- NextMethod()
-  return(x/unit_conversion$conversion)
+  prefix <- get_unit_prefix(unit_conversion$unit, get_base_unit(q))
+  scaling <- get_metric_scale_factor(q, prefix)
+  return(transform(q@.Data * scaling/unit_conversion$conversion))
 }
 
 #' @export
-get_qty_value.MediaToolsSolubility <- function(q, unit = get_qty_units(q)) {
+get_qty_value.MediaToolsSolubility <- function(q, unit = get_qty_units(q), transform = identity) {
   unit_conversion <- get_solubility_unit_conversion(unit)
-  unit <- unit_conversion$unit
-  x <- NextMethod()
-  return(x/unit_conversion$conversion)
+  prefix <- get_unit_prefix(unit_conversion$unit, get_base_unit(q))
+  scaling <- get_metric_scale_factor(q, prefix)
+  return(transform(q@.Data * scaling/unit_conversion$conversion))
 }
 
 #' @export
-get_qty_value.MediaToolsTemperature <- function(q, unit = get_qty_units(q)) {
+get_qty_value.MediaToolsTemperature <- function(q, unit = get_qty_units(q), transform = identity) {
   unit_conversion <- get_temperature_unit_conversion(unit)
-  unit <- unit_conversion$unit
-  x <- NextMethod()
-  return(unit_conversion$conversion_back(x))
+  prefix <- get_unit_prefix(unit_conversion$unit, get_base_unit(q))
+  scaling <- get_metric_scale_factor(q, prefix)
+  return(transform(unit_conversion$conversion_back(q@.Data * scaling)))
 }
 
 #' @details \code{get_qty_text}: get the value of the quantity in the desired unit as a text string with the unit appended

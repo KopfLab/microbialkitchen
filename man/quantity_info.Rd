@@ -8,7 +8,7 @@
 \alias{get_qty_units_with_label}
 \title{Get quantity information}
 \usage{
-get_qty_value(q, unit = get_qty_units(q))
+get_qty_value(q, unit = get_qty_units(q), transform = identity)
 
 get_qty_text(q, unit = get_qty_units(q), signif = 5)
 
@@ -20,6 +20,8 @@ get_qty_units_with_label(q, label = names(q))
 \item{q}{quantity or list of quantities}
 
 \item{unit}{the unit of the quantity}
+
+\item{transform}{whether to transform the value with an additional function once in the desired units. Common transformation examples are log10 and log (natural log) but custom transformations are also possible. Default is NO transformation (\link[identity]).}
 
 \item{signif}{number of significant digits for printing the quantity}
 

@@ -17,6 +17,7 @@ test_that("Testing that units work and can be metric scaled", {
   expect_error({a <- molarity(1, "mM"); a@unit <- "J"; scale_metric(a, "m")}, "not a valid unit")
   expect_equal(scale_metric(molarity(1, "mM"), "n") %>% get_qty_units(), "nM")
   expect_equal(scale_metric(molarity(1, "mM"), "n") %>% get_qty_value(), 1e6)
+  expect_equal(scale_metric(molarity(1, "mM"), "n") %>% get_qty_value(transform = log10), 6)
   expect_equal(scale_metric(molarity(1, "M"), "m") %>% get_qty_value(), 1e3)
   expect_equal(scale_metric(molarity(1, "\U00B5M"), "") %>% get_qty_value(), 1e-6)
   expect_error(base_metric(1), "not a known type of quantity")
@@ -34,7 +35,11 @@ test_that("Testing that units work and can be metric scaled", {
   expect_equal(density(1, "ng/l") %>% get_qty_units(), "ng/L")
   expect_equal(density(0.1, "ng/L") %>% get_qty_units(), "pg/L")
   expect_equal(density(0.1, "ng/L") %>% get_qty_value(), 100)
+  expect_equal(density(0.1, "ng/L") %>% get_qty_value(), 100)
+  expect_equal(density(0.1, "ng/L") %>% get_qty_value(transform = log10), 2)
   expect_equal(density(0.1, "ng/L") %>% get_qty_value("ng/L"), 0.1)
+  expect_equal(density(0.1, "ng/L") %>% get_qty_value("ng/L", log10), -1)
+  expect_equal(density(0.1, "ng/L") %>% get_qty_value("ng/L", function(x) x*10), 1)
   
   # amout
   expect_error(amount(1, "J"), "not a known amount unit")
