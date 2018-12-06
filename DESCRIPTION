@@ -13,6 +13,7 @@ Imports:
     rlang,
     magrittr,
     purrr,
+    forcats,
     dplyr,
     stringr,
     glue,
@@ -37,3 +38,4 @@ Collate:
     'package.R'
     'quantities.R'
     'utils.R'
+    'visualization.R'
