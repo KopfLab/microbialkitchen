@@ -48,16 +48,24 @@ qty(0, "C") %>% get_qty_value("F") # or use it for unit conversion
 qty(760, "Torr") %>% get_qty_value("atm") # or use it for unit conversion
 ```
 
-To retrieven numeric values as text that includes their units, simply use `get_qty_text()` instead of `get_qty_value()`. This also works well using a lists of quantities to generate e.g. axis tick mark labels with the ideal unit.
+To retrieven numeric values as text that includes their units, simply use `get_qty_text()` instead of `get_qty_value()`. 
 
 ```{r}
 # get quantity with unit
 qty(100, "mg") %>% get_qty_text()
 qty(0:10, "C") %>% get_qty_text("F")
 qty(760, "Torr") %>% get_qty_text("atm")
+```
 
-# use list e.g. for axis tick mark labels
-10^(-9:0) %>% map(qty, "M") %>% map_chr(get_qty_text)
+To include this type of quantity text in axis tickmark labels, color/shape/linetype scale labels or facet labels, generate a labeller function using `make_qty_text_labeller()` and use it as the `labels` parameter for scales or the `labeller` parameter for facets.
+
+```{r}
+# generate labellers for plotting purposes
+q <- qty(c(0.1, 1, 1000), "g")
+standard_units_labeller <- make_qty_text_labeller(q)
+standard_units_labeller(q)
+specific_units_labeller <- make_qty_text_labeller(q, "g")
+specific_units_labeller(q)
 ```
 
 The units of a quantity object can also be retrieved directly with the `get_qty_units()` function for a single quantity, list of quantities as well as entire data frames (see details on the latter in the [data frames section](#data-frames)).
