@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mediatools</a>
-        <span class="label label-danger" data-toggle="tooltip" data-placement="bottom" title="in active development">0.3.1.9999</span>
+        <span class="label label-danger" data-toggle="tooltip" data-placement="bottom" title="in active development">0.3.2.9999</span>
       </span>
     </div>
 
@@ -134,7 +134,16 @@
     </div>
 
     <pre class="usage"><span class='fu'>c_qty</span>(<span class='no'>...</span>)</pre>
-        
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>...</th>
+      <td><p><a href='quantities.html'>quantities</a> to concatenate</p></td>
+    </tr>
+    </table>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>c_qty</span>(<span class='fu'><a href='quantities.html'>qty</a></span>(<span class='fl'>5</span>, <span class='st'>"g"</span>), <span class='fu'><a href='quantities.html'>qty</a></span>(<span class='fu'>c</span>(<span class='fl'>10</span>, <span class='fl'>20</span>), <span class='st'>"mg"</span>)) <span class='co'># MediaToolsMass [mg]: 5000, 10, 20</span></div><div class='output co'>#&gt; Mass [mg]
@@ -144,6 +153,7 @@
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
+      <li><a href="#arguments">Arguments</a></li>
             
       <li><a href="#examples">Examples</a></li>
     </ul>

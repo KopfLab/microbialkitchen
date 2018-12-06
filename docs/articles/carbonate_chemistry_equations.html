@@ -35,7 +35,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mediatools</a>
-        <span class="label label-danger" data-toggle="tooltip" data-placement="bottom" title="in active development">0.3.1.9999</span>
+        <span class="label label-danger" data-toggle="tooltip" data-placement="bottom" title="in active development">0.3.2.9999</span>
       </span>
     </div>
 
@@ -87,7 +87,7 @@
     <div class="page-header toc-ignore">
       <h1>Carbonate Chemistry Equations</h1>
             
-            <h4 class="date">2018-12-05</h4>
+            <h4 class="date">2018-12-06</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/kopflab/mediatools/blob/master/vignettes/carbonate_chemistry_equations.Rmd"><code>vignettes/carbonate_chemistry_equations.Rmd</code></a></small>
       <div class="hidden name"><code>carbonate_chemistry_equations.Rmd</code></div>
@@ -100,6 +100,10 @@
 <div id="co_2-solubility" class="section level1">
 <h1 class="hasAnchor">
 <a href="#co_2-solubility" class="anchor"></a>CO<span class="math inline">\(_2\)</span> solubility</h1>
+<blockquote>
+<p>Key functions: <code>calculate_solubility</code></p>
+</blockquote>
+<p><a href="carbonate_chemistry_examples.html#co2-solubility">See examples</a>.</p>
 <p>CO2 is slightly soluable in water with a Henry’s law solubility constant of <span class="math inline">\(K_H^{cp} = 3.3 \cdot 10^{-4} \frac{mol}{m^3 Pa} = 0.033 \frac{M}{bar}\)</span> at <span class="math inline">\(T^\theta = 298.15 K\)</span> (25C). Henry’s law constants are typically more temperature sensitive than acid dissociation constants so it’s worthwhile taking them into consideration. The temperature dependence constant is <span class="math inline">\(\frac{d \ln{H^{cp}}}{d(1/T)} = 2400 K\)</span> (Sander, 2015), which yields the following relationship:</p>
 <p><span class="math display">\[
 K_H(T) = K_H (T^0) \cdot e^{2400 K \cdot \left( \frac{1}{T} - \frac{1}{T^0} \right)}
@@ -111,6 +115,7 @@ K_H(T) = K_H (T^0) \cdot e^{2400 K \cdot \left( \frac{1}{T} - \frac{1}{T^0} \rig
 <blockquote>
 <p>Key functions: <code>calculate_DIC</code>, <code>calculate_carbonic_acid</code>, <code>calculate_bicarbonate</code>, <code>calculate_carbonate</code>.</p>
 </blockquote>
+<p><a href="carbonate_chemistry_examples.html#speciation">See examples</a>.</p>
 <p>The carbonate system has a couple of general equilibrium equations that constrain species distribution in aquatic systems at equilibrium. Note that the dissociation constants are also affected by physical parameters (temperature and pressure), which is not discussed further here.</p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -151,6 +156,7 @@ K_H(T) = K_H (T^0) \cdot e^{2400 K \cdot \left( \frac{1}{T} - \frac{1}{T^0} \rig
 <blockquote>
 <p>Key functions: <code>calculate_open_system_pH</code>, <code>calculate_open_system_alkalinity</code></p>
 </blockquote>
+<p><a href="carbonate_chemistry_examples.html#open-system">See examples</a>.</p>
 <p>In an open system, there is an infinite reservoir of CO<span class="math inline">\(_2\)</span> available (e.g. from the atmosphere) whose CO<span class="math inline">\(_2\)</span> concentration will NOT change in response to exchange with the aqueous system.</p>
 <div id="co_2-only" class="section level2">
 <h2 class="hasAnchor">
@@ -215,7 +221,9 @@ K_H(T) = K_H (T^0) \cdot e^{2400 K \cdot \left( \frac{1}{T} - \frac{1}{T^0} \rig
 <blockquote>
 <p>Key functions: <code>calculate_closed_system_pH</code>, <code>calculate_closed_system_alkalinity</code>, <code>calculate_closed_system_TIC</code>, <code>calculate_closed_system_pCO2</code></p>
 </blockquote>
+<p><a href="carbonate_chemistry_examples.html#closed-system">See examples</a>.</p>
 <p>The above equations also hold for closed systems at equlibratium except that mass balance constraints (total inorganic carbon = <strong>TIC</strong>) must be taken into consideration for the gas phase in addition to the liquid phase. This is rarely a relevant environmental scenario but frequently applicable in laboratory settings.</p>
+<p>Note: alkalinity is a conservative quantity so although TIC will change with microbial production and consumption, the alkalinity will stay the same as long as there is no mineral precipitation.</p>
 <div id="limited-volume-vessel" class="section level2">
 <h2 class="hasAnchor">
 <a href="#limited-volume-vessel" class="anchor"></a>Limited volume vessel</h2>

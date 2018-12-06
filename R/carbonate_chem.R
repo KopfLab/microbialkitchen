@@ -234,6 +234,7 @@ NULL
 #' @param V_liquid volume of liquid (a volume quantity)
 #' @param V_gas volume of the gas/headsapce (a volume quantity)
 #' @inheritParams calculate_open_system_pH
+#' @export
 calculate_closed_system_pH <- function(
   TIC, V_liquid, V_gas, 
   solubility = calculate_solubility("CO2", temperature), temperature = qty(25, "C"),

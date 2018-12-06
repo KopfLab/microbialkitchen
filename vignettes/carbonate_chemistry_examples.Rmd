@@ -403,7 +403,7 @@ df_CO2_consumption %>%
 
 Scenario: media with organic substrate (e.g. a sugar) is adjusted to an initial starting pH (which requires the appropriate addition of alkalinity) in presence or absence of a pH buffer. Then the vessel is closed off and CO2 is produced from the organic substrate (assuming the entire organic pool is respirable).
 
-```{r "CO2 consumption", fig.width = 9, fig.height=8}
+```{r "CO2 production", fig.width = 9, fig.height=8}
 df_CO2_production <-
   crossing(
     data_frame(

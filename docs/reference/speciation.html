@@ -75,7 +75,7 @@ carbonate = CO3(2-)
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mediatools</a>
-        <span class="label label-danger" data-toggle="tooltip" data-placement="bottom" title="in active development">0.3.1.9999</span>
+        <span class="label label-danger" data-toggle="tooltip" data-placement="bottom" title="in active development">0.3.2.9999</span>
       </span>
     </div>
 
@@ -142,19 +142,19 @@ carbonate = CO3(2-)
     </div>
 
     <pre class="usage"><span class='fu'>calculate_DIC</span>(<span class='no'>pH</span>, <span class='no'>pCO2</span>, <span class='kw'>`H2CO3*`</span> <span class='kw'>=</span> <span class='no'>solubility</span> * <span class='no'>pCO2</span>,
-  <span class='kw'>solubility</span> <span class='kw'>=</span> <span class='fu'><a href='calculate_solubility.html'>calculate_solubility</a></span>(<span class='st'>"CO2"</span>, <span class='no'>temperature</span>),
+  <span class='kw'>solubility</span> <span class='kw'>=</span> <span class='fu'><a href='gas_calculations.html'>calculate_solubility</a></span>(<span class='st'>"CO2"</span>, <span class='no'>temperature</span>),
   <span class='kw'>temperature</span> <span class='kw'>=</span> <span class='fu'><a href='quantities.html'>qty</a></span>(<span class='fl'>25</span>, <span class='st'>"C"</span>), <span class='kw'>pKa1</span> <span class='kw'>=</span> <span class='fl'>6.3</span>, <span class='kw'>pKa2</span> <span class='kw'>=</span> <span class='fl'>10.3</span>)
 
 <span class='fu'>calculate_carbonic_acid</span>(<span class='no'>pH</span>, <span class='no'>pCO2</span>, <span class='no'>DIC</span>,
-  <span class='kw'>solubility</span> <span class='kw'>=</span> <span class='fu'><a href='calculate_solubility.html'>calculate_solubility</a></span>(<span class='st'>"CO2"</span>, <span class='no'>temperature</span>),
+  <span class='kw'>solubility</span> <span class='kw'>=</span> <span class='fu'><a href='gas_calculations.html'>calculate_solubility</a></span>(<span class='st'>"CO2"</span>, <span class='no'>temperature</span>),
   <span class='kw'>temperature</span> <span class='kw'>=</span> <span class='fu'><a href='quantities.html'>qty</a></span>(<span class='fl'>25</span>, <span class='st'>"C"</span>), <span class='kw'>pKa1</span> <span class='kw'>=</span> <span class='fl'>6.3</span>, <span class='kw'>pKa2</span> <span class='kw'>=</span> <span class='fl'>10.3</span>)
 
 <span class='fu'>calculate_bicarbonate</span>(<span class='no'>pH</span>, <span class='no'>pCO2</span>, <span class='no'>DIC</span>,
-  <span class='kw'>solubility</span> <span class='kw'>=</span> <span class='fu'><a href='calculate_solubility.html'>calculate_solubility</a></span>(<span class='st'>"CO2"</span>, <span class='no'>temperature</span>),
+  <span class='kw'>solubility</span> <span class='kw'>=</span> <span class='fu'><a href='gas_calculations.html'>calculate_solubility</a></span>(<span class='st'>"CO2"</span>, <span class='no'>temperature</span>),
   <span class='kw'>temperature</span> <span class='kw'>=</span> <span class='fu'><a href='quantities.html'>qty</a></span>(<span class='fl'>25</span>, <span class='st'>"C"</span>), <span class='kw'>pKa1</span> <span class='kw'>=</span> <span class='fl'>6.3</span>, <span class='kw'>pKa2</span> <span class='kw'>=</span> <span class='fl'>10.3</span>)
 
 <span class='fu'>calculate_carbonate</span>(<span class='no'>pH</span>, <span class='no'>pCO2</span>, <span class='no'>DIC</span>,
-  <span class='kw'>solubility</span> <span class='kw'>=</span> <span class='fu'><a href='calculate_solubility.html'>calculate_solubility</a></span>(<span class='st'>"CO2"</span>, <span class='no'>temperature</span>),
+  <span class='kw'>solubility</span> <span class='kw'>=</span> <span class='fu'><a href='gas_calculations.html'>calculate_solubility</a></span>(<span class='st'>"CO2"</span>, <span class='no'>temperature</span>),
   <span class='kw'>temperature</span> <span class='kw'>=</span> <span class='fu'><a href='quantities.html'>qty</a></span>(<span class='fl'>25</span>, <span class='st'>"C"</span>), <span class='kw'>pKa1</span> <span class='kw'>=</span> <span class='fl'>6.3</span>, <span class='kw'>pKa2</span> <span class='kw'>=</span> <span class='fl'>10.3</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -187,6 +187,10 @@ carbonate = CO3(2-)
     <tr>
       <th>pKa2</th>
       <td><p>the acid dissociation constant for bicarbonate (HCO3-)</p></td>
+    </tr>
+    <tr>
+      <th>DIC</th>
+      <td><p>dissolved inorganic carbon (a molarity quantity)</p></td>
     </tr>
     </table>
     

@@ -19,6 +19,10 @@ knitr::opts_chunk$set(
 
 # CO$_2$ solubility
 
+> Key functions: `calculate_solubility`
+
+[See examples](carbonate_chemistry_examples.html#co2-solubility).
+
 CO2 is slightly soluable in water with a Henry's law solubility constant of $K_H^{cp} = 3.3 \cdot 10^{-4} \frac{mol}{m^3 Pa} = 0.033 \frac{M}{bar}$ at $T^\theta = 298.15 K$ (25C). Henry's law constants are typically more temperature sensitive than acid dissociation constants so it's worthwhile taking them into consideration. The temperature dependence constant is $\frac{d \ln{H^{cp}}}{d(1/T)} = 2400 K$ (Sander, 2015), which yields the following relationship:
 
 $$
@@ -28,6 +32,8 @@ $$
 # Speciation
 
 > Key functions: `calculate_DIC`, `calculate_carbonic_acid`, `calculate_bicarbonate`, `calculate_carbonate`. 
+
+[See examples](carbonate_chemistry_examples.html#speciation).
 
 The carbonate system has a couple of general equilibrium equations that constrain species distribution in aquatic systems at equilibrium. Note that the dissociation constants are also affected by physical parameters (temperature and pressure), which is not discussed further here.
 
@@ -69,6 +75,8 @@ $$
 # Open system
 
 > Key functions: `calculate_open_system_pH`, `calculate_open_system_alkalinity`
+
+[See examples](carbonate_chemistry_examples.html#open-system).
 
 In an open system, there is an infinite reservoir of CO$_2$ available (e.g. from the atmosphere) whose CO$_2$ concentration will NOT change in response to exchange with the aqueous system. 
 
@@ -144,6 +152,8 @@ $$
 # Closed system
 
 > Key functions: `calculate_closed_system_pH`, `calculate_closed_system_alkalinity`, `calculate_closed_system_TIC`, `calculate_closed_system_pCO2`
+
+[See examples](carbonate_chemistry_examples.html#closed-system).
 
 The above equations also hold for closed systems at equlibratium except that mass balance constraints (total inorganic carbon = **TIC**) must be taken into consideration for the gas phase in addition to the liquid phase. This is rarely a relevant environmental scenario but frequently applicable in laboratory settings.
 

@@ -40,12 +40,25 @@ Get quantity information
 \code{get_qty_units_with_label} get units from a quantity, list of quantities or data frame, with a custom label in the format \code{label [units]}. Objects/columns that are not quantities simply return the label with out the [units] part.
 }
 \examples{
+qty(0.1, "g") \%>\% get_qty_value()
+qty(0.1, "g") \%>\% get_qty_value("g")
+qty(0.1, "g") \%>\% get_qty_value("g", log10)
+qty(0, "C") \%>\% get_qty_value("F") 
+qty(760, "Torr") \%>\% get_qty_value("atm")
+qty(0.1, "g") \%>\% get_qty_text()
+qty(0.1, "g") \%>\% get_qty_text("g")
+qty(0:10, "C") \%>\% get_qty_text("F")
+qty(760, "Torr") \%>\% get_qty_text("atm")
+qty(5000, "g") \%>\% get_qty_units()
+x <- list(a = qty(5000, "g"), b = 42, c = qty(100, "mbar"))
+x \%>\% get_qty_units()
 # labels with units
 get_qty_units_with_label(qty(0.1, "mM"), "concentration")
 
 # make labels with units for data frame columns
 x <- data.frame(a = qty(1, "mg"), b = 2, c = qty(100, "mbar"))
-get_qty_units_with_label(x, names(x)) 
+get_qty_units_with_label(x) 
+get_qty_units_with_label(x, "same label")
 }
 \seealso{
 Other quantity functions: \code{\link{metric}},

@@ -1,13 +1,17 @@
-#' Quantity labeller function
-#' 
-#' This is a useful labeller function for ggplots to generate quantity text labels on discrete scales and facets in the used created by \code{\link{get_qty_text}}. Supports both best metric for each label (simply don't provide the \code{unit} parameter) or a specify unit (specify the \code{unit} parameter). 
+#' Visualization functions
+#' @name visualization
+NULL
+
+#' @describeIn visualization This is a useful labeller function for ggplots to generate quantity text labels on discrete scales and facets in the used created by \code{\link{get_qty_text}}. Supports both best metric for each label (simply don't provide the \code{unit} parameter) or a specify unit (specify the \code{unit} parameter). 
 #' 
 #' @param q the quantity for which to generate a text labeller
 #' @param unit the unit (or units) in which to represent the quantity on the plot. By default uses the best metric prefix for each value of the quantity, which is good for generating orders of magnitude scales e.g. from mg to g to kg. If provided, uses the specified unit or units (need to be compatible with the quantity) for all values.
 #' @inheritParams get_qty_text
 #' @examples 
-#' 
-#' 
+#' # native unit labels
+#' q <- qty(c(0.1, 10, 1000), "mg")
+#' l <- make_qty_text_labeller(q)
+#' l(q) # test how labels would look
 #' # dual unit labels
 #' q <- qty(seq(0, 1000, by = 100), "K")
 #' l <- make_qty_text_labeller(q, unit = c("K", "C"))

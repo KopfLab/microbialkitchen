@@ -32,7 +32,7 @@
 
 <meta property="og:title" content="Quantities — quantities" />
 
-<meta property="og:description" content="The qty function makes it easy to keep track of different quantities in chemical calculations. Metric prefixes are fully supported, i.e. any unit can be combined with standard metric scaling (mL, nmol, µM, etc.). Some quantities can also be used in common arithmetic operations." />
+<meta property="og:description" content="The qty function makes it easy to keep track of different quantities in chemical calculations. Metric prefixes are fully supported, i.e. any unit can be combined with standard metric scaling (mL, nmol, kg, etc.). Some quantities can also be used in common arithmetic operations." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mediatools</a>
-        <span class="label label-danger" data-toggle="tooltip" data-placement="bottom" title="in active development">0.3.1.9999</span>
+        <span class="label label-danger" data-toggle="tooltip" data-placement="bottom" title="in active development">0.3.2.9999</span>
       </span>
     </div>
 
@@ -129,13 +129,31 @@
 
     <div class="ref-description">
     
-    <p>The <code>qty</code> function makes it easy to keep track of different quantities in chemical calculations. Metric prefixes are fully supported, i.e. any unit can be combined with standard <a href='metric.html'>metric</a> scaling (mL, nmol, µM, etc.). Some quantities can also be used in common <a href='arithmetic.html'>arithmetic</a> operations.</p>
+    <p>The <code>qty</code> function makes it easy to keep track of different quantities in chemical calculations. Metric prefixes are fully supported, i.e. any unit can be combined with standard <a href='metric.html'>metric</a> scaling (mL, nmol, kg, etc.). Some quantities can also be used in common <a href='arithmetic.html'>arithmetic</a> operations.</p>
     
     </div>
 
     <pre class="usage"><span class='fu'>qty</span>(<span class='no'>x</span>, <span class='no'>unit</span>, <span class='kw'>scale_to_best_metric</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
-<span class='fu'>is_qty</span>(<span class='no'>x</span>)</pre>
+<span class='fu'>is_qty</span>(<span class='no'>q</span>)
+
+<span class='fu'>is_amount</span>(<span class='no'>q</span>)
+
+<span class='fu'>is_mass</span>(<span class='no'>q</span>)
+
+<span class='fu'>is_molecular_mass</span>(<span class='no'>q</span>)
+
+<span class='fu'>is_molarity</span>(<span class='no'>q</span>)
+
+<span class='fu'>is_density</span>(<span class='no'>q</span>)
+
+<span class='fu'>is_volume</span>(<span class='no'>q</span>)
+
+<span class='fu'>is_pressure</span>(<span class='no'>q</span>)
+
+<span class='fu'>is_solubility</span>(<span class='no'>q</span>)
+
+<span class='fu'>is_temperature</span>(<span class='no'>q</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -154,7 +172,7 @@
     </tr>
     <tr>
       <th>q</th>
-      <td><p>quantity</p></td>
+      <td><p>a quantity object</p></td>
     </tr>
     </table>
     
@@ -166,7 +184,7 @@
 <p><em>concentration (molarity)</em>: base unit <code>M</code> but also understands <code>mol/L</code>, all metric prefixes allowed in the numerator</p>
 <p><em>concentration (density)</em>: base unit <code>g/L</code> but also understands <code>g/l</code>, all metric prefixes allowed in the numerator</p>
 <p><em>volume</em>: base unit <code>L</code> but also understands <code>l</code>, all metric prefixes allowed</p>
-<p><em>pressure</em>: base unit <code>bar</code> but also understands <code>Pa</code>, all metric prefixes allowed, the common non-metric units <code>atm</code> and <code>psi</code>, <code>Torr</code> and <code>mTorr</code> are also supported and will be automatically converted to <code>bar</code></p>
+<p><em>pressure</em>: base unit <code>bar</code> but also understands <code>Pa</code>, all metric prefixes allowed, the common non-metric units <code>atm</code>, <code>psi</code>, <code>Torr</code>, <code>mTorr</code>, and <code>% SP</code> (% at standard pressure = % of 1 bar) are also supported and will be automatically converted to <code>bar</code>.</p>
 <p><em>Henry's law solubility constant</em>: base unit <code>M/bar</code>, all metric prefixes allowed in the numerator, the common non-metric unit <code>M/atm</code> is also supported and will be automatically converted to <code>M/bar</code>.</p>
 <p><em>temperature</em>: base unit <code>K</code> but also understands <code>C</code> and <code>F</code> and converts them to Kelvin</p>
     
@@ -175,19 +193,33 @@
     <ul>
 <li><p><code>qty</code>: generate a quantity object</p></li>
 <li><p><code>is_qty</code>: check whether something is a quantity</p></li>
+<li><p><code>is_amount</code>: check whether something is an amount quantity</p></li>
+<li><p><code>is_mass</code>: check whether something is an amount quantity</p></li>
+<li><p><code>is_molecular_mass</code>: check whether something is a molecular mass quantity</p></li>
+<li><p><code>is_molarity</code>: check whether something is a molarity quantity</p></li>
+<li><p><code>is_density</code>: check whether something is a density quantity</p></li>
+<li><p><code>is_volume</code>: check whether something is a volume quantity</p></li>
+<li><p><code>is_pressure</code>: check whether something is a pressure quantity</p></li>
+<li><p><code>is_solubility</code>: check whether something is a solubility quantity</p></li>
+<li><p><code>is_temperature</code>: check whether something is a temperature quantity</p></li>
 </ul>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other quantities: <code><a href='metric.html'>metric</a></code>,
+    <div class='dont-index'><p>Other quantity functions: <code><a href='metric.html'>metric</a></code>,
   <code><a href='quantity_info.html'>quantity_info</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>qty</span>(<span class='fl'>0.045</span>, <span class='st'>"mmol/L"</span>)</div><div class='output co'>#&gt; Molarity [µM]
-#&gt; [1] 45</div><div class='input'><span class='fu'>qty</span>(<span class='fl'>6</span>, <span class='st'>"psi"</span>)</div><div class='output co'>#&gt; Pressure [mbar]
+#&gt; [1] 45</div><div class='input'><span class='fu'>qty</span>(<span class='fl'>200</span>, <span class='st'>"mbar"</span>)</div><div class='output co'>#&gt; Pressure [mbar]
+#&gt; [1] 200</div><div class='input'><span class='fu'>qty</span>(<span class='fl'>6</span>, <span class='st'>"psi"</span>)</div><div class='output co'>#&gt; Pressure [mbar]
 #&gt; [1] 413.6855</div><div class='input'><span class='fu'>qty</span>(<span class='fl'>30</span>, <span class='st'>"C"</span>)</div><div class='output co'>#&gt; Temperature [K]
-#&gt; [1] 303.15</div></pre>
+#&gt; [1] 303.15</div><div class='input'><span class='fu'>qty</span>(<span class='fl'>100</span>, <span class='st'>"K"</span>)</div><div class='output co'>#&gt; Temperature [K]
+#&gt; [1] 100</div><div class='input'><span class='fu'>qty</span>(<span class='fl'>5</span>, <span class='st'>"mg/L"</span>)</div><div class='output co'>#&gt; Density [mg/L]
+#&gt; [1] 5</div><div class='input'><span class='fu'>qty</span>(<span class='fl'>1</span>, <span class='st'>"mM/bar"</span>)</div><div class='output co'>#&gt; Solubility [mM/bar]
+#&gt; [1] 1</div><div class='input'><span class='fu'>qty</span>(<span class='fl'>257</span>, <span class='st'>"g/mol"</span>)</div><div class='output co'>#&gt; MolecularMass [g/mol]
+#&gt; [1] 257</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

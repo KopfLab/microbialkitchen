@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Objects exported from other packages — reexports • mediatools</title>
+<title>General gas calculations — gas_calculations • mediatools</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,15 +30,9 @@
 
 
 
-<meta property="og:title" content="Objects exported from other packages — reexports" />
+<meta property="og:title" content="General gas calculations — gas_calculations" />
 
-<meta property="og:description" content="These objects are imported from other packages. Follow the links
-below to see their documentation.
-
-  forcatsas_factor" />
-
-<meta property="og:description" content="magrittr%&amp;gt;%
-" />
+<meta property="og:description" content="General gas calculations" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -128,30 +122,65 @@ below to see their documentation.
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Objects exported from other packages</h1>
-    <small class="dont-index">Source: <a href='https://github.com/kopflab/mediatools/blob/master/R/package.R'><code>R/package.R</code></a></small>
-    <div class="hidden name"><code>reexports.Rd</code></div>
+    <h1>General gas calculations</h1>
+    <small class="dont-index">Source: <a href='https://github.com/kopflab/mediatools/blob/master/R/calculations.R'><code>R/calculations.R</code></a></small>
+    <div class="hidden name"><code>gas_calculations.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>These objects are imported from other packages. Follow the links
-below to see their documentation.</p>
-<dl class='dl-horizontal'>
-  <dt>forcats</dt><dd><p><code><a href='http://www.rdocumentation.org/packages/forcats/topics/as_factor'>as_factor</a></code></p></dd>
-
-    <dt>magrittr</dt><dd><p><code>%&gt;%</code></p></dd>
-</dl>
+    <p>General gas calculations</p>
     
     </div>
 
-        
+    <pre class="usage"><span class='fu'>calculate_ideal_gas_molarity</span>(<span class='no'>pressure</span>, <span class='no'>temperature</span>)
+
+<span class='fu'>calculate_ideal_gas_amount</span>(<span class='no'>pressure</span>, <span class='no'>temperature</span>, <span class='no'>volume</span>)
+
+<span class='fu'>calculate_solubility</span>(<span class='no'>gas</span>, <span class='no'>temperature</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>pressure</th>
+      <td><p>the pressure quantity of the gas</p></td>
+    </tr>
+    <tr>
+      <th>temperature</th>
+      <td><p>the temperature quantity of the gas</p></td>
+    </tr>
+    <tr>
+      <th>volume</th>
+      <td><p>the volume quantity of the gas</p></td>
+    </tr>
+    <tr>
+      <th>gas</th>
+      <td><p>name of the gas</p></td>
+    </tr>
+    <tr>
+      <th>temperature</th>
+      <td><p>temperature quantity</p></td>
+    </tr>
+    </table>
+    
+    <h2 class="hasAnchor" id="functions"><a class="anchor" href="#functions"></a>Functions</h2>
+
+    <ul>
+<li><p><code>calculate_ideal_gas_molarity</code>: calculate the gas phase equivalent concentration of an ideal gas at a specific temperature (i.e. mol of gas / L of volume). Returns a molarity quantity.</p></li>
+<li><p><code>calculate_ideal_gas_amount</code>: calculates the amount of an ideal gas at a specific pressure, temperature and volume. Returns an amount quantity.</p></li>
+<li><p><code>calculate_solubility</code>: calculates Henry's law solubility constant for a gas at a specific temperature. Henry's law constants are from: Sander, R. Compilation of Henry's law constants (version 4.0) for water as solvent. Atmos Chem Phys 15, 4399–4981 (2015). https://www.atmos-chem-phys.net/15/4399/2015/. Returns a solubility quantity.</p></li>
+</ul>
+    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-                </ul>
+      <li><a href="#arguments">Arguments</a></li>
+      
+      <li><a href="#functions">Functions</a></li>
+          </ul>
 
   </div>
 </div>

@@ -35,7 +35,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mediatools</a>
-        <span class="label label-danger" data-toggle="tooltip" data-placement="bottom" title="in active development">0.3.1.9999</span>
+        <span class="label label-danger" data-toggle="tooltip" data-placement="bottom" title="in active development">0.3.2.9999</span>
       </span>
     </div>
 
@@ -87,7 +87,7 @@
     <div class="page-header toc-ignore">
       <h1>Operations</h1>
             
-            <h4 class="date">2018-12-05</h4>
+            <h4 class="date">2018-12-06</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/kopflab/mediatools/blob/master/vignettes/operations.Rmd"><code>vignettes/operations.Rmd</code></a></small>
       <div class="hidden name"><code>operations.Rmd</code></div>
@@ -119,20 +119,24 @@
 <a class="sourceLine" id="cb2-15" data-line-number="15"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">100</span>, <span class="st">"mg"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/metric.html">scale_metric</a></span>(<span class="st">"k"</span>)</a>
 <a class="sourceLine" id="cb2-16" data-line-number="16"><span class="co">#&gt; Mass [kg]</span></a>
 <a class="sourceLine" id="cb2-17" data-line-number="17"><span class="co">#&gt; [1] 1e-04</span></a></code></pre></div>
-<p>The actual numeric value of a quantity can be retrieved via the <code><a href="../reference/quantity_info.html">get_qty_value()</a></code> function which takes an optional parameter to specify which unit the value should be retrieved in (by default it is the unit that the quantity is currently in).</p>
+<p>The actual numeric value of a quantity can be retrieved via the <code><a href="../reference/quantity_info.html">get_qty_value()</a></code> function which takes an optional parameter to specify which unit the value should be retrieved in (by default it is the unit that the quantity is currently in). Additionally, a transformation function can be specified for easy log or other transformations.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">100</span>, <span class="st">"mg"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/quantity_info.html">get_qty_value</a></span>() <span class="co"># returns 100</span></a>
 <a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co">#&gt; [1] 100</span></a>
 <a class="sourceLine" id="cb3-3" data-line-number="3"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="fl">0.1</span>, <span class="st">"g"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/quantity_info.html">get_qty_value</a></span>() <span class="co"># returns 100 because the units are "mg"</span></a>
 <a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co">#&gt; [1] 100</span></a>
 <a class="sourceLine" id="cb3-5" data-line-number="5"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="fl">0.1</span>, <span class="st">"g"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/quantity_info.html">get_qty_value</a></span>(<span class="st">"g"</span>) <span class="co"># better to be specific upon retrieval</span></a>
 <a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co">#&gt; [1] 0.1</span></a>
-<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="fl">0.1</span>, <span class="st">"g"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/quantity_info.html">get_qty_value</a></span>(<span class="st">"kg"</span>) <span class="co"># can use any valid unit</span></a>
-<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co">#&gt; [1] 1e-04</span></a>
-<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">0</span>, <span class="st">"C"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/quantity_info.html">get_qty_value</a></span>(<span class="st">"F"</span>) <span class="co"># or use it for unit conversion</span></a>
-<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="co">#&gt; [1] 32</span></a>
-<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">760</span>, <span class="st">"Torr"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/quantity_info.html">get_qty_value</a></span>(<span class="st">"atm"</span>) <span class="co"># or use it for unit conversion</span></a>
-<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="co">#&gt; [1] 1</span></a></code></pre></div>
-<p>To retrieven numeric values as text that includes their units, simply use <code><a href="../reference/quantity_info.html">get_qty_text()</a></code> instead of <code><a href="../reference/quantity_info.html">get_qty_value()</a></code>. This also works well using a lists of quantities to generate e.g. axis tick mark labels with the ideal unit.</p>
+<a class="sourceLine" id="cb3-7" data-line-number="7"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="fl">0.1</span>, <span class="st">"g"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/quantity_info.html">get_qty_value</a></span>(<span class="st">"g"</span>, log10) <span class="co"># applies a log10 transform</span></a>
+<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="co">#&gt; [1] -1</span></a>
+<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="fl">0.1</span>, <span class="st">"g"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/quantity_info.html">get_qty_value</a></span>(<span class="st">"kg"</span>) <span class="co"># can use any valid unit</span></a>
+<a class="sourceLine" id="cb3-10" data-line-number="10"><span class="co">#&gt; [1] 1e-04</span></a>
+<a class="sourceLine" id="cb3-11" data-line-number="11"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="fl">0.1</span>, <span class="st">"g"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/quantity_info.html">get_qty_value</a></span>(<span class="st">"kg"</span>, sqrt) <span class="co"># and any transformation</span></a>
+<a class="sourceLine" id="cb3-12" data-line-number="12"><span class="co">#&gt; [1] 0.01</span></a>
+<a class="sourceLine" id="cb3-13" data-line-number="13"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">0</span>, <span class="st">"C"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/quantity_info.html">get_qty_value</a></span>(<span class="st">"F"</span>) <span class="co"># or use it for unit conversion</span></a>
+<a class="sourceLine" id="cb3-14" data-line-number="14"><span class="co">#&gt; [1] 32</span></a>
+<a class="sourceLine" id="cb3-15" data-line-number="15"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">760</span>, <span class="st">"Torr"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/quantity_info.html">get_qty_value</a></span>(<span class="st">"atm"</span>) <span class="co"># or use it for unit conversion</span></a>
+<a class="sourceLine" id="cb3-16" data-line-number="16"><span class="co">#&gt; [1] 1</span></a></code></pre></div>
+<p>To retrieven numeric values as text that includes their units, simply use <code><a href="../reference/quantity_info.html">get_qty_text()</a></code> instead of <code><a href="../reference/quantity_info.html">get_qty_value()</a></code>.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co"># get quantity with unit</span></a>
 <a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">100</span>, <span class="st">"mg"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/quantity_info.html">get_qty_text</a></span>()</a>
 <a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co">#&gt; [1] "100 mg"</span></a>
@@ -140,35 +144,39 @@
 <a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">#&gt;  [1] "32 F"   "33.8 F" "35.6 F" "37.4 F" "39.2 F" "41 F"   "42.8 F"</span></a>
 <a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co">#&gt;  [8] "44.6 F" "46.4 F" "48.2 F" "50 F"</span></a>
 <a class="sourceLine" id="cb4-7" data-line-number="7"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">760</span>, <span class="st">"Torr"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/quantity_info.html">get_qty_text</a></span>(<span class="st">"atm"</span>)</a>
-<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">#&gt; [1] "1 atm"</span></a>
-<a class="sourceLine" id="cb4-9" data-line-number="9"></a>
-<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="co"># use list e.g. for axis tick mark labels</span></a>
-<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="dv">10</span><span class="op">^</span>(<span class="op">-</span><span class="dv">9</span><span class="op">:</span><span class="dv">0</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">map</span>(qty, <span class="st">"M"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">map_chr</span>(get_qty_text)</a>
-<a class="sourceLine" id="cb4-12" data-line-number="12"><span class="co">#&gt;  [1] "1 nM"   "10 nM"  "100 nM" "1 µM"   "10 µM"  "100 µM" "1 mM"  </span></a>
-<a class="sourceLine" id="cb4-13" data-line-number="13"><span class="co">#&gt;  [8] "10 mM"  "100 mM" "1 M"</span></a></code></pre></div>
+<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="co">#&gt; [1] "1 atm"</span></a></code></pre></div>
+<p>To include this type of quantity text in axis tickmark labels, color/shape/linetype scale labels or facet labels, generate a labeller function using <code><a href="../reference/visualization.html">make_qty_text_labeller()</a></code> and use it as the <code>labels</code> parameter for scales or the <code>labeller</code> parameter for facets.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># generate labellers for plotting purposes</span></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">q &lt;-<span class="st"> </span><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="kw">c</span>(<span class="fl">0.1</span>, <span class="dv">1</span>, <span class="dv">1000</span>), <span class="st">"g"</span>)</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3">standard_units_labeller &lt;-<span class="st"> </span><span class="kw"><a href="../reference/visualization.html">make_qty_text_labeller</a></span>(q)</a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="kw">standard_units_labeller</span>(q)</a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co">#&gt; [1] "100 mg" "1 g"    "1 kg"</span></a>
+<a class="sourceLine" id="cb5-6" data-line-number="6">specific_units_labeller &lt;-<span class="st"> </span><span class="kw"><a href="../reference/visualization.html">make_qty_text_labeller</a></span>(q, <span class="st">"g"</span>)</a>
+<a class="sourceLine" id="cb5-7" data-line-number="7"><span class="kw">specific_units_labeller</span>(q)</a>
+<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="co">#&gt; [1] "0.1 g"  "1 g"    "1000 g"</span></a></code></pre></div>
 <p>The units of a quantity object can also be retrieved directly with the <code><a href="../reference/quantity_info.html">get_qty_units()</a></code> function for a single quantity, list of quantities as well as entire data frames (see details on the latter in the <a href="#data-frames">data frames section</a>).</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">5000</span>, <span class="st">"g"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/quantity_info.html">get_qty_units</a></span>()</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">#&gt; [1] "kg"</span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3">x &lt;-<span class="st"> </span><span class="kw">list</span>(</a>
-<a class="sourceLine" id="cb5-4" data-line-number="4">  <span class="dt">a =</span> <span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">5000</span>, <span class="st">"g"</span>),</a>
-<a class="sourceLine" id="cb5-5" data-line-number="5">  <span class="dt">b =</span> <span class="dv">42</span>,</a>
-<a class="sourceLine" id="cb5-6" data-line-number="6">  <span class="dt">c =</span> <span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">100</span>, <span class="st">"mbar"</span>)</a>
-<a class="sourceLine" id="cb5-7" data-line-number="7">) </a>
-<a class="sourceLine" id="cb5-8" data-line-number="8">x <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/quantity_info.html">get_qty_units</a></span>()</a>
-<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="co">#&gt;      a      b      c </span></a>
-<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="co">#&gt;   "kg"     NA "mbar"</span></a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">5000</span>, <span class="st">"g"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/quantity_info.html">get_qty_units</a></span>()</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="co">#&gt; [1] "kg"</span></a>
+<a class="sourceLine" id="cb6-3" data-line-number="3">x &lt;-<span class="st"> </span><span class="kw">list</span>(</a>
+<a class="sourceLine" id="cb6-4" data-line-number="4">  <span class="dt">a =</span> <span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">5000</span>, <span class="st">"g"</span>),</a>
+<a class="sourceLine" id="cb6-5" data-line-number="5">  <span class="dt">b =</span> <span class="dv">42</span>,</a>
+<a class="sourceLine" id="cb6-6" data-line-number="6">  <span class="dt">c =</span> <span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">100</span>, <span class="st">"mbar"</span>)</a>
+<a class="sourceLine" id="cb6-7" data-line-number="7">) </a>
+<a class="sourceLine" id="cb6-8" data-line-number="8">x <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/quantity_info.html">get_qty_units</a></span>()</a>
+<a class="sourceLine" id="cb6-9" data-line-number="9"><span class="co">#&gt;      a      b      c </span></a>
+<a class="sourceLine" id="cb6-10" data-line-number="10"><span class="co">#&gt;   "kg"     NA "mbar"</span></a></code></pre></div>
 <p>For easy construction of plot axis or legend labels, the function <code><a href="../reference/quantity_info.html">get_qty_units_with_label()</a></code> further provides an easy way to combine labels with the units. By default (for lists and data frames), it uses the names of the list variable/data frame columns (see details on the latter in the <a href="#data-frames">data frames section</a>).</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">5000</span>, <span class="st">"g"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/quantity_info.html">get_qty_units_with_label</a></span>(<span class="st">"weight"</span>)</a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="co">#&gt; [1] "weight [kg]"</span></a>
-<a class="sourceLine" id="cb6-3" data-line-number="3">x <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/quantity_info.html">get_qty_units_with_label</a></span>()</a>
-<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="co">#&gt;          a          b          c </span></a>
-<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="co">#&gt;   "a [kg]"        "b" "c [mbar]"</span></a>
-<a class="sourceLine" id="cb6-6" data-line-number="6">x <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/quantity_info.html">get_qty_units_with_label</a></span>(<span class="st">"same label"</span>)</a>
-<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="co">#&gt;                   a                   b                   c </span></a>
-<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="co">#&gt;   "same label [kg]"        "same label" "same label [mbar]"</span></a>
-<a class="sourceLine" id="cb6-9" data-line-number="9">x <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/quantity_info.html">get_qty_units_with_label</a></span>(<span class="kw">c</span>(<span class="st">"apple"</span>, <span class="st">"banana"</span>, <span class="st">"carrot"</span>))</a>
-<a class="sourceLine" id="cb6-10" data-line-number="10"><span class="co">#&gt;               a               b               c </span></a>
-<a class="sourceLine" id="cb6-11" data-line-number="11"><span class="co">#&gt;    "apple [kg]"        "banana" "carrot [mbar]"</span></a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">5000</span>, <span class="st">"g"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/quantity_info.html">get_qty_units_with_label</a></span>(<span class="st">"weight"</span>)</a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="co">#&gt; [1] "weight [kg]"</span></a>
+<a class="sourceLine" id="cb7-3" data-line-number="3">x <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/quantity_info.html">get_qty_units_with_label</a></span>()</a>
+<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="co">#&gt;          a          b          c </span></a>
+<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co">#&gt;   "a [kg]"        "b" "c [mbar]"</span></a>
+<a class="sourceLine" id="cb7-6" data-line-number="6">x <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/quantity_info.html">get_qty_units_with_label</a></span>(<span class="st">"same label"</span>)</a>
+<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="co">#&gt;                   a                   b                   c </span></a>
+<a class="sourceLine" id="cb7-8" data-line-number="8"><span class="co">#&gt;   "same label [kg]"        "same label" "same label [mbar]"</span></a>
+<a class="sourceLine" id="cb7-9" data-line-number="9">x <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/quantity_info.html">get_qty_units_with_label</a></span>(<span class="kw">c</span>(<span class="st">"apple"</span>, <span class="st">"banana"</span>, <span class="st">"carrot"</span>))</a>
+<a class="sourceLine" id="cb7-10" data-line-number="10"><span class="co">#&gt;               a               b               c </span></a>
+<a class="sourceLine" id="cb7-11" data-line-number="11"><span class="co">#&gt;    "apple [kg]"        "banana" "carrot [mbar]"</span></a></code></pre></div>
 </div>
 <div id="arithmetic" class="section level2">
 <h2 class="hasAnchor">
@@ -178,203 +186,203 @@
 <h3 class="hasAnchor">
 <a href="#addition-and-subtraction" class="anchor"></a>Addition and Subtraction</h3>
 <p>Quantities of the same type (e.g. masses, volumes, etc.) can be added or subtracted with proper interpration of the metric prefixes. The resulting quantity will be scaled to the best metric prefix as described above. Attempts to add or subtract non-matching quantities (e.g. mass + volume) or a quantity and a number without units will fail with an error to avoid unexpect behaviour and ambiguous calculations.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="fl">0.003</span>, <span class="st">"g"</span>) <span class="op">-</span><span class="st"> </span><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">2</span>, <span class="st">"mg"</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">5</span>, <span class="st">"µg"</span>) <span class="co"># 1.005 mg</span></a>
-<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="co">#&gt; Mass [mg]</span></a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="co">#&gt; [1] 1.005</span></a>
-<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="kw">try</span>(<span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">1</span>, <span class="st">"g"</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">1</span>, <span class="st">"L"</span>)) <span class="co"># not allowed</span></a>
-<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="co">#&gt; Error : addition is not implemented for these quantities (trying to use 'MediaToolsMass' and 'MediaToolsVolume').</span></a>
-<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="kw">try</span>(<span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">1</span>, <span class="st">"g"</span>) <span class="op">+</span><span class="st"> </span><span class="dv">1</span>) <span class="co"># not allowed</span></a>
-<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="co">#&gt; Error : addition is not implemented for these quantities (trying to use 'MediaToolsMass' and 'numeric').</span></a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="fl">0.003</span>, <span class="st">"g"</span>) <span class="op">-</span><span class="st"> </span><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">2</span>, <span class="st">"mg"</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">5</span>, <span class="st">"µg"</span>) <span class="co"># 1.005 mg</span></a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="co">#&gt; Mass [mg]</span></a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="co">#&gt; [1] 1.005</span></a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="kw">try</span>(<span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">1</span>, <span class="st">"g"</span>) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">1</span>, <span class="st">"L"</span>)) <span class="co"># not allowed</span></a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="co">#&gt; Error : addition is not implemented for these quantities (trying to use 'MediaToolsMass' and 'MediaToolsVolume').</span></a>
+<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="kw">try</span>(<span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">1</span>, <span class="st">"g"</span>) <span class="op">+</span><span class="st"> </span><span class="dv">1</span>) <span class="co"># not allowed</span></a>
+<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="co">#&gt; Error : addition is not implemented for these quantities (trying to use 'MediaToolsMass' and 'numeric').</span></a></code></pre></div>
 </div>
 <div id="multiplication-division" class="section level3">
 <h3 class="hasAnchor">
 <a href="#multiplication-division" class="anchor"></a>Multiplication / Division</h3>
 <p>Quantities can be multipled/divided by a number. The resulting quantity will be scaled to the best metric prefix. This is most commonly used with multiplication/division by 1000.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">1</span>, <span class="st">"mg"</span>) <span class="op">*</span><span class="st"> </span><span class="dv">1000</span> <span class="co"># convert mg into g</span></a>
-<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="co">#&gt; Mass [g]</span></a>
-<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="co">#&gt; [1] 1</span></a>
-<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">1</span>, <span class="st">"mg"</span>) <span class="op">/</span><span class="st"> </span><span class="fl">1e6</span> <span class="co"># convert mg into ng</span></a>
-<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="co">#&gt; Mass [ng]</span></a>
-<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="co">#&gt; [1] 1</span></a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">1</span>, <span class="st">"mg"</span>) <span class="op">*</span><span class="st"> </span><span class="dv">1000</span> <span class="co"># convert mg into g</span></a>
+<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="co">#&gt; Mass [g]</span></a>
+<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="co">#&gt; [1] 1</span></a>
+<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">1</span>, <span class="st">"mg"</span>) <span class="op">/</span><span class="st"> </span><span class="fl">1e6</span> <span class="co"># convert mg into ng</span></a>
+<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="co">#&gt; Mass [ng]</span></a>
+<a class="sourceLine" id="cb9-6" data-line-number="6"><span class="co">#&gt; [1] 1</span></a></code></pre></div>
 <p>Quantities can also be divided by another quantity of the same type (e.g. a mass by another mass) effectively canceling out the units resulting in a regular number (with the metric prefixes properly taken into consideration).</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="co"># how many mg in a kg?</span></a>
-<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">1</span>, <span class="st">"mg"</span>) <span class="op">/</span><span class="st"> </span><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">1</span>, <span class="st">"kg"</span>)</a>
-<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="co">#&gt; [1] 1e-06</span></a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="co"># how many mg in a kg?</span></a>
+<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">1</span>, <span class="st">"mg"</span>) <span class="op">/</span><span class="st"> </span><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">1</span>, <span class="st">"kg"</span>)</a>
+<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="co">#&gt; [1] 1e-06</span></a></code></pre></div>
 <p>Additional multiplications and divisions are possible for specific combinations of quantities as detailed below. These formulas are each implemented for all three possible arrangements.</p>
 <div id="molarity-amount-volume" class="section level4">
 <h4 class="hasAnchor">
 <a href="#molarity-amount-volume" class="anchor"></a>Molarity = Amount / Volume</h4>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">5</span>, <span class="st">"nmol"</span>) <span class="op">/</span><span class="st"> </span><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">50</span>, <span class="st">"mL"</span>) <span class="co"># calculation molarity</span></a>
-<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="co">#&gt; Molarity [nM]</span></a>
-<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="co">#&gt; [1] 100</span></a>
-<a class="sourceLine" id="cb10-4" data-line-number="4"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">5</span>, <span class="st">"nmol"</span>) <span class="op">/</span><span class="st"> </span><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">100</span>, <span class="st">"nM"</span>) <span class="co"># calculate volume</span></a>
-<a class="sourceLine" id="cb10-5" data-line-number="5"><span class="co">#&gt; Volume [mL]</span></a>
-<a class="sourceLine" id="cb10-6" data-line-number="6"><span class="co">#&gt; [1] 50</span></a>
-<a class="sourceLine" id="cb10-7" data-line-number="7"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">100</span>, <span class="st">"nM"</span>) <span class="op">*</span><span class="st"> </span><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">50</span>, <span class="st">"mL"</span>) <span class="co"># calculate amount</span></a>
-<a class="sourceLine" id="cb10-8" data-line-number="8"><span class="co">#&gt; Amount [nmol]</span></a>
-<a class="sourceLine" id="cb10-9" data-line-number="9"><span class="co">#&gt; [1] 5</span></a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">5</span>, <span class="st">"nmol"</span>) <span class="op">/</span><span class="st"> </span><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">50</span>, <span class="st">"mL"</span>) <span class="co"># calculation molarity</span></a>
+<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="co">#&gt; Molarity [nM]</span></a>
+<a class="sourceLine" id="cb11-3" data-line-number="3"><span class="co">#&gt; [1] 100</span></a>
+<a class="sourceLine" id="cb11-4" data-line-number="4"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">5</span>, <span class="st">"nmol"</span>) <span class="op">/</span><span class="st"> </span><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">100</span>, <span class="st">"nM"</span>) <span class="co"># calculate volume</span></a>
+<a class="sourceLine" id="cb11-5" data-line-number="5"><span class="co">#&gt; Volume [mL]</span></a>
+<a class="sourceLine" id="cb11-6" data-line-number="6"><span class="co">#&gt; [1] 50</span></a>
+<a class="sourceLine" id="cb11-7" data-line-number="7"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">100</span>, <span class="st">"nM"</span>) <span class="op">*</span><span class="st"> </span><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">50</span>, <span class="st">"mL"</span>) <span class="co"># calculate amount</span></a>
+<a class="sourceLine" id="cb11-8" data-line-number="8"><span class="co">#&gt; Amount [nmol]</span></a>
+<a class="sourceLine" id="cb11-9" data-line-number="9"><span class="co">#&gt; [1] 5</span></a></code></pre></div>
 </div>
 <div id="density-mass-volume" class="section level4">
 <h4 class="hasAnchor">
 <a href="#density-mass-volume" class="anchor"></a>Density = Mass / Volume</h4>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">5</span>, <span class="st">"ng"</span>) <span class="op">/</span><span class="st"> </span><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">50</span>, <span class="st">"mL"</span>) <span class="co"># calculate density</span></a>
-<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="co">#&gt; Density [ng/L]</span></a>
-<a class="sourceLine" id="cb11-3" data-line-number="3"><span class="co">#&gt; [1] 100</span></a>
-<a class="sourceLine" id="cb11-4" data-line-number="4"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">5</span>, <span class="st">"ng"</span>) <span class="op">/</span><span class="st"> </span><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">100</span>, <span class="st">"ng/L"</span>) <span class="co"># calculate volume</span></a>
-<a class="sourceLine" id="cb11-5" data-line-number="5"><span class="co">#&gt; Volume [mL]</span></a>
-<a class="sourceLine" id="cb11-6" data-line-number="6"><span class="co">#&gt; [1] 50</span></a>
-<a class="sourceLine" id="cb11-7" data-line-number="7"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">100</span>, <span class="st">"ng/L"</span>) <span class="op">*</span><span class="st"> </span><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">50</span>, <span class="st">"mL"</span>) <span class="co"># calculate mass</span></a>
-<a class="sourceLine" id="cb11-8" data-line-number="8"><span class="co">#&gt; Mass [ng]</span></a>
-<a class="sourceLine" id="cb11-9" data-line-number="9"><span class="co">#&gt; [1] 5</span></a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">5</span>, <span class="st">"ng"</span>) <span class="op">/</span><span class="st"> </span><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">50</span>, <span class="st">"mL"</span>) <span class="co"># calculate density</span></a>
+<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="co">#&gt; Density [ng/L]</span></a>
+<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="co">#&gt; [1] 100</span></a>
+<a class="sourceLine" id="cb12-4" data-line-number="4"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">5</span>, <span class="st">"ng"</span>) <span class="op">/</span><span class="st"> </span><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">100</span>, <span class="st">"ng/L"</span>) <span class="co"># calculate volume</span></a>
+<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="co">#&gt; Volume [mL]</span></a>
+<a class="sourceLine" id="cb12-6" data-line-number="6"><span class="co">#&gt; [1] 50</span></a>
+<a class="sourceLine" id="cb12-7" data-line-number="7"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">100</span>, <span class="st">"ng/L"</span>) <span class="op">*</span><span class="st"> </span><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">50</span>, <span class="st">"mL"</span>) <span class="co"># calculate mass</span></a>
+<a class="sourceLine" id="cb12-8" data-line-number="8"><span class="co">#&gt; Mass [ng]</span></a>
+<a class="sourceLine" id="cb12-9" data-line-number="9"><span class="co">#&gt; [1] 5</span></a></code></pre></div>
 </div>
 <div id="amount-mass-molecular-mass" class="section level4">
 <h4 class="hasAnchor">
 <a href="#amount-mass-molecular-mass" class="anchor"></a>Amount = Mass / Molecular Mass</h4>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">10</span>, <span class="st">"g"</span>) <span class="op">/</span><span class="st"> </span><span class="kw"><a href="../reference/quantities.html">qty</a></span> (<span class="dv">50</span>, <span class="st">"g/mol"</span>) <span class="co"># calculate amount</span></a>
-<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="co">#&gt; Amount [mmol]</span></a>
-<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="co">#&gt; [1] 200</span></a>
-<a class="sourceLine" id="cb12-4" data-line-number="4"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">10</span>, <span class="st">"g"</span>) <span class="op">/</span><span class="st"> </span><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">200</span>, <span class="st">"mmol"</span>) <span class="co"># calculate molecular mass</span></a>
-<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="co">#&gt; MolecularMass [g/mol]</span></a>
-<a class="sourceLine" id="cb12-6" data-line-number="6"><span class="co">#&gt; [1] 50</span></a>
-<a class="sourceLine" id="cb12-7" data-line-number="7"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">200</span>, <span class="st">"mmol"</span>) <span class="op">*</span><span class="st"> </span><span class="kw"><a href="../reference/quantities.html">qty</a></span> (<span class="dv">50</span>, <span class="st">"g/mol"</span>) <span class="co"># calculate mass</span></a>
-<a class="sourceLine" id="cb12-8" data-line-number="8"><span class="co">#&gt; Mass [g]</span></a>
-<a class="sourceLine" id="cb12-9" data-line-number="9"><span class="co">#&gt; [1] 10</span></a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">10</span>, <span class="st">"g"</span>) <span class="op">/</span><span class="st"> </span><span class="kw"><a href="../reference/quantities.html">qty</a></span> (<span class="dv">50</span>, <span class="st">"g/mol"</span>) <span class="co"># calculate amount</span></a>
+<a class="sourceLine" id="cb13-2" data-line-number="2"><span class="co">#&gt; Amount [mmol]</span></a>
+<a class="sourceLine" id="cb13-3" data-line-number="3"><span class="co">#&gt; [1] 200</span></a>
+<a class="sourceLine" id="cb13-4" data-line-number="4"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">10</span>, <span class="st">"g"</span>) <span class="op">/</span><span class="st"> </span><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">200</span>, <span class="st">"mmol"</span>) <span class="co"># calculate molecular mass</span></a>
+<a class="sourceLine" id="cb13-5" data-line-number="5"><span class="co">#&gt; MolecularMass [g/mol]</span></a>
+<a class="sourceLine" id="cb13-6" data-line-number="6"><span class="co">#&gt; [1] 50</span></a>
+<a class="sourceLine" id="cb13-7" data-line-number="7"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">200</span>, <span class="st">"mmol"</span>) <span class="op">*</span><span class="st"> </span><span class="kw"><a href="../reference/quantities.html">qty</a></span> (<span class="dv">50</span>, <span class="st">"g/mol"</span>) <span class="co"># calculate mass</span></a>
+<a class="sourceLine" id="cb13-8" data-line-number="8"><span class="co">#&gt; Mass [g]</span></a>
+<a class="sourceLine" id="cb13-9" data-line-number="9"><span class="co">#&gt; [1] 10</span></a></code></pre></div>
 </div>
 <div id="solubility-molarity-pressure" class="section level4">
 <h4 class="hasAnchor">
 <a href="#solubility-molarity-pressure" class="anchor"></a>Solubility = Molarity / Pressure</h4>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">10</span>, <span class="st">"mM"</span>) <span class="op">/</span><span class="st"> </span><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">200</span>, <span class="st">"mbar"</span>) <span class="co"># calculate solubility</span></a>
-<a class="sourceLine" id="cb13-2" data-line-number="2"><span class="co">#&gt; Solubility [mM/bar]</span></a>
-<a class="sourceLine" id="cb13-3" data-line-number="3"><span class="co">#&gt; [1] 50</span></a>
-<a class="sourceLine" id="cb13-4" data-line-number="4"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">10</span>, <span class="st">"mM"</span>) <span class="op">/</span><span class="st"> </span><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">50</span>, <span class="st">"mM/bar"</span>) <span class="co"># calculate pressure</span></a>
-<a class="sourceLine" id="cb13-5" data-line-number="5"><span class="co">#&gt; Pressure [mbar]</span></a>
-<a class="sourceLine" id="cb13-6" data-line-number="6"><span class="co">#&gt; [1] 200</span></a>
-<a class="sourceLine" id="cb13-7" data-line-number="7"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">50</span>, <span class="st">"mM/bar"</span>) <span class="op">*</span><span class="st"> </span><span class="kw"><a href="../reference/quantities.html">qty</a></span> (<span class="dv">200</span>, <span class="st">"mbar"</span>) <span class="co"># calculate molarity</span></a>
-<a class="sourceLine" id="cb13-8" data-line-number="8"><span class="co">#&gt; Molarity [mM]</span></a>
-<a class="sourceLine" id="cb13-9" data-line-number="9"><span class="co">#&gt; [1] 10</span></a></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">10</span>, <span class="st">"mM"</span>) <span class="op">/</span><span class="st"> </span><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">200</span>, <span class="st">"mbar"</span>) <span class="co"># calculate solubility</span></a>
+<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="co">#&gt; Solubility [mM/bar]</span></a>
+<a class="sourceLine" id="cb14-3" data-line-number="3"><span class="co">#&gt; [1] 50</span></a>
+<a class="sourceLine" id="cb14-4" data-line-number="4"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">10</span>, <span class="st">"mM"</span>) <span class="op">/</span><span class="st"> </span><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">50</span>, <span class="st">"mM/bar"</span>) <span class="co"># calculate pressure</span></a>
+<a class="sourceLine" id="cb14-5" data-line-number="5"><span class="co">#&gt; Pressure [mbar]</span></a>
+<a class="sourceLine" id="cb14-6" data-line-number="6"><span class="co">#&gt; [1] 200</span></a>
+<a class="sourceLine" id="cb14-7" data-line-number="7"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">50</span>, <span class="st">"mM/bar"</span>) <span class="op">*</span><span class="st"> </span><span class="kw"><a href="../reference/quantities.html">qty</a></span> (<span class="dv">200</span>, <span class="st">"mbar"</span>) <span class="co"># calculate molarity</span></a>
+<a class="sourceLine" id="cb14-8" data-line-number="8"><span class="co">#&gt; Molarity [mM]</span></a>
+<a class="sourceLine" id="cb14-9" data-line-number="9"><span class="co">#&gt; [1] 10</span></a></code></pre></div>
 </div>
 </div>
 <div id="comparisons" class="section level3">
 <h3 class="hasAnchor">
 <a href="#comparisons" class="anchor"></a>Comparisons</h3>
 <p>Quantities can be compared with all common logic operators (<code>&gt;</code>, <code>&gt;=</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>==</code>, <code>!=</code>) taking the metric scaling properly into consideration. Attempts to compare non-matching quantities (e.g. mass &amp; volume) will fail with an error to avoid unexpect behaviour. Comparisons of quantities with numerics are allowed but it is important to be cautious about these since the metric scaling in quantities affects the numeric value.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">5</span>, <span class="st">"mg"</span>) <span class="op">&lt;</span><span class="st"> </span><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">1</span>, <span class="st">"g"</span>)</a>
-<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="co">#&gt; [1] TRUE</span></a>
-<a class="sourceLine" id="cb14-3" data-line-number="3"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">5</span>, <span class="st">"mg"</span>) <span class="op">&gt;</span><span class="st"> </span><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">10</span>, <span class="st">"ng"</span>)</a>
-<a class="sourceLine" id="cb14-4" data-line-number="4"><span class="co">#&gt; [1] TRUE</span></a>
-<a class="sourceLine" id="cb14-5" data-line-number="5"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">5</span>, <span class="st">"mg"</span>) <span class="op">==</span><span class="st"> </span><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="fl">0.005</span>, <span class="st">"g"</span>)</a>
-<a class="sourceLine" id="cb14-6" data-line-number="6"><span class="co">#&gt; [1] TRUE</span></a>
-<a class="sourceLine" id="cb14-7" data-line-number="7"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">5</span>, <span class="st">"mg"</span>) <span class="op">!=</span><span class="st"> </span><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">5</span>, <span class="st">"g"</span>)</a>
-<a class="sourceLine" id="cb14-8" data-line-number="8"><span class="co">#&gt; [1] TRUE</span></a>
-<a class="sourceLine" id="cb14-9" data-line-number="9"><span class="kw">try</span>(<span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">1</span>, <span class="st">"mg"</span>) <span class="op">&gt;</span><span class="st"> </span><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">1</span>, <span class="st">"L"</span>)) <span class="co"># not allowed (different quantities)</span></a>
-<a class="sourceLine" id="cb14-10" data-line-number="10"><span class="co">#&gt; Error : comparison is not implemented for these quantities (trying to use 'MediaToolsMass' and 'MediaToolsVolume').</span></a>
-<a class="sourceLine" id="cb14-11" data-line-number="11"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">1</span>, <span class="st">"mg"</span>) <span class="op">==</span><span class="st"> </span><span class="dv">1</span> <span class="co"># allowed but important to be careful</span></a>
-<a class="sourceLine" id="cb14-12" data-line-number="12"><span class="co">#&gt; [1] TRUE</span></a>
-<a class="sourceLine" id="cb14-13" data-line-number="13"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="fl">0.1</span>, <span class="st">"g"</span>) <span class="op">==</span><span class="st"> </span><span class="fl">0.1</span> <span class="co"># example of metric scaling affecting the comparison</span></a>
-<a class="sourceLine" id="cb14-14" data-line-number="14"><span class="co">#&gt; [1] FALSE</span></a>
-<a class="sourceLine" id="cb14-15" data-line-number="15"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="fl">0.1</span>, <span class="st">"g"</span>) <span class="op">==</span><span class="st"> </span><span class="dv">100</span> <span class="co"># example of metric scaling affecting the comparison</span></a>
-<a class="sourceLine" id="cb14-16" data-line-number="16"><span class="co">#&gt; [1] TRUE</span></a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">5</span>, <span class="st">"mg"</span>) <span class="op">&lt;</span><span class="st"> </span><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">1</span>, <span class="st">"g"</span>)</a>
+<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="co">#&gt; [1] TRUE</span></a>
+<a class="sourceLine" id="cb15-3" data-line-number="3"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">5</span>, <span class="st">"mg"</span>) <span class="op">&gt;</span><span class="st"> </span><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">10</span>, <span class="st">"ng"</span>)</a>
+<a class="sourceLine" id="cb15-4" data-line-number="4"><span class="co">#&gt; [1] TRUE</span></a>
+<a class="sourceLine" id="cb15-5" data-line-number="5"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">5</span>, <span class="st">"mg"</span>) <span class="op">==</span><span class="st"> </span><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="fl">0.005</span>, <span class="st">"g"</span>)</a>
+<a class="sourceLine" id="cb15-6" data-line-number="6"><span class="co">#&gt; [1] TRUE</span></a>
+<a class="sourceLine" id="cb15-7" data-line-number="7"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">5</span>, <span class="st">"mg"</span>) <span class="op">!=</span><span class="st"> </span><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">5</span>, <span class="st">"g"</span>)</a>
+<a class="sourceLine" id="cb15-8" data-line-number="8"><span class="co">#&gt; [1] TRUE</span></a>
+<a class="sourceLine" id="cb15-9" data-line-number="9"><span class="kw">try</span>(<span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">1</span>, <span class="st">"mg"</span>) <span class="op">&gt;</span><span class="st"> </span><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">1</span>, <span class="st">"L"</span>)) <span class="co"># not allowed (different quantities)</span></a>
+<a class="sourceLine" id="cb15-10" data-line-number="10"><span class="co">#&gt; Error : comparison is not implemented for these quantities (trying to use 'MediaToolsMass' and 'MediaToolsVolume').</span></a>
+<a class="sourceLine" id="cb15-11" data-line-number="11"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">1</span>, <span class="st">"mg"</span>) <span class="op">==</span><span class="st"> </span><span class="dv">1</span> <span class="co"># allowed but important to be careful</span></a>
+<a class="sourceLine" id="cb15-12" data-line-number="12"><span class="co">#&gt; [1] TRUE</span></a>
+<a class="sourceLine" id="cb15-13" data-line-number="13"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="fl">0.1</span>, <span class="st">"g"</span>) <span class="op">==</span><span class="st"> </span><span class="fl">0.1</span> <span class="co"># example of metric scaling affecting the comparison</span></a>
+<a class="sourceLine" id="cb15-14" data-line-number="14"><span class="co">#&gt; [1] FALSE</span></a>
+<a class="sourceLine" id="cb15-15" data-line-number="15"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="fl">0.1</span>, <span class="st">"g"</span>) <span class="op">==</span><span class="st"> </span><span class="dv">100</span> <span class="co"># example of metric scaling affecting the comparison</span></a>
+<a class="sourceLine" id="cb15-16" data-line-number="16"><span class="co">#&gt; [1] TRUE</span></a></code></pre></div>
 <p>It is important to note that due to machine errors, the <code>==</code> is best avoided in favor of more reliable comparisions such as tests that check whether the difference between quantities is smaller than a tiny quantity:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">(x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">1</span>, <span class="st">"mg"</span>))</a>
-<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="co">#&gt; Mass [mg]</span></a>
-<a class="sourceLine" id="cb15-3" data-line-number="3"><span class="co">#&gt; [1] 1</span></a>
-<a class="sourceLine" id="cb15-4" data-line-number="4">(y &lt;-<span class="st"> </span>x <span class="op">/</span><span class="st"> </span><span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb15-5" data-line-number="5"><span class="co">#&gt; Mass [µg]</span></a>
-<a class="sourceLine" id="cb15-6" data-line-number="6"><span class="co">#&gt; [1] 333.3333</span></a>
-<a class="sourceLine" id="cb15-7" data-line-number="7">(x2 &lt;-<span class="st"> </span>y <span class="op">*</span><span class="st"> </span><span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb15-8" data-line-number="8"><span class="co">#&gt; Mass [mg]</span></a>
-<a class="sourceLine" id="cb15-9" data-line-number="9"><span class="co">#&gt; [1] 1</span></a>
-<a class="sourceLine" id="cb15-10" data-line-number="10">x <span class="op">==</span><span class="st"> </span>x2 <span class="co"># should be identical but is not because of machine precision</span></a>
-<a class="sourceLine" id="cb15-11" data-line-number="11"><span class="co">#&gt; [1] FALSE</span></a>
-<a class="sourceLine" id="cb15-12" data-line-number="12"><span class="kw">abs</span>(x <span class="op">-</span><span class="st"> </span>x2) <span class="op">&lt;</span><span class="st"> </span><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">1</span>, <span class="st">"fg"</span>) <span class="co"># absolute difference smaller than 1 femtogram</span></a>
-<a class="sourceLine" id="cb15-13" data-line-number="13"><span class="co">#&gt; [1] TRUE</span></a></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">(x &lt;-<span class="st"> </span><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">1</span>, <span class="st">"mg"</span>))</a>
+<a class="sourceLine" id="cb16-2" data-line-number="2"><span class="co">#&gt; Mass [mg]</span></a>
+<a class="sourceLine" id="cb16-3" data-line-number="3"><span class="co">#&gt; [1] 1</span></a>
+<a class="sourceLine" id="cb16-4" data-line-number="4">(y &lt;-<span class="st"> </span>x <span class="op">/</span><span class="st"> </span><span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb16-5" data-line-number="5"><span class="co">#&gt; Mass [µg]</span></a>
+<a class="sourceLine" id="cb16-6" data-line-number="6"><span class="co">#&gt; [1] 333.3333</span></a>
+<a class="sourceLine" id="cb16-7" data-line-number="7">(x2 &lt;-<span class="st"> </span>y <span class="op">*</span><span class="st"> </span><span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb16-8" data-line-number="8"><span class="co">#&gt; Mass [mg]</span></a>
+<a class="sourceLine" id="cb16-9" data-line-number="9"><span class="co">#&gt; [1] 1</span></a>
+<a class="sourceLine" id="cb16-10" data-line-number="10">x <span class="op">==</span><span class="st"> </span>x2 <span class="co"># should be identical but is not because of machine precision</span></a>
+<a class="sourceLine" id="cb16-11" data-line-number="11"><span class="co">#&gt; [1] FALSE</span></a>
+<a class="sourceLine" id="cb16-12" data-line-number="12"><span class="kw">abs</span>(x <span class="op">-</span><span class="st"> </span>x2) <span class="op">&lt;</span><span class="st"> </span><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">1</span>, <span class="st">"fg"</span>) <span class="co"># absolute difference smaller than 1 femtogram</span></a>
+<a class="sourceLine" id="cb16-13" data-line-number="13"><span class="co">#&gt; [1] TRUE</span></a></code></pre></div>
 </div>
 </div>
 <div id="data-frames" class="section level2">
 <h2 class="hasAnchor">
 <a href="#data-frames" class="anchor"></a>Data Frames</h2>
 <p>Quantities are fully supported in dplyr type data frames and the units of a quantity are displayed underneath the column headers, e.g. <code>&lt;mg&gt;</code> to indicate a quantity column that has the units of <code>mg</code> (and thus is a mass).</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="kw">data_frame</span>(</a>
-<a class="sourceLine" id="cb16-2" data-line-number="2">  <span class="dt">weight =</span> <span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="st">"mg"</span>),</a>
-<a class="sourceLine" id="cb16-3" data-line-number="3">  <span class="dt">volume =</span> <span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">20</span>, <span class="st">"mL"</span>)</a>
-<a class="sourceLine" id="cb16-4" data-line-number="4">)</a>
-<a class="sourceLine" id="cb16-5" data-line-number="5"><span class="co">#&gt; # A tibble: 5 x 2</span></a>
-<a class="sourceLine" id="cb16-6" data-line-number="6"><span class="co">#&gt;   weight volume</span></a>
-<a class="sourceLine" id="cb16-7" data-line-number="7"><span class="co">#&gt;   &lt;mg&gt;   &lt;mL&gt;  </span></a>
-<a class="sourceLine" id="cb16-8" data-line-number="8"><span class="co">#&gt; 1 1      20    </span></a>
-<a class="sourceLine" id="cb16-9" data-line-number="9"><span class="co">#&gt; 2 2      20    </span></a>
-<a class="sourceLine" id="cb16-10" data-line-number="10"><span class="co">#&gt; 3 3      20    </span></a>
-<a class="sourceLine" id="cb16-11" data-line-number="11"><span class="co">#&gt; 4 4      20    </span></a>
-<a class="sourceLine" id="cb16-12" data-line-number="12"><span class="co">#&gt; 5 5      20</span></a></code></pre></div>
-<p>This also means that all common arithmetic operations are allowed within data frames.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">df &lt;-<span class="st"> </span><span class="kw">data_frame</span>(</a>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="kw">data_frame</span>(</a>
 <a class="sourceLine" id="cb17-2" data-line-number="2">  <span class="dt">weight =</span> <span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="st">"mg"</span>),</a>
-<a class="sourceLine" id="cb17-3" data-line-number="3">  <span class="dt">vol =</span> <span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">20</span>, <span class="st">"mL"</span>),</a>
-<a class="sourceLine" id="cb17-4" data-line-number="4">  <span class="dt">mw =</span> <span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">500</span>, <span class="st">"g/mol"</span>),</a>
-<a class="sourceLine" id="cb17-5" data-line-number="5">  <span class="dt">amount =</span> weight <span class="op">/</span><span class="st"> </span>mw,</a>
-<a class="sourceLine" id="cb17-6" data-line-number="6">  <span class="dt">conc =</span> amount <span class="op">/</span><span class="st"> </span>vol,</a>
-<a class="sourceLine" id="cb17-7" data-line-number="7">  <span class="dt">new_vol =</span> <span class="dv">50</span> <span class="op">*</span><span class="st"> </span><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">20</span>, <span class="st">"mL"</span>),</a>
-<a class="sourceLine" id="cb17-8" data-line-number="8">  <span class="dt">new_weight =</span> conc <span class="op">*</span><span class="st"> </span>new_vol <span class="op">*</span><span class="st"> </span>mw,</a>
-<a class="sourceLine" id="cb17-9" data-line-number="9">  <span class="st">`</span><span class="dt">correct?</span><span class="st">`</span> =<span class="st"> </span><span class="kw">abs</span>(<span class="dv">50</span> <span class="op">*</span><span class="st"> </span>weight <span class="op">-</span><span class="st"> </span>new_weight) <span class="op">&lt;</span><span class="st"> </span><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">1</span>, <span class="st">"fg"</span>)</a>
-<a class="sourceLine" id="cb17-10" data-line-number="10">)</a>
-<a class="sourceLine" id="cb17-11" data-line-number="11">df</a>
-<a class="sourceLine" id="cb17-12" data-line-number="12"><span class="co">#&gt; # A tibble: 5 x 8</span></a>
-<a class="sourceLine" id="cb17-13" data-line-number="13"><span class="co">#&gt;   weight vol   mw      amount conc  new_vol new_weight `correct?`</span></a>
-<a class="sourceLine" id="cb17-14" data-line-number="14"><span class="co">#&gt;   &lt;mg&gt;   &lt;mL&gt;  &lt;g/mol&gt; &lt;µmol&gt; &lt;µM&gt;  &lt;L&gt;     &lt;mg&gt;       &lt;lgl&gt;     </span></a>
-<a class="sourceLine" id="cb17-15" data-line-number="15"><span class="co">#&gt; 1 1      20    500      2     100   1        50        TRUE      </span></a>
-<a class="sourceLine" id="cb17-16" data-line-number="16"><span class="co">#&gt; 2 2      20    500      4     200   1       100        TRUE      </span></a>
-<a class="sourceLine" id="cb17-17" data-line-number="17"><span class="co">#&gt; 3 3      20    500      6     300   1       150        TRUE      </span></a>
-<a class="sourceLine" id="cb17-18" data-line-number="18"><span class="co">#&gt; 4 4      20    500      8     400   1       200        TRUE      </span></a>
-<a class="sourceLine" id="cb17-19" data-line-number="19"><span class="co">#&gt; 5 5      20    500     10     500   1       250        TRUE</span></a></code></pre></div>
+<a class="sourceLine" id="cb17-3" data-line-number="3">  <span class="dt">volume =</span> <span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">20</span>, <span class="st">"mL"</span>)</a>
+<a class="sourceLine" id="cb17-4" data-line-number="4">)</a>
+<a class="sourceLine" id="cb17-5" data-line-number="5"><span class="co">#&gt; # A tibble: 5 x 2</span></a>
+<a class="sourceLine" id="cb17-6" data-line-number="6"><span class="co">#&gt;   weight volume</span></a>
+<a class="sourceLine" id="cb17-7" data-line-number="7"><span class="co">#&gt;   &lt;mg&gt;   &lt;mL&gt;  </span></a>
+<a class="sourceLine" id="cb17-8" data-line-number="8"><span class="co">#&gt; 1 1      20    </span></a>
+<a class="sourceLine" id="cb17-9" data-line-number="9"><span class="co">#&gt; 2 2      20    </span></a>
+<a class="sourceLine" id="cb17-10" data-line-number="10"><span class="co">#&gt; 3 3      20    </span></a>
+<a class="sourceLine" id="cb17-11" data-line-number="11"><span class="co">#&gt; 4 4      20    </span></a>
+<a class="sourceLine" id="cb17-12" data-line-number="12"><span class="co">#&gt; 5 5      20</span></a></code></pre></div>
+<p>This also means that all common arithmetic operations are allowed within data frames.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1">df &lt;-<span class="st"> </span><span class="kw">data_frame</span>(</a>
+<a class="sourceLine" id="cb18-2" data-line-number="2">  <span class="dt">weight =</span> <span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="st">"mg"</span>),</a>
+<a class="sourceLine" id="cb18-3" data-line-number="3">  <span class="dt">vol =</span> <span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">20</span>, <span class="st">"mL"</span>),</a>
+<a class="sourceLine" id="cb18-4" data-line-number="4">  <span class="dt">mw =</span> <span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">500</span>, <span class="st">"g/mol"</span>),</a>
+<a class="sourceLine" id="cb18-5" data-line-number="5">  <span class="dt">amount =</span> weight <span class="op">/</span><span class="st"> </span>mw,</a>
+<a class="sourceLine" id="cb18-6" data-line-number="6">  <span class="dt">conc =</span> amount <span class="op">/</span><span class="st"> </span>vol,</a>
+<a class="sourceLine" id="cb18-7" data-line-number="7">  <span class="dt">new_vol =</span> <span class="dv">50</span> <span class="op">*</span><span class="st"> </span><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">20</span>, <span class="st">"mL"</span>),</a>
+<a class="sourceLine" id="cb18-8" data-line-number="8">  <span class="dt">new_weight =</span> conc <span class="op">*</span><span class="st"> </span>new_vol <span class="op">*</span><span class="st"> </span>mw,</a>
+<a class="sourceLine" id="cb18-9" data-line-number="9">  <span class="st">`</span><span class="dt">correct?</span><span class="st">`</span> =<span class="st"> </span><span class="kw">abs</span>(<span class="dv">50</span> <span class="op">*</span><span class="st"> </span>weight <span class="op">-</span><span class="st"> </span>new_weight) <span class="op">&lt;</span><span class="st"> </span><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">1</span>, <span class="st">"fg"</span>)</a>
+<a class="sourceLine" id="cb18-10" data-line-number="10">)</a>
+<a class="sourceLine" id="cb18-11" data-line-number="11">df</a>
+<a class="sourceLine" id="cb18-12" data-line-number="12"><span class="co">#&gt; # A tibble: 5 x 8</span></a>
+<a class="sourceLine" id="cb18-13" data-line-number="13"><span class="co">#&gt;   weight vol   mw      amount conc  new_vol new_weight `correct?`</span></a>
+<a class="sourceLine" id="cb18-14" data-line-number="14"><span class="co">#&gt;   &lt;mg&gt;   &lt;mL&gt;  &lt;g/mol&gt; &lt;µmol&gt; &lt;µM&gt;  &lt;L&gt;     &lt;mg&gt;       &lt;lgl&gt;     </span></a>
+<a class="sourceLine" id="cb18-15" data-line-number="15"><span class="co">#&gt; 1 1      20    500      2     100   1        50        TRUE      </span></a>
+<a class="sourceLine" id="cb18-16" data-line-number="16"><span class="co">#&gt; 2 2      20    500      4     200   1       100        TRUE      </span></a>
+<a class="sourceLine" id="cb18-17" data-line-number="17"><span class="co">#&gt; 3 3      20    500      6     300   1       150        TRUE      </span></a>
+<a class="sourceLine" id="cb18-18" data-line-number="18"><span class="co">#&gt; 4 4      20    500      8     400   1       200        TRUE      </span></a>
+<a class="sourceLine" id="cb18-19" data-line-number="19"><span class="co">#&gt; 5 5      20    500     10     500   1       250        TRUE</span></a></code></pre></div>
 <p>To get the quantities’ units or full labels, simply use <code><a href="../reference/quantity_info.html">get_qty_units()</a></code> and <code><a href="../reference/quantity_info.html">get_qty_units_with_label()</a></code></p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1">df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/quantity_info.html">get_qty_units</a></span>()</a>
-<a class="sourceLine" id="cb18-2" data-line-number="2"><span class="co">#&gt;     weight        vol         mw     amount       conc    new_vol </span></a>
-<a class="sourceLine" id="cb18-3" data-line-number="3"><span class="co">#&gt;       "mg"       "mL"    "g/mol"     "µmol"       "µM"        "L" </span></a>
-<a class="sourceLine" id="cb18-4" data-line-number="4"><span class="co">#&gt; new_weight   correct? </span></a>
-<a class="sourceLine" id="cb18-5" data-line-number="5"><span class="co">#&gt;       "mg"         NA</span></a>
-<a class="sourceLine" id="cb18-6" data-line-number="6">df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/quantity_info.html">get_qty_units_with_label</a></span>()</a>
-<a class="sourceLine" id="cb18-7" data-line-number="7"><span class="co">#&gt;            weight               vol                mw            amount </span></a>
-<a class="sourceLine" id="cb18-8" data-line-number="8"><span class="co">#&gt;     "weight [mg]"        "vol [mL]"      "mw [g/mol]"   "amount [µmol]" </span></a>
-<a class="sourceLine" id="cb18-9" data-line-number="9"><span class="co">#&gt;              conc           new_vol        new_weight          correct? </span></a>
-<a class="sourceLine" id="cb18-10" data-line-number="10"><span class="co">#&gt;       "conc [µM]"     "new_vol [L]" "new_weight [mg]"        "correct?"</span></a></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/quantity_info.html">get_qty_units</a></span>()</a>
+<a class="sourceLine" id="cb19-2" data-line-number="2"><span class="co">#&gt;     weight        vol         mw     amount       conc    new_vol </span></a>
+<a class="sourceLine" id="cb19-3" data-line-number="3"><span class="co">#&gt;       "mg"       "mL"    "g/mol"     "µmol"       "µM"        "L" </span></a>
+<a class="sourceLine" id="cb19-4" data-line-number="4"><span class="co">#&gt; new_weight   correct? </span></a>
+<a class="sourceLine" id="cb19-5" data-line-number="5"><span class="co">#&gt;       "mg"         NA</span></a>
+<a class="sourceLine" id="cb19-6" data-line-number="6">df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/quantity_info.html">get_qty_units_with_label</a></span>()</a>
+<a class="sourceLine" id="cb19-7" data-line-number="7"><span class="co">#&gt;            weight               vol                mw            amount </span></a>
+<a class="sourceLine" id="cb19-8" data-line-number="8"><span class="co">#&gt;     "weight [mg]"        "vol [mL]"      "mw [g/mol]"   "amount [µmol]" </span></a>
+<a class="sourceLine" id="cb19-9" data-line-number="9"><span class="co">#&gt;              conc           new_vol        new_weight          correct? </span></a>
+<a class="sourceLine" id="cb19-10" data-line-number="10"><span class="co">#&gt;       "conc [µM]"     "new_vol [L]" "new_weight [mg]"        "correct?"</span></a></code></pre></div>
 </div>
 <div id="concatenation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#concatenation" class="anchor"></a>Concatenation</h2>
 <p>Quantities can be concatenated using the regular <code>c()</code> function (or the more explicit <code><a href="../reference/c_qty.html">c_qty()</a></code>) as long as they are the same type of quantity (e.g. all masses). Concatenation make sure that the metric prefix is taken into consideration and scales the new vector to the best metric of the median.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="kw">c</span>(</a>
-<a class="sourceLine" id="cb19-2" data-line-number="2">  <span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">1</span>, <span class="st">"g"</span>), </a>
-<a class="sourceLine" id="cb19-3" data-line-number="3">  <span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="st">"mg"</span>),</a>
-<a class="sourceLine" id="cb19-4" data-line-number="4">  <span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">2</span>, <span class="st">"g"</span>)</a>
-<a class="sourceLine" id="cb19-5" data-line-number="5">)</a>
-<a class="sourceLine" id="cb19-6" data-line-number="6"><span class="co">#&gt; Mass [mg]</span></a>
-<a class="sourceLine" id="cb19-7" data-line-number="7"><span class="co">#&gt; [1] 1000    1    2    3 2000</span></a></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="kw">c</span>(</a>
+<a class="sourceLine" id="cb20-2" data-line-number="2">  <span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">1</span>, <span class="st">"g"</span>), </a>
+<a class="sourceLine" id="cb20-3" data-line-number="3">  <span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="st">"mg"</span>),</a>
+<a class="sourceLine" id="cb20-4" data-line-number="4">  <span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">2</span>, <span class="st">"g"</span>)</a>
+<a class="sourceLine" id="cb20-5" data-line-number="5">)</a>
+<a class="sourceLine" id="cb20-6" data-line-number="6"><span class="co">#&gt; Mass [mg]</span></a>
+<a class="sourceLine" id="cb20-7" data-line-number="7"><span class="co">#&gt; [1] 1000    1    2    3 2000</span></a></code></pre></div>
 </div>
 <div id="missing-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#missing-data" class="anchor"></a>Missing data</h2>
 <p>Missing data (<code>NA</code>), empty vector (<code>numeric(0)</code>) and infinity placeholders (<code>Inf</code>, <code>-Inf</code>) are supported in all quantities and work the same as in any other R vectors.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="ot">NA</span>, <span class="st">"mg"</span>)</a>
-<a class="sourceLine" id="cb20-2" data-line-number="2"><span class="co">#&gt; Mass [g]</span></a>
-<a class="sourceLine" id="cb20-3" data-line-number="3"><span class="co">#&gt; [1] NA</span></a>
-<a class="sourceLine" id="cb20-4" data-line-number="4"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="ot">Inf</span>, <span class="st">"mg"</span>)</a>
-<a class="sourceLine" id="cb20-5" data-line-number="5"><span class="co">#&gt; Mass [g]</span></a>
-<a class="sourceLine" id="cb20-6" data-line-number="6"><span class="co">#&gt; [1] Inf</span></a>
-<a class="sourceLine" id="cb20-7" data-line-number="7"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="kw">numeric</span>(<span class="dv">0</span>), <span class="st">"mg"</span>)</a>
-<a class="sourceLine" id="cb20-8" data-line-number="8"><span class="co">#&gt; Mass [g]</span></a>
-<a class="sourceLine" id="cb20-9" data-line-number="9"><span class="co">#&gt; numeric(0)</span></a>
-<a class="sourceLine" id="cb20-10" data-line-number="10"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="kw">c</span>(<span class="dv">10</span>, <span class="ot">NA</span>, <span class="op">-</span><span class="ot">Inf</span>, <span class="ot">Inf</span>, <span class="kw">numeric</span>(<span class="dv">0</span>)), <span class="st">"mg"</span>)</a>
-<a class="sourceLine" id="cb20-11" data-line-number="11"><span class="co">#&gt; Mass [mg]</span></a>
-<a class="sourceLine" id="cb20-12" data-line-number="12"><span class="co">#&gt; [1]   10   NA -Inf  Inf</span></a></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="ot">NA</span>, <span class="st">"mg"</span>)</a>
+<a class="sourceLine" id="cb21-2" data-line-number="2"><span class="co">#&gt; Mass [g]</span></a>
+<a class="sourceLine" id="cb21-3" data-line-number="3"><span class="co">#&gt; [1] NA</span></a>
+<a class="sourceLine" id="cb21-4" data-line-number="4"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="ot">Inf</span>, <span class="st">"mg"</span>)</a>
+<a class="sourceLine" id="cb21-5" data-line-number="5"><span class="co">#&gt; Mass [g]</span></a>
+<a class="sourceLine" id="cb21-6" data-line-number="6"><span class="co">#&gt; [1] Inf</span></a>
+<a class="sourceLine" id="cb21-7" data-line-number="7"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="kw">numeric</span>(<span class="dv">0</span>), <span class="st">"mg"</span>)</a>
+<a class="sourceLine" id="cb21-8" data-line-number="8"><span class="co">#&gt; Mass [g]</span></a>
+<a class="sourceLine" id="cb21-9" data-line-number="9"><span class="co">#&gt; numeric(0)</span></a>
+<a class="sourceLine" id="cb21-10" data-line-number="10"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="kw">c</span>(<span class="dv">10</span>, <span class="ot">NA</span>, <span class="op">-</span><span class="ot">Inf</span>, <span class="ot">Inf</span>, <span class="kw">numeric</span>(<span class="dv">0</span>)), <span class="st">"mg"</span>)</a>
+<a class="sourceLine" id="cb21-11" data-line-number="11"><span class="co">#&gt; Mass [mg]</span></a>
+<a class="sourceLine" id="cb21-12" data-line-number="12"><span class="co">#&gt; [1]   10   NA -Inf  Inf</span></a></code></pre></div>
 </div>
 <div id="miscellaneous" class="section level2">
 <h2 class="hasAnchor">
 <a href="#miscellaneous" class="anchor"></a>Miscellaneous</h2>
 <p>To check whether something is a quantity, use the <code><a href="../reference/quantities.html">is_qty()</a></code> function.</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">1</span>, <span class="st">"mg"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/quantities.html">is_qty</a></span>() <span class="co"># is a quantity</span></a>
-<a class="sourceLine" id="cb21-2" data-line-number="2"><span class="co">#&gt; [1] TRUE</span></a>
-<a class="sourceLine" id="cb21-3" data-line-number="3"><span class="dv">1</span> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/quantities.html">is_qty</a></span>() <span class="co"># not a quantity</span></a>
-<a class="sourceLine" id="cb21-4" data-line-number="4"><span class="co">#&gt; [1] FALSE</span></a></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1"><span class="kw"><a href="../reference/quantities.html">qty</a></span>(<span class="dv">1</span>, <span class="st">"mg"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/quantities.html">is_qty</a></span>() <span class="co"># is a quantity</span></a>
+<a class="sourceLine" id="cb22-2" data-line-number="2"><span class="co">#&gt; [1] TRUE</span></a>
+<a class="sourceLine" id="cb22-3" data-line-number="3"><span class="dv">1</span> <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/quantities.html">is_qty</a></span>() <span class="co"># not a quantity</span></a>
+<a class="sourceLine" id="cb22-4" data-line-number="4"><span class="co">#&gt; [1] FALSE</span></a></code></pre></div>
 </div>
   </div>
 

@@ -10,19 +10,13 @@
     <loc>http://kopflab.github.io/mediatools//reference/c_qty.html</loc>
   </url>
   <url>
-    <loc>http://kopflab.github.io/mediatools//reference/calculate_ideal_gas_amount.html</loc>
-  </url>
-  <url>
-    <loc>http://kopflab.github.io/mediatools//reference/calculate_ideal_gas_molarity.html</loc>
-  </url>
-  <url>
-    <loc>http://kopflab.github.io/mediatools//reference/calculate_solubility.html</loc>
-  </url>
-  <url>
     <loc>http://kopflab.github.io/mediatools//reference/closed_system.html</loc>
   </url>
   <url>
     <loc>http://kopflab.github.io/mediatools//reference/constants.html</loc>
+  </url>
+  <url>
+    <loc>http://kopflab.github.io/mediatools//reference/gas_calculations.html</loc>
   </url>
   <url>
     <loc>http://kopflab.github.io/mediatools//reference/mediatools-package.html</loc>
@@ -46,7 +40,7 @@
     <loc>http://kopflab.github.io/mediatools//reference/speciation.html</loc>
   </url>
   <url>
-    <loc>http://kopflab.github.io/mediatools//articles/carbonate_chemistry.html</loc>
+    <loc>http://kopflab.github.io/mediatools//reference/visualization.html</loc>
   </url>
   <url>
     <loc>http://kopflab.github.io/mediatools//articles/carbonate_chemistry_equations.html</loc>

@@ -2,7 +2,6 @@ pandoc: 2.2.1
 pkgdown: 1.1.0
 pkgdown_sha: ~
 articles:
-  carbonate_chemistry: carbonate_chemistry.html
   carbonate_chemistry_equations: carbonate_chemistry_equations.html
   carbonate_chemistry_examples: carbonate_chemistry_examples.html
   operations: operations.html

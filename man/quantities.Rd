@@ -96,8 +96,13 @@ The \code{qty} function makes it easy to keep track of different quantities in c
 
 \examples{
 qty(0.045, "mmol/L")
+qty(200, "mbar")
 qty(6, "psi")
 qty(30, "C")
+qty(100, "K")
+qty(5, "mg/L")
+qty(1, "mM/bar")
+qty(257, "g/mol")
 }
 \seealso{
 Other quantity functions: \code{\link{metric}},

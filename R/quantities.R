@@ -16,8 +16,13 @@ NULL
 #' @param scale_to_best_metric whether to automatically scale to the best metric prefix
 #' @examples
 #' qty(0.045, "mmol/L")
+#' qty(200, "mbar")
 #' qty(6, "psi")
 #' qty(30, "C")
+#' qty(100, "K")
+#' qty(5, "mg/L")
+#' qty(1, "mM/bar")
+#' qty(257, "g/mol")
 #' @export
 #' @family quantity functions
 qty <- function(x, unit, scale_to_best_metric = TRUE) {
@@ -299,6 +304,12 @@ is_temperature <- function(q) is(q, "MediaToolsTemperature")
 #' @inheritParams qty
 #' @param transform whether to transform the value with an additional function once in the desired units. Common transformation examples are log10 and log (natural log) but custom transformations are also possible. Default is NO transformation (\link{identity}).
 #' @family quantity functions
+#' @examples 
+#' qty(0.1, "g") %>% get_qty_value()
+#' qty(0.1, "g") %>% get_qty_value("g")
+#' qty(0.1, "g") %>% get_qty_value("g", log10)
+#' qty(0, "C") %>% get_qty_value("F") 
+#' qty(760, "Torr") %>% get_qty_value("atm")
 #' @export
 get_qty_value <- function(q, unit = get_qty_units(q), transform = identity) UseMethod("get_qty_value", q)
 
@@ -340,6 +351,11 @@ get_qty_value.MediaToolsTemperature <- function(q, unit = get_qty_units(q), tran
 #' @rdname quantity_info
 #' @param signif number of significant digits for printing the quantity
 #' @export
+#' @examples 
+#' qty(0.1, "g") %>% get_qty_text()
+#' qty(0.1, "g") %>% get_qty_text("g")
+#' qty(0:10, "C") %>% get_qty_text("F")
+#' qty(760, "Torr") %>% get_qty_text("atm")
 get_qty_text <- function(q, unit = get_qty_units(q), signif = 5) {
   paste(base::signif(get_qty_value(q, unit), signif), unit)
 }
@@ -412,6 +428,10 @@ c.MediaToolsQuantity <- function(...) {
 #' @details \code{get_qty_units}: get units from a quantity, list of quantities or data frame (returns NA for objects/columns that are not quantities)
 #' @rdname quantity_info
 #' @param q quantity or list of quantities
+#' @examples 
+#' qty(5000, "g") %>% get_qty_units()
+#' x <- list(a = qty(5000, "g"), b = 42, c = qty(100, "mbar"))
+#' x %>% get_qty_units()
 #' @export
 get_qty_units <- function(q) {
   if (is_qty(q)) 
@@ -431,7 +451,8 @@ get_qty_units <- function(q) {
 #' 
 #' # make labels with units for data frame columns
 #' x <- data.frame(a = qty(1, "mg"), b = 2, c = qty(100, "mbar"))
-#' get_qty_units_with_label(x, names(x)) 
+#' get_qty_units_with_label(x) 
+#' get_qty_units_with_label(x, "same label")
 #' @export
 get_qty_units_with_label <- function(q, label = names(q)) {
   units <- get_qty_units(q)

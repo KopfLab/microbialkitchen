@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mediatools</a>
-        <span class="label label-danger" data-toggle="tooltip" data-placement="bottom" title="in active development">0.3.1.9999</span>
+        <span class="label label-danger" data-toggle="tooltip" data-placement="bottom" title="in active development">0.3.2.9999</span>
       </span>
     </div>
 
@@ -134,12 +134,12 @@
     </div>
 
     <pre class="usage"><span class='fu'>calculate_open_system_pH</span>(<span class='no'>pCO2</span>, <span class='kw'>`H2CO3*`</span> <span class='kw'>=</span> <span class='no'>solubility</span> * <span class='no'>pCO2</span>,
-  <span class='kw'>solubility</span> <span class='kw'>=</span> <span class='fu'><a href='calculate_solubility.html'>calculate_solubility</a></span>(<span class='st'>"CO2"</span>, <span class='no'>temperature</span>),
+  <span class='kw'>solubility</span> <span class='kw'>=</span> <span class='fu'><a href='gas_calculations.html'>calculate_solubility</a></span>(<span class='st'>"CO2"</span>, <span class='no'>temperature</span>),
   <span class='kw'>temperature</span> <span class='kw'>=</span> <span class='fu'><a href='quantities.html'>qty</a></span>(<span class='fl'>25</span>, <span class='st'>"C"</span>), <span class='kw'>pKa1</span> <span class='kw'>=</span> <span class='fl'>6.3</span>, <span class='kw'>pKa2</span> <span class='kw'>=</span> <span class='fl'>10.3</span>, <span class='kw'>pKw</span> <span class='kw'>=</span> <span class='fl'>14</span>,
   <span class='kw'>buffer</span> <span class='kw'>=</span> <span class='fu'><a href='quantities.html'>qty</a></span>(<span class='fl'>0</span>, <span class='st'>"M"</span>), <span class='no'>buffer_pKa</span>, <span class='kw'>alkalinity</span> <span class='kw'>=</span> <span class='fu'><a href='quantities.html'>qty</a></span>(<span class='fl'>0</span>, <span class='st'>"M"</span>))
 
 <span class='fu'>calculate_open_system_alkalinity</span>(<span class='no'>pH</span>, <span class='no'>pCO2</span>, <span class='kw'>`H2CO3*`</span> <span class='kw'>=</span> <span class='no'>solubility</span> * <span class='no'>pCO2</span>,
-  <span class='kw'>solubility</span> <span class='kw'>=</span> <span class='fu'><a href='calculate_solubility.html'>calculate_solubility</a></span>(<span class='st'>"CO2"</span>, <span class='no'>temperature</span>),
+  <span class='kw'>solubility</span> <span class='kw'>=</span> <span class='fu'><a href='gas_calculations.html'>calculate_solubility</a></span>(<span class='st'>"CO2"</span>, <span class='no'>temperature</span>),
   <span class='kw'>temperature</span> <span class='kw'>=</span> <span class='fu'><a href='quantities.html'>qty</a></span>(<span class='fl'>25</span>, <span class='st'>"C"</span>), <span class='kw'>pKa1</span> <span class='kw'>=</span> <span class='fl'>6.3</span>, <span class='kw'>pKa2</span> <span class='kw'>=</span> <span class='fl'>10.3</span>, <span class='kw'>pKw</span> <span class='kw'>=</span> <span class='fl'>14</span>,
   <span class='kw'>buffer</span> <span class='kw'>=</span> <span class='fu'><a href='quantities.html'>qty</a></span>(<span class='fl'>0</span>, <span class='st'>"M"</span>), <span class='no'>buffer_pKa</span>)</pre>
     
@@ -169,6 +169,10 @@
     <tr>
       <th>pKa2</th>
       <td><p>the acid dissociation constant for bicarbonate (HCO3-)</p></td>
+    </tr>
+    <tr>
+      <th>pKw</th>
+      <td><p>water dissociation constant</p></td>
     </tr>
     <tr>
       <th>buffer</th>
