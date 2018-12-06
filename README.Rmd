@@ -40,4 +40,4 @@ devtools::install_github("KopfLab/mediatools")
  - [function reference](https://kopflab.github.io/mediatools/reference/) for details on all functions
  - [quantities vignette](https://kopflab.github.io/mediatools/articles/quantities.html) on built-in chemical quantities 
  - [operations vignette](https://kopflab.github.io/mediatools/articles/operations.html) on working with quantities
- - [carbonate chemistry vignette](https://kopflab.github.io/mediatools/articles/carbonate_chemistry.html) on working with quantities
+ - [carbonate chemistry equations](https://kopflab.github.io/mediatools/articles/carbonate_chemistry_equations.html) and [carbonate chemistry examples](https://kopflab.github.io/mediatools/articles/carbonate_chemistry_examples.html) vignettes for working with carbonate buffered media systems
