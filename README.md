@@ -4,13 +4,15 @@
 # mediatools
 
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/mediatools)](https://cran.r-project.org/package=mediatools)
-[![Git\_Hub\_Version](https://img.shields.io/badge/GitHub-0.3.1.9999-orange.svg?style=flat-square)](/commits)
-[![Last-Update](https://img.shields.io/badge/updated-2018--12--05-yellowgreen.svg)](/commits)
+[![Git\_Hub\_Version](https://img.shields.io/badge/GitHub-0.3.2.9999-orange.svg?style=flat-square)](/commits)
+[![Last-Update](https://img.shields.io/badge/updated-2018--12--06-yellowgreen.svg)](/commits)
 [![Documentation](https://img.shields.io/badge/docs-online-green.svg)](https://kopflab.github.io/mediatools/reference/)
+[![codecov](https://codecov.io/github/KopfLab/mediatools/branch/master/graphs/badge.svg)](https://codecov.io/github/Kopflab/mediatools)
 [![Build
 Status](https://travis-ci.org/KopfLab/mediatools.svg?branch=master)](https://travis-ci.org/KopfLab/mediatools)
 [![AppVeyor Build
 Status](https://ci.appveyor.com/api/projects/status/github/KopfLab/mediatools?branch=master&svg=true)](https://ci.appveyor.com/project/KopfLab/mediatools)
+[![Binder](http://mybinder.org/badge.svg)](http://mybinder.org/v2/gh/KopfLab/mediatools/binder?urlpath=rstudio)
 
 ## About
 
@@ -56,3 +58,7 @@ devtools::install_github("KopfLab/mediatools")
         vignette](https://kopflab.github.io/mediatools/articles/carbonate_chemistry_equations.html)
       - [examples
         vignette](https://kopflab.github.io/mediatools/articles/carbonate_chemistry_examples.html)
+
+Explore all functionality and vignettes of the **mediatools** package
+[interactively on
+binder](http://mybinder.org/v2/gh/KopfLab/mediatools/binder?urlpath=rstudio).
