@@ -1,9 +1,12 @@
-#' Calculate the concentration of an ideal gas
-#' 
-#' Calculate the gas phase equivalent concentration of an ideal gas at a specific temperature (i.e. mol of gas / L of volume).
+# gas calculations =====
+
+#' General gas calculations
+#' @name gas_calculations
+NULL
+
+#' @describeIn gas_calculations calculate the gas phase equivalent concentration of an ideal gas at a specific temperature (i.e. mol of gas / L of volume). Returns a molarity quantity.
 #' @param pressure the pressure quantity of the gas
 #' @param temperature the temperature quantity of the gas
-#' @return molarity quantity
 #' @family calculations
 #' @export
 calculate_ideal_gas_molarity <- function(pressure, temperature) {
@@ -19,12 +22,9 @@ calculate_ideal_gas_molarity <- function(pressure, temperature) {
   return(molarity(molarity.M, "M"))
 }
 
-#' Calculate the amount of an ideal gas
-#' 
-#' Calculate the amount of an ideal gas at a specific pressure, temperature and volume
+#' @describeIn gas_calculations calculates the amount of an ideal gas at a specific pressure, temperature and volume. Returns an amount quantity.
 #' @inheritParams calculate_ideal_gas_molarity
 #' @param volume the volume quantity of the gas
-#' @return amount quantity
 #' @family calculations
 #' @export
 calculate_ideal_gas_amount <- function(pressure, temperature, volume) {
@@ -33,14 +33,10 @@ calculate_ideal_gas_amount <- function(pressure, temperature, volume) {
   return(molarity * volume)
 }
 
-#' Calculate solubility of a gas
-#' 
-#' Calculate Henry's law solubility constant for a gas at a specific temperature. Henry's law constants are from: Sander, R. Compilation of Henry's law constants (version 4.0) for water as solvent. Atmos Chem Phys 15, 4399–4981 (2015). https://www.atmos-chem-phys.net/15/4399/2015/
-#' 
-#' @param gas of the gas
+#' @describeIn gas_calculations calculates Henry's law solubility constant for a gas at a specific temperature. Henry's law constants are from: Sander, R. Compilation of Henry's law constants (version 4.0) for water as solvent. Atmos Chem Phys 15, 4399–4981 (2015). https://www.atmos-chem-phys.net/15/4399/2015/. Returns a solubility quantity.
+#' @param gas name of the gas
 #' @param temperature temperature quantity
 #' @family calculations
-#' @return solubility quantity
 #' @export
 calculate_solubility <- function(gas, temperature) {
   

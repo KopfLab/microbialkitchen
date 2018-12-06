@@ -21,7 +21,7 @@ get_qty_units_with_label(q, label = names(q))
 
 \item{unit}{the unit of the quantity}
 
-\item{transform}{whether to transform the value with an additional function once in the desired units. Common transformation examples are log10 and log (natural log) but custom transformations are also possible. Default is NO transformation (\link[identity]).}
+\item{transform}{whether to transform the value with an additional function once in the desired units. Common transformation examples are log10 and log (natural log) but custom transformations are also possible. Default is NO transformation (\link{identity}).}
 
 \item{signif}{number of significant digits for printing the quantity}
 

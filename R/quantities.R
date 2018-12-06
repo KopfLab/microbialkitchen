@@ -297,7 +297,7 @@ is_temperature <- function(q) is(q, "MediaToolsTemperature")
 #' @details \code{get_qty_value}: get the value of a quantity in the desired unit. By default returns the quantity in the units it is in.
 #' @name quantity_info
 #' @inheritParams qty
-#' @param transform whether to transform the value with an additional function once in the desired units. Common transformation examples are log10 and log (natural log) but custom transformations are also possible. Default is NO transformation (\link[identity]).
+#' @param transform whether to transform the value with an additional function once in the desired units. Common transformation examples are log10 and log (natural log) but custom transformations are also possible. Default is NO transformation (\link{identity}).
 #' @family quantity functions
 #' @export
 get_qty_value <- function(q, unit = get_qty_units(q), transform = identity) UseMethod("get_qty_value", q)
