@@ -7,7 +7,7 @@
   # metric
   opts <- list(
     metric_prefix = 
-      c(f = 1e-15, p = 1e-12, n = 1e-9, 'µ' = 1e-6, m = 1e-3, 1, 
+      c(f = 1e-15, p = 1e-12, n = 1e-9, '\U00B5' = 1e-6, m = 1e-3, 1, 
         k = 1e3, M = 1e6, G = 1e9, T = 1e12),
     
     # pressure units
@@ -47,10 +47,10 @@ get_mediatools_constant <- function(name) {
 #' @describeIn constants list all constants
 #' @export
 get_mediatools_constants <- function() {
-  opts <- options() %>% {.[names(.) %>% str_detect("^mediatools_")]}
+  opts <- options() %>% {.[names(.) %>% stringr::str_detect("^mediatools_")]}
   data_frame(
-    constant = names(opts) %>% str_replace("^mediatools_", ""),
-    key = map(opts, names) %>% map( ~ if (is.null(.x)) { NA_character_ } else { .x }),
-    value = map(opts, identity)
+    constant = names(opts) %>% stringr::str_replace("^mediatools_", ""),
+    key = purrr::map(opts, names) %>% purrr::map( ~ if (is.null(.x)) { NA_character_ } else { .x }),
+    value = purrr::map(opts, identity)
   ) %>% unnest(key, value)
 }

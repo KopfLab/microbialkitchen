@@ -38,6 +38,8 @@ calculate_carbonate(pH, pCO2, DIC,
 \item{pKa1}{the acid dissociation constant for H2CO3*}
 
 \item{pKa2}{the acid dissociation constant for bicarbonate (HCO3-)}
+
+\item{DIC}{dissolved inorganic carbon (a molarity quantity)}
 }
 \description{
 Calculate dissolved inorganic carbon (DIC) and individual carbonate species in an open or closes system at equilibrium.

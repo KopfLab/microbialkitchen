@@ -3,7 +3,7 @@ setClass("MediaToolsQuantity",
          prototype = prototype(numeric(), unit = ""))
 
 setMethod("show", "MediaToolsQuantity", function(object) {
-  validObject(object)
+  methods::validObject(object)
   cat(class(object)[1] %>% stringr::str_replace("MediaTools", ""), " [", object@unit, "]\n", sep="")
   print(object@.Data)
 })

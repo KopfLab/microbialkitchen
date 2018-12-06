@@ -37,7 +37,7 @@ calculate_ideal_gas_amount <- function(pressure, temperature, volume) {
 #' 
 #' Calculate Henry's law solubility constant for a gas at a specific temperature. Henry's law constants are from: Sander, R. Compilation of Henry's law constants (version 4.0) for water as solvent. Atmos Chem Phys 15, 4399–4981 (2015). https://www.atmos-chem-phys.net/15/4399/2015/
 #' 
-#' @param name of the gas
+#' @param gas of the gas
 #' @param temperature temperature quantity
 #' @family calculations
 #' @return solubility quantity

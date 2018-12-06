@@ -7,9 +7,9 @@
 calculate_solubility(gas, temperature)
 }
 \arguments{
-\item{temperature}{temperature quantity}
+\item{gas}{of the gas}
 
-\item{name}{of the gas}
+\item{temperature}{temperature quantity}
 }
 \value{
 solubility quantity

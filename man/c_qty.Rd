@@ -6,6 +6,9 @@
 \usage{
 c_qty(...)
 }
+\arguments{
+\item{...}{\link{quantities} to concatenate}
+}
 \description{
 Concatenate multiple quantity vectors or values. They must all be of the same type (i.e. you cannot combine e.g. a temperature and a mass value). The concatenated values will be scaled according to \code{\link{best_metric}}. Note that the regular `c()` operator automatically calls this function if the first argument is a quantity object.
 }

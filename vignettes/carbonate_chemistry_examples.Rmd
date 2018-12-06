@@ -53,17 +53,14 @@ df_speciation <-
   data_frame(
     pH = seq(3, 14, by = 0.1),
     DIC = qty(10, "mM"),
-    `H2CO3*` = calculate_carbonic_acid(pH, DIC = DIC, temp = temperature) %>%
-      get_qty_value("mM"),
-    HCO3 = calculate_bicarbonate(pH, DIC = DIC, temp = temperature) %>%
-      get_qty_value("mM"),
-    CO3 = calculate_carbonate(pH, DIC = DIC, temp = temperature) %>%
-      get_qty_value("mM")
+    `H2CO3*` = calculate_carbonic_acid(pH, DIC = DIC, temp = temperature),
+    HCO3 = calculate_bicarbonate(pH, DIC = DIC, temp = temperature),
+    CO3 = calculate_carbonate(pH, DIC = DIC, temp = temperature)
   ) 
 
 # visualize
 df_speciation %>% 
-  mutate(DIC = DIC %>% get_qty_value("mM")) %>% 
+  mutate_if(is_molarity, get_qty_value, "mM") %>% 
   gather(Species, Concentration, -pH, -DIC) %>% 
   ggplot() + 
   aes(pH, Concentration, color = Species) +
@@ -71,7 +68,7 @@ df_speciation %>%
   scale_x_continuous(expand = c(0, 0), breaks = c(1:14)) +
   scale_y_log10(
     breaks = 10^(-3:1), 
-    labels = function(x) map(x, qty, "mM") %>% map_chr(get_qty_text)) +
+    labels = make_qty_text_labeller(qty(1, "mM"))) +
   coord_cartesian(ylim = c(10^-3, 10)) +
   theme_bw()
 ```
@@ -104,10 +101,15 @@ df_pH_vs_pCO2 %>%
   gather(var, val, pH, `DIC [mM]`, `CO2 [mM]`) %>% 
   filter(!(var == "pH" & val > 5.5)) %>% 
   ggplot() +
-  aes(pCO2, val, color = get_qty_text(temperature, "C")) +
+  aes(pCO2, val, color = factor(temperature)) +
   geom_line() +
-  scale_x_continuous("pCO2", expand = c(0,0), labels = function(x) str_c(x, "mbar\n", x/10, "% at SP")) +
-  scale_color_brewer("Temperature", palette = "Set1") +  
+  scale_x_continuous(
+    expand = c(0,0), 
+    labels = make_qty_text_labeller(df_pH_vs_pCO2$pCO2, c("mbar", "% SP"))) +
+  scale_color_brewer(
+    "Temperature", palette = "Set1",
+    labels = make_qty_text_labeller(df_pH_vs_pCO2$temperature, "C")
+  ) +  
   facet_grid(var~., scales = "free_y") +
   expand_limits(x = 0) +
   theme_bw() + labs(y = "")
@@ -309,4 +311,17 @@ p %+% df_pH_switch %+%
 
 # Closed system
 
-Examples coming soon.
+Work in progres...
+
+## CO2 consumption
+
+
+## CO2 production
+
+
+## CO2 loss through headspace exchange
+
+
+## CO2 gain through headspace exchange
+
+

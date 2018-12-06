@@ -32,7 +32,7 @@ if the quantity has a vector of values, scales to the best metric prefix for the
 }}
 
 \seealso{
-Other quantities: \code{\link{quantities}},
+Other quantity functions: \code{\link{quantities}},
   \code{\link{quantity_info}}
 }
-\concept{quantities}
+\concept{quantity functions}

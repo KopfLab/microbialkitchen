@@ -18,13 +18,13 @@ test_that("Testing that units work and can be metric scaled", {
   expect_equal(scale_metric(molarity(1, "mM"), "n") %>% get_qty_units(), "nM")
   expect_equal(scale_metric(molarity(1, "mM"), "n") %>% get_qty_value(), 1e6)
   expect_equal(scale_metric(molarity(1, "M"), "m") %>% get_qty_value(), 1e3)
-  expect_equal(scale_metric(molarity(1, "µM"), "") %>% get_qty_value(), 1e-6)
+  expect_equal(scale_metric(molarity(1, "\U00B5M"), "") %>% get_qty_value(), 1e-6)
   expect_error(base_metric(1), "not a known type of quantity")
   expect_equal(base_metric(molarity(1, "kM")) %>% get_qty_value(), 1e3)
   expect_equal(molarity(1, "kM") %>% get_qty_value("M"), 1e3)
   expect_equal(molarity(1, "kM") %>% get_qty_value("mM"), 1e6)
   expect_equal(best_metric(molarity(0.2, "M", scale_to_best_metric = FALSE)) %>% get_qty_units(), "mM")
-  expect_equal(best_metric(molarity(-5000, "nM", scale_to_best_metric = FALSE)) %>% get_qty_units(), "µM")
+  expect_equal(best_metric(molarity(-5000, "nM", scale_to_best_metric = FALSE)) %>% get_qty_units(), "\U00B5M")
   expect_equal(best_metric(molarity(c(100, 1200, 1500), "pM", scale_to_best_metric = FALSE)) %>% get_qty_units(), "nM")
   
   # density
@@ -42,7 +42,7 @@ test_that("Testing that units work and can be metric scaled", {
   expect_equal(amount(1, "nmol") %>% get_qty_units(), "nmol")
   expect_equal(amount(1, "mole") %>% get_qty_units(), "mol")
   expect_equal(amount(1000, "nmol", scale_to_best_metric = F) %>% get_qty_units(), "nmol")
-  expect_equal(amount(1000, "nmol", scale_to_best_metric = T) %>% get_qty_units(), "µmol")
+  expect_equal(amount(1000, "nmol", scale_to_best_metric = T) %>% get_qty_units(), "\U00B5mol")
   expect_equal(amount(1000, "nmol", scale_to_best_metric = T) %>% get_qty_value(), 1)
   expect_equal(amount(1, "nmol") %>% get_qty_value("pmol"), 1000)
   
@@ -138,7 +138,7 @@ test_that("Testing that units work and can be metric scaled", {
   expect_false(is_qty(1))
   
   # as factor (order preserved)
-  expect_equal(as_factor(qty(c(1, 3, 2), "mg")) %>% levels(), c(1, 3, 2))
+  expect_equal(as_factor(qty(c(1, 3, 2), "mg")) %>% levels(), c("1", "3", "2"))
   
   # get units
   expect_equal(1 %>% get_qty_units(), NA_character_)

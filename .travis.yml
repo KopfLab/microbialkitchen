@@ -3,12 +3,22 @@
 language: R
 sudo: false
 dist: trusty
+warnings_are_errors: false
 cache: packages
 r:
   - oldrel
   - release
   - devel
 
+r_packages:
+  - covr
+  - devtools
+
 after_success:
   - Rscript -e 'covr::codecov()'
   - Rscript -e 'devtools::install();devtools::test()'
+
+notifications:
+  email:
+    on_success: change
+    on_failure: change

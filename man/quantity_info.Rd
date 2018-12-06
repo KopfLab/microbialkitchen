@@ -46,7 +46,7 @@ x <- data.frame(a = qty(1, "mg"), b = 2, c = qty(100, "mbar"))
 get_qty_units_with_label(x, names(x)) 
 }
 \seealso{
-Other quantities: \code{\link{metric}},
+Other quantity functions: \code{\link{metric}},
   \code{\link{quantities}}
 }
-\concept{quantities}
+\concept{quantity functions}

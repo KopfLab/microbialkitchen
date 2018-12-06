@@ -47,6 +47,7 @@ calculate_DIC <- function(
 }
 
 #' @describeIn speciation calculates the concentration of carbonic acid (H2CO3*) based on pH and either pCO2 or DIC. Returns carbonic acid as a molarity quantity.
+#' @param DIC dissolved inorganic carbon (a molarity quantity)
 #' @export
 calculate_carbonic_acid <- function(
   pH, pCO2, DIC, solubility = calculate_solubility("CO2", temperature), temperature = qty(25, "C"),
@@ -127,6 +128,7 @@ NULL
 
 #' @describeIn open_system calculate the pH of an open system. Returns pH.
 #' @inheritParams calculate_DIC
+#' @param pKw water dissociation constant
 #' @param buffer [optional] total concentration of the pH buffer (a molarity quantity). Assumes that this is a protonated weak acid with the provided \code{buffer_pKa}. For weak base buffers, provide a negative molarity quantity instead and the appropriate \code{buffer_pKa}. If the buffer is a salt (e.g. Na-Buffer or Buffer-Cl), make sure to add the appropriate molarity to the \code{alkalinity} to account for the added ions (positive for hard cations, negative for hard anions). By default no additional buffer is added.
 #' @param buffer_pKa buffer acid dissociation constant, required if \code{buffer} is provided
 #' @param alkalinity [optional] charge-weighed NET concentration of all conservative ions [units charge x a molarity quantity] (explicitly conservative alkalinity). Conservative ions are those that do NOT get affected by changes in pH in the pH range of interest (i.e. do not form any acids or bases or have pKas far outside the pH range of interest). E.g. mol/L Na that was added in the form of NaOH, NaHCO3 or as part of a Na-buffer salt; -1 x mol/L Cl that was added as HCl or -2 x mol/L SO4 that was added as H2SO4. Ions from salts that are comprised exclusively of conservative ions (e.g. NaCl, MgSO4) do not need to be included because they cancel out. By default the alkalinity of the system is 0 M.
@@ -168,7 +170,7 @@ calculate_open_system_pH <- function(
               calculate_open_system_alkalinity_formula(
                 pH, `H2CO3*.M`, pKa1, pKa2, pKw, buffer.M, buffer_pKa)
           }
-          return(uniroot(calc_root, c(0, 14))$root)
+          return(stats::uniroot(calc_root, c(0, 14))$root)
         },
         `H2CO3*.M`, buffer.M, buffer_pKa, alkalinity.M, pKa1, pKa2, pKw)
     )
@@ -269,7 +271,7 @@ calculate_closed_system_pH <- function(
               calculate_closed_system_alkalinity_formula(
                 pH, TIC.mol, V_liquid.L, V_gas.L, pKa1, pKa2, pKw, buffer.M, buffer_pKa, temperature.K, solubility.M_bar)
           }
-          return(uniroot(calc_root, c(0, 14))$root)
+          return(stats::uniroot(calc_root, c(0, 14))$root)
         },
         TIC.mol, V_liquid.L, V_gas.L, pKa1, pKa2, pKw, buffer.M, buffer_pKa, temperature.K, solubility.M_bar, alkalinity.M)
     )

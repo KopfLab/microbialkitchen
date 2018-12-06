@@ -28,8 +28,9 @@ library(mediatools) # load the library
 Amount (=chemical substance) quantities use `"mol"` as the base unit and `"mole"` as a recognized alternative. All standard metric prefixes (`r get_mediatools_constant("metric_prefix") %>% names() %>% { paste(.[.!=""], collapse = ", ") }`) are supported.
 
 ```{r}
+qty(1, "mmole")
 qty(1, "mmol")
-qty(1, "µmole")
+qty(1, "pmol")
 ```
 
 #### Metric scaling example

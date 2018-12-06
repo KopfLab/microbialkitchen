@@ -14,10 +14,9 @@ Imports:
     magrittr,
     purrr,
     forcats,
+    tibble,
     dplyr,
-    stringr,
-    glue,
-    CHNOSZ
+    stringr
 Suggests:
     testthat,
     knitr,

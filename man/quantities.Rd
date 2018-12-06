@@ -2,6 +2,7 @@
 % Please edit documentation in R/quantities.R
 \name{quantities}
 \alias{quantities}
+\alias{quantity}
 \alias{qty}
 \alias{is_qty}
 \alias{is_amount}
@@ -47,7 +48,7 @@ is_temperature(q)
 \item{q}{a quantity object}
 }
 \description{
-The \code{qty} function makes it easy to keep track of different quantities in chemical calculations. Metric prefixes are fully supported, i.e. any unit can be combined with standard \link{metric} scaling (mL, nmol, µM, etc.). Some quantities can also be used in common \link{arithmetic} operations.
+The \code{qty} function makes it easy to keep track of different quantities in chemical calculations. Metric prefixes are fully supported, i.e. any unit can be combined with standard \link{metric} scaling (mL, nmol, kg, etc.). Some quantities can also be used in common \link{arithmetic} operations.
 }
 \details{
 \emph{amount}: base unit \code{mol} but also understands \code{mole}, all metric prefixes allowed
@@ -62,7 +63,7 @@ The \code{qty} function makes it easy to keep track of different quantities in c
 
 \emph{volume}: base unit \code{L} but also understands \code{l}, all metric prefixes allowed
 
-\emph{pressure}: base unit \code{bar} but also understands \code{Pa}, all metric prefixes allowed, the common non-metric units \code{atm} and \code{psi}, \code{Torr} and \code{mTorr} are also supported and will be automatically converted to \code{bar}
+\emph{pressure}: base unit \code{bar} but also understands \code{Pa}, all metric prefixes allowed, the common non-metric units \code{atm}, \code{psi}, \code{Torr}, \code{mTorr}, and \code{\% SP} (\% at standard pressure = \% of 1 bar) are also supported and will be automatically converted to \code{bar}.
 
 \emph{Henry's law solubility constant}: base unit \code{M/bar}, all metric prefixes allowed in the numerator, the common non-metric unit \code{M/atm} is also supported and will be automatically converted to \code{M/bar}.
 
@@ -99,7 +100,7 @@ qty(6, "psi")
 qty(30, "C")
 }
 \seealso{
-Other quantities: \code{\link{metric}},
+Other quantity functions: \code{\link{metric}},
   \code{\link{quantity_info}}
 }
-\concept{quantities}
+\concept{quantity functions}

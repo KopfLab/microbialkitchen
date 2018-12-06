@@ -5,8 +5,9 @@ NULL
 
 #' Quantities
 #' 
-#' The \code{qty} function makes it easy to keep track of different quantities in chemical calculations. Metric prefixes are fully supported, i.e. any unit can be combined with standard \link{metric} scaling (mL, nmol, µM, etc.). Some quantities can also be used in common \link{arithmetic} operations.
+#' The \code{qty} function makes it easy to keep track of different quantities in chemical calculations. Metric prefixes are fully supported, i.e. any unit can be combined with standard \link{metric} scaling (mL, nmol, kg, etc.). Some quantities can also be used in common \link{arithmetic} operations.
 #' @name quantities
+#' @aliases quantity
 NULL
 
 #' @describeIn quantities generate a quantity object
@@ -18,7 +19,7 @@ NULL
 #' qty(6, "psi")
 #' qty(30, "C")
 #' @export
-#' @family quantities
+#' @family quantity functions
 qty <- function(x, unit, scale_to_best_metric = TRUE) {
   if (!is(r <- try(molarity(x, unit, scale_to_best_metric), silent = TRUE), "try-error")) return(r)
   if (!is(r <- try(density(x, unit, scale_to_best_metric), silent = TRUE), "try-error")) return(r)
@@ -130,7 +131,7 @@ volume <- function(x, unit, scale_to_best_metric = TRUE) {
   return(q)
 }
 
-#' @details \emph{pressure}: base unit \code{bar} but also understands \code{Pa}, all metric prefixes allowed, the common non-metric units \code{atm}, \code{psi}, \code{Torr}, \code{mTorr}, and \code{% SP} (% at standard pressure = % of 1 bar) are also supported and will be automatically converted to \code{bar}.
+#' @details \emph{pressure}: base unit \code{bar} but also understands \code{Pa}, all metric prefixes allowed, the common non-metric units \code{atm}, \code{psi}, \code{Torr}, \code{mTorr}, and \code{\% SP} (\% at standard pressure = \% of 1 bar) are also supported and will be automatically converted to \code{bar}.
 #' @name quantities
 NULL
 pressure <- function(x, unit, scale_to_best_metric = TRUE) {
@@ -296,7 +297,7 @@ is_temperature <- function(q) is(q, "MediaToolsTemperature")
 #' @details \code{get_qty_value}: get the value of a quantity in the desired unit. By default returns the quantity in the units it is in.
 #' @name quantity_info
 #' @inheritParams qty
-#' @family quantities
+#' @family quantity functions
 #' @export
 get_qty_value <- function(q, unit = get_qty_units(q)) UseMethod("get_qty_value", q)
 
@@ -380,6 +381,7 @@ as_factor.MediaToolsQuantity <- function(x) {
 #' Concatenate quantities
 #' 
 #' Concatenate multiple quantity vectors or values. They must all be of the same type (i.e. you cannot combine e.g. a temperature and a mass value). The concatenated values will be scaled according to \code{\link{best_metric}}. Note that the regular `c()` operator automatically calls this function if the first argument is a quantity object.
+#' @param ... \link{quantities} to concatenate
 #' @examples 
 #' c_qty(qty(5, "g"), qty(c(10, 20), "mg")) # MediaToolsMass [mg]: 5000, 10, 20
 #' c(qty(5, "g"), qty(c(10, 20), "mg")) # same (shortcut for the above)
@@ -390,7 +392,7 @@ c_qty <- function(...) {
   classes <- purrr::map_chr(qs, ~class(.x)[1])
   if (any(classes != classes[1])) {
     stop(sprintf("cannot combine different types quantities (trying to combine %s). ", 
-                 glue::glue_collapse(unique(classes), sep = ", ", last = " and ")), call. = FALSE)
+                 paste(unique(classes), collapse = ", ")), call. = FALSE)
   }
   # combine quantities making sure metric scaling is appropriate
   purrr::map(qs, ~as.numeric(base_metric(.x))) %>% 
@@ -467,7 +469,7 @@ get_metric_scale_factor <- function(q, prefix) {
 #' @describeIn metric scale to a specific metrix prefix (from whatever the quantity is currently in)
 #' @param q the \link{quantity} to scale
 #' @param prefix a metric prefix (p, n, µ, m, k, M, etc.)
-#' @family quantities
+#' @family quantity functions
 #' @export
 scale_metric <- function (q, prefix = "") {
   scale_factor <- get_metric_scale_factor(q, prefix)
@@ -486,7 +488,7 @@ best_metric <- function(q) {
     ideal <- which(names(prefix) == "")
   } else {
     values <- as.numeric(base_metric(q)) %>% { .[!is.infinite(.)] }
-    ideal <- max(1, which( median(abs(values), na.rm = TRUE)/prefix >= 1))
+    ideal <- max(1, which( stats::median(abs(values), na.rm = TRUE)/prefix >= 1))
   }
   return(scale_metric(q, names(prefix)[ideal]))
 }

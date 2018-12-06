@@ -29,6 +29,8 @@ calculate_open_system_alkalinity(pH, pCO2, `H2CO3*` = solubility * pCO2,
 
 \item{pKa2}{the acid dissociation constant for bicarbonate (HCO3-)}
 
+\item{pKw}{water dissociation constant}
+
 \item{buffer}{[optional] total concentration of the pH buffer (a molarity quantity). Assumes that this is a protonated weak acid with the provided \code{buffer_pKa}. For weak base buffers, provide a negative molarity quantity instead and the appropriate \code{buffer_pKa}. If the buffer is a salt (e.g. Na-Buffer or Buffer-Cl), make sure to add the appropriate molarity to the \code{alkalinity} to account for the added ions (positive for hard cations, negative for hard anions). By default no additional buffer is added.}
 
 \item{buffer_pKa}{buffer acid dissociation constant, required if \code{buffer} is provided}
