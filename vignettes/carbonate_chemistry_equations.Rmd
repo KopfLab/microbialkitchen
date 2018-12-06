@@ -1,0 +1,200 @@
+---
+title: "Carbonate Chemistry Equations"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Carbonate Chemistry Equations}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+This vignette describes the conceptual approach to carbonate chemistry. See the [carbonate chemistry examples vignette](carbonate_chemistry_examples.html) for code examples using the relevant functionality. For recommended primary literature on carbonate chemistry, see **CO2 in Seawater: Equilibrium, Kinetics, Isotopes. Zeebe & Wolf-Gladrow, 2001**.
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# CO$_2$ solubility
+
+CO2 is slightly soluable in water with a Henry's law solubility constant of $K_H^{cp} = 3.3 \cdot 10^{-4} \frac{mol}{m^3 Pa} = 0.033 \frac{M}{bar}$ at $T^\theta = 298.15 K$ (25C). Henry's law constants are typically more temperature sensitive than acid dissociation constants so it's worthwhile taking them into consideration. The temperature dependence constant is $\frac{d \ln{H^{cp}}}{d(1/T)} = 2400 K$ (Sander, 2015), which yields the following relationship:
+
+$$
+K_H(T) = K_H (T^0) \cdot e^{2400 K \cdot \left( \frac{1}{T} - \frac{1}{T^0} \right)}
+$$
+
+# Speciation
+
+> Key functions: `calculate_DIC`, `calculate_carbonic_acid`, `calculate_bicarbonate`, `calculate_carbonate`. 
+
+The carbonate system has a couple of general equilibrium equations that constrain species distribution in aquatic systems at equilibrium. Note that the dissociation constants are also affected by physical parameters (temperature and pressure), which is not discussed further here.
+
+$$
+\begin{aligned}
+\textrm{dissociation of carbonic acid: } &
+  H_2CO_3^* \rightleftharpoons H^+ + HCO_3^- \\
+  &\textrm{with dissociation constant } \frac{[H^+][HCO_3^-]}{[H_2CO_3^*]} = K_1 = 10^{-6.3} \\
+\textrm{dissociation of bicarbonate: } & 
+  HCO_3^- \rightleftharpoons H^+ + CO_3^{2-} \\
+  &\textrm{with dissociation constant } \frac{[H^+][CO_3^{2-}]}{[HCO_3^-]} = K_2 = 10^{-10.3} \\
+\textrm{water dissociation: } &
+  H_2O \rightleftharpoons H^+ + OH^- \\
+  &\textrm{with dissociation constant } [H^+][OH^-] = K_w = 10^{-14} \\
+\textrm{dissolved inorganic carbon (DIC): } &
+  [DIC] = [H_2CO_3^*] + [HCO3^-] + [CO_3^{2-}] \\
+ &[DIC] = [H_2CO_3^*] \left( 1 + \frac{K_1}{[H^+]} + \frac{K_1 K_2}{[H^+]^2} \right) \rightarrow [H_2CO_3^*] = \frac{[DIC]\cdot[H^+]^2}{[H^+]^2 + K_1 [H^+] + K_1 K_2} \\
+ &[DIC] = [HCO_3^-] \left( \frac{[H^+]}{K_1} + 1 + \frac{K_2}{[H^+]} \right) \rightarrow [HCO_3^-] = \frac{[DIC]\cdot K_1 [H^+]}{[H^+]^2 + K_1 [H^+] + K_1 K_2} \\
+ &[DIC] = [CO_3^{2-}] \left( \frac{[H^+]^2}{K_1 K_2} + \frac{[H^+]}{K_2} + 1 \right) \rightarrow [HCO_3^-] = \frac{[DIC]\cdot K_1 K_2}{[H^+]^2 + K_1 [H^+] + K_1 K_2} \\
+\textrm{charge balance (carbonate system only): } &
+  [H^+] - [HCO_3^-] - 2\cdot[CO_3^{2-}] - [OH^-] = 0 \\
+\textrm{charge balance (alkalinity): } &
+  TA = [HCO_3^-] + 2\cdot[CO_3^{2-}] + [OH^-] - [H^+] \\
+  &\hskip{1.5em} = \sum_i (\textrm{charge} \times \textrm{ion})_i = [Na^+] + 2 \cdot [Mg^{2+}] + \,...\, - [Cl^-] - 2\cdot [SO_4^{2-}]- \,... \\
+\end{aligned}
+$$
+
+with $[H_2CO_3^*]$ technically comprising both dissolved CO$_2$ as well as hydrated carbonic acid (the dissolved CO$_2$ is actually much more abundant with only a small amount of carbonic acid - hydration is typically the kinetically slowest step of CO$_2$ dissolution). Dissociation constants are typically expressed in relation to this equilibrium mixture $[H_2CO_3^*]$ although technically only the carbonic acid participates in the reaction directly. For aqueous system at equilibrium with the gas phase (such as both the open and closed systems discussed below), this pool can also be expressed relative to the pressure of CO$_2$ using the solubility discussed above.
+
+$$
+\begin{aligned}
+\left[H_2CO_3^*\right] &= [CO_2 (aq)] + [H_2CO_3] = K_H \cdot P_{CO_2} \\
+\rightarrow DIC &= [H_2CO_3^*] + [HCO_3^-] + [CO_3^{2-}]  \\
+&= [H_2CO_3^*] \left(1 + \frac{K_1}{[H^+]} + \frac{K_1 K_2}{[H^+]^2} \right) \\
+&= K_H \cdot P_{CO_2} \left(1 + \frac{K_1}{[H^+]} + \frac{K_1 K_2}{[H^+]^2} \right)
+\end{aligned}
+$$
+
+# Open system
+
+> Key functions: `calculate_open_system_pH`, `calculate_open_system_alkalinity`
+
+In an open system, there is an infinite reservoir of CO$_2$ available (e.g. from the atmosphere) whose CO$_2$ concentration will NOT change in response to exchange with the aqueous system. 
+
+## CO$_2$ only
+
+Alkalinity (charge balance):
+
+$$
+[HCO_3^-] + 2\cdot[CO_3^{2-}] + [OH^-] - [H^+] = 0
+$$
+ 
+Overall polynomial to find pH:
+
+$$
+[H^+] - \frac{K_1 H \cdot P_{CO_2}}{[H^+]} - 2 \frac{K_1 K_2  K_H \cdot P_{CO_2}}{[H^+]^2} - \frac{K_w }{[H^+]} = 0 
+$$
+
+## Adjusting pH with alkalinity
+
+A common scenario (especially in the lab) is that there are additional sources of alkalinity in the system (a net difference in the conservative cations and anions from the addition of bases/acids). Conservative ions are those that do NOT get affected by changes in pH in the pH range of interest (i.e. do not form any acids or bases or have pKas far outside the pH range of interest). E.g. Na$^+$ that is added in the form of sodium hydroxide (NaOH), sodium bicarbonte (NaHCO$_3$), Cl$^-$ that is added as hydrochloric acid (HCl) or SO$_4^{2-}$ added as sulfuric acid (H$_2$SO$_4$). Ions from salts that are comprised exclusively of conservative ions (e.g. NaCl, MgSO$_4$) do not need to be included in the alkalinity. Here we consider a scenario where NaOH or NaHCO$_3$ (same outcome) and HCl are the only bases/acid used to adjust alkalinity.
+
+Alkalinity (charge balance) becomes:
+
+$$
+[HCO_3^-] + 2\cdot[CO_3^{2-}] + [OH^-] - [H^+] = \sum_i (\textrm{charge} \times \textrm{ion})_i = [Na^+] + [Cl^-]
+$$
+ 
+This yields the overall polynomial to find pH:
+
+$$
+[H^+] + [Na^+] - [Cl^-] - \frac{K_1 K_H \cdot P_{CO_2}}{[H^+]} - 2 \frac{K_1 K_2 K_H \cdot P_{CO_2}}{[H^+]^2} - \frac{K_w }{[H^+]} = 0
+$$
+
+Or in terms of the alkalinity / conservative ions Na$^+$ and Cl$^-$ (i.e. the net amount of sodium bicarbonate / NaOH or HCl to add):
+
+$$
+\begin{align}
+[Na^+] - [Cl^-] &= \frac{2\cdot K_1 K_2  K_H \cdot P_{CO_2}}{[H^+]^2} + \frac{K_1 K_H \cdot P_{CO_2} + K_w}{[H^+]} - [H^+] \\
+&= K_H \cdot P_{CO_2} \left( 2 \cdot 10^{2 pH - pK_{a1} - pK_{a2}} + 10^{pH - pK_{a1}} \right) + 10^{pH - pK_w} - 10^{-pH}
+\end{align}
+$$
+
+## Adjusting pH with a buffer
+
+The next more complex scenario is an additional weak acid or weak base pH buffer (besides the carbonate system) such as citrate, phosphate, MOPS, etc. Let's take the example of a weak acid $[A]$ (or sodium salt) that can dissociate to $[A-]$, with dissociation constant $K_{a}$. The dissociated ion of the new weak acid needs to be included on the left side of the alkalinity but it is important to note that if it is provided as a salt, it will also add to the right side (e.g. by increasing net Na$^+$ if it's the buffer is a sodium salt). 
+
+Alkalinity (charge balance) becomes:
+
+$$
+[HCO_3^-] + 2\cdot[CO_3^{2-}] + [OH^-] + [A^-] - [H^+] = \sum_i (\textrm{charge} \times \textrm{ion})_i = [Na^+] + [Cl^-]
+$$
+
+This yields the overall polynomial to find pH:
+
+$$
+[H^+] + [Na^+] - [Cl^-] - 
+  \frac{K_a \cdot [A_T]}{K_a+[H^+]} - 
+  \frac{K_1 K_H \cdot P_{CO_2}}{[H^+]} - 
+  2 \frac{K_1 K_2 K_H \cdot P_{CO_2}}{[H^+]^2} -
+  \frac{K_w}{[H^+]} = 0
+$$
+
+Or in terms of the alkalinity / conservative ions Na$^+$ and Cl$^-$
+
+$$
+\begin{align}
+[Na^+] - [Cl^-] &= \frac{2\cdot K_1 K_2  K_H \cdot P_{CO_2}}{[H^+]^2} + \frac{K_1 K_H \cdot P_{CO_2} + K_w}{[H^+]} - [H^+] + \frac{K_a \cdot [A_T]}{K_a+[H^+]} \\
+&= K_H \cdot P_{CO_2} \left( 2 \cdot 10^{2 pH - pK_{a1} - pK_{a2}} + 10^{pH - pK_{a1}} \right) + 10^{pH - pK_w} - 10^{-pH} + \frac{[A_T]}{1 + 10^{(pK_a-pH)}}
+\end{align}
+$$
+
+
+# Closed system
+
+> Key functions: `calculate_closed_system_pH`, `calculate_closed_system_alkalinity`, `calculate_closed_system_TIC`, `calculate_closed_system_pCO2`
+
+The above equations also hold for closed systems at equlibratium except that mass balance constraints (total inorganic carbon = **TIC**) must be taken into consideration for the gas phase in addition to the liquid phase. This is rarely a relevant environmental scenario but frequently applicable in laboratory settings.
+
+## Limited volume vessel
+
+Note: this is a typical culturing scenario - certain amount of headspace and liquid with an initial infusion of CO$_2$ that gets equilibrated in the vessel. Note that at relatively high partial pressures and/or large headspaces, this scenario is well approximated by the open system solutions. The charge balance / alkalinity constraints remain the same as in the open system:
+
+$$
+[H^+] + [Na^+] - [Cl^-] - 
+  \frac{K_a \cdot [A_T]}{K_a+[H^+]} - 
+  \frac{K_1 K_H \cdot P_{CO_2}}{[H^+]} - 
+  2 \frac{K_1 K_2 K_H \cdot P_{CO_2}}{[H^+]^2} -
+  \frac{K_w}{[H^+]} = 0
+$$
+
+However, the mass balance (based on total moles of carbon in the system) provides an additional constraint on the system:
+
+$$
+\begin{align}
+C_{T} &= n_{CO_2(g)} + V_{liquid} \cdot DIC \\
+DIC &= [H_2CO_3^*] + [HCO_3^-] + [CO_3^{2-}] = K_H \cdot P_{CO_2} \left(1 + \frac{K_1}{[H^+]} + \frac{K_1 K_2}{[H^+]^2} \right) \\
+n_{CO_2(g)} &= \frac{P_{CO_2} \cdot V_{gas}}{RT} \\
+C_{T} &= P_{CO_2} \cdot \left[\frac{V_G}{RT} + V_L \cdot K_H \left( 1 + \frac{K_1}{[H^+]} + \frac{K_1 K_2}{[H^+]^2} \right) \right] \\
+\rightarrow P_{CO_2} &= \frac{C_{T}}{\frac{V_G}{RT} + V_L \cdot K_H \left( 1 + \frac{K_1}{[H^+]} + \frac{K_1 K_2}{[H^+]^2} \right)} \\
+ &= \frac{C_{T}}{\frac{V_g}{RT} + V_L\cdot K_H\cdot\left(1 + 10^{(pH-pK_1)} + 10^{(2\cdot pH-pK_1-pK_2)}\right)}
+\end{align}
+$$
+ 
+This leads to the overall polynomial for find pH (plug mass balance into charge balance):
+
+$$
+\begin{align}
+[H^+] + [Na^+] - 
+  \frac{K_a}{K_a+[H^+]} \cdot [A_T] - 
+  \frac{\frac{K_1}{[H^+]} + 2\frac{K_1 K_2}{[H^+]^2}}
+        {\frac{V_g}{K_H\cdot RT} + \left( 1 + \frac{K_1}{[H^+]} + \frac{K_1 K_2}{[H^+]^2} \right) V_l} \cdot C_T -
+  \frac{K_w}{[H^+]} &= 0
+\end{align}
+$$
+
+Or with all the pX parameters instead of X:
+
+$$
+10^{-pH} 
++ [Na^+] 
+- \frac{1}{1 + 10^{(pK_a-pH)}}\cdot [A_T]
+- \frac{10^{(pH-pK_1)} + 2\cdot 10^{(2\cdot pH-pK_1-pK_2)}}
+        {\frac{V_g}{K_H\cdot RT} + \left(1 + 10^{(pH-pK_1)} + 10^{(2\cdot pH-pK_1-pK_2)}\right) V_l} 
+        \cdot C_T
+- 10^{(pH-pK_w)} = 0
+$$
+
+
+

@@ -1,12 +1,14 @@
 ---
-title: "Carbonate Chemistry"
+title: "Carbonate Chemistry Examples"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Carbonate Chemistry}
+  %\VignetteIndexEntry{Carbonate Chemistry Examples}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
+
+This vignette provides examples of the carbonate chemistry tools implemented by the **mediatools** package to explore carbonate solubility and pH control in open and closed media systems. See the [carbonate chemistry equations vignette](carbonate_chemistry_equations.html) for conceptual background.
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
@@ -26,18 +28,7 @@ library(latex2exp)
 library(mediatools)
 ```
 
-Vignette to explore carbonate solubility and pH control in open and closed system media. Main reference: **CO2 in Seawater: Equilibrium, Kinetics, Isotopes. Zeebe & Wolf-Gladrow, 2001**.
- 
-# Concepts
-
-## CO2 solubility
-
-CO2 is slightly solubable in water with a Henry's law solubility constant of $K_H^{cp} = 3.3 \cdot 10^{-4} \frac{mol}{m^3 Pa} = 0.033 \frac{M}{bar}$ at $T^\theta = 298.15 K$ (25C). Henry's law constants are typically more temperature sensitive than acid dissociation constants so it's worthwhile taking them into consideration. The temperature dependence constant is $\frac{d \ln{H^{cp}}}{d(1/T)} = 2400 K$ (Sander, 2015), which yields the following relationship:
-
-$$
-K_H(T) = K_H (T^0) \cdot e^{2400 K \cdot \left( \frac{1}{T} - \frac{1}{T^0} \right)}
-$$
-Functionality ot calculate solubility constants is implement via the `calculate_solubility` function.
+# CO$_2$ solubility
 
 ```{r "henry"}
 solubilities <- data_frame(
@@ -54,68 +45,41 @@ ggplot(solubilities) +
   theme_bw()
 ```
 
-## Carbonate system
+# Speciation
 
-The carbonate system has a couple of general equilibrium equations that constrain species distribution in aquatic systems at equilibrium. Note that the dissociation constants are also affected by physical parameters (temperature and pressure, especially the latter), which is not discussed further here.
+```{r}
+# calculate
+df_speciation <- 
+  data_frame(
+    pH = seq(3, 14, by = 0.1),
+    DIC = qty(10, "mM"),
+    `H2CO3*` = calculate_carbonic_acid(pH, DIC = DIC, temp = temperature) %>%
+      get_qty_value("mM"),
+    HCO3 = calculate_bicarbonate(pH, DIC = DIC, temp = temperature) %>%
+      get_qty_value("mM"),
+    CO3 = calculate_carbonate(pH, DIC = DIC, temp = temperature) %>%
+      get_qty_value("mM")
+  ) 
 
-$$
-\begin{aligned}
-\textrm{dissociation of carbonic acid: } &
-  H_2CO_3^* \rightleftharpoons H^+ + HCO_3^- \\
-  &\textrm{with dissociation constant } \frac{[H^+][HCO_3^-]}{[H_2CO_3^*]} = K_1 = 10^{-6.3} \\
-\textrm{dissociation of bicarbonate: } & 
-  HCO_3^- \rightleftharpoons H^+ + CO_3^{2-} \\
-  &\textrm{with dissociation constant } \frac{[H^+][CO_3^{2-}]}{[HCO_3^-]} = K_2 = 10^{-10.3} \\
-\textrm{water dissociation: } &
-  H_2O \rightleftharpoons H^+ + OH^- \\
-  &\textrm{with dissociation constant } [H^+][OH^-] = K_w = 10^{-14} \\
-\textrm{dissolved inorganic carbon (DIC): } &
-  [DIC] = [H_2CO_3^*] + [HCO3^-] + [CO_3^{2-}] \\
-\textrm{charge balance (not considering any other solutes): } &
-  [H^+] - [HCO_3^-] - 2\cdot[CO_3^{2-}] - [OH^-] = 0
-\end{aligned}
-$$
+# visualize
+df_speciation %>% 
+  mutate(DIC = DIC %>% get_qty_value("mM")) %>% 
+  gather(Species, Concentration, -pH, -DIC) %>% 
+  ggplot() + 
+  aes(pH, Concentration, color = Species) +
+  geom_line() +
+  scale_x_continuous(expand = c(0, 0), breaks = c(1:14)) +
+  scale_y_log10(
+    breaks = 10^(-3:1), 
+    labels = function(x) map(x, qty, "mM") %>% map_chr(get_qty_text)) +
+  coord_cartesian(ylim = c(10^-3, 10)) +
+  theme_bw()
+```
+
 
 # Open system
 
-In an open system, the equilibrium concentration of aqueous CO2 and the resulting carbonic acid is determined by the pressure of CO2 in the (infinite) atmospheric reservoir: $[H_2CO_3^*] = [CO_2 (aq)] + [H_2CO_3] = K_H \cdot P_{CO_2}$ (the hydrated CO2 is actually much more abundant with only a small amount of carbonic acid). Dissociation constants are typically expressed in relation to this equilibrium mixture $[H_2CO_3^*]$ although technically only the carbonic acid participates in the reaction directly. Key functions provided by the **mediatools** package for this scenario are `calculate_open_system_pH` and `calculate_open_system_unbalanced_ions`.
- 
 ## CO2 only
-
-Charge balance:
-
-$$
-[H^+] - [HCO_3^-] - 2\cdot[CO_3^{2-}] - [OH^-] = 0
-$$
- 
-Overall roots to find:
-
-$$
-\begin{align}
-[H^+] - \frac{K_1 H \cdot P_{CO_2}}{[H^+]} - 2 \frac{K_1 K_2  K_H \cdot P_{CO_2}}{[H^+]^2} - \frac{K_w }{[H^+]} &= 0 \\
-[H^+]^3 - [H^+] \cdot (K_1 K_H \cdot P_{CO_2} + K_w ) - 2\cdot K_1 K_2  K_H \cdot P_{CO_2} &= 0
-\end{align}
-$$
-
-DIC:
-
-$$
-\begin{aligned}
-C_T &= [H_2CO_3^*] + [HCO_3^-] + [CO_3^{2-}]  \\
-&= [H_2CO_3^*] \left(1 + \frac{K_1}{[H^+]} + \frac{K_1 K_2}{[H^+]^2} \right) \\
-&= K_H \cdot P_{CO_2} \left(1 + \frac{K_1}{[H^+]} + \frac{K_1 K_2}{[H^+]^2} \right)
-\end{aligned}
-$$
-
-### Calculating pH
-
-```{r}
-# easy way to calculate the resulting pH if there are no other acids or bases in the system
-calculate_open_system_pH(pCO2 = qty(0.4, "mbar"), temperature = qty(30, "C"))
-calculate_open_system_pH(pCO2 = qty(50, "mbar"), temperature = qty(30, "C"))
-```
-
-### Visualizing pH dependence on pCO2
 
 ```{r}
 # range of pCO2s
@@ -149,49 +113,26 @@ df_pH_vs_pCO2 %>%
   theme_bw() + labs(y = "")
 ```
 
-## Adjusting pH with base
-
-A common scenario (especially in the lab) is that there are additional sources of basicity in the system (or sometimes called *unbalanced cations*). Here the example is bicarbonate. Note that this could also just be sodium hydroxide or sodium carbonate, allowing equilibration with atmosphere (i.e. open system) will lead to the same outcome.
-
-Adding a certain amount of bicarbonate (or NaOH) to the system changes its charge balance, which has to include the metal cation, e.g.:
-
-$$
-[H^+] + [Na^+] - [HCO_3^-] - 2\cdot[CO_3^{2-}] - [OH^-] = 0
-$$
- 
-This yields to overall equation:
-
-$$
-\begin{align}
-[H^+] + [Na^+] - \frac{K_1 K_H \cdot P_{CO_2}}{[H^+]} - 2 \frac{K_1 K_2 K_H \cdot P_{CO_2}}{[H^+]^2} - \frac{K_w }{[H^+]} &= 0 \\
-[H^+]^3 + [H^+]^2 \cdot [Na^+] - [H^+] \cdot (K_1 H \cdot P_{CO_2} + K_w ) - 2\cdot K_1 K_2  K_H \cdot P_{CO_2} &= 0
-\end{align}
-$$
-
-Or in terms of Na+ (i.e. the amount of sodium bicarbonate / NaOH to add):
-
-$$
-\begin{align}
-[Na^+] &= \frac{2\cdot K_1 K_2  K_H \cdot P_{CO_2}}{[H^+]^2} + \frac{K_1 K_H \cdot P_{CO_2} + K_w}{[H^+]} - [H^+] \\
-&= K_H \cdot P_{CO_2} \left( 2 \cdot 10^{2 pH - pK_{a1} - pK_{a2}} + 10^{pH - pK_{a1}} \right) + 10^{pH - pK_w} - 10^{-pH}
-\end{align}
-$$
-
-### Calculating pH / required base
+## Adjusting pH with alkalinity
 
 ```{r}
 # to calculate how much base (NaOH or NaHCO3) to add
-calculate_open_system_unbalanced_ions(pH = 6.8, pCO2 = qty(0.4, "mbar"))
-calculate_open_system_unbalanced_ions(pH = 6.8, pCO2 = qty(50, "mbar"))
-calculate_open_system_unbalanced_ions(pH = 6.8, pCO2 = qty(200, "mbar"))
+calculate_open_system_alkalinity(pH = 6.8, pCO2 = qty(0.4, "mbar"))
+calculate_open_system_alkalinity(pH = 6.8, pCO2 = qty(50, "mbar"))
+calculate_open_system_alkalinity(pH = 6.8, pCO2 = qty(200, "mbar"))
 
 # to calculate pH with addition of a specific amount of base
-calculate_open_system_pH(pCO2 = qty(0.4, "mbar"), unbalanced_ions = qty(5, "mM"))
-calculate_open_system_pH(pCO2 = qty(50, "mbar"), unbalanced_ions = qty(5, "mM"))
-calculate_open_system_pH(pCO2 = qty(200, "mbar"), unbalanced_ions = qty(5, "mM"))
+calculate_open_system_pH(pCO2 = qty(0.4, "mbar"), alkalinity = qty(5, "mM"))
+calculate_open_system_pH(pCO2 = qty(50, "mbar"), alkalinity = qty(5, "mM"))
+calculate_open_system_pH(pCO2 = qty(200, "mbar"), alkalinity = qty(5, "mM"))
+
+# to calculate pH with addition of a specific amount of acid
+calculate_open_system_pH(pCO2 = qty(0.4, "mbar"), alkalinity = qty(-1, "mM"))
+calculate_open_system_pH(pCO2 = qty(50, "mbar"), alkalinity = qty(-1, "mM"))
+calculate_open_system_pH(pCO2 = qty(200, "mbar"), alkalinity = qty(-1, "mM"))
 ```
 
-### Visualizing required acid/base for pH
+### Visualization
 
 ```{r "unbalanced ions for pH", fig.width = 10, fig.height = 6}
 # range of pCO2s
@@ -203,15 +144,15 @@ temperatures <- data_frame(temperature = c(25, 37) %>% qty("C"))
 df_base_vs_pH <-
   crossing(pCO2s, temperatures, pH = seq(3, 7.5, by = 0.05)) %>% 
   mutate(
-    ions = calculate_open_system_unbalanced_ions(pH, pCO2, temp = temperature),
-    `Na+ required [mM]` = ifelse(ions > 0, get_qty_value(ions, "mM"), 0),
-    `Cl- required [mM]` = ifelse(ions < 0, -get_qty_value(ions, "mM"), 0),
+    ions = calculate_open_system_alkalinity(pH, pCO2, temp = temperature),
+    `Add base (e.g. NaOH) [mM]` = ifelse(ions > 0, get_qty_value(ions, "mM"), 0),
+    `Add acid (e.g. HCl) [mM]` = ifelse(ions < 0, -get_qty_value(ions, "mM"), 0),
     `DIC [mM]` = calculate_DIC(pH, pCO2, temp = temperature) %>% 
       get_qty_value("mM")
   ) 
 
 p <- df_base_vs_pH %>% 
-  gather(var, val, `Na+ required [mM]`, `Cl- required [mM]`, `DIC [mM]`) %>% 
+  gather(var, val, `Add base (e.g. NaOH) [mM]`, `Add acid (e.g. HCl) [mM]`, `DIC [mM]`) %>% 
   mutate(panel = get_qty_text(pCO2, "mbar") %>% paste("CO2") %>% as_factor()) %>% 
   filter(val > 0) %>% 
   ggplot() +
@@ -226,6 +167,8 @@ p <- df_base_vs_pH %>%
 p
 ```
 
+### Log scale
+
 ```{r "unbalanced ions for pH - log scale", fig.width = 10, fig.height = 6}
 # easier to see in log space and equal y axis + a vertical line
 p_log <- p +
@@ -237,49 +180,18 @@ p_log
 
 ## Adjusting pH with a buffer
 
-The next more complex scenario is an additional pH buffer (besides the carbonate system). Now we have some random acid $[A]$ (or sodium salt) that can dissociate to $[A-]$, with dissociation constant $K_{a}$, as well as some base to set the system as before (adds only $Na^+$). This changes the charge balance to the root finding problem:
-
-$$
-\begin{align}
-[H^+] - [HCO_3^-] - 2\cdot[HCO_3^{2-}] - [OH^-] - [A^-] + [Na^+] &= 0 \\
-[H^+] + [Na^+] - 
-  \frac{K_a \cdot [A_T]}{K_a+[H^+]} - 
-  \frac{K_1 K_H \cdot P_{CO_2}}{[H^+]} - 
-  2 \frac{K_1 K_2 K_H \cdot P_{CO_2}}{[H^+]^2} -
-  \frac{K_w}{[H^+]} &= 0
-\end{align}
-$$
-
-Or with all the pX parameters instead of X:
-
-$$
-10^{-pH} 
-+ [Na^+] 
-- \frac{[A_T]}{1 + 10^{(pK_a-pH)}}
-- \left(10^{(pH-pK_1)} +2 \cdot 10^{(2\cdot pH - pK_1 - pK_2)} \right) \cdot K_H P_{CO_2}
-- 10^{(pH-pK_w)} = 0
-$$
-And in terms of Na+ to add:
-
-$$
-\begin{align}
-[Na^+] &= \frac{2\cdot K_1 K_2  K_H \cdot P_{CO_2}}{[H^+]^2} + \frac{K_1 K_H \cdot P_{CO_2} + K_w}{[H^+]} - [H^+] + \frac{K_a \cdot [A_T]}{K_a+[H^+]} \\
-&= K_H \cdot P_{CO_2} \left( 2 \cdot 10^{2 pH - pK_{a1} - pK_{a2}} + 10^{pH - pK_{a1}} \right) + 10^{pH - pK_w} - 10^{-pH} + \frac{[A_T]}{1 + 10^{(pK_a-pH)}}
-\end{align}
-$$
-
-### Calculating pH / required base
+For simplicty keeping temperature constant at the default (25C).
 
 ```{r}
 buffer <- qty(c(1, 10, 50), "mM")
 # to calculate how much base (NaOH or NaHCO3) to add
 df <- data_frame(
   buffer = buffer,
-  add = calculate_open_system_unbalanced_ions(
+  add = calculate_open_system_alkalinity(
     pH = 6.8,
     pCO2 = qty(50, "mbar"),
     buffer = buffer,
-    pKa = 7.5
+    buffer_pKa = 7.5
   )
 )
 df
@@ -293,86 +205,82 @@ df %>%
     pH = calculate_open_system_pH(
       pCO2 = qty(50, "mbar"),
       buffer = buffer,
-      unbalanced_ions = add,
-      pKa = 7.5
+      alkalinity = add,
+      buffer_pKa = 7.5
     )
   )
 ```
 
-### Visualizing required acid/base for pH
-
-For simplicty keeping temperature constant at the default (25C).
-
-#### Different concentrations of weak acid (same pKa)
+### Different concentrations of weak acid (same pKa)
 
 ```{r "unbalanced ions for pH with buffer", fig.width = 10, fig.height = 6}
 # range of pCO2s
 pCO2s <- data_frame(pCO2 = c(0.4, 50, 200) %>% qty("mbar"))
 # range of buffers
-buffers <- data_frame(buffer = c(0, 20, 20, 20, 50) %>% qty("mM"), pKa = c(7.5, 7.5, 6.5, 5.5, 7.5))
+buffers <- data_frame(
+  buffer = c(0, 20, 20, 20, 50) %>% qty("mM"), 
+  buffer_pKa = c(7.5, 7.5, 9, 6, 7.5))
 
 # calculate for all combinations
 df_base_w_buffer_vs_pH <-
   crossing(pCO2s, buffers, pH = seq(3, 7.5, by = 0.05)) %>% 
   mutate(
-    ions = calculate_open_system_unbalanced_ions(pH, pCO2, buffer = buffer, pKa = pKa),
-    `Na+ required [mM]` = ifelse(ions > 0, get_qty_value(ions, "mM"), 0),
-    `Cl- required [mM]` = ifelse(ions < 0, -get_qty_value(ions, "mM"), 0),
+    ions = calculate_open_system_alkalinity(pH, pCO2, buffer = buffer, buffer_pKa = buffer_pKa),
+    `Add base (e.g. NaOH) [mM]` = ifelse(ions > 0, get_qty_value(ions, "mM"), 0),
+    `Add acid (e.g. HCl) [mM]` = ifelse(ions < 0, -get_qty_value(ions, "mM"), 0),
     `DIC [mM]` = calculate_DIC(pH, pCO2) %>% get_qty_value("mM")
   ) 
 
 # visualize
 plot_df <- df_base_w_buffer_vs_pH %>% 
-  gather(var, val, `Na+ required [mM]`, `Cl- required [mM]`, `DIC [mM]`) %>% 
+  gather(var, val, `Add base (e.g. NaOH) [mM]`, `Add acid (e.g. HCl) [mM]`, `DIC [mM]`) %>% 
   mutate(panel = get_qty_text(pCO2, "mbar") %>% paste("CO2") %>% as_factor(),
-         Buffer = get_qty_text(buffer, "mM") %>% paste0(" (pKa=", pKa, ")")) %>% 
+         Buffer = get_qty_text(buffer, "mM") %>% paste0(" (pKa=", buffer_pKa, ")")) %>% 
   filter(val > 0)
 
-p_log %+% filter(plot_df, pKa == 7.5) %+% 
+p_log %+% filter(plot_df, buffer_pKa == 7.5) %+% 
   aes(linetype = Buffer) +
   labs(title = "Different concentrations of a weak acid buffer")
 ```
+
+#### Interactive
 
 ```{r "unbalanced ions for pH with buffer interactive", fig.width = 10, fig.height = 6}
 ggplotly()
 ```
 
-#### Same concentration of weak acid (different pKa)
+### Same concentration of weak acid (different pKa)
 
 ```{r "unbalanced ions for pH with buffer difference pKa", fig.width = 10, fig.height = 6}
-ggplotly(
-  p_log %+% filter(plot_df, buffer == qty(20, "mM")) %+% 
+p_log %+% filter(plot_df, buffer == qty(20, "mM")) %+% 
     aes(linetype = Buffer) +
     labs(title = "Same concentration of a weak acid buffer with different pKa")
-)
 ```
 
-#### Different concentration of salt buffer (same pKa)
+### Different concentration of salt buffer (same pKa)
 
-If the buffer is a salt instead of an acid, it contributes to the free ions. E.g. for a mono-valent buffer, the amount of free hard ions (acid/base addition) is reduced by the buffer concentration (2x the buffer concentration if di-valent, 3x if tri-valent, etc.).
+If the buffer is a salt instead of an acid, it contributes to the alkalinity.
 
 ```{r "unbalanced ions for pH with different buffer concs", fig.width = 10, fig.height = 6}
 plot_df2 <- 
   crossing(pCO2s, buffers, pH = seq(3, 7.5, by = 0.05)) %>% 
   mutate(
-    ions = calculate_open_system_unbalanced_ions(pH, pCO2, buffer = buffer, pKa = pKa) - buffer,
-    `Na+ required [mM]` = ifelse(ions > 0, get_qty_value(ions, "mM"), 0),
-    `Cl- required [mM]` = ifelse(ions < 0, -get_qty_value(ions, "mM"), 0),
+    ions = calculate_open_system_alkalinity(pH, pCO2, buffer = buffer, buffer_pKa = buffer_pKa) - buffer,
+    `Add base (e.g. NaOH) [mM]` = ifelse(ions > 0, get_qty_value(ions, "mM"), 0),
+    `Add acid (e.g. HCl) [mM]` = ifelse(ions < 0, -get_qty_value(ions, "mM"), 0),
     `DIC [mM]` = calculate_DIC(pH, pCO2) %>% get_qty_value("mM")
   ) %>% 
-  gather(var, val, `Na+ required [mM]`, `Cl- required [mM]`, `DIC [mM]`) %>% 
+  gather(var, val, `Add base (e.g. NaOH) [mM]`, `Add acid (e.g. HCl) [mM]`, `DIC [mM]`) %>% 
   mutate(panel = get_qty_text(pCO2, "mbar") %>% paste("CO2") %>% as_factor(),
-         Buffer = get_qty_text(buffer, "mM") %>% paste0(" (pKa=", pKa, ")")) %>% 
+         Buffer = get_qty_text(buffer, "mM") %>% paste0(" (pKa=", buffer_pKa, ")")) %>% 
   filter(val > 0)
 
-ggplotly(
-  p_log %+% filter(plot_df2, pKa == 7.5) %+% 
+p_log %+% filter(plot_df2, buffer_pKa == 7.5) %+% 
   aes(linetype = Buffer) +
   labs(title = "Different concentrations of a mono-valent salt buffer")
-)
 ```
 
-#### pH difference upon atmosphere switching
+## pH difference upon atmosphere switching
 
 A rare environmental but common laboratory scenario is the sometimes unexpected change in pH upon shifting from standard atmospheric CO2 (400ppm, let's face reality...) to some artifical higher CO2 atmosphere without adjusting anything else.
 
@@ -384,7 +292,7 @@ df_pH_switch <-
   crossing(data_frame(pCO2 = qty(c(50, 200), "mbar"))) %>% 
   mutate(
     `new pH` = calculate_open_system_pH(
-      pCO2 = pCO2, buffer = buffer, pKa = pKa, unbalanced_ions = ions
+      pCO2 = pCO2, buffer = buffer, buffer_pKa = buffer_pKa, alkalinity = ions
     ),
     `pH difference` = `new pH` - pH,
     panel = get_qty_text(pCO2, "mbar") %>% paste("CO2") %>% as_factor()
@@ -392,87 +300,13 @@ df_pH_switch <-
   gather(var, val, `new pH`, `pH difference`)
 
 p %+% df_pH_switch %+% 
-  aes(color = get_qty_text(buffer, "mM"), linetype = factor(pKa) %>% fct_rev()) +
+  aes(color = get_qty_text(buffer, "mM"), linetype = factor(buffer_pKa)) +
   facet_grid(var~panel, scales = "free_y") +
   scale_color_brewer("Buffer", palette = "Set1") +  
+  scale_linetype_manual(values = c(2, 1, 3)) +
   labs(linetype = "pKa", y = "")
 ```
 
 # Closed system
 
-The above equations also hold for closed systems at equlibratium except that mass balance constraints must be taken into consideration for the gas phase in addition to the liquid phase. This is rarely a relevant environmental scenario but frequently applicable in laboratory settings.
-
-## Carbonate system in limited volume vessel
-
-Note: this is a typical culturing scenario - certain amount of headspace and liquid with an initial infusion of CO2 that gets equilibrated in the vessel. Note that at relatively high partial pressures and/or large headspaces, this scenario is well approximated by the open system solutions. The charge balance remains the same as in the open system (omit base term $Na^+$ and buffer $A_T$ if not part of the system):
-
-$$
-\begin{align}
-[H^+] + [Na^+] - 
-  \frac{K_a}{K_a+[H^+]} \cdot [A_T] - 
-  \frac{K_1 K_H }{[H^+]} \cdot P_{CO_2} - 
-  2 \frac{K_1 K_2 K_H }{[H^+]^2} \cdot P_{CO_2} -
-  \frac{K_w}{[H^+]} &= 0
-\end{align}
-$$
-
-### Mass balance
-
-However, the mass balance (based on total moles of carbon in the system) provides an additional constraint on the system:
-
-$$
-\begin{align}
-C_{T} &= n_{CO_2(g)} + V_{liquid} \cdot DIC \\
-DIC &= [H_2CO_3^*] + [HCO_3^-] + [CO_3^{2-}] = K_H \cdot P_{CO_2} \left(1 + \frac{K_1}{[H^+]} + \frac{K_1 K_2}{[H^+]^2} \right) \\
-n_{CO_2(g)} &= \frac{P_{CO_2} \cdot V_{gas}}{RT} \\
-C_{T} &= P_{CO_2} \cdot \left[\frac{V_G}{RT} + V_L \cdot K_H \left( 1 + \frac{K_1}{[H^+]} + \frac{K_1 K_2}{[H^+]^2} \right) \right] \\
-\rightarrow P_{CO_2} &= \frac{C_{T}}{\frac{V_G}{RT} + V_L \cdot K_H \left( 1 + \frac{K_1}{[H^+]} + \frac{K_1 K_2}{[H^+]^2} \right)} \\
- &= \frac{C_{T}}{\frac{V_g}{RT} + V_L\cdot K_H\cdot\left(1 + 10^{(pH-pK_1)} + 10^{(2\cdot pH-pK_1-pK_2)}\right)}
-\end{align}
-$$
- 
-### Final close system equation
-
-Root finding function to find pH (plug mass balance into charge balance):
-
-$$
-\begin{align}
-[H^+] + [Na^+] - 
-  \frac{K_a}{K_a+[H^+]} \cdot [A_T] - 
-  \frac{\frac{K_1}{[H^+]} + 2\frac{K_1 K_2}{[H^+]^2}}
-        {\frac{V_g}{K_H\cdot RT} + \left( 1 + \frac{K_1}{[H^+]} + \frac{K_1 K_2}{[H^+]^2} \right) V_l} \cdot C_T -
-  \frac{K_w}{[H^+]} &= 0
-\end{align}
-$$
-
-Or with all the pX parameters instead of X:
-
-$$
-10^{-pH} 
-+ [Na^+] 
-- \frac{1}{1 + 10^{(pK_a-pH)}}\cdot [A_T]
-- \frac{10^{(pH-pK_1)} + 2\cdot 10^{(2\cdot pH-pK_1-pK_2)}}
-        {\frac{V_g}{K_H\cdot RT} + \left(1 + 10^{(pH-pK_1)} + 10^{(2\cdot pH-pK_1-pK_2)}\right) V_l} 
-        \cdot C_T
-- 10^{(pH-pK_w)} = 0
-$$
-
-
-# Env. system (inorganic carbon controlled)
-
-For carbonate controlled environmenal systems with known $[DIC]$, the above equations can be combined to substitute the concentration terms in the charge balance equation with the $[DIC]$ and acid dissociation constants. 
-
-$$
-\begin{align}
-[DIC] &= [H_2CO_3^*] \left( 1 + \frac{K_1}{[H^+]} + \frac{K_1 K_2}{[H^+]^2} \right) \rightarrow [H_2CO_3^*] = \frac{[DIC]\cdot[H^+]^2}{[H^+]^2 + K_1 [H^+] + K_1 K_2} \\
-[DIC] &= [HCO_3^-] \left( \frac{[H^+]}{K_1} + 1 + \frac{K_2}{[H^+]} \right) \rightarrow [HCO_3^-] = \frac{[DIC]\cdot K_1 [H^+]}{[H^+]^2 + K_1 [H^+] + K_1 K_2} \\
-[DIC] &= [CO_3^{2-}] \left( \frac{[H^+]^2}{K_1 K_2} + \frac{[H^+]}{K_2} + 1 \right) \rightarrow [HCO_3^-] = \frac{[DIC]\cdot K_1 K_2}{[H^+]^2 + K_1 [H^+] + K_1 K_2}
-\end{align}
-$$
-
-which yields the overall charge balance equation in terms of pH ($[H^+]$) and dissovled inorganic carbon ($[DIC]$):
-
-$$
-[H^+] - \frac{[DIC]\cdot K_1 [H^+]}{[H^+]^2 + K_1 [H^+] + K_1 K_2} - 2 \frac{[DIC]\cdot K_1 K_2}{[H^+]^2 + K_1 [H^+] + K_1 K_2} - \frac{K_w}{[H^+]} = 0 
-$$
-
+Examples coming soon.
