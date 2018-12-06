@@ -74,11 +74,12 @@ qty(273150, "mK")
 
 ## Pressure
 
-Pressure quantities use the non-SI but metric unit `"bar"` as base unit (1 bar = 100,000 Pa) because of its more common use in chemical and culturing applications. However, pressure quantities can also be generated from the SI unit `"Pa"` as well as the common non-metric units `"atm"`, `"psi"`, `"Torr"` and `"mTorr"` which are all automatically converted to `bar`. All pressure quantities are absolute pressures (i.e. technically `psi` is `psiA`, not relative to atmospheric). All standard metric prefixes are supported for the `bar` base unit.
+Pressure quantities use the non-SI but metric unit `"bar"` as base unit (1 bar = 100,000 Pa) because of its more common use in chemical and culturing applications. However, pressure quantities can also be generated from the SI unit `"Pa"` as well as the common non-metric units `"atm"`, `"psi"`, `"Torr"`, `"mTorr"` and `"% SP"` (% of standard pressure = % of 1 bar) which are all automatically converted to `bar`. All pressure quantities are absolute pressures (i.e. technically `psi` is `psiA`, not relative to atmospheric). All standard metric prefixes are supported for the `bar` base unit.
 
 ```{r}
 qty(1, "bar")
 qty(1000, "mbar")
+qty(100, "% SP")
 qty(1, "atm")
 qty(14.7, "psi") 
 qty(760, "Torr")

@@ -130,7 +130,7 @@ volume <- function(x, unit, scale_to_best_metric = TRUE) {
   return(q)
 }
 
-#' @details \emph{pressure}: base unit \code{bar} but also understands \code{Pa}, all metric prefixes allowed, the common non-metric units \code{atm} and \code{psi}, \code{Torr} and \code{mTorr} are also supported and will be automatically converted to \code{bar}
+#' @details \emph{pressure}: base unit \code{bar} but also understands \code{Pa}, all metric prefixes allowed, the common non-metric units \code{atm}, \code{psi}, \code{Torr}, \code{mTorr}, and \code{% SP} (% at standard pressure = % of 1 bar) are also supported and will be automatically converted to \code{bar}.
 #' @name quantities
 NULL
 pressure <- function(x, unit, scale_to_best_metric = TRUE) {
@@ -146,7 +146,7 @@ get_pressure_unit_conversion <- function(unit) {
   prefix <- get_mediatools_constant("metric_prefix")
   primary_units <- paste0(names(prefix), get_base_unit(new("MediaToolsPressure")))
   secondary_units <- paste0(names(prefix), "Pa")
-  alternative_units <- c("atm", "psi", "Torr", "mTorr")
+  alternative_units <- c("atm", "psi", "Torr", "mTorr", "% SP")
   if (! unit %in% c(primary_units, secondary_units, alternative_units)) 
     stop("not a known pressure unit: ", unit)
   
@@ -156,12 +156,15 @@ get_pressure_unit_conversion <- function(unit) {
     unit <- "Torr"
   }
   
-  if (unit %in% alternative_units) {
+  if (unit == "% SP") {
+    conversion <- conversion / 100
+    unit <- "bar"
+  } else if (unit %in% alternative_units) {
     c_factor <- get_mediatools_constant(paste0("bar_per_", unit))
     conversion <- conversion * c_factor
     unit <- "bar"
   }
-  
+    
   # pascal
   if (unit %in% secondary_units) {
     conversion <- conversion * get_mediatools_constant("bar_per_pa")
@@ -243,22 +246,47 @@ get_temperature_unit_conversion <- function(unit) {
 # type checks =================
 
 #' @describeIn quantities check whether something is a quantity
-#' @param q quantity
+#' @param q a quantity object
 #' @export
-is_qty <- function(x) {
-  is(x, "MediaToolsQuantity")
+is_qty <- function(q) {
+  is(q, "MediaToolsQuantity")
 }
 
-# these are not exported in order to not pollute the namespace but are useful for internal checks
-is_amount <- function(x) is(x, "MediaToolsAmount")
-is_mass <- function(x) is(x, "MediaToolsMass")
-is_molecular_mass <- function(x) is(x, "MediaToolsMolecularMass")
-is_molarity <- function(x) is(x, "MediaToolsMolarity")
-is_density <- function(x) is(x, "MediaToolsDensity")
-is_volume <- function(x) is(x, "MediaToolsVolume")
-is_pressure <- function(x) is(x, "MediaToolsPressure")
-is_solubility <- function(x) is(x, "MediaToolsSolubility")
-is_temperature <- function(x) is(x, "MediaToolsTemperature")
+#' @describeIn quantities check whether something is an amount quantity
+#' @export
+is_amount <- function(q) is(q, "MediaToolsAmount")
+
+#' @describeIn quantities check whether something is an amount quantity
+#' @export
+is_mass <- function(q) is(q, "MediaToolsMass")
+
+#' @describeIn quantities check whether something is a molecular mass quantity
+#' @export
+is_molecular_mass <- function(q) is(q, "MediaToolsMolecularMass")
+
+#' @describeIn quantities check whether something is a molarity quantity
+#' @export
+is_molarity <- function(q) is(q, "MediaToolsMolarity")
+
+#' @describeIn quantities check whether something is a density quantity
+#' @export
+is_density <- function(q) is(q, "MediaToolsDensity")
+
+#' @describeIn quantities check whether something is a volume quantity
+#' @export
+is_volume <- function(q) is(q, "MediaToolsVolume")
+
+#' @describeIn quantities check whether something is a pressure quantity
+#' @export
+is_pressure <- function(q) is(q, "MediaToolsPressure")
+
+#' @describeIn quantities check whether something is a solubility quantity
+#' @export
+is_solubility <- function(q) is(q, "MediaToolsSolubility")
+
+#' @describeIn quantities check whether something is a temperature quantity
+#' @export
+is_temperature <- function(q) is(q, "MediaToolsTemperature")
 
 
 # value return ======
@@ -308,9 +336,10 @@ get_qty_value.MediaToolsTemperature <- function(q, unit = get_qty_units(q)) {
 
 #' @details \code{get_qty_text}: get the value of the quantity in the desired unit as a text string with the unit appended
 #' @rdname quantity_info
+#' @param signif number of significant digits for printing the quantity
 #' @export
-get_qty_text <- function(q, unit = get_qty_units(q)) {
-  paste(get_qty_value(q, unit), unit)
+get_qty_text <- function(q, unit = get_qty_units(q), signif = 5) {
+  paste(base::signif(get_qty_value(q, unit), signif), unit)
 }
 
 # expand S4 methods ========================
@@ -343,6 +372,10 @@ type_sum.MediaToolsQuantity <- function(x) {
   return(x@unit)
 }
 
+#' @export
+as_factor.MediaToolsQuantity <- function(x) {
+  return(forcats::as_factor(as.character(x)))
+}
 
 #' Concatenate quantities
 #' 

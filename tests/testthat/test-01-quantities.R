@@ -87,6 +87,10 @@ test_that("Testing that units work and can be metric scaled", {
   expect_equal(pressure(760, "mTorr") %>% get_qty_value("mTorr"), 760)
   expect_equal(pressure(760, "mTorr") %>% get_qty_value("Torr"), 0.760)
   expect_equal(pressure(760, "mTorr") %>% get_qty_value("atm"), 0.001)
+  expect_equal(pressure(1, "% SP") %>% get_qty_value("% SP"), 1)
+  expect_equal(pressure(1, "% SP") %>% get_qty_value(), 10)
+  expect_equal(pressure(1, "% SP") %>% get_qty_units(), "mbar")
+  expect_equal(pressure(100, "mbar") %>% get_qty_value("% SP"), 10)
   
   # solubility
   expect_error(solubility(1, "J"), "not a known solubility unit")
@@ -132,6 +136,9 @@ test_that("Testing that units work and can be metric scaled", {
   expect_equal(qty(-Inf, "mg") %>% get_qty_units(), "g")
   expect_true(is_qty(qty(1, "mg")))
   expect_false(is_qty(1))
+  
+  # as factor (order preserved)
+  expect_equal(as_factor(qty(c(1, 3, 2), "mg")) %>% levels(), c(1, 3, 2))
   
   # get units
   expect_equal(1 %>% get_qty_units(), NA_character_)

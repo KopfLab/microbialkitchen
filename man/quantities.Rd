@@ -4,11 +4,38 @@
 \alias{quantities}
 \alias{qty}
 \alias{is_qty}
+\alias{is_amount}
+\alias{is_mass}
+\alias{is_molecular_mass}
+\alias{is_molarity}
+\alias{is_density}
+\alias{is_volume}
+\alias{is_pressure}
+\alias{is_solubility}
+\alias{is_temperature}
 \title{Quantities}
 \usage{
 qty(x, unit, scale_to_best_metric = TRUE)
 
-is_qty(x)
+is_qty(q)
+
+is_amount(q)
+
+is_mass(q)
+
+is_molecular_mass(q)
+
+is_molarity(q)
+
+is_density(q)
+
+is_volume(q)
+
+is_pressure(q)
+
+is_solubility(q)
+
+is_temperature(q)
 }
 \arguments{
 \item{x}{the numeric value of the quantity, can be a single value or a vector}
@@ -17,7 +44,7 @@ is_qty(x)
 
 \item{scale_to_best_metric}{whether to automatically scale to the best metric prefix}
 
-\item{q}{quantity}
+\item{q}{a quantity object}
 }
 \description{
 The \code{qty} function makes it easy to keep track of different quantities in chemical calculations. Metric prefixes are fully supported, i.e. any unit can be combined with standard \link{metric} scaling (mL, nmol, µM, etc.). Some quantities can also be used in common \link{arithmetic} operations.
@@ -46,6 +73,24 @@ The \code{qty} function makes it easy to keep track of different quantities in c
 \item \code{qty}: generate a quantity object
 
 \item \code{is_qty}: check whether something is a quantity
+
+\item \code{is_amount}: check whether something is an amount quantity
+
+\item \code{is_mass}: check whether something is an amount quantity
+
+\item \code{is_molecular_mass}: check whether something is a molecular mass quantity
+
+\item \code{is_molarity}: check whether something is a molarity quantity
+
+\item \code{is_density}: check whether something is a density quantity
+
+\item \code{is_volume}: check whether something is a volume quantity
+
+\item \code{is_pressure}: check whether something is a pressure quantity
+
+\item \code{is_solubility}: check whether something is a solubility quantity
+
+\item \code{is_temperature}: check whether something is a temperature quantity
 }}
 
 \examples{
