@@ -10,7 +10,7 @@
 \usage{
 get_qty_value(q, unit = get_qty_units(q))
 
-get_qty_text(q, unit = get_qty_units(q))
+get_qty_text(q, unit = get_qty_units(q), signif = 5)
 
 get_qty_units(q)
 
@@ -20,6 +20,8 @@ get_qty_units_with_label(q, label = names(q))
 \item{q}{quantity or list of quantities}
 
 \item{unit}{the unit of the quantity}
+
+\item{signif}{number of significant digits for printing the quantity}
 
 \item{label}{text label to use with the units - single value or vector of the same length as \code{q}. By default uses the names of \code{q}, which only works if \code{q} is a list or data frame.}
 }
