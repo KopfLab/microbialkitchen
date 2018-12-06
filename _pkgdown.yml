@@ -25,7 +25,11 @@ navbar:
   - text: "Operations"
     href: articles/operations.html
   - text: "Carbonate Chemistry"
-    href: articles/carbonate_chemistry.html
+    menu:
+      - text: "Equations"
+        href: articles/carbonate_chemistry_equations.html
+      - text: "Examples"
+        href: articles/carbonate_chemistry_examples.html
   right:
   - icon: fa-github fa-lg
     href: https://github.com/kopflab/mediatools

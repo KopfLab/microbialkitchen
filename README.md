@@ -4,7 +4,7 @@
 # mediatools
 
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/mediatools)](https://cran.r-project.org/package=mediatools)
-[![Git\_Hub\_Version](https://img.shields.io/badge/GitHub-0.3.0.9999-orange.svg?style=flat-square)](/commits)
+[![Git\_Hub\_Version](https://img.shields.io/badge/GitHub-0.3.1.9999-orange.svg?style=flat-square)](/commits)
 [![Last-Update](https://img.shields.io/badge/updated-2018--12--05-yellowgreen.svg)](/commits)
 [![Documentation](https://img.shields.io/badge/docs-online-green.svg)](https://kopflab.github.io/mediatools/reference/)
 [![Build
@@ -50,6 +50,9 @@ devtools::install_github("KopfLab/mediatools")
   - [operations
     vignette](https://kopflab.github.io/mediatools/articles/operations.html)
     on working with quantities
-  - [carbonate chemistry
-    vignette](https://kopflab.github.io/mediatools/articles/carbonate_chemistry.html)
-    on working with quantities
+  - carbonate chemistry vignettes for working with carbonate buffered
+    media systems:
+      - [equations
+        vignette](https://kopflab.github.io/mediatools/articles/carbonate_chemistry_equations.html)
+      - [examples
+        vignette](https://kopflab.github.io/mediatools/articles/carbonate_chemistry_examples.html)

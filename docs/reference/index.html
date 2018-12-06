@@ -68,7 +68,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">mediatools</a>
-        <span class="label label-danger" data-toggle="tooltip" data-placement="bottom" title="in active development">0.3.0.9999</span>
+        <span class="label label-danger" data-toggle="tooltip" data-placement="bottom" title="in active development">0.3.1.9999</span>
       </span>
     </div>
 
@@ -83,8 +83,20 @@
 <li>
   <a href="../articles/operations.html">Operations</a>
 </li>
-<li>
-  <a href="../articles/carbonate_chemistry.html">Carbonate Chemistry</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Carbonate Chemistry
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/carbonate_chemistry_equations.html">Equations</a>
+    </li>
+    <li>
+      <a href="../articles/carbonate_chemistry_examples.html">Examples</a>
+    </li>
+  </ul>
 </li>
       </ul>
       
@@ -140,36 +152,6 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="calculate_DIC.html">calculate_DIC()</a></code> </p>
-        </td>
-        <td><p>Function to calculate DIC</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="calculate_closed_system_TIC.html">calculate_closed_system_TIC()</a></code> </p>
-        </td>
-        <td><p>Total inorganic carbon in a closed system</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="calculate_closed_system_pCO2.html">calculate_closed_system_pCO2()</a></code> </p>
-        </td>
-        <td><p>CO2 pressure in a closed system</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="calculate_closed_system_pH.html">calculate_closed_system_pH()</a></code> </p>
-        </td>
-        <td><p>Calculate pH i a closed system</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="calculate_closed_system_unbalanced_ions.html">calculate_closed_system_unbalanced_ions()</a></code> </p>
-        </td>
-        <td><p>Calculate unbalanced ions of a closed system</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="calculate_ideal_gas_amount.html">calculate_ideal_gas_amount()</a></code> </p>
         </td>
         <td><p>Calculate the amount of an ideal gas</p></td>
@@ -182,21 +164,15 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="calculate_open_system_pH.html">calculate_open_system_pH()</a></code> </p>
-        </td>
-        <td><p>Calculate pH in open system (i.e. unlimited pCO2)</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="calculate_open_system_unbalanced_ions.html">calculate_open_system_unbalanced_ions()</a></code> </p>
-        </td>
-        <td><p>Calculate unbalanced ions of an open system</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="calculate_solubility.html">calculate_solubility()</a></code> </p>
         </td>
         <td><p>Calculate solubility of a gas</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="closed_system.html">calculate_closed_system_pH()</a></code> <code><a href="closed_system.html">calculate_closed_system_alkalinity()</a></code> <code><a href="closed_system.html">calculate_closed_system_TIC()</a></code> <code><a href="closed_system.html">calculate_closed_system_pCO2()</a></code> </p>
+        </td>
+        <td><p>Closed system calculations</p></td>
       </tr><tr>
         
         <td>
@@ -212,6 +188,12 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="open_system.html">calculate_open_system_pH()</a></code> <code><a href="open_system.html">calculate_open_system_alkalinity()</a></code> </p>
+        </td>
+        <td><p>Open system calculations</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="quantities.html">qty()</a></code> <code><a href="quantities.html">is_qty()</a></code> </p>
         </td>
         <td><p>Quantities</p></td>
@@ -221,6 +203,12 @@
           <p><code><a href="quantity_info.html">get_qty_value()</a></code> <code><a href="quantity_info.html">get_qty_text()</a></code> <code><a href="quantity_info.html">get_qty_units()</a></code> <code><a href="quantity_info.html">get_qty_units_with_label()</a></code> </p>
         </td>
         <td><p>Get quantity information</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="speciation.html">calculate_DIC()</a></code> <code><a href="speciation.html">calculate_carbonic_acid()</a></code> <code><a href="speciation.html">calculate_bicarbonate()</a></code> <code><a href="speciation.html">calculate_carbonate()</a></code> </p>
+        </td>
+        <td><p>Speciation functions</p></td>
       </tr>
     </tbody>
     </table>

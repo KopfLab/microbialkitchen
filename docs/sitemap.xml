@@ -10,34 +10,16 @@
     <loc>http://kopflab.github.io/mediatools//reference/c_qty.html</loc>
   </url>
   <url>
-    <loc>http://kopflab.github.io/mediatools//reference/calculate_DIC.html</loc>
-  </url>
-  <url>
-    <loc>http://kopflab.github.io/mediatools//reference/calculate_closed_system_TIC.html</loc>
-  </url>
-  <url>
-    <loc>http://kopflab.github.io/mediatools//reference/calculate_closed_system_pCO2.html</loc>
-  </url>
-  <url>
-    <loc>http://kopflab.github.io/mediatools//reference/calculate_closed_system_pH.html</loc>
-  </url>
-  <url>
-    <loc>http://kopflab.github.io/mediatools//reference/calculate_closed_system_unbalanced_ions.html</loc>
-  </url>
-  <url>
     <loc>http://kopflab.github.io/mediatools//reference/calculate_ideal_gas_amount.html</loc>
   </url>
   <url>
     <loc>http://kopflab.github.io/mediatools//reference/calculate_ideal_gas_molarity.html</loc>
   </url>
   <url>
-    <loc>http://kopflab.github.io/mediatools//reference/calculate_open_system_pH.html</loc>
-  </url>
-  <url>
-    <loc>http://kopflab.github.io/mediatools//reference/calculate_open_system_unbalanced_ions.html</loc>
-  </url>
-  <url>
     <loc>http://kopflab.github.io/mediatools//reference/calculate_solubility.html</loc>
+  </url>
+  <url>
+    <loc>http://kopflab.github.io/mediatools//reference/closed_system.html</loc>
   </url>
   <url>
     <loc>http://kopflab.github.io/mediatools//reference/constants.html</loc>
@@ -49,6 +31,9 @@
     <loc>http://kopflab.github.io/mediatools//reference/metric.html</loc>
   </url>
   <url>
+    <loc>http://kopflab.github.io/mediatools//reference/open_system.html</loc>
+  </url>
+  <url>
     <loc>http://kopflab.github.io/mediatools//reference/quantities.html</loc>
   </url>
   <url>
@@ -58,7 +43,16 @@
     <loc>http://kopflab.github.io/mediatools//reference/reexports.html</loc>
   </url>
   <url>
+    <loc>http://kopflab.github.io/mediatools//reference/speciation.html</loc>
+  </url>
+  <url>
     <loc>http://kopflab.github.io/mediatools//articles/carbonate_chemistry.html</loc>
+  </url>
+  <url>
+    <loc>http://kopflab.github.io/mediatools//articles/carbonate_chemistry_equations.html</loc>
+  </url>
+  <url>
+    <loc>http://kopflab.github.io/mediatools//articles/carbonate_chemistry_examples.html</loc>
   </url>
   <url>
     <loc>http://kopflab.github.io/mediatools//articles/operations.html</loc>
