@@ -28,7 +28,7 @@ library(latex2exp)
 library(mediatools)
 ```
 
-# CO$_2$ solubility
+# CO2 solubility
 
 ```{r "henry", fig.width=8, fig.height=6}
 solubilities <- data_frame(
