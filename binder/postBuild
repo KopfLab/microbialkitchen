@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# simplify directory structure by removing everything but the vignettes and binder
+
+# remove the files
+find . -type f -maxdepth 1 -delete
+
+# move vignettes to main directory
+mv vignettes/* ./
+
+# remove folders
+rm -rf R docs man tests vignettes
+
+# write new README
+echo $'# Instructions\n\nExplore this package by modifying the RMarkdown notebooks in the vignettes folder or by creating a new RMarkdown file.' > README.md
