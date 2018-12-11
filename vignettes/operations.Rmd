@@ -9,21 +9,13 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-
-```{r setup, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
-options(try.outFile = stdout()) # show error messages in try statements
-```
-
 ```{r, message=FALSE}
 library(tidyverse) # load tidyverse tools
 library(mediatools) # load the library
+options(try.outFile = stdout()) # show error messages in try statements
 ```
 
-## Units & Metric Scaling
+# Units & Metric Scaling
 
 All chemical quantities in this package keep track of the units they represent with a base unit as detailed in the [quantities vignette](quantities.html) and a metric prefix. By default, the metric prefix is adjusted automatically to keep numeric values in a range close to 1. However, scaling to a specific prefix is easily achieved.
 
@@ -91,11 +83,11 @@ x %>% get_qty_units_with_label("same label")
 x %>% get_qty_units_with_label(c("apple", "banana", "carrot"))
 ```
 
-## Arithmetic
+# Arithmetic
 
 Several common arithmetic operations are implemented for easy interconversion between quantities. All arithmetic operations also automatically keep track of the units and metric prefixes for correct calculations.
 
-### Addition and Subtraction
+## Addition and Subtraction
 
 Quantities of the same type (e.g. masses, volumes, etc.) can be added or subtracted with proper interpration of the metric prefixes. The resulting quantity will be scaled to the best metric prefix as described above. Attempts to add or subtract non-matching quantities (e.g. mass + volume) or a quantity and a number without units will fail with an error to avoid unexpect behaviour and ambiguous calculations. 
 
@@ -105,7 +97,7 @@ try(qty(1, "g") + qty(1, "L")) # not allowed
 try(qty(1, "g") + 1) # not allowed
 ```
 
-### Multiplication / Division
+## Multiplication / Division
 
 Quantities can be multipled/divided by a number. The resulting quantity will be scaled to the best metric prefix. This is most commonly used with multiplication/division by 1000.
 
@@ -123,7 +115,7 @@ qty(1, "mg") / qty(1, "kg")
 
 Additional multiplications and divisions are possible for specific combinations of quantities as detailed below. These formulas are each implemented for all three possible arrangements.
 
-#### Molarity = Amount / Volume
+### Molarity = Amount / Volume
 
 ```{r}
 qty(5, "nmol") / qty(50, "mL") # calculation molarity
@@ -131,7 +123,7 @@ qty(5, "nmol") / qty(100, "nM") # calculate volume
 qty(100, "nM") * qty(50, "mL") # calculate amount
 ```
 
-#### Density = Mass / Volume
+### Density = Mass / Volume
 
 ```{r}
 qty(5, "ng") / qty(50, "mL") # calculate density
@@ -139,7 +131,7 @@ qty(5, "ng") / qty(100, "ng/L") # calculate volume
 qty(100, "ng/L") * qty(50, "mL") # calculate mass
 ```
 
-#### Amount = Mass / Molecular Mass
+### Amount = Mass / Molecular Mass
 
 ```{r}
 qty(10, "g") / qty (50, "g/mol") # calculate amount
@@ -147,7 +139,7 @@ qty(10, "g") / qty(200, "mmol") # calculate molecular mass
 qty(200, "mmol") * qty (50, "g/mol") # calculate mass
 ```
 
-#### Solubility = Molarity / Pressure
+### Solubility = Molarity / Pressure
 
 ```{r}
 qty(10, "mM") / qty(200, "mbar") # calculate solubility
@@ -156,7 +148,7 @@ qty(50, "mM/bar") * qty (200, "mbar") # calculate molarity
 ```
 
 
-### Comparisons
+## Comparisons
 
 Quantities can be compared with all common logic operators (`>`, `>=`, `<`, `<=`, `==`, `!=`) taking the metric scaling properly into consideration. Attempts to compare non-matching quantities (e.g. mass & volume)  will fail with an error to avoid unexpect behaviour. Comparisons of quantities with numerics are allowed but it is important to be cautious about these since the metric scaling in quantities affects the numeric value.
 
@@ -182,7 +174,7 @@ abs(x - x2) < qty(1, "fg") # absolute difference smaller than 1 femtogram
 ```
 
 
-## Data Frames
+# Data Frames
 
 Quantities are fully supported in dplyr type data frames and the units of a quantity are displayed underneath the column headers, e.g. `<mg>` to indicate a quantity column that has the units of `mg` (and thus is a mass). 
 
@@ -217,7 +209,7 @@ df %>% get_qty_units_with_label()
 ```
 
 
-## Concatenation
+# Concatenation
 
 Quantities can be concatenated using the regular `c()` function (or the more explicit `c_qty()`) as long as they are the same type of quantity (e.g. all masses). Concatenation make sure that the metric prefix is taken into consideration and scales the new vector to the best metric of the median. 
 
@@ -229,7 +221,7 @@ c(
 )
 ```
 
-## Missing data
+# Missing data
 
 Missing data (`NA`), empty vector (`numeric(0)`) and  infinity placeholders (`Inf`, `-Inf`) are supported in all quantities and work the same as in any other R vectors.
 
@@ -240,7 +232,7 @@ qty(numeric(0), "mg")
 qty(c(10, NA, -Inf, Inf, numeric(0)), "mg")
 ```
 
-## Miscellaneous
+# Miscellaneous
 
 To check whether something is a quantity, use the `is_qty()` function.
 

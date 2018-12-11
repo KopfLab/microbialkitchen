@@ -10,22 +10,10 @@ vignette: >
 
 This vignette provides examples of the carbonate chemistry tools implemented by the **mediatools** package to explore carbonate solubility and pH control in open and closed media systems. See the [carbonate chemistry equations vignette](carbonate_chemistry_equations.html) for conceptual background.
 
-```{r setup, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
-# @TODO:
-# - figure out scale zooming for plotly
-# - add margins for plotly to see y axes properly
-```
-
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
-library(knitr)
-library(tidyverse)
-library(plotly)
-library(latex2exp)
-library(mediatools)
+library(tidyverse) # load tidyverse tools
+library(plotly) # load interactive plotting
+library(mediatools) # load mediatools library
 ```
 
 # CO2 solubility

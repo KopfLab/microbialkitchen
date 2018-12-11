@@ -18,11 +18,10 @@ Imports:
     dplyr,
     stringr
 Suggests:
-    testthat,
-    knitr,
-    rmarkdown,
     tidyverse,
-    webchem
+    plotly,
+    knitr,
+    rmarkdown
 License: GPL (>= 2) 
 Encoding: UTF-8
 LazyData: true
