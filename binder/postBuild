@@ -2,14 +2,22 @@
 
 # simplify directory structure by removing everything but the vignettes and binder
 
-# remove the files
+## remove the files
 find . -type f -maxdepth 1 -delete
 
-# move vignettes to main directory
+## move vignettes to main directory
 mv vignettes/* ./
 
-# remove folders
+## remove folders
 rm -rf R docs man tests vignettes
 
+# convert RMarkdown files to ipynb
+pip install ipyrmd
+for f in *.Rmd; do ipyrmd $f; done
+
+# install jupyter notebook toc
+jupyter labextension install @jupyterlab/toc
+
 # write new README
-echo $'# Instructions\n\nExplore this package by modifying the RMarkdown notebooks in the vignettes folder or by creating a new RMarkdown file.' > README.md
+echo $'# Instructions\n\nExplore this package on binder by modifying the vignettes in RStudio (RMarkdown .Rmd files) or Jupyter Lab (notebook .ipynb files) by creating a new notebook.' > README.md
+
