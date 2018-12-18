@@ -3,11 +3,11 @@ context("Units")
 test_that("Testing that units work and can be metric scaled", {
   
   # constants
-  expect_error(get_mediatools_constant("bla"), "not specified")
+  expect_error(get_mediachemtools_constant("bla"), "not specified")
   
   # concentration (molarity) objects
   expect_error(molarity(1, "J"), "not a known concentration")
-  expect_is(molarity(1, "mM"), "MediaToolsMolarity")
+  expect_is(molarity(1, "mM"), "MediaChemToolsMolarity")
   expect_equal(molarity(1, "mM") %>% get_qty_units(), "mM")
   expect_equal(molarity(1, "mmol/L") %>% get_qty_units(), "mM")
   
@@ -30,7 +30,7 @@ test_that("Testing that units work and can be metric scaled", {
   
   # density
   expect_error(density(1, "J"), "not a known concentration")
-  expect_is(density(1, "g/L"), "MediaToolsDensity")
+  expect_is(density(1, "g/L"), "MediaChemToolsDensity")
   expect_equal(density(1, "mg/L") %>% get_qty_units(), "mg/L")
   expect_equal(density(1, "ng/l") %>% get_qty_units(), "ng/L")
   expect_equal(density(0.1, "ng/L") %>% get_qty_units(), "pg/L")
@@ -43,7 +43,7 @@ test_that("Testing that units work and can be metric scaled", {
   
   # amout
   expect_error(amount(1, "J"), "not a known amount unit")
-  expect_is(amount(1, "mol"), "MediaToolsAmount")
+  expect_is(amount(1, "mol"), "MediaChemToolsAmount")
   expect_equal(amount(1, "nmol") %>% get_qty_units(), "nmol")
   expect_equal(amount(1, "mole") %>% get_qty_units(), "mol")
   expect_equal(amount(1000, "nmol", scale_to_best_metric = F) %>% get_qty_units(), "nmol")
@@ -53,7 +53,7 @@ test_that("Testing that units work and can be metric scaled", {
   
   # mass
   expect_error(mass(1, "J"), "not a known mass unit")
-  expect_is(mass(1, "mg"), "MediaToolsMass")
+  expect_is(mass(1, "mg"), "MediaChemToolsMass")
   expect_equal(mass(1, "kg") %>% get_qty_units(), "kg")
   expect_equal(mass(0.01, "g") %>% get_qty_units(), "mg")
   expect_equal(mass(0.01, "g") %>% get_qty_value(), 10)
@@ -61,7 +61,7 @@ test_that("Testing that units work and can be metric scaled", {
 
   # molecular mass
   expect_error(molecular_mass(1, "J"), "not a known molecular mass unit")
-  expect_is(molecular_mass(1, "g/mol"), "MediaToolsMolecularMass")
+  expect_is(molecular_mass(1, "g/mol"), "MediaChemToolsMolecularMass")
   expect_equal(molecular_mass(1257, "g/mol") %>% get_qty_units(), "kg/mol") 
   expect_equal(molecular_mass(1257, "g/mol") %>% get_qty_value(), 1.257)
   expect_equal(molecular_mass(1257, "g/mol") %>% get_qty_value("g/mol"), 1257)
@@ -70,18 +70,18 @@ test_that("Testing that units work and can be metric scaled", {
   
   # volume
   expect_error(volume(1, "mM"), "not a known volume unit")
-  expect_is(volume(1, "mL"), "MediaToolsVolume")
+  expect_is(volume(1, "mL"), "MediaChemToolsVolume")
   expect_equal(volume(1, "nL") %>% get_qty_units(), "nL")
   expect_equal(volume(1, "nL") %>% get_qty_value(), 1)
   expect_equal(volume(1, "nL") %>% get_qty_value("pL"), 1000)
   
   # pressure
   expect_error(pressure(1, "J"), "not a known pressure unit")
-  expect_is(pressure(1, "bar"), "MediaToolsPressure")
+  expect_is(pressure(1, "bar"), "MediaChemToolsPressure")
   expect_equal(pressure(1, "mbar") %>% get_qty_units(), "mbar")
   expect_equal(pressure(1, "atm") %>% get_qty_value(), 1.01325)
   expect_equal(pressure(0.1, "MPa") %>% get_qty_value(), 1)
-  expect_equal(pressure(1, "kPa", scale_to_best_metric = FALSE) %>% get_qty_value(), get_mediatools_constant("bar_per_pa"))
+  expect_equal(pressure(1, "kPa", scale_to_best_metric = FALSE) %>% get_qty_value(), get_mediachemtools_constant("bar_per_pa"))
   expect_equal(pressure(1, "kPa", scale_to_best_metric = FALSE) %>% get_qty_units(), "kbar")
   expect_equal(pressure(760, "Torr") %>% get_qty_units(), "bar")
   expect_equal(pressure(760, "Torr") %>% get_qty_value(), 1.01325)
@@ -99,15 +99,15 @@ test_that("Testing that units work and can be metric scaled", {
   
   # solubility
   expect_error(solubility(1, "J"), "not a known solubility unit")
-  expect_is(solubility(1, "mM/bar"), "MediaToolsSolubility")
+  expect_is(solubility(1, "mM/bar"), "MediaChemToolsSolubility")
   expect_equal(solubility(1, "mM/bar") %>% get_qty_units(), "mM/bar")
-  expect_equal(solubility(10, "mM/atm") %>% get_qty_value(), 10/get_mediatools_constant("bar_per_atm"))
+  expect_equal(solubility(10, "mM/atm") %>% get_qty_value(), 10/get_mediachemtools_constant("bar_per_atm"))
   expect_equal(solubility(10, "mM/atm") %>% get_qty_value("mM/atm"), 10)
   expect_equal(solubility(10, "mM/atm") %>% get_qty_value("M/atm"), 0.01)
   
   # temperature
   expect_error(temperature(1, "J"), "not a known temperature unit")
-  expect_is(temperature(0, "C"), "MediaToolsTemperature")
+  expect_is(temperature(0, "C"), "MediaChemToolsTemperature")
   expect_equal(temperature(100, "C") %>% get_qty_units(), "K")
   expect_equal(temperature(100, "C") %>% get_qty_value(), 373.15)
   expect_equal(temperature(100, "C") %>% get_qty_value("C"), 100)

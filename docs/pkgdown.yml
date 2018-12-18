@@ -7,6 +7,6 @@ articles:
   operations: operations.html
   quantities: quantities.html
 urls:
-  reference: http://kopflab.github.io/mediatools//reference
-  article: http://kopflab.github.io/mediatools//articles
+  reference: http://kopflab.github.io/mediachemtools//reference
+  article: http://kopflab.github.io/mediachemtools//articles
 

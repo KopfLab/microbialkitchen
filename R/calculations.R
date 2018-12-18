@@ -16,7 +16,7 @@ calculate_ideal_gas_molarity <- function(pressure, temperature) {
   
   temperature.K <- get_qty_value(temperature, "K")
   pressure.bar <- get_qty_value(pressure, "bar")
-  R_ideal <- get_mediatools_constant("R_in_L_bar_per_K_mol") 
+  R_ideal <- get_mediachemtools_constant("R_in_L_bar_per_K_mol") 
   molarity.M <- pressure.bar / (R_ideal * temperature.K)
   
   return(molarity(molarity.M, "M"))

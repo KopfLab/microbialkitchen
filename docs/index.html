@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Culture media calculations. • mediatools</title>
+<title>Culture media calculations. • MediaChemTools</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/simplex/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
@@ -34,7 +34,7 @@
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <a class="navbar-link" href="index.html">mediatools</a>
+        <a class="navbar-link" href="index.html">MediaChemTools</a>
         <span class="label label-danger" data-toggle="tooltip" data-placement="bottom" title="in active development">0.3.2.9999</span>
       </span>
     </div>
@@ -68,7 +68,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/kopflab/mediatools">
+  <a href="https://github.com/kopflab/mediachemtools">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -89,39 +89,40 @@
     
     
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-<div id="mediatools" class="section level1">
+<div id="mediachemtools" class="section level1">
 
 
 <div id="about" class="section level2">
 <h2 class="hasAnchor">
 <a href="#about" class="anchor"></a>About</h2>
-<p>The <a href="https://kopflab.github.io/mediatools/">mediatools</a> package is a collection of tools to simplify working with the chemical composition and speciation of defined culture media for microbial physiology and environmental microbiology research. It includes a wide range of general purpose functionality for chemical applications including built-in, data-frame-compatible <a href="https://kopflab.github.io/mediatools/articles/quantities.html">chemical quantities</a> (volume, mass, molarity, temperature, pressure, etc.) that automatically keep track of their units and metric scaling, as well as more specialized tools for the assembly and comparison of culturing media recipes, pH buffering strategies and aqueous speciation. All basic data types and operations are fully implemented, documented and ready to use. However, since the package is still in active development and some syntax and function names may change.</p>
+<p>The <a href="https://kopflab.github.io/mediachemtools/">mediachemtools</a> package is a collection of tools to simplify working with the chemical composition and speciation of defined culture media for microbial physiology and environmental microbiology research. It includes a wide range of general purpose functionality for chemical applications including built-in, data-frame-compatible <a href="https://kopflab.github.io/mediachemtools/articles/quantities.html">chemical quantities</a> (volume, mass, molarity, temperature, pressure, etc.) that automatically keep track of their units and metric scaling, as well as more specialized tools for the assembly and comparison of culturing media recipes, pH buffering strategies and aqueous speciation. All basic data types and operations are fully implemented, documented and ready to use. However, since the package is still in active development and some syntax and function names may change.</p>
 </div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<p>You can install <a href="https://kopflab.github.io/mediatools/">mediatools</a> from github with the devtools package.</p>
+<p>You can install <a href="https://kopflab.github.io/mediachemtools/">mediachemtools</a> from github with the devtools package.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># install.packages("devtools") </span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"KopfLab/mediatools"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb1-2" data-line-number="2">devtools<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"KopfLab/MediaChemTools"</span>)</a></code></pre></div>
 </div>
 <div id="functionality" class="section level2">
 <h2 class="hasAnchor">
 <a href="#functionality" class="anchor"></a>Functionality</h2>
 <ul>
 <li>
-<a href="https://kopflab.github.io/mediatools/reference/">function reference</a> for details on all functions</li>
+<a href="https://kopflab.github.io/mediachemtools/reference/">function reference</a> for details on all functions</li>
 <li>
-<a href="https://kopflab.github.io/mediatools/articles/quantities.html">quantities vignette</a> on built-in chemical quantities</li>
+<a href="https://kopflab.github.io/mediachemtools/articles/quantities.html">quantities vignette</a> on built-in chemical quantities</li>
 <li>
-<a href="https://kopflab.github.io/mediatools/articles/operations.html">operations vignette</a> on working with quantities</li>
+<a href="https://kopflab.github.io/mediachemtools/articles/operations.html">operations vignette</a> on working with quantities</li>
 <li>carbonate chemistry vignettes for working with carbonate buffered media systems:
 <ul>
-<li><a href="https://kopflab.github.io/mediatools/articles/carbonate_chemistry_equations.html">equations vignette</a></li>
-<li><a href="https://kopflab.github.io/mediatools/articles/carbonate_chemistry_examples.html">examples vignette</a></li>
+<li><a href="https://kopflab.github.io/mediachemtools/articles/carbonate_chemistry_equations.html">equations vignette</a></li>
+<li><a href="https://kopflab.github.io/mediachemtools/articles/carbonate_chemistry_examples.html">examples vignette</a></li>
 </ul>
 </li>
 </ul>
-<p>Explore all functionality and vignettes of the <strong>mediatools</strong> package <a href="http://mybinder.org/v2/gh/KopfLab/mediatools/binder?urlpath=rstudio">interactively on binder</a>.</p>
+<p>Explore all functionality and vignettes of the <strong>mediachemtools</strong> package interactively on <a href="https://mybinder.org/">binder</a>:</p>
+<p><a href="https://mybinder.org/v2/gh/KopfLab/mediachemtools/binder?urlpath=lab"><img src="https://img.shields.io/badge/launch-Jupyter-blue.svg" alt="Binder"></a> <a href="https://mybinder.org/v2/gh/KopfLab/mediachemtools/binder?urlpath=rstudio"><img src="https://img.shields.io/badge/launch-RStudio-blue.svg" alt="Binder"></a></p>
 </div>
 </div>
   </div>
@@ -130,9 +131,9 @@
     <div class="links">
 <h2>Links</h2>
 <ul class="list-unstyled">
-<li>Browse source code at <br><a href="https://github.com/kopflab/mediatools">https://​github.com/​kopflab/​mediatools</a>
+<li>Browse source code at <br><a href="https://github.com/kopflab/mediachemtools">https://​github.com/​kopflab/​mediachemtools</a>
 </li>
-<li>Report a bug at <br><a href="https://github.com/kopflab/mediatools/issues">https://​github.com/​kopflab/​mediatools/​issues</a>
+<li>Report a bug at <br><a href="https://github.com/kopflab/mediachemtools/issues">https://​github.com/​kopflab/​mediachemtools/​issues</a>
 </li>
 </ul>
 </div>
@@ -152,14 +153,15 @@
       <div class="dev-status">
 <h2>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://cran.r-project.org/package=mediatools"><img src="http://www.r-pkg.org/badges/version/mediatools" alt="CRAN_Status_Badge"></a></li>
+<li><a href="https://cran.r-project.org/package=mediachemtools"><img src="http://www.r-pkg.org/badges/version/mediachemtools" alt="CRAN_Status_Badge"></a></li>
 <li><a href="/commits"><img src="https://img.shields.io/badge/GitHub-0.3.2.9999-orange.svg?style=flat-square" alt="Git_Hub_Version"></a></li>
-<li><a href="/commits"><img src="https://img.shields.io/badge/updated-2018--12--06-yellowgreen.svg" alt="Last-Update"></a></li>
-<li><a href="https://kopflab.github.io/mediatools/reference/"><img src="https://img.shields.io/badge/docs-online-green.svg" alt="Documentation"></a></li>
-<li><a href="https://codecov.io/github/Kopflab/mediatools"><img src="https://codecov.io/github/KopfLab/mediatools/branch/master/graphs/badge.svg" alt="codecov"></a></li>
-<li><a href="https://travis-ci.org/KopfLab/mediatools"><img src="https://travis-ci.org/KopfLab/mediatools.svg?branch=master" alt="Build Status"></a></li>
-<li><a href="https://ci.appveyor.com/project/KopfLab/mediatools"><img src="https://ci.appveyor.com/api/projects/status/github/KopfLab/mediatools?branch=master&amp;svg=true" alt="AppVeyor Build Status"></a></li>
-<li><a href="http://mybinder.org/v2/gh/KopfLab/mediatools/binder?urlpath=rstudio"><img src="http://mybinder.org/badge.svg" alt="Binder"></a></li>
+<li><a href="/commits"><img src="https://img.shields.io/badge/updated-2018--12--17-yellowgreen.svg" alt="Last-Update"></a></li>
+<li><a href="https://kopflab.github.io/mediachemtools/reference/"><img src="https://img.shields.io/badge/docs-online-green.svg" alt="Documentation"></a></li>
+<li><a href="https://codecov.io/github/Kopflab/mediachemtools"><img src="https://codecov.io/github/KopfLab/mediachemtools/branch/master/graphs/badge.svg" alt="codecov"></a></li>
+<li><a href="https://travis-ci.org/KopfLab/mediachemtools"><img src="https://travis-ci.org/KopfLab/mediachemtools.svg?branch=master" alt="Build Status"></a></li>
+<li><a href="https://ci.appveyor.com/project/KopfLab/mediachemtools"><img src="https://ci.appveyor.com/api/projects/status/github/KopfLab/mediachemtools?branch=master&amp;svg=true" alt="AppVeyor Build Status"></a></li>
+<li><a href="https://mybinder.org/v2/gh/KopfLab/mediachemtools/binder?urlpath=lab"><img src="https://img.shields.io/badge/launch-Jupyter-blue.svg" alt="Binder"></a></li>
+<li><a href="https://mybinder.org/v2/gh/KopfLab/mediachemtools/binder?urlpath=rstudio"><img src="https://img.shields.io/badge/launch-RStudio-blue.svg" alt="Binder"></a></li>
 </ul>
 </div>
 </div>

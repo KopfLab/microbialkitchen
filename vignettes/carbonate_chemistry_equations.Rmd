@@ -10,13 +10,6 @@ vignette: >
 
 This vignette describes the conceptual approach to carbonate chemistry. See the [carbonate chemistry examples vignette](carbonate_chemistry_examples.html) for code examples using the relevant functionality. For recommended primary literature on carbonate chemistry, see **CO2 in Seawater: Equilibrium, Kinetics, Isotopes. Zeebe & Wolf-Gladrow, 2001**.
 
-```{r setup, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
-```
-
 # CO$_2$ solubility
 
 > Key functions: `calculate_solubility`

@@ -1,12 +1,12 @@
-Package: mediatools
+Package: MediaChemTools
 Type: Package
 Title: Culture media calculations.
 Description: Package to simplify working with defined culture medium.
 Version: 0.3.2.9999
 Authors@R: person("Sebastian", "Kopf", email = "sebastian.kopf@colorado.edu",
     role = c("aut", "cre"))
-URL: https://github.com/kopflab/mediatools
-BugReports: https://github.com/kopflab/mediatools/issues
+URL: https://github.com/kopflab/mediachemtools
+BugReports: https://github.com/kopflab/mediachemtools/issues
 Depends: R (>= 3.3.0)
 Imports:
     methods,

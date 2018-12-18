@@ -11,7 +11,7 @@ vignette: >
 
 ```{r, message=FALSE}
 library(tidyverse) # load tidyverse tools
-library(mediatools) # load the library
+library(MediaChemTools) # load the library
 options(try.outFile = stdout()) # show error messages in try statements
 ```
 
@@ -21,12 +21,12 @@ All chemical quantities in this package keep track of the units they represent w
 
 ```{r}
 # automatic scaling
-qty(5000, "g") # automatically scaled to kg
-qty(5000, "g", scale_to_best_metric = FALSE) # stays g
+qty(5000, "g") %>% print() # automatically scaled to kg
+qty(5000, "g", scale_to_best_metric = FALSE) %>% print() # stays g
 # specific scaling
-qty(100, "mg") %>% base_metric() # scale to the base unit (here g)
-qty(100, "mM") %>% base_metric() # scale to the base unit (here M)
-qty(100, "mg") %>% scale_metric("k")
+qty(100, "mg") %>% base_metric() %>% print() # scale to the base unit (here g)
+qty(100, "mM") %>% base_metric() %>% print() # scale to the base unit (here M)
+qty(100, "mg") %>% scale_metric("k") %>% print()
 ```
 
 The actual numeric value of a quantity can be retrieved via the `get_qty_value()` function which takes an optional parameter to specify which unit the value should be retrieved in (by default it is the unit that the quantity is currently in). Additionally, a transformation function can be specified for easy log or other transformations.
@@ -57,9 +57,9 @@ To include this type of quantity text in axis tickmark labels, color/shape/linet
 # generate labellers for plotting purposes
 q <- qty(c(0.1, 1, 1000), "g")
 standard_units_labeller <- make_qty_text_labeller(q)
-standard_units_labeller(q)
+standard_units_labeller(q) %>% print()
 specific_units_labeller <- make_qty_text_labeller(q, "g")
-specific_units_labeller(q)
+specific_units_labeller(q) %>% print()
 ```
 
 The units of a quantity object can also be retrieved directly with the `get_qty_units()` function for a single quantity, list of quantities as well as entire data frames (see details on the latter in the [data frames section](#data-frames)).
@@ -71,16 +71,16 @@ x <- list(
   b = 42,
   c = qty(100, "mbar")
 ) 
-x %>% get_qty_units()
+x %>% get_qty_units() %>% print()
 ```
 
 For easy construction of plot axis or legend labels, the function `get_qty_units_with_label()` further provides an easy way to combine labels with the units. By default (for lists and data frames), it uses the names of the list variable/data frame columns (see details on the latter in the [data frames section](#data-frames)).
 
 ```{r}
 qty(5000, "g") %>% get_qty_units_with_label("weight")
-x %>% get_qty_units_with_label()
-x %>% get_qty_units_with_label("same label")
-x %>% get_qty_units_with_label(c("apple", "banana", "carrot"))
+x %>% get_qty_units_with_label() %>% print()
+x %>% get_qty_units_with_label("same label") %>% print()
+x %>% get_qty_units_with_label(c("apple", "banana", "carrot")) %>% print()
 ```
 
 # Arithmetic
@@ -92,7 +92,7 @@ Several common arithmetic operations are implemented for easy interconversion be
 Quantities of the same type (e.g. masses, volumes, etc.) can be added or subtracted with proper interpration of the metric prefixes. The resulting quantity will be scaled to the best metric prefix as described above. Attempts to add or subtract non-matching quantities (e.g. mass + volume) or a quantity and a number without units will fail with an error to avoid unexpect behaviour and ambiguous calculations. 
 
 ```{r}
-qty(0.003, "g") - qty(2, "mg") + qty(5, "µg") # 1.005 mg
+print(qty(0.003, "g") - qty(2, "mg") + qty(5, "µg")) # 1.005 mg
 try(qty(1, "g") + qty(1, "L")) # not allowed
 try(qty(1, "g") + 1) # not allowed
 ```
@@ -102,8 +102,8 @@ try(qty(1, "g") + 1) # not allowed
 Quantities can be multipled/divided by a number. The resulting quantity will be scaled to the best metric prefix. This is most commonly used with multiplication/division by 1000.
 
 ```{r}
-qty(1, "mg") * 1000 # convert mg into g
-qty(1, "mg") / 1e6 # convert mg into ng
+print(qty(1, "mg") * 1000) # convert mg into g
+print(qty(1, "mg") / 1e6) # convert mg into ng
 ```
 
 Quantities can also be divided by another quantity of the same type (e.g. a mass by another mass) effectively canceling out the units resulting in a regular number (with the metric prefixes properly taken into consideration).
@@ -118,33 +118,33 @@ Additional multiplications and divisions are possible for specific combinations 
 ### Molarity = Amount / Volume
 
 ```{r}
-qty(5, "nmol") / qty(50, "mL") # calculation molarity
-qty(5, "nmol") / qty(100, "nM") # calculate volume
-qty(100, "nM") * qty(50, "mL") # calculate amount
+print(qty(5, "nmol") / qty(50, "mL")) # calculation molarity
+print(qty(5, "nmol") / qty(100, "nM")) # calculate volume
+print(qty(100, "nM") * qty(50, "mL")) # calculate amount
 ```
 
 ### Density = Mass / Volume
 
 ```{r}
-qty(5, "ng") / qty(50, "mL") # calculate density
-qty(5, "ng") / qty(100, "ng/L") # calculate volume
-qty(100, "ng/L") * qty(50, "mL") # calculate mass
+print(qty(5, "ng") / qty(50, "mL")) # calculate density
+print(qty(5, "ng") / qty(100, "ng/L")) # calculate volume
+print(qty(100, "ng/L") * qty(50, "mL")) # calculate mass
 ```
 
 ### Amount = Mass / Molecular Mass
 
 ```{r}
-qty(10, "g") / qty (50, "g/mol") # calculate amount
-qty(10, "g") / qty(200, "mmol") # calculate molecular mass
-qty(200, "mmol") * qty (50, "g/mol") # calculate mass
+print(qty(10, "g") / qty (50, "g/mol")) # calculate amount
+print(qty(10, "g") / qty(200, "mmol")) # calculate molecular mass
+print(qty(200, "mmol") * qty (50, "g/mol")) # calculate mass
 ```
 
 ### Solubility = Molarity / Pressure
 
 ```{r}
-qty(10, "mM") / qty(200, "mbar") # calculate solubility
-qty(10, "mM") / qty(50, "mM/bar") # calculate pressure
-qty(50, "mM/bar") * qty (200, "mbar") # calculate molarity
+print(qty(10, "mM") / qty(200, "mbar")) # calculate solubility
+print(qty(10, "mM") / qty(50, "mM/bar")) # calculate pressure
+print(qty(50, "mM/bar") * qty (200, "mbar")) # calculate molarity
 ```
 
 
@@ -182,7 +182,7 @@ Quantities are fully supported in dplyr type data frames and the units of a quan
 data_frame(
   weight = qty(1:5, "mg"),
   volume = qty(20, "mL")
-)
+) %>% print()
 ```
 
 This also means that all common arithmetic operations are allowed within data frames.
@@ -198,14 +198,14 @@ df <- data_frame(
   new_weight = conc * new_vol * mw,
   `correct?` = abs(50 * weight - new_weight) < qty(1, "fg")
 )
-df
+print(df)
 ```
 
 To get the quantities' units or full labels, simply use `get_qty_units()` and `get_qty_units_with_label()`
 
 ```{r}
-df %>% get_qty_units()
-df %>% get_qty_units_with_label()
+df %>% get_qty_units() %>% print()
+df %>% get_qty_units_with_label() %>% print()
 ```
 
 
@@ -218,7 +218,7 @@ c(
   qty(1, "g"), 
   qty(1:3, "mg"),
   qty(2, "g")
-)
+) %>% print()
 ```
 
 # Missing data
@@ -226,10 +226,10 @@ c(
 Missing data (`NA`), empty vector (`numeric(0)`) and  infinity placeholders (`Inf`, `-Inf`) are supported in all quantities and work the same as in any other R vectors.
 
 ```{r}
-qty(NA, "mg")
-qty(Inf, "mg")
-qty(numeric(0), "mg")
-qty(c(10, NA, -Inf, Inf, numeric(0)), "mg")
+qty(NA, "mg") %>% print()
+qty(Inf, "mg") %>% print()
+qty(numeric(0), "mg") %>% print()
+qty(c(10, NA, -Inf, Inf, numeric(0)), "mg") %>% print()
 ```
 
 # Miscellaneous
