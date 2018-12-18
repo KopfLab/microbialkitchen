@@ -15,13 +15,13 @@ version <- as.character(packageVersion("MediaChemTools"))
 
 # MediaChemTools
 
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/mediachemtools)](https://cran.r-project.org/package=mediachemtools)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/MediaChemTools)](https://cran.r-project.org/package=MediaChemTools)
 [![Git_Hub_Version](https://img.shields.io/badge/GitHub-`r version`-orange.svg?style=flat-square)](/commits)
 [![Last-Update](https://img.shields.io/badge/updated-`r gsub('-', '--', Sys.Date())`-yellowgreen.svg)](/commits)
-[![Documentation](https://img.shields.io/badge/docs-online-green.svg)](https://kopflab.github.io/mediachemtools/reference/)
-[![codecov](https://codecov.io/github/KopfLab/mediachemtools/branch/master/graphs/badge.svg)](https://codecov.io/github/Kopflab/mediachemtools) 
-[![Build Status](https://travis-ci.org/KopfLab/mediachemtools.svg?branch=master)](https://travis-ci.org/KopfLab/mediachemtools)
-[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/KopfLab/mediachemtools?branch=master&svg=true)](https://ci.appveyor.com/project/KopfLab/mediachemtools)
+[![Documentation](https://img.shields.io/badge/docs-online-green.svg)](https://mediachemtools.kopflab.org/reference/)
+[![codecov](https://codecov.io/github/KopfLab/MediaChemTools/branch/master/graphs/badge.svg)](https://codecov.io/github/Kopflab/MediaChemTools) 
+[![Build Status](https://travis-ci.org/KopfLab/MediaChemTools.svg?branch=master)](https://travis-ci.org/KopfLab/MediaChemTools)
+[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/KopfLab/MediaChemTools?branch=master&svg=true)](https://ci.appveyor.com/project/KopfLab/MediaChemTools)
 [![Binder](https://img.shields.io/badge/launch-Jupyter-blue.svg)](https://mybinder.org/v2/gh/KopfLab/mediachemtools/binder?urlpath=lab)
 [![Binder](https://img.shields.io/badge/launch-RStudio-blue.svg)](https://mybinder.org/v2/gh/KopfLab/mediachemtools/binder?urlpath=rstudio)
 
