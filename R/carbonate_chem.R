@@ -318,7 +318,7 @@ calculate_closed_system_alkalinity <- function(
 # helper function for calculating unbalanced ions
 calculate_closed_system_alkalinity_formula <- function(pH, TIC.mol, V_liquid.L, V_gas.L, pKa1, pKa2, pKw, buffer.M, buffer_pKa, temperature.K, solubility.M_bar) {
   
-  R_ideal <- get_mediatools_constant("R_in_L_bar_per_K_mol") 
+  R_ideal <- get_mediachemtools_constant("R_in_L_bar_per_K_mol") 
   -10^(-pH) + 
     1/(1 + 10^(buffer_pKa - pH)) * buffer.M +
     (
@@ -367,7 +367,7 @@ calculate_closed_system_pCO2 <- function(
   V_gas.L <- get_qty_value(V_gas, "L")
   V_liquid.L <- get_qty_value(V_liquid, "L")
   solubility.M_bar <- get_qty_value(solubility, "M/bar")
-  R_ideal <- get_mediatools_constant("R_in_L_bar_per_K_mol") 
+  R_ideal <- get_mediachemtools_constant("R_in_L_bar_per_K_mol") 
   
   pCO2.bar <- TIC.mol / 
     ( V_gas.L / (R_ideal * temperature.K) + 

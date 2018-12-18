@@ -4,7 +4,7 @@ NULL
 
 #' Arithmetic
 #' 
-#' These arithmetic operators for quantities in mediatools keep track of units in standard operations (i.e. they ALL take the SI prefix into consideration). Also note that all operations that result in a new quantity object automatically scale the new value using \code{\link{best_metric}}.
+#' These arithmetic operators for quantities in mediachemtools keep track of units in standard operations (i.e. they ALL take the SI prefix into consideration). Also note that all operations that result in a new quantity object automatically scale the new value using \code{\link{best_metric}}.
 #' 
 #' @name arithmetic
 NULL
@@ -21,32 +21,32 @@ NULL
 #' @name arithmetic 
 NULL
 
-setMethod("<", signature(e1 = "MediaToolsQuantity", e2 = "MediaToolsQuantity"), function(e1, e2) {
+setMethod("<", signature(e1 = "MediaChemToolsQuantity", e2 = "MediaChemToolsQuantity"), function(e1, e2) {
   class_check ("comparison", e1, e2)
   return (scale_metric(e1, get_prefix(e2))@.Data < e2@.Data)
 })
 
-setMethod("<=", signature(e1 = "MediaToolsQuantity", e2 = "MediaToolsQuantity"), function(e1, e2) {
+setMethod("<=", signature(e1 = "MediaChemToolsQuantity", e2 = "MediaChemToolsQuantity"), function(e1, e2) {
   class_check ("comparison", e1, e2)
   return (scale_metric(e1, get_prefix(e2))@.Data <= e2@.Data)
 })
 
-setMethod(">", signature(e1 = "MediaToolsQuantity", e2 = "MediaToolsQuantity"), function(e1, e2) {
+setMethod(">", signature(e1 = "MediaChemToolsQuantity", e2 = "MediaChemToolsQuantity"), function(e1, e2) {
   class_check ("comparison", e1, e2)
   return (scale_metric(e1, get_prefix(e2))@.Data > e2@.Data)
 })
 
-setMethod(">=", signature(e1 = "MediaToolsQuantity", e2 = "MediaToolsQuantity"), function(e1, e2) {
+setMethod(">=", signature(e1 = "MediaChemToolsQuantity", e2 = "MediaChemToolsQuantity"), function(e1, e2) {
   class_check ("comparison", e1, e2)
   return (scale_metric(e1, get_prefix(e2))@.Data >= e2@.Data)
 })
 
-setMethod("==", signature(e1 = "MediaToolsQuantity", e2 = "MediaToolsQuantity"), function(e1, e2) {
+setMethod("==", signature(e1 = "MediaChemToolsQuantity", e2 = "MediaChemToolsQuantity"), function(e1, e2) {
   class_check ("comparison", e1, e2)
   return (scale_metric(e1, get_prefix(e2))@.Data == e2@.Data)
 })
 
-setMethod("!=", signature(e1 = "MediaToolsQuantity", e2 = "MediaToolsQuantity"), function(e1, e2) {
+setMethod("!=", signature(e1 = "MediaChemToolsQuantity", e2 = "MediaChemToolsQuantity"), function(e1, e2) {
   class_check ("comparison", e1, e2)
   return (scale_metric(e1, get_prefix(e2))@.Data != e2@.Data)
 })
@@ -54,40 +54,40 @@ setMethod("!=", signature(e1 = "MediaToolsQuantity", e2 = "MediaToolsQuantity"),
 # the following are not allowed b/c of ambiguity (no unit for second number)
 # update: these are used so frequently in other functions (e.g. ggplots), it is difficult to restrict them
 
-# setMethod("<", signature(e1 = "MediaToolsQuantity", e2 = "numeric"), function(e1, e2) 
+# setMethod("<", signature(e1 = "MediaChemToolsQuantity", e2 = "numeric"), function(e1, e2) 
 #   operation_error("comparison", e1, e2))
 # 
-# setMethod("<", signature(e1 = "numeric", e2 = "MediaToolsQuantity"), function(e1, e2) 
+# setMethod("<", signature(e1 = "numeric", e2 = "MediaChemToolsQuantity"), function(e1, e2) 
 #   operation_error("comparison", e1, e2))
 # 
-# setMethod("<=", signature(e1 = "MediaToolsQuantity", e2 = "numeric"), function(e1, e2) 
+# setMethod("<=", signature(e1 = "MediaChemToolsQuantity", e2 = "numeric"), function(e1, e2) 
 #   operation_error("comparison", e1, e2))
 # 
-# setMethod("<=", signature(e1 = "numeric", e2 = "MediaToolsQuantity"), function(e1, e2) 
+# setMethod("<=", signature(e1 = "numeric", e2 = "MediaChemToolsQuantity"), function(e1, e2) 
 #   operation_error("comparison", e1, e2))
 # 
-# setMethod(">", signature(e1 = "MediaToolsQuantity", e2 = "numeric"), function(e1, e2) 
+# setMethod(">", signature(e1 = "MediaChemToolsQuantity", e2 = "numeric"), function(e1, e2) 
 #   operation_error("comparison", e1, e2))
 # 
-# setMethod(">", signature(e1 = "numeric", e2 = "MediaToolsQuantity"), function(e1, e2) 
+# setMethod(">", signature(e1 = "numeric", e2 = "MediaChemToolsQuantity"), function(e1, e2) 
 #   operation_error("comparison", e1, e2))
 # 
-# setMethod(">=", signature(e1 = "MediaToolsQuantity", e2 = "numeric"), function(e1, e2) 
+# setMethod(">=", signature(e1 = "MediaChemToolsQuantity", e2 = "numeric"), function(e1, e2) 
 #   operation_error("comparison", e1, e2))
 # 
-# setMethod(">=", signature(e1 = "numeric", e2 = "MediaToolsQuantity"), function(e1, e2) 
+# setMethod(">=", signature(e1 = "numeric", e2 = "MediaChemToolsQuantity"), function(e1, e2) 
 #   operation_error("comparison", e1, e2))
 # 
-# setMethod("==", signature(e1 = "MediaToolsQuantity", e2 = "numeric"), function(e1, e2) 
+# setMethod("==", signature(e1 = "MediaChemToolsQuantity", e2 = "numeric"), function(e1, e2) 
 #   operation_error("comparison", e1, e2))
 # 
-# setMethod("==", signature(e1 = "numeric", e2 = "MediaToolsQuantity"), function(e1, e2) 
+# setMethod("==", signature(e1 = "numeric", e2 = "MediaChemToolsQuantity"), function(e1, e2) 
 #   operation_error("comparison", e1, e2))
 # 
-# setMethod("!=", signature(e1 = "MediaToolsQuantity", e2 = "numeric"), function(e1, e2) 
+# setMethod("!=", signature(e1 = "MediaChemToolsQuantity", e2 = "numeric"), function(e1, e2) 
 #   operation_error("comparison", e1, e2))
 # 
-# setMethod("!=", signature(e1 = "numeric", e2 = "MediaToolsQuantity"), function(e1, e2) 
+# setMethod("!=", signature(e1 = "numeric", e2 = "MediaChemToolsQuantity"), function(e1, e2) 
 #   operation_error("comparison", e1, e2))
 
 # Addition  ========================
@@ -101,14 +101,14 @@ setMethod("!=", signature(e1 = "MediaToolsQuantity", e2 = "MediaToolsQuantity"),
 NULL
 
 
-setMethod("+", signature(e1 = "MediaToolsQuantity", e2 = "MediaToolsQuantity"), function(e1, e2) {
+setMethod("+", signature(e1 = "MediaChemToolsQuantity", e2 = "MediaChemToolsQuantity"), function(e1, e2) {
   class_check ("addition", e1, e2)
   e1 <- scale_metric(e1, get_prefix(e2))
   e1@.Data <- e1@.Data + e2@.Data
   return(best_metric(e1))
 })
 
-setMethod("-", signature(e1 = "MediaToolsQuantity", e2 = "MediaToolsQuantity"), function(e1, e2)  {
+setMethod("-", signature(e1 = "MediaChemToolsQuantity", e2 = "MediaChemToolsQuantity"), function(e1, e2)  {
   class_check ("subtraction", e1, e2)
   e1 <- scale_metric(e1, get_prefix(e2))
   e1@.Data <- e1@.Data - e2@.Data
@@ -116,16 +116,16 @@ setMethod("-", signature(e1 = "MediaToolsQuantity", e2 = "MediaToolsQuantity"), 
 })
 
 # the following are not allowed b/c of ambiguity (no unit for second number)
-setMethod("+", signature(e1 = "MediaToolsQuantity", e2 = "numeric"), function(e1, e2) 
+setMethod("+", signature(e1 = "MediaChemToolsQuantity", e2 = "numeric"), function(e1, e2) 
   operation_error("addition", e1, e2))
 
-setMethod("+", signature(e1 = "numeric", e2 = "MediaToolsQuantity"), function(e1, e2) 
+setMethod("+", signature(e1 = "numeric", e2 = "MediaChemToolsQuantity"), function(e1, e2) 
   operation_error("addition", e1, e2))
 
-setMethod("-", signature(e1 = "MediaToolsQuantity", e2 = "numeric"), function(e1, e2) 
+setMethod("-", signature(e1 = "MediaChemToolsQuantity", e2 = "numeric"), function(e1, e2) 
   operation_error("subtraction", e1, e2))
 
-setMethod("-", signature(e1 = "numeric", e2 = "MediaToolsQuantity"), function(e1, e2) 
+setMethod("-", signature(e1 = "numeric", e2 = "MediaChemToolsQuantity"), function(e1, e2) 
   operation_error("subtraction", e1, e2))
 
 # Division =========================
@@ -138,7 +138,7 @@ setMethod("-", signature(e1 = "numeric", e2 = "MediaToolsQuantity"), function(e1
 #' @name arithmetic 
 NULL
 
-setMethod("/", signature(e1 = "MediaToolsQuantity", e2 = "MediaToolsQuantity"), function(e1, e2) {
+setMethod("/", signature(e1 = "MediaChemToolsQuantity", e2 = "MediaChemToolsQuantity"), function(e1, e2) {
   if (class(e1) == class(e2))
     return (scale_metric(e1, get_prefix(e2))@.Data / e2@.Data)
   else
@@ -153,13 +153,13 @@ setMethod("/", signature(e1 = "MediaToolsQuantity", e2 = "MediaToolsQuantity"), 
 #' @name arithmetic 
 NULL
 
-setMethod("/", signature(e1 = "MediaToolsQuantity", e2 = "numeric"), function(e1, e2) {
+setMethod("/", signature(e1 = "MediaChemToolsQuantity", e2 = "numeric"), function(e1, e2) {
   e1@.Data <- e1@.Data / e2
   return (best_metric(e1))
 })
 
 # don't allow number / quantity
-setMethod("/", signature(e1 = "numeric", e2 = "MediaToolsQuantity"), function(e1, e2) {
+setMethod("/", signature(e1 = "numeric", e2 = "MediaChemToolsQuantity"), function(e1, e2) {
   operation_error ("division", e1, e2)
 })
 
@@ -174,17 +174,17 @@ setMethod("/", signature(e1 = "numeric", e2 = "MediaToolsQuantity"), function(e1
 NULL
 
 # don't allow default quantity * quantity
-setMethod("*", signature(e1 = "MediaToolsQuantity", e2 = "MediaToolsQuantity"), function(e1, e2) {
+setMethod("*", signature(e1 = "MediaChemToolsQuantity", e2 = "MediaChemToolsQuantity"), function(e1, e2) {
   operation_error ("multiplication", e1, e2)
 })
 
 # don't allow default quantity * quantity
-setMethod("*", signature(e1 = "MediaToolsQuantity", e2 = "numeric"), function(e1, e2) {
+setMethod("*", signature(e1 = "MediaChemToolsQuantity", e2 = "numeric"), function(e1, e2) {
   e1@.Data <- e1@.Data * e2
   return (best_metric(e1))
 })
 
-setMethod("*", signature(e1 = "numeric", e2 = "MediaToolsQuantity"), function(e1, e2) {
+setMethod("*", signature(e1 = "numeric", e2 = "MediaChemToolsQuantity"), function(e1, e2) {
   return (e2 * e1)
 })
 
@@ -202,20 +202,20 @@ setMethod("*", signature(e1 = "numeric", e2 = "MediaToolsQuantity"), function(e1
 NULL
 
 # amount / volume = molarity
-setMethod("/", signature(e1 = "MediaToolsAmount", e2 = "MediaToolsVolume"), function(e1, e2) {
+setMethod("/", signature(e1 = "MediaChemToolsAmount", e2 = "MediaChemToolsVolume"), function(e1, e2) {
   return (molarity( e1@.Data / base_metric(e2)@.Data, paste0(e1@unit, "/L") ))
 })
 
 # amount / molarity = volume
-setMethod("/", signature(e1 = "MediaToolsAmount", e2 = "MediaToolsMolarity"), function(e1, e2) {
+setMethod("/", signature(e1 = "MediaChemToolsAmount", e2 = "MediaChemToolsMolarity"), function(e1, e2) {
   return (volume( scale_metric(e1, get_prefix(e2))@.Data / e2@.Data, "L" ))
 })
 
 # volume * molarity = amount
-setMethod("*", signature(e1 = "MediaToolsVolume", e2 = "MediaToolsMolarity"), function(e1, e2) {
+setMethod("*", signature(e1 = "MediaChemToolsVolume", e2 = "MediaChemToolsMolarity"), function(e1, e2) {
   return (amount( base_metric(e1)@.Data * base_metric(e2)@.Data, "mol"))
 })
-setMethod("*", signature(e1 = "MediaToolsMolarity", e2 = "MediaToolsVolume"), function(e1, e2) e2 * e1)
+setMethod("*", signature(e1 = "MediaChemToolsMolarity", e2 = "MediaChemToolsVolume"), function(e1, e2) e2 * e1)
 
 
 #' @usage mass / volume = density, mass / density = volume, density * volume = mass
@@ -230,20 +230,20 @@ setMethod("*", signature(e1 = "MediaToolsMolarity", e2 = "MediaToolsVolume"), fu
 NULL
 
 # amount / volume = molarity
-setMethod("/", signature(e1 = "MediaToolsMass", e2 = "MediaToolsVolume"), function(e1, e2) {
+setMethod("/", signature(e1 = "MediaChemToolsMass", e2 = "MediaChemToolsVolume"), function(e1, e2) {
   return (density( e1@.Data / base_metric(e2)@.Data, paste0(e1@unit, "/L") ))
 })
 
 # amount / molarity = volume
-setMethod("/", signature(e1 = "MediaToolsMass", e2 = "MediaToolsDensity"), function(e1, e2) {
+setMethod("/", signature(e1 = "MediaChemToolsMass", e2 = "MediaChemToolsDensity"), function(e1, e2) {
   return (volume( scale_metric(e1, get_prefix(e2))@.Data / e2@.Data, "L" ))
 })
 
 # volume * molarity = amount
-setMethod("*", signature(e1 = "MediaToolsVolume", e2 = "MediaToolsDensity"), function(e1, e2) {
+setMethod("*", signature(e1 = "MediaChemToolsVolume", e2 = "MediaChemToolsDensity"), function(e1, e2) {
   return (mass( base_metric(e1)@.Data * base_metric(e2)@.Data, "g"))
 })
-setMethod("*", signature(e1 = "MediaToolsDensity", e2 = "MediaToolsVolume"), function(e1, e2) e2 * e1)
+setMethod("*", signature(e1 = "MediaChemToolsDensity", e2 = "MediaChemToolsVolume"), function(e1, e2) e2 * e1)
 
 
 #' @usage mass / molecular mass = amount, mass / amount = molecular mass, amount * molecular mass = mass
@@ -258,20 +258,20 @@ setMethod("*", signature(e1 = "MediaToolsDensity", e2 = "MediaToolsVolume"), fun
 NULL
 
 # mass / MW = amount
-setMethod("/", signature(e1 = "MediaToolsMass", e2 = "MediaToolsMolecularMass"), function(e1, e2) {
+setMethod("/", signature(e1 = "MediaChemToolsMass", e2 = "MediaChemToolsMolecularMass"), function(e1, e2) {
   return (amount( scale_metric(e1, get_prefix(e2))@.Data / e2@.Data, "mol" ))
 })
 
 # mass / amount = MW
-setMethod("/", signature(e1 = "MediaToolsMass", e2 = "MediaToolsAmount"), function(e1, e2) {
+setMethod("/", signature(e1 = "MediaChemToolsMass", e2 = "MediaChemToolsAmount"), function(e1, e2) {
   return (molecular_mass( base_metric(e1)@.Data / base_metric(e2)@.Data, "g/mol") )
 })
 
 # amount * MW = mass
-setMethod("*", signature(e1 = "MediaToolsAmount", e2 = "MediaToolsMolecularMass"), function(e1, e2) {
+setMethod("*", signature(e1 = "MediaChemToolsAmount", e2 = "MediaChemToolsMolecularMass"), function(e1, e2) {
   return (mass( base_metric(e1)@.Data * base_metric(e2)@.Data, "g"))
 })
-setMethod("*", signature(e1 = "MediaToolsMolecularMass", e2 = "MediaToolsAmount"), function(e1, e2) e2 * e1)
+setMethod("*", signature(e1 = "MediaChemToolsMolecularMass", e2 = "MediaChemToolsAmount"), function(e1, e2) e2 * e1)
 
 #' @usage molarity / pressure = solubility, solubility * pressure = molarity, molarity / solubility = pressure
 #' @details \code{molarity / pressure} divide a concentration by pressure to create a solubility (M/bar).
@@ -285,20 +285,20 @@ setMethod("*", signature(e1 = "MediaToolsMolecularMass", e2 = "MediaToolsAmount"
 NULL
 
 # molarity / pressure = solubility
-setMethod("/", signature(e1 = "MediaToolsMolarity", e2 = "MediaToolsPressure"), function(e1, e2) {
+setMethod("/", signature(e1 = "MediaChemToolsMolarity", e2 = "MediaChemToolsPressure"), function(e1, e2) {
   return (solubility( scale_metric(e1, get_prefix(e2))@.Data / e2@.Data, "M/bar" ))
 })
 
 # molarity / solubility = pressure
-setMethod("/", signature(e1 = "MediaToolsMolarity", e2 = "MediaToolsSolubility"), function(e1, e2) {
+setMethod("/", signature(e1 = "MediaChemToolsMolarity", e2 = "MediaChemToolsSolubility"), function(e1, e2) {
   return (pressure( base_metric(e1)@.Data / base_metric(e2)@.Data, "bar") )
 })
 
 # solubility * pressure = molarity
-setMethod("*", signature(e1 = "MediaToolsSolubility", e2 = "MediaToolsPressure"), function(e1, e2) {
+setMethod("*", signature(e1 = "MediaChemToolsSolubility", e2 = "MediaChemToolsPressure"), function(e1, e2) {
   return (molarity( base_metric(e1)@.Data * base_metric(e2)@.Data, "M"))
 })
-setMethod("*", signature(e1 = "MediaToolsPressure", e2 = "MediaToolsSolubility"), function(e1, e2) e2 * e1)
+setMethod("*", signature(e1 = "MediaChemToolsPressure", e2 = "MediaChemToolsSolubility"), function(e1, e2) e2 * e1)
 
 
 

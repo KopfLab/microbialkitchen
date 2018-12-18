@@ -13,6 +13,6 @@ c_qty(...)
 Concatenate multiple quantity vectors or values. They must all be of the same type (i.e. you cannot combine e.g. a temperature and a mass value). The concatenated values will be scaled according to \code{\link{best_metric}}. Note that the regular `c()` operator automatically calls this function if the first argument is a quantity object.
 }
 \examples{
-c_qty(qty(5, "g"), qty(c(10, 20), "mg")) # MediaToolsMass [mg]: 5000, 10, 20
+c_qty(qty(5, "g"), qty(c(10, 20), "mg")) # MediaChemToolsMass [mg]: 5000, 10, 20
 c(qty(5, "g"), qty(c(10, 20), "mg")) # same (shortcut for the above)
 }

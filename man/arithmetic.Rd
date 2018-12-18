@@ -23,7 +23,7 @@ mass / molecular mass = amount, mass / amount = molecular mass, amount * molecul
 molarity / pressure = solubility, solubility * pressure = molarity, molarity / solubility = pressure
 }
 \description{
-These arithmetic operators for quantities in mediatools keep track of units in standard operations (i.e. they ALL take the SI prefix into consideration). Also note that all operations that result in a new quantity object automatically scale the new value using \code{\link{best_metric}}.
+These arithmetic operators for quantities in mediachemtools keep track of units in standard operations (i.e. they ALL take the SI prefix into consideration). Also note that all operations that result in a new quantity object automatically scale the new value using \code{\link{best_metric}}.
 }
 \details{
 \code{qty ==, !=, <, <=, >, >= qty} allows the comparison of quantities that are the same type (e.g. all mass).

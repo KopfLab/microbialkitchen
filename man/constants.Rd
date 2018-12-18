@@ -2,24 +2,24 @@
 % Please edit documentation in R/constants.R
 \name{constants}
 \alias{constants}
-\alias{get_mediatools_constant}
-\alias{get_mediatools_constants}
+\alias{get_mediachemtools_constant}
+\alias{get_mediachemtools_constants}
 \title{Constants}
 \usage{
-get_mediatools_constant(name)
+get_mediachemtools_constant(name)
 
-get_mediatools_constants()
+get_mediachemtools_constants()
 }
 \arguments{
 \item{name}{name of the constant}
 }
 \description{
-List and retrieve constants used in mediatools.
+List and retrieve constants used in mediachemtools.
 }
 \section{Functions}{
 \itemize{
-\item \code{get_mediatools_constant}: get the value of a constant
+\item \code{get_mediachemtools_constant}: get the value of a constant
 
-\item \code{get_mediatools_constants}: list all constants
+\item \code{get_mediachemtools_constants}: list all constants
 }}
 

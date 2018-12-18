@@ -1,5 +1,5 @@
-title: mediatools
-url: http://kopflab.github.io/mediatools/
+title: MediaChemTools
+url: http://kopflab.github.io/mediachemtools/
 template:
   params:
     bootswatch: simplex
@@ -15,7 +15,7 @@ development:
   version_tooltip: "in active development"
 
 navbar:
-  title: mediatools
+  title: mediachemtools
   type: default
   left:
   - text: "Reference"
@@ -32,6 +32,6 @@ navbar:
         href: articles/carbonate_chemistry_examples.html
   right:
   - icon: fa-github fa-lg
-    href: https://github.com/kopflab/mediatools
+    href: https://github.com/kopflab/mediachemtools
     
 

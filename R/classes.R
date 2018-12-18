@@ -1,36 +1,36 @@
-setClass("MediaToolsQuantity", 
+setClass("MediaChemToolsQuantity", 
          representation(unit = "character"), contains = "numeric",
          prototype = prototype(numeric(), unit = ""))
 
-setMethod("show", "MediaToolsQuantity", function(object) {
+setMethod("show", "MediaChemToolsQuantity", function(object) {
   methods::validObject(object)
-  cat(class(object)[1] %>% stringr::str_replace("MediaTools", ""), " [", object@unit, "]\n", sep="")
+  cat(class(object)[1] %>% stringr::str_replace("MediaChemTools", ""), " [", object@unit, "]\n", sep="")
   print(object@.Data)
 })
 
-setClass("MediaToolsAmount", contains = "MediaToolsQuantity", 
-         prototype = prototype(new("MediaToolsQuantity", numeric(), unit = "mol")))
+setClass("MediaChemToolsAmount", contains = "MediaChemToolsQuantity", 
+         prototype = prototype(new("MediaChemToolsQuantity", numeric(), unit = "mol")))
 
-setClass("MediaToolsMass", contains = "MediaToolsQuantity", 
-         prototype = prototype(new("MediaToolsQuantity", numeric(), unit = "g")))
+setClass("MediaChemToolsMass", contains = "MediaChemToolsQuantity", 
+         prototype = prototype(new("MediaChemToolsQuantity", numeric(), unit = "g")))
 
-setClass("MediaToolsMolecularMass", contains = "MediaToolsQuantity", 
-         prototype = prototype(new("MediaToolsQuantity", numeric(), unit = "g/mol")))
+setClass("MediaChemToolsMolecularMass", contains = "MediaChemToolsQuantity", 
+         prototype = prototype(new("MediaChemToolsQuantity", numeric(), unit = "g/mol")))
 
-setClass("MediaToolsMolarity", contains = "MediaToolsQuantity", 
-         prototype = prototype(new("MediaToolsQuantity", numeric(), unit = "M")))
+setClass("MediaChemToolsMolarity", contains = "MediaChemToolsQuantity", 
+         prototype = prototype(new("MediaChemToolsQuantity", numeric(), unit = "M")))
 
-setClass("MediaToolsDensity", contains = "MediaToolsQuantity", 
-         prototype = prototype(new("MediaToolsQuantity", numeric(), unit = "g/L")))
+setClass("MediaChemToolsDensity", contains = "MediaChemToolsQuantity", 
+         prototype = prototype(new("MediaChemToolsQuantity", numeric(), unit = "g/L")))
 
-setClass("MediaToolsVolume", contains = "MediaToolsQuantity", 
-         prototype = prototype(new("MediaToolsQuantity", numeric(), unit = "L")))
+setClass("MediaChemToolsVolume", contains = "MediaChemToolsQuantity", 
+         prototype = prototype(new("MediaChemToolsQuantity", numeric(), unit = "L")))
 
-setClass("MediaToolsPressure", contains = "MediaToolsQuantity", 
-         prototype = prototype(new("MediaToolsQuantity", numeric(), unit = "bar")))
+setClass("MediaChemToolsPressure", contains = "MediaChemToolsQuantity", 
+         prototype = prototype(new("MediaChemToolsQuantity", numeric(), unit = "bar")))
 
-setClass("MediaToolsSolubility", contains = "MediaToolsQuantity", 
-         prototype = prototype(new("MediaToolsQuantity", numeric(), unit = "M/bar")))
+setClass("MediaChemToolsSolubility", contains = "MediaChemToolsQuantity", 
+         prototype = prototype(new("MediaChemToolsQuantity", numeric(), unit = "M/bar")))
 
-setClass("MediaToolsTemperature", contains = "MediaToolsQuantity", 
-         prototype = prototype(new("MediaToolsQuantity", numeric(), unit = "K")))
+setClass("MediaChemToolsTemperature", contains = "MediaChemToolsQuantity", 
+         prototype = prototype(new("MediaChemToolsQuantity", numeric(), unit = "K")))

@@ -8,12 +8,12 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-This vignette provides examples of the carbonate chemistry tools implemented by the **mediatools** package to explore carbonate solubility and pH control in open and closed media systems. See the [carbonate chemistry equations vignette](carbonate_chemistry_equations.html) for conceptual background.
+This vignette provides examples of the carbonate chemistry tools implemented by the **mediachemtools** package to explore carbonate solubility and pH control in open and closed media systems. See the [carbonate chemistry equations vignette](carbonate_chemistry_equations.html) for conceptual background.
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 library(tidyverse) # load tidyverse tools
 library(plotly) # load interactive plotting
-library(mediatools) # load mediatools library
+library(MediaChemTools) # load mediachemtools library
 ```
 
 # CO2 solubility

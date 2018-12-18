@@ -9,7 +9,7 @@ test_that("Testing that ideal gas calculations are working", {
   expect_error(calculate_ideal_gas_molarity(qty(1, "mbar"), 1), "not a temperature")
   expect_equal(
     calculate_ideal_gas_molarity(qty(100, "mbar"), qty(0, "C")) %>% base_metric() %>% as.numeric(),
-    0.1 / (273.15 * get_mediatools_constant("R_in_L_bar_per_K_mol"))
+    0.1 / (273.15 * get_mediachemtools_constant("R_in_L_bar_per_K_mol"))
   )
   
   # ideal gas amount
@@ -17,7 +17,7 @@ test_that("Testing that ideal gas calculations are working", {
   expect_error(calculate_ideal_gas_amount(qty(1, "mbar"), qty(0, "C"), 1), "not a volume")
   expect_equal(
     calculate_ideal_gas_amount(qty(100, "mbar"), qty(0, "C"), qty(5, "mL")) %>% base_metric() %>% as.numeric(),
-    0.005 * 0.1 / (273.15 * get_mediatools_constant("R_in_L_bar_per_K_mol"))
+    0.005 * 0.1 / (273.15 * get_mediachemtools_constant("R_in_L_bar_per_K_mol"))
   )
   
   # solubility

@@ -28,7 +28,7 @@ These functions simplify converting between different metric prefixes.
 \item \code{best_metric}: convert to best metric prefix (i.e. one that gives at least 1 significant digit before the decimal), 
 if the quantity has a vector of values, scales to the best metric prefix for the median of all values
 
-\item \code{base_metric}: convert to base metric prefix of mediatools (i.e. to mol, L, etc.)
+\item \code{base_metric}: convert to base metric prefix of mediachemtools (i.e. to mol, L, etc.)
 }}
 
 \seealso{

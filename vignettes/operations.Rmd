@@ -11,7 +11,7 @@ vignette: >
 
 ```{r, message=FALSE}
 library(tidyverse) # load tidyverse tools
-library(mediatools) # load the library
+library(MediaChemTools) # load the library
 options(try.outFile = stdout()) # show error messages in try statements
 ```
 
