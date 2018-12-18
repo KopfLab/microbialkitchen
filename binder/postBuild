@@ -19,5 +19,5 @@ for f in *.Rmd; do ipyrmd $f; done
 jupyter labextension install @jupyterlab/toc
 
 # write new README
-echo $'# Instructions\n\nExplore this package on binder by modifying the vignettes in RStudio (RMarkdown .Rmd files) or Jupyter Lab (notebook .ipynb files) by creating a new notebook.' > README.md
+echo $'# Instructions\n\nExplore this package on binder by modifying the vignettes in RStudio (RMarkdown .Rmd files) or Jupyter Lab (notebook .ipynb files) or by creating a new notebook from scratch.' > README.md
 
