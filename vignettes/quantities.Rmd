@@ -21,19 +21,19 @@ library(mediatools) # load the library
 Amount (=chemical substance) quantities use `"mol"` as the base unit and `"mole"` as a recognized alternative. All standard metric prefixes are supported.
 
 ```{r}
-qty(1, "mmole")
-qty(1, "mmol")
-qty(1, "pmol")
+qty(1, "mmole") %>% print()
+qty(1, "mmol") %>% print()
+qty(1, "pmol") %>% print()
 ```
 
-#### Metric scaling example
+## Metric scaling example
 
 By default quantities are scaled to the most sensible metric prefix (of the median for vector quantities), unless explicitly instructed not to. For more details on scaling, see the [units & metric scaling section](operations.html#units-metric-scaling) of the [operations vignette](operations.html).
 
 ```{r}
-qty(1000, "pmol") # automatic metric scaling
-qty(1000, "pmol", scale_to_best_metric = FALSE) # no scaling, keep the unit
-qty(c(0.1, 0.5, 10), "pmol") # automatic scaling to median
+qty(1000, "pmol") %>% print() # automatic metric scaling
+qty(1000, "pmol", scale_to_best_metric = FALSE) %>% print() # keep the exact unit
+qty(c(0.1, 0.5, 10), "pmol") %>% print() # automatic scaling to median
 ```
 
 # Mass
@@ -41,8 +41,8 @@ qty(c(0.1, 0.5, 10), "pmol") # automatic scaling to median
 Mass quantities use the gram `"g"` as the base unit. All standard metric prefixes are supported.
 
 ```{r}
-qty(10000, "g")
-qty(5, "mg")
+qty(10000, "g") %>% print()
+qty(5, "mg") %>% print()
 ```
 
 # Volume
@@ -50,9 +50,9 @@ qty(5, "mg")
 Volume quantities use the SI-accepted litre `"L"` as the base unit because of its common use in chemical applications (as compared to the equivalent dm$^3$ or base unit m$^3$). Lower case `"l"` is also recognized. All standard metric prefixes are supported.
 
 ```{r}
-qty(42, "mL")
-qty(42, "ml")
-qty(2000, "nL")
+qty(42, "mL") %>% print()
+qty(42, "ml") %>% print()
+qty(2000, "nL") %>% print()
 ```
 
 # Temperature
@@ -60,10 +60,10 @@ qty(2000, "nL")
 Temperature quantities use the SI unit Kelvin (`"K"`) but can be generated from the alternative units Celsius (`"C"`) and Fahrenheit (`"F"`). For example, the following statements all generate the same temperature object. Note that although rarely used in chemical applications for culturing, metric prefixes _are_ supported for the `"K"` base unit.
 
 ```{r}
-qty(0, "C")
-qty(32, "F")
-qty(273.15, "K")
-qty(273150, "mK")
+qty(0, "C") %>% print()
+qty(32, "F") %>% print()
+qty(273.15, "K") %>% print()
+qty(273150, "mK") %>% print()
 ```
 
 # Pressure
@@ -71,13 +71,13 @@ qty(273150, "mK")
 Pressure quantities use the non-SI but metric unit `"bar"` as base unit (1 bar = 100,000 Pa) because of its more common use in chemical and culturing applications. However, pressure quantities can also be generated from the SI unit `"Pa"` as well as the common non-metric units `"atm"`, `"psi"`, `"Torr"`, `"mTorr"` and `"% SP"` (% of standard pressure = % of 1 bar) which are all automatically converted to `bar`. All pressure quantities are absolute pressures (i.e. technically `psi` is `psiA`, not relative to atmospheric). All standard metric prefixes are supported for the `bar` base unit.
 
 ```{r}
-qty(1, "bar")
-qty(1000, "mbar")
-qty(100, "% SP")
-qty(1, "atm")
-qty(14.7, "psi") 
-qty(760, "Torr")
-qty(760000, "mTorr")
+qty(1, "bar") %>% print()
+qty(1000, "mbar") %>% print()
+qty(100, "% SP") %>% print()
+qty(1, "atm") %>% print()
+qty(14.7, "psi") %>% print()
+qty(760, "Torr") %>% print()
+qty(760000, "mTorr") %>% print()
 ```
 
 # Molecular Mass
@@ -85,9 +85,9 @@ qty(760000, "mTorr")
 Molecular mass (sometimes also called molar mass or molecular weight) quantities use gram / mole `"g/mol"` as the base unit and the SI-accepted Dalton `"Da"` as a recognized alternative (1 Da = 1 g/mol). All standard metric prefixes are supported.
 
 ```{r}
-qty(257, "g/mol")
-qty(4.2, "kg/mol")
-qty(4.2, "kDa")
+qty(257, "g/mol") %>% print()
+qty(4.2, "kg/mol") %>% print()
+qty(4.2, "kDa") %>% print()
 ```
 
 # Concentration
@@ -99,8 +99,8 @@ The two most common concentration measurements in culturing and media chemistry 
 Amount-based concentration quantities use molar concentration `"M"` as the base unit with the more explicit `mol/L` as a recognized alternative (1 mol/L = 1 M). All standard metric prefixes are supported.
 
 ```{r}
-qty(5, "mM")
-qty(5, "mmol/L")
+qty(5, "mM") %>% print()
+qty(5, "mmol/L") %>% print()
 ```
 
 ## Weight-based (density)
@@ -108,8 +108,8 @@ qty(5, "mmol/L")
 Weight-based concentration quantities use volumetric mass density `"g/L"` as the base unit. These are not densities in the solid matter or pure liquid sense ($\rho$) but rather solute densities in a solution. All standard metric prefixes are supported.
 
 ```{r}
-qty(5, "mg/L")
-qty(5, "mg/l")
+qty(5, "mg/L") %>% print()
+qty(5, "mg/l") %>% print()
 ```
 
 # Solubility
@@ -117,6 +117,6 @@ qty(5, "mg/l")
 Solubility quantities (i.e. Henry's law solubility constants) use the non-SI but metric unit `"M/bar"` as base unit. However, solubility quantities can also be generated from the common non-metric unit `"M/atm"`, which is automatically converted to `M/bar`. All standard metric prefixes are supported in the numerator for both `"M/bar"` and `"M/atm"`.
 
 ```{r}
-qty(5, "mM/bar")
-qty(5, "mM/atm")
+qty(5, "mM/bar") %>% print()
+qty(5, "mM/atm") %>% print()
 ```
