@@ -24,7 +24,7 @@ navbar:
     href: articles/quantities.html
   - text: "Operations"
     href: articles/operations.html
-  - text: "Carbonate Chemistry"
+  - text: "Carbonate Buffering"
     menu:
       - text: "Equations"
         href: articles/carbonate_chemistry_equations.html
