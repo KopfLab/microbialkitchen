@@ -8,22 +8,52 @@
 \alias{calculate_closed_system_pCO2}
 \title{Closed system calculations}
 \usage{
-calculate_closed_system_pH(TIC, V_liquid, V_gas,
+calculate_closed_system_pH(
+  TIC,
+  V_liquid,
+  V_gas,
   solubility = calculate_solubility("CO2", temperature),
-  temperature = qty(25, "C"), pKa1 = 6.3, pKa2 = 10.3, pKw = 14,
-  buffer = qty(0, "M"), buffer_pKa, alkalinity = qty(0, "M"))
+  temperature = qty(25, "C"),
+  pKa1 = 6.3,
+  pKa2 = 10.3,
+  pKw = 14,
+  buffer = qty(0, "M"),
+  buffer_pKa,
+  alkalinity = qty(0, "M")
+)
 
-calculate_closed_system_alkalinity(pH, TIC, V_liquid, V_gas,
+calculate_closed_system_alkalinity(
+  pH,
+  TIC,
+  V_liquid,
+  V_gas,
   solubility = calculate_solubility("CO2", temperature),
-  temperature = qty(25, "C"), pKa1 = 6.3, pKa2 = 10.3, pKw = 14,
-  buffer = qty(0, "M"), buffer_pKa)
+  temperature = qty(25, "C"),
+  pKa1 = 6.3,
+  pKa2 = 10.3,
+  pKw = 14,
+  buffer = qty(0, "M"),
+  buffer_pKa
+)
 
-calculate_closed_system_TIC(pH, pCO2, V_gas, V_liquid,
-  temperature = qty(25, "C"))
+calculate_closed_system_TIC(
+  pH,
+  pCO2,
+  V_gas,
+  V_liquid,
+  temperature = qty(25, "C")
+)
 
-calculate_closed_system_pCO2(pH, TIC, V_gas, V_liquid,
+calculate_closed_system_pCO2(
+  pH,
+  TIC,
+  V_gas,
+  V_liquid,
   solubility = calculate_solubility("CO2", temperature),
-  temperature = qty(25, "C"), pKa1 = 6.3, pKa2 = 10.3)
+  temperature = qty(25, "C"),
+  pKa1 = 6.3,
+  pKa2 = 10.3
+)
 }
 \arguments{
 \item{TIC}{total inorganic carbon in the system (an amount quantity)}
@@ -67,7 +97,8 @@ Functions to calculate pH, alkalinity, total inorganic carbon and pCO2 in a clos
 }}
 
 \seealso{
-Other carbonate chemistry: \code{\link{open_system}},
-  \code{\link{speciation}}
+Other carbonate chemistry: 
+\code{\link{open_system}},
+\code{\link{speciation}}
 }
 \concept{carbonate chemistry}

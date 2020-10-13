@@ -14,6 +14,6 @@ below to see their documentation.
 \describe{
   \item{forcats}{\code{\link[forcats]{as_factor}}}
 
-  \item{magrittr}{\code{\link[magrittr]{\%>\%}}}
+  \item{magrittr}{\code{\link[magrittr:pipe]{\%>\%}}}
 }}
 

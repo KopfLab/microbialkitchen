@@ -16,13 +16,11 @@ calculate_solubility(gas, temperature)
 \arguments{
 \item{pressure}{the pressure quantity of the gas}
 
-\item{temperature}{the temperature quantity of the gas}
+\item{temperature}{temperature quantity}
 
 \item{volume}{the volume quantity of the gas}
 
 \item{gas}{name of the gas}
-
-\item{temperature}{temperature quantity}
 }
 \description{
 General gas calculations

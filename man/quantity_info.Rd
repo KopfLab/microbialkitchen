@@ -61,7 +61,8 @@ get_qty_units_with_label(x)
 get_qty_units_with_label(x, "same label")
 }
 \seealso{
-Other quantity functions: \code{\link{metric}},
-  \code{\link{quantities}}
+Other quantity functions: 
+\code{\link{metric}},
+\code{\link{quantities}}
 }
 \concept{quantity functions}

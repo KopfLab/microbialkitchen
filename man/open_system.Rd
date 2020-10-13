@@ -6,15 +6,31 @@
 \alias{calculate_open_system_alkalinity}
 \title{Open system calculations}
 \usage{
-calculate_open_system_pH(pCO2, `H2CO3*` = solubility * pCO2,
+calculate_open_system_pH(
+  pCO2,
+  `H2CO3*` = solubility * pCO2,
   solubility = calculate_solubility("CO2", temperature),
-  temperature = qty(25, "C"), pKa1 = 6.3, pKa2 = 10.3, pKw = 14,
-  buffer = qty(0, "M"), buffer_pKa, alkalinity = qty(0, "M"))
+  temperature = qty(25, "C"),
+  pKa1 = 6.3,
+  pKa2 = 10.3,
+  pKw = 14,
+  buffer = qty(0, "M"),
+  buffer_pKa,
+  alkalinity = qty(0, "M")
+)
 
-calculate_open_system_alkalinity(pH, pCO2, `H2CO3*` = solubility * pCO2,
+calculate_open_system_alkalinity(
+  pH,
+  pCO2,
+  `H2CO3*` = solubility * pCO2,
   solubility = calculate_solubility("CO2", temperature),
-  temperature = qty(25, "C"), pKa1 = 6.3, pKa2 = 10.3, pKw = 14,
-  buffer = qty(0, "M"), buffer_pKa)
+  temperature = qty(25, "C"),
+  pKa1 = 6.3,
+  pKa2 = 10.3,
+  pKw = 14,
+  buffer = qty(0, "M"),
+  buffer_pKa
+)
 }
 \arguments{
 \item{pCO2}{the partial pressure of CO2 (a pressure quantity)}
@@ -53,7 +69,8 @@ Functions to calculate pH and alkalinity in an open, carbonate-buffered system a
 calculate_open_system_pH(pCO2 = qty(100, "mbar"))
 }
 \seealso{
-Other carbonate chemistry: \code{\link{closed_system}},
-  \code{\link{speciation}}
+Other carbonate chemistry: 
+\code{\link{closed_system}},
+\code{\link{speciation}}
 }
 \concept{carbonate chemistry}

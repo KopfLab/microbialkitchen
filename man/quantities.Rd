@@ -105,7 +105,8 @@ qty(1, "mM/bar")
 qty(257, "g/mol")
 }
 \seealso{
-Other quantity functions: \code{\link{metric}},
-  \code{\link{quantity_info}}
+Other quantity functions: 
+\code{\link{metric}},
+\code{\link{quantity_info}}
 }
 \concept{quantity functions}
