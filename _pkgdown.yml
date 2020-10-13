@@ -1,5 +1,5 @@
-title: MediaChemTools
-url: http://kopflab.github.io/mediachemtools/
+title: microbialkitchen
+url: http://kopflab.github.io/microbialkitchen/
 template:
   params:
     bootswatch: simplex
@@ -32,6 +32,6 @@ navbar:
         href: articles/carbonate_chemistry_examples.html
   right:
   - icon: fa-github fa-lg
-    href: https://github.com/kopflab/mediachemtools
+    href: https://github.com/kopflab/microbialkitchen
     
 

@@ -1,4 +1,4 @@
-Package: MediaChemTools
+Package: microbialkitchen
 Type: Package
 Title: Culture media calculations.
 Description: Package to simplify working with defined culture medium.
@@ -27,7 +27,7 @@ License: GPL (>= 2)
 Encoding: UTF-8
 LazyData: true
 VignetteBuilder: knitr
-RoxygenNote: 6.1.0
+RoxygenNote: 7.1.1
 Collate:
     'classes.R'
     'arithmetic.R'
