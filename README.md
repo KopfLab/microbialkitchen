@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# Microbial Kitchen
+# Microbial Kitchen (formerly MediaChemTools)
 
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/microbialkitchen)](https://cran.r-project.org/package=microbialkitchen)
 [![Git\_Hub\_Version](https://img.shields.io/badge/GitHub-0.3.2.9999-orange.svg?style=flat-square)](/commits)
