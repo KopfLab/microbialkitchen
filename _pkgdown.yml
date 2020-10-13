@@ -15,7 +15,7 @@ development:
   version_tooltip: "in active development"
 
 navbar:
-  title: mediachemtools
+  title: microbialkitchen
   type: default
   left:
   - text: "Reference"

@@ -16,14 +16,13 @@ calculate_ideal_gas_molarity <- function(pressure, temperature) {
   
   temperature.K <- get_qty_value(temperature, "K")
   pressure.bar <- get_qty_value(pressure, "bar")
-  R_ideal <- get_mediachemtools_constant("R_in_L_bar_per_K_mol") 
+  R_ideal <- get_microbialkitchen_constant("R_in_L_bar_per_K_mol") 
   molarity.M <- pressure.bar / (R_ideal * temperature.K)
   
   return(molarity(molarity.M, "M"))
 }
 
 #' @describeIn gas_calculations calculates the amount of an ideal gas at a specific pressure, temperature and volume. Returns an amount quantity.
-#' @inheritParams calculate_ideal_gas_molarity
 #' @param volume the volume quantity of the gas
 #' @family calculations
 #' @export

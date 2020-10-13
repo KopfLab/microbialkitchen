@@ -3,7 +3,7 @@ context("Units")
 test_that("Testing that units work and can be metric scaled", {
   
   # constants
-  expect_error(get_mediachemtools_constant("bla"), "not specified")
+  expect_error(get_microbialkitchen_constant("bla"), "not specified")
   
   # concentration (molarity) objects
   expect_error(molarity(1, "J"), "not a known concentration")
@@ -81,7 +81,7 @@ test_that("Testing that units work and can be metric scaled", {
   expect_equal(pressure(1, "mbar") %>% get_qty_units(), "mbar")
   expect_equal(pressure(1, "atm") %>% get_qty_value(), 1.01325)
   expect_equal(pressure(0.1, "MPa") %>% get_qty_value(), 1)
-  expect_equal(pressure(1, "kPa", scale_to_best_metric = FALSE) %>% get_qty_value(), get_mediachemtools_constant("bar_per_pa"))
+  expect_equal(pressure(1, "kPa", scale_to_best_metric = FALSE) %>% get_qty_value(), get_microbialkitchen_constant("bar_per_pa"))
   expect_equal(pressure(1, "kPa", scale_to_best_metric = FALSE) %>% get_qty_units(), "kbar")
   expect_equal(pressure(760, "Torr") %>% get_qty_units(), "bar")
   expect_equal(pressure(760, "Torr") %>% get_qty_value(), 1.01325)
@@ -101,7 +101,7 @@ test_that("Testing that units work and can be metric scaled", {
   expect_error(solubility(1, "J"), "not a known solubility unit")
   expect_is(solubility(1, "mM/bar"), "MediaChemToolsSolubility")
   expect_equal(solubility(1, "mM/bar") %>% get_qty_units(), "mM/bar")
-  expect_equal(solubility(10, "mM/atm") %>% get_qty_value(), 10/get_mediachemtools_constant("bar_per_atm"))
+  expect_equal(solubility(10, "mM/atm") %>% get_qty_value(), 10/get_microbialkitchen_constant("bar_per_atm"))
   expect_equal(solubility(10, "mM/atm") %>% get_qty_value("mM/atm"), 10)
   expect_equal(solubility(10, "mM/atm") %>% get_qty_value("M/atm"), 0.01)
   

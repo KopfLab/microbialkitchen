@@ -16,7 +16,7 @@
 \alias{is_temperature}
 \title{Quantities}
 \usage{
-qty(x, unit, scale_to_best_metric = TRUE)
+qty(x = double(), unit, scale_to_best_metric = TRUE)
 
 is_qty(q)
 

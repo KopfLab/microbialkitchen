@@ -22,15 +22,15 @@
     fahrenheit_celsius_slope = 9/5,
     
     # physical constants
-    R_in_L_bar_per_K_mol = 0.08314462 # ideal gas constant in the units used as base units by mediachemtools (L bar K-1 mol-1)
+    R_in_L_bar_per_K_mol = 0.08314462 # ideal gas constant in the units used as base units by microbialkitchen (L bar K-1 mol-1)
   )
-  names(opts) <- paste0("mediachemtools_", names(opts))
+  names(opts) <- paste0("microbialkitchen_", names(opts))
   options(opts)
 }
 
 #' Constants
 #' 
-#' List and retrieve constants used in mediachemtools.
+#' List and retrieve constants used in microbialkitchen.
 #' 
 #' @name constants
 NULL 
@@ -38,18 +38,18 @@ NULL
 #' @describeIn constants get the value of a constant
 #' @param name name of the constant
 #' @export
-get_mediachemtools_constant <- function(name) {
-  value <- getOption(paste0("mediachemtools_", name))
+get_microbialkitchen_constant <- function(name) {
+  value <- getOption(paste0("microbialkitchen_", name))
   if (is.null(value)) stop("constant ", name, " is not specified")
   return(value)
 }
 
 #' @describeIn constants list all constants
 #' @export
-get_mediachemtools_constants <- function() {
-  opts <- options() %>% {.[names(.) %>% stringr::str_detect("^mediachemtools_")]}
+get_microbialkitchen_constants <- function() {
+  opts <- options() %>% {.[names(.) %>% stringr::str_detect("^microbialkitchen_")]}
   data_frame(
-    constant = names(opts) %>% stringr::str_replace("^mediachemtools_", ""),
+    constant = names(opts) %>% stringr::str_replace("^microbialkitchen_", ""),
     key = purrr::map(opts, names) %>% purrr::map( ~ if (is.null(.x)) { NA_character_ } else { .x }),
     value = purrr::map(opts, identity)
   ) %>% unnest(key, value)

@@ -42,3 +42,4 @@ packrat/src/
 !docs/**/*.html
 !docs/**/*.png
 inst/doc
+docs

@@ -13,7 +13,7 @@ All quantity data types are accessible via the universal `qty` function. The `qt
 Once familiar with the quantities supported by this package, take a look at the [operations vignette](operations.html) to see what you can do with them.
 
 ```{r}
-library(MediaChemTools) # load the library
+library(microbialkitchen) # load the library
 ```
 
 # Amount

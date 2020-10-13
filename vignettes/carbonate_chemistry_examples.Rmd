@@ -8,12 +8,12 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-This vignette provides examples of the carbonate chemistry tools implemented by the **mediachemtools** package to explore carbonate solubility and pH control in open and closed media systems. See the [carbonate chemistry equations vignette](carbonate_chemistry_equations.html) for conceptual background.
+This vignette provides examples of the carbonate chemistry tools implemented by the **microbialkitchen** package to explore carbonate solubility and pH control in open and closed media systems. See the [carbonate chemistry equations vignette](carbonate_chemistry_equations.html) for conceptual background.
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 library(tidyverse) # load tidyverse tools
 library(plotly) # load interactive plotting
-library(MediaChemTools) # load mediachemtools library
+library(microbialkitchen) # load microbial kitchen library
 ```
 
 # CO2 solubility
@@ -26,11 +26,11 @@ solubilities <- data_frame(
   solubility = calculate_solubility("CO2", temperature)
   )
 
-ggplot(solubilities) + 
-  aes(get_qty_value(temperature, "C"), solubility) + 
-  geom_line(size = 2) + 
+ggplot(solubilities) +
+  aes(get_qty_value(temperature, "C"), solubility) +
+  geom_line(size = 2) +
   labs(
-    x = "T [C]", 
+    x = "T [C]",
     y = get_qty_units_with_label(solubilities$solubility, "Henry's law solubility")) +
   theme_bw()
 ```
@@ -41,25 +41,25 @@ ggplot(solubilities) +
 
 ```{r "speciation", fig.width=8, fig.height=6}
 # calculate
-df_speciation <- 
+df_speciation <-
   data_frame(
     pH = seq(3, 14, by = 0.1),
     DIC = qty(10, "mM"),
     `H2CO3*` = calculate_carbonic_acid(pH, DIC = DIC),
     HCO3 = calculate_bicarbonate(pH, DIC = DIC),
     CO3 = calculate_carbonate(pH, DIC = DIC)
-  ) 
+  )
 
 # visualize
-df_speciation %>% 
-  mutate_if(is_molarity, get_qty_value, "mM") %>% 
-  gather(Species, Concentration, -pH, -DIC) %>% 
-  ggplot() + 
+df_speciation %>%
+  mutate_if(is_molarity, get_qty_value, "mM") %>%
+  gather(Species, Concentration, -pH, -DIC) %>%
+  ggplot() +
   aes(pH, Concentration, color = Species) +
   geom_line() +
   scale_x_continuous(expand = c(0, 0), breaks = c(1:14)) +
   scale_y_log10(
-    breaks = 10^(-3:1), 
+    breaks = 10^(-3:1),
     labels = make_qty_text_labeller(qty(1, "mM"))) +
   coord_cartesian(ylim = c(10^-3, 10)) +
   theme_bw()
@@ -80,25 +80,25 @@ temperatures <- data_frame(temperature = c(10, 25, 37) %>% qty("C"))
 
 # calculate for all combinations
 df_pH_vs_pCO2 <-
-  crossing(pCO2s, temperatures) %>% 
+  crossing(pCO2s, temperatures) %>%
   mutate(
     pH = calculate_open_system_pH(pCO2, temp = temperature),
-    `DIC [mM]` = calculate_DIC(pH, pCO2, temp = temperature) %>% 
+    `DIC [mM]` = calculate_DIC(pH, pCO2, temp = temperature) %>%
       get_qty_value("mM"),
-    `CO2 [mM]` = calculate_ideal_gas_molarity(pCO2, temp = temperature) %>% 
+    `CO2 [mM]` = calculate_ideal_gas_molarity(pCO2, temp = temperature) %>%
       get_qty_value("mM")
   )
 ```
 
 ```{r "pH vs pCO2", fig.width = 8, fig.height = 6}
-df_pH_vs_pCO2 %>% 
-  gather(var, val, pH, `DIC [mM]`, `CO2 [mM]`) %>% 
-  filter(!(var == "pH" & val > 5.5)) %>% 
+df_pH_vs_pCO2 %>%
+  gather(var, val, pH, `DIC [mM]`, `CO2 [mM]`) %>%
+  filter(!(var == "pH" & val > 5.5)) %>%
   ggplot() +
   aes(pCO2, val, color = factor(temperature)) +
   geom_line() +
   scale_x_continuous(
-    expand = c(0,0), 
+    expand = c(0,0),
     labels = make_qty_text_labeller(df_pH_vs_pCO2$pCO2, c("mbar", "% SP"))) +
   scale_color_brewer(
     "Temperature", palette = "Set1",
@@ -138,19 +138,19 @@ temperatures <- data_frame(temperature = c(25, 37) %>% qty("C"))
 
 # calculate for all combinations
 df_base_vs_pH <-
-  crossing(pCO2s, temperatures, pH = seq(3, 7.5, by = 0.05)) %>% 
+  crossing(pCO2s, temperatures, pH = seq(3, 7.5, by = 0.05)) %>%
   mutate(
     ions = calculate_open_system_alkalinity(pH, pCO2, temp = temperature),
     `Add base (e.g. NaOH) [mM]` = ifelse(ions > 0, get_qty_value(ions, "mM"), 0),
     `Add acid (e.g. HCl) [mM]` = ifelse(ions < 0, -get_qty_value(ions, "mM"), 0),
-    `DIC [mM]` = calculate_DIC(pH, pCO2, temp = temperature) %>% 
+    `DIC [mM]` = calculate_DIC(pH, pCO2, temp = temperature) %>%
       get_qty_value("mM")
-  ) 
+  )
 
-p <- df_base_vs_pH %>% 
-  gather(var, val, `Add base (e.g. NaOH) [mM]`, `Add acid (e.g. HCl) [mM]`, `DIC [mM]`) %>% 
-  mutate(panel = get_qty_text(pCO2, "mbar") %>% paste("CO2") %>% as_factor()) %>% 
-  filter(val > 0) %>% 
+p <- df_base_vs_pH %>%
+  gather(var, val, `Add base (e.g. NaOH) [mM]`, `Add acid (e.g. HCl) [mM]`, `DIC [mM]`) %>%
+  mutate(panel = get_qty_text(pCO2, "mbar") %>% paste("CO2") %>% as_factor()) %>%
+  filter(val > 0) %>%
   ggplot() +
   aes(pH, val, color = var, linetype = get_qty_text(temperature, "C")) +
   geom_vline(xintercept = 7, color = "black", size = 1) +
@@ -158,7 +158,7 @@ p <- df_base_vs_pH %>%
   scale_x_continuous(breaks = 1:14, expand = c(0, 0)) +
   scale_color_brewer("Component", palette = "Set1") +  
   facet_wrap(~panel, nrow = 1, scales = "free_y") +
-  theme_bw() + 
+  theme_bw() +
   labs(y = "Concentration [mM]", linetype = "Temperature")
 p
 ```
@@ -169,8 +169,8 @@ p
 # easier to see in log space and equal y axis + a vertical line
 p_log <- p +
   scale_y_log10("Concentration", breaks = 10^(-3:3),
-                labels = function(x) map(x, qty, "mM") %>% map_chr(get_qty_text)) + 
-  facet_wrap(~panel, nrow = 1) 
+                labels = function(x) map(x, qty, "mM") %>% map_chr(get_qty_text)) +
+  facet_wrap(~panel, nrow = 1)
 p_log
 ```
 
@@ -196,7 +196,7 @@ df
 df %>% mutate(add_if_salt_buffer = add - buffer)
 
 # to calculate pH with addition of a specific buffer
-df %>% 
+df %>%
   mutate(
     pH = calculate_open_system_pH(
       pCO2 = qty(50, "mbar"),
@@ -214,27 +214,27 @@ df %>%
 pCO2s <- data_frame(pCO2 = c(0.4, 50, 200) %>% qty("mbar"))
 # range of buffers
 buffers <- data_frame(
-  buffer = c(0, 20, 20, 20, 50) %>% qty("mM"), 
+  buffer = c(0, 20, 20, 20, 50) %>% qty("mM"),
   buffer_pKa = c(7.5, 7.5, 9, 6, 7.5))
 
 # calculate for all combinations
 df_base_w_buffer_vs_pH <-
-  crossing(pCO2s, buffers, pH = seq(3, 7.5, by = 0.05)) %>% 
+  crossing(pCO2s, buffers, pH = seq(3, 7.5, by = 0.05)) %>%
   mutate(
     ions = calculate_open_system_alkalinity(pH, pCO2, buffer = buffer, buffer_pKa = buffer_pKa),
     `Add base (e.g. NaOH) [mM]` = ifelse(ions > 0, get_qty_value(ions, "mM"), 0),
     `Add acid (e.g. HCl) [mM]` = ifelse(ions < 0, -get_qty_value(ions, "mM"), 0),
     `DIC [mM]` = calculate_DIC(pH, pCO2) %>% get_qty_value("mM")
-  ) 
+  )
 
 # visualize
-plot_df <- df_base_w_buffer_vs_pH %>% 
-  gather(var, val, `Add base (e.g. NaOH) [mM]`, `Add acid (e.g. HCl) [mM]`, `DIC [mM]`) %>% 
+plot_df <- df_base_w_buffer_vs_pH %>%
+  gather(var, val, `Add base (e.g. NaOH) [mM]`, `Add acid (e.g. HCl) [mM]`, `DIC [mM]`) %>%
   mutate(panel = get_qty_text(pCO2, "mbar") %>% paste("CO2") %>% as_factor(),
-         Buffer = get_qty_text(buffer, "mM") %>% paste0(" (pKa=", buffer_pKa, ")")) %>% 
+         Buffer = get_qty_text(buffer, "mM") %>% paste0(" (pKa=", buffer_pKa, ")")) %>%
   filter(val > 0)
 
-p_log %+% filter(plot_df, buffer_pKa == 7.5) %+% 
+p_log %+% filter(plot_df, buffer_pKa == 7.5) %+%
   aes(linetype = Buffer) +
   labs(title = "Different concentrations of a weak acid buffer")
 ```
@@ -248,7 +248,7 @@ ggplotly()
 ### Same concentration of weak acid (different pKa)
 
 ```{r "unbalanced ions for pH with buffer difference pKa", fig.width = 9, fig.height = 6}
-p_log %+% filter(plot_df, buffer == qty(20, "mM")) %+% 
+p_log %+% filter(plot_df, buffer == qty(20, "mM")) %+%
     aes(linetype = Buffer) +
     labs(title = "Same concentration of a weak acid buffer with different pKa")
 ```
@@ -258,20 +258,20 @@ p_log %+% filter(plot_df, buffer == qty(20, "mM")) %+%
 If the buffer is a salt instead of an acid, it contributes to the alkalinity.
 
 ```{r "unbalanced ions for pH with different buffer concs", fig.width = 9, fig.height = 6}
-plot_df2 <- 
-  crossing(pCO2s, buffers, pH = seq(3, 7.5, by = 0.05)) %>% 
+plot_df2 <-
+  crossing(pCO2s, buffers, pH = seq(3, 7.5, by = 0.05)) %>%
   mutate(
     ions = calculate_open_system_alkalinity(pH, pCO2, buffer = buffer, buffer_pKa = buffer_pKa) - buffer,
     `Add base (e.g. NaOH) [mM]` = ifelse(ions > 0, get_qty_value(ions, "mM"), 0),
     `Add acid (e.g. HCl) [mM]` = ifelse(ions < 0, -get_qty_value(ions, "mM"), 0),
     `DIC [mM]` = calculate_DIC(pH, pCO2) %>% get_qty_value("mM")
-  ) %>% 
-  gather(var, val, `Add base (e.g. NaOH) [mM]`, `Add acid (e.g. HCl) [mM]`, `DIC [mM]`) %>% 
+  ) %>%
+  gather(var, val, `Add base (e.g. NaOH) [mM]`, `Add acid (e.g. HCl) [mM]`, `DIC [mM]`) %>%
   mutate(panel = get_qty_text(pCO2, "mbar") %>% paste("CO2") %>% as_factor(),
-         Buffer = get_qty_text(buffer, "mM") %>% paste0(" (pKa=", buffer_pKa, ")")) %>% 
+         Buffer = get_qty_text(buffer, "mM") %>% paste0(" (pKa=", buffer_pKa, ")")) %>%
   filter(val > 0)
 
-p_log %+% filter(plot_df2, buffer_pKa == 7.5) %+% 
+p_log %+% filter(plot_df2, buffer_pKa == 7.5) %+%
   aes(linetype = Buffer) +
   labs(title = "Different concentrations of a mono-valent salt buffer")
 ```
@@ -281,21 +281,21 @@ p_log %+% filter(plot_df2, buffer_pKa == 7.5) %+%
 A rare environmental but common laboratory scenario is the sometimes unexpected change in pH upon shifting from standard atmospheric CO2 (400ppm, let's face reality...) to some artifical higher CO2 atmosphere without adjusting anything else.
 
 ```{r, "pH change vs pCO2 and acid base with buffer", fig.width = 8, fig.height = 7, warning=FALSE}
-df_pH_switch <- 
-  df_base_w_buffer_vs_pH %>% 
-  filter(pCO2 == qty(0.4, "mbar")) %>% 
-  rename(init_pCO2 = pCO2) %>% 
-  crossing(data_frame(pCO2 = qty(c(50, 200), "mbar"))) %>% 
+df_pH_switch <-
+  df_base_w_buffer_vs_pH %>%
+  filter(pCO2 == qty(0.4, "mbar")) %>%
+  rename(init_pCO2 = pCO2) %>%
+  crossing(data_frame(pCO2 = qty(c(50, 200), "mbar"))) %>%
   mutate(
     `new pH` = calculate_open_system_pH(
       pCO2 = pCO2, buffer = buffer, buffer_pKa = buffer_pKa, alkalinity = ions
     ),
     `pH difference` = `new pH` - pH,
     panel = get_qty_text(pCO2, "mbar") %>% paste("CO2") %>% as_factor()
-  ) %>% 
+  ) %>%
   gather(var, val, `new pH`, `pH difference`)
 
-p %+% df_pH_switch %+% 
+p %+% df_pH_switch %+%
   aes(color = get_qty_text(buffer, "mM"), linetype = factor(buffer_pKa)) +
   facet_grid(var~panel, scales = "free_y") +
   scale_color_brewer("Buffer", palette = "Set1") +  
@@ -324,25 +324,25 @@ df_CO2_consumption <-
       buffer = qty(c(0, 50), "mM"),
       pKa = 7.5
     )
-  ) %>% 
+  ) %>%
   mutate(
     # required alkalinity for pH
     pH_start = 7,
     alkalinity = calculate_open_system_alkalinity(
-      pH = pH_start, pCO2 = pCO2_start, 
+      pH = pH_start, pCO2 = pCO2_start,
       buffer = buffer, buffer_pKa = pKa),
     # close off
     V_liquid = qty(10, "mL"),
     V_gas = qty(10, "mL"),
     TIC_start = calculate_closed_system_TIC(pH = pH_start, pCO2 = pCO2_start, V_liquid = V_liquid, V_gas = V_gas)
-  ) %>% 
+  ) %>%
   # range of TIC used up (%)
-  crossing(TIC_used = seq(0, 1, by = 0.01)) %>% 
+  crossing(TIC_used = seq(0, 1, by = 0.01)) %>%
   # calculation of system at each point
   mutate(
     TIC = TIC_start * (1-TIC_used),
     pH = calculate_closed_system_pH(
-      TIC = TIC, V_liquid = V_liquid, V_gas = V_gas, 
+      TIC = TIC, V_liquid = V_liquid, V_gas = V_gas,
       alkalinity = alkalinity, buffer = buffer, buffer_pKa = pKa),
     pCO2 = calculate_closed_system_pCO2(pH = pH, TIC = TIC, V_liquid = V_liquid, V_gas = V_gas),
     DIC = calculate_DIC(pH, pCO2 = pCO2),
@@ -352,19 +352,19 @@ df_CO2_consumption <-
   )
 
 # visualize
-df_CO2_consumption %>% 
+df_CO2_consumption %>%
   # convert units in preparation for gathering
   mutate(
     pCO2_start = get_qty_text(pCO2_start, "mbar") %>% as_factor(),
     buffer = get_qty_text(buffer, "mM") %>% paste0(" (pKa=", pKa, ")") %>% as_factor()
-  ) %>% 
-  mutate_if(is_molarity, get_qty_value, "M", log10) %>% 
-  mutate_if(is_pressure, get_qty_value, "bar", log10) %>% 
-  gather(var, val, pH, pCO2, DIC, `H2CO3*`, HCO3, CO3) %>% 
+  ) %>%
+  mutate_if(is_molarity, get_qty_value, "M", log10) %>%
+  mutate_if(is_pressure, get_qty_value, "bar", log10) %>%
+  gather(var, val, pH, pCO2, DIC, `H2CO3*`, HCO3, CO3) %>%
   # avoid extremes
-  filter(!(var == "pCO2" & val < -7), !(var == "H2CO3*" & val < -8)) %>% 
+  filter(!(var == "pCO2" & val < -7), !(var == "H2CO3*" & val < -8)) %>%
   # make sensible panels
-  mutate(panel = case_when(var %in% c("pH", "pCO2") ~ var, TRUE ~ "inorganic carbon")) %>% 
+  mutate(panel = case_when(var %in% c("pH", "pCO2") ~ var, TRUE ~ "inorganic carbon")) %>%
   ggplot() +
   aes(TIC_used, val, color = var, linetype = buffer) +
   geom_line() +
@@ -404,26 +404,26 @@ df_CO2_production <-
       buffer = qty(c(0, 50), "mM"),
       pKa = 7.5
     )
-  ) %>% 
+  ) %>%
   mutate(
     # required alkalinity for pH adjustment
     pH_start = 7,
     pCO2_start = qty(0.4, "mbar"), # atmospheric
     alkalinity = calculate_open_system_alkalinity(
-      pH = pH_start, pCO2 = pCO2_start, 
+      pH = pH_start, pCO2 = pCO2_start,
       buffer = buffer, buffer_pKa = pKa),
     # close off
     V_liquid = qty(10, "mL"),
     V_gas = qty(10, "mL"),
     TIC_start = calculate_closed_system_TIC(pH = pH_start, pCO2 = pCO2_start, V_liquid = V_liquid, V_gas = V_gas)
-  ) %>% 
+  ) %>%
   # range of organics respired (%)
-  crossing(Corg_used = seq(0, 1, by = 0.01)) %>% 
+  crossing(Corg_used = seq(0, 1, by = 0.01)) %>%
   # calculation of system at each point
   mutate(
     TIC = TIC_start + Corg * V_liquid * Corg_used,
     pH = calculate_closed_system_pH(
-      TIC = TIC, V_liquid = V_liquid, V_gas = V_gas, 
+      TIC = TIC, V_liquid = V_liquid, V_gas = V_gas,
       alkalinity = alkalinity, buffer = buffer, buffer_pKa = pKa),
     pCO2 = calculate_closed_system_pCO2(pH = pH, TIC = TIC, V_liquid = V_liquid, V_gas = V_gas),
     DIC = calculate_DIC(pH, pCO2 = pCO2),
@@ -433,19 +433,19 @@ df_CO2_production <-
   )
 
 # visualize
-df_CO2_production %>% 
+df_CO2_production %>%
   # convert units in preparation for gathering
   mutate(
     Corg = get_qty_text(Corg, "mM") %>% paste("organic carbon") %>% as_factor(),
     buffer = get_qty_text(buffer, "mM") %>% paste0(" (pKa=", pKa, ")") %>% as_factor()
-  ) %>% 
-  mutate_if(is_molarity, get_qty_value, "M", log10) %>% 
-  mutate_if(is_pressure, get_qty_value, "bar", log10) %>% 
-  gather(var, val, pH, pCO2, `H2CO3*`, HCO3, CO3) %>% 
+  ) %>%
+  mutate_if(is_molarity, get_qty_value, "M", log10) %>%
+  mutate_if(is_pressure, get_qty_value, "bar", log10) %>%
+  gather(var, val, pH, pCO2, `H2CO3*`, HCO3, CO3) %>%
   # avoid extremes
-  filter(!(var == "pCO2" & val < -7), !(var == "H2CO3*" & val < -8)) %>% 
+  filter(!(var == "pCO2" & val < -7), !(var == "H2CO3*" & val < -8)) %>%
   # make sensible panels
-  mutate(panel = case_when(var %in% c("pH", "pCO2") ~ var, TRUE ~ "inorganic carbon")) %>% 
+  mutate(panel = case_when(var %in% c("pH", "pCO2") ~ var, TRUE ~ "inorganic carbon")) %>%
   ggplot() +
   aes(Corg_used, val, color = var, linetype = buffer) +
   geom_line() +
@@ -473,4 +473,3 @@ Coming soon...
 ## CO2 gain through headspace exchange
 
 Coming soon...
-

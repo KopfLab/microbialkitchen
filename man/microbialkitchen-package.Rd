@@ -4,15 +4,15 @@
 \name{microbialkitchen-package}
 \alias{microbialkitchen}
 \alias{microbialkitchen-package}
-\title{microbialkitchen: Culture media calculations.}
+\title{microbialkitchen: Culture Media Tools}
 \description{
 Package to simplify working with defined culture medium.
 }
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/kopflab/mediachemtools}
-  \item Report bugs at \url{https://github.com/kopflab/mediachemtools/issues}
+  \item \url{https://github.com/kopflab/microbialkitchen}
+  \item Report bugs at \url{https://github.com/kopflab/microbialkitchen/issues}
 }
 
 }

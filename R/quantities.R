@@ -4,7 +4,7 @@ NULL
 # quantities ======
 
 #' Quantities
-#' 
+#'
 #' The \code{qty} function makes it easy to keep track of different quantities in chemical calculations. Metric prefixes are fully supported, i.e. any unit can be combined with standard \link{metric} scaling (mL, nmol, kg, etc.). Some quantities can also be used in common \link{arithmetic} operations.
 #' @name quantities
 #' @aliases quantity
@@ -25,7 +25,9 @@ NULL
 #' qty(257, "g/mol")
 #' @export
 #' @family quantity functions
-qty <- function(x, unit, scale_to_best_metric = TRUE) {
+qty <- function(x = double(), unit, scale_to_best_metric = TRUE) {
+  #x <- vctrs::vec_cast(x, double())
+  vctrs::vec_assert(unit, ptype = character(), size = 1)
   if (!is(r <- try(molarity(x, unit, scale_to_best_metric), silent = TRUE), "try-error")) return(r)
   if (!is(r <- try(density(x, unit, scale_to_best_metric), silent = TRUE), "try-error")) return(r)
   if (!is(r <- try(volume(x, unit, scale_to_best_metric), silent = TRUE), "try-error")) return(r)
@@ -38,18 +40,29 @@ qty <- function(x, unit, scale_to_best_metric = TRUE) {
   stop("Could not determine the appropriate quantity for unit ", unit)
 }
 
+# qty constructor
+new_qty <- function(x = double(), unit = "undefined units") {
+  vctrs::vec_assert(x, ptype = double())
+  vctrs::vec_assert(unit, ptype = character(), size = 1)
+  if (is.na(units[1])) stop("units must be set (NA is not permissible)", call. = FALSE)
+  vctrs::new_vctr(x, units = units, class = "microbial_kitchen_quantity")
+}
+
+#' @importFrom methods setOldClass
+methods::setOldClass(c("microbial_kitchen_quantity", "vctrs_vctr"))
+
 #' @details \emph{amount}: base unit \code{mol} but also understands \code{mole}, all metric prefixes allowed
 #' @name quantities
 NULL
 amount <- function(x, unit, scale_to_best_metric = TRUE) {
-  prefix <- get_mediachemtools_constant("metric_prefix")
+  prefix <- get_microbialkitchen_constant("metric_prefix")
   primary_units <- paste0(names(prefix), "mol")
   secondary_units <- paste0(names(prefix), "mole")
   if (! unit %in% c(primary_units, secondary_units)) stop("not a known amount unit: ", unit)
-  
+
   if (unit %in% secondary_units)
     unit <- primary_units[secondary_units == unit]
-  
+
   q <- new("MediaChemToolsAmount", x, unit = unit)
   if (scale_to_best_metric) q <- best_metric(q)
   return(q)
@@ -59,10 +72,10 @@ amount <- function(x, unit, scale_to_best_metric = TRUE) {
 #' @name quantities
 NULL
 mass <- function(x, unit, scale_to_best_metric = TRUE) {
-  prefix <- get_mediachemtools_constant("metric_prefix")
+  prefix <- get_microbialkitchen_constant("metric_prefix")
   primary_units <- paste0(names(prefix), "g")
   if (! unit %in% primary_units) stop("not a known mass unit: ", unit)
-  
+
   q <- new("MediaChemToolsMass", x, unit = unit)
   if (scale_to_best_metric) q <- best_metric(q)
   return(q)
@@ -72,14 +85,14 @@ mass <- function(x, unit, scale_to_best_metric = TRUE) {
 #' @name quantities
 NULL
 molecular_mass <- function(x, unit, scale_to_best_metric = TRUE) {
-  prefix <- get_mediachemtools_constant("metric_prefix")
+  prefix <- get_microbialkitchen_constant("metric_prefix")
   primary_units <- paste0(names(prefix), "g/mol")
   secondary_units <- paste0(names(prefix), "Da")
   if (! unit %in% c(primary_units, secondary_units)) stop("not a known molecular mass unit: ", unit)
-  
+
   if (unit %in% secondary_units)
     unit <- primary_units[secondary_units == unit]
-  
+
   q <- new("MediaChemToolsMolecularMass", x, unit = unit)
   if (scale_to_best_metric) q <- best_metric(q)
   return(q)
@@ -89,14 +102,14 @@ molecular_mass <- function(x, unit, scale_to_best_metric = TRUE) {
 #' @name quantities
 NULL
 molarity <- function(x, unit, scale_to_best_metric = TRUE) {
-  prefix <- get_mediachemtools_constant("metric_prefix")
+  prefix <- get_microbialkitchen_constant("metric_prefix")
   primary_units <- paste0(names(prefix), "M")
   secondary_units <- paste0(names(prefix), "mol/L")
   if (! unit %in% c(primary_units, secondary_units)) stop("not a known concentration (molarity) unit: ", unit)
-  
+
   if (unit %in% secondary_units)
     unit <- primary_units[secondary_units == unit]
-  
+
   q <- new("MediaChemToolsMolarity", x, unit = unit)
   if (scale_to_best_metric) q <- best_metric(q)
   return(q)
@@ -106,14 +119,14 @@ molarity <- function(x, unit, scale_to_best_metric = TRUE) {
 #' @name quantities
 NULL
 density <- function(x, unit, scale_to_best_metric = TRUE) {
-  prefix <- get_mediachemtools_constant("metric_prefix")
+  prefix <- get_microbialkitchen_constant("metric_prefix")
   primary_units <- paste0(names(prefix), "g/L")
   secondary_units <- paste0(names(prefix), "g/l")
   if (! unit %in% c(primary_units, secondary_units)) stop("not a known concentration (density) unit: ", unit)
-  
+
   if (unit %in% secondary_units)
     unit <- primary_units[secondary_units == unit]
-  
+
   q <- new("MediaChemToolsDensity", x, unit = unit)
   if (scale_to_best_metric) q <- best_metric(q)
   return(q)
@@ -123,14 +136,14 @@ density <- function(x, unit, scale_to_best_metric = TRUE) {
 #' @name quantities
 NULL
 volume <- function(x, unit, scale_to_best_metric = TRUE) {
-  prefix <- get_mediachemtools_constant("metric_prefix")
+  prefix <- get_microbialkitchen_constant("metric_prefix")
   primary_units <- paste0(names(prefix), "L")
   secondary_units <- paste0(names(prefix), "l")
   if (! unit %in% c(primary_units, secondary_units)) stop("not a known volume unit: ", unit)
-  
+
   if (unit %in% secondary_units)
     unit <- primary_units[secondary_units == unit]
-  
+
   q <- new("MediaChemToolsVolume", x, unit = unit)
   if (scale_to_best_metric) q <- best_metric(q)
   return(q)
@@ -149,34 +162,34 @@ pressure <- function(x, unit, scale_to_best_metric = TRUE) {
 # get conversion for pressure units
 get_pressure_unit_conversion <- function(unit) {
   conversion <- 1
-  prefix <- get_mediachemtools_constant("metric_prefix")
+  prefix <- get_microbialkitchen_constant("metric_prefix")
   primary_units <- paste0(names(prefix), get_base_unit(new("MediaChemToolsPressure")))
   secondary_units <- paste0(names(prefix), "Pa")
   alternative_units <- c("atm", "psi", "Torr", "mTorr", "% SP")
-  if (! unit %in% c(primary_units, secondary_units, alternative_units)) 
+  if (! unit %in% c(primary_units, secondary_units, alternative_units))
     stop("not a known pressure unit: ", unit)
-  
+
   # alternative units
   if (unit == "mTorr") {
     conversion <- conversion/1000
     unit <- "Torr"
   }
-  
+
   if (unit == "% SP") {
     conversion <- conversion / 100
     unit <- "bar"
   } else if (unit %in% alternative_units) {
-    c_factor <- get_mediachemtools_constant(paste0("bar_per_", unit))
+    c_factor <- get_microbialkitchen_constant(paste0("bar_per_", unit))
     conversion <- conversion * c_factor
     unit <- "bar"
   }
-    
+
   # pascal
   if (unit %in% secondary_units) {
-    conversion <- conversion * get_mediachemtools_constant("bar_per_pa")
+    conversion <- conversion * get_microbialkitchen_constant("bar_per_pa")
     unit <- primary_units[secondary_units == unit]
   }
-  
+
   return(list(unit = unit, conversion = conversion))
 }
 
@@ -193,19 +206,19 @@ solubility <- function(x, unit, scale_to_best_metric = TRUE) {
 # get conversion for solubility units
 get_solubility_unit_conversion <- function(unit) {
   conversion <- 1
-  prefix <- get_mediachemtools_constant("metric_prefix")
+  prefix <- get_microbialkitchen_constant("metric_prefix")
   primary_units <- paste0(names(prefix), get_base_unit(new("MediaChemToolsSolubility")))
   secondary_units <- paste0(names(prefix), "M/atm")
-  if (! unit %in% c(primary_units, secondary_units)) 
+  if (! unit %in% c(primary_units, secondary_units))
     stop("not a known solubility unit: ", unit)
-  
+
   # alternative units
   if (unit %in% secondary_units) {
-    c_factor <- get_mediachemtools_constant("bar_per_atm")
+    c_factor <- get_microbialkitchen_constant("bar_per_atm")
     conversion <- conversion / c_factor
     unit <- primary_units[secondary_units == unit]
   }
-  
+
   return(list(unit = unit, conversion = conversion))
 }
 
@@ -223,29 +236,29 @@ temperature <- function(x, unit, scale_to_best_metric = TRUE) {
 get_temperature_unit_conversion <- function(unit) {
   conversion_fwd <- function(x) x
   conversion_back <- function(x) x
-  prefix <- get_mediachemtools_constant("metric_prefix")
+  prefix <- get_microbialkitchen_constant("metric_prefix")
   primary_units <- paste0(names(prefix), get_base_unit(new("MediaChemToolsTemperature")))
   alternative_units <- c("C", "F")
-  if (! unit %in% c(primary_units, alternative_units)) 
+  if (! unit %in% c(primary_units, alternative_units))
     stop("not a known temperature unit: ", unit)
-  
+
   # alternative units
   if (unit == "C") {
-    conversion_fwd <- function(x) x - get_mediachemtools_constant("celsius_kelvin_offset")
-    conversion_back <- function(x) x + get_mediachemtools_constant("celsius_kelvin_offset")
+    conversion_fwd <- function(x) x - get_microbialkitchen_constant("celsius_kelvin_offset")
+    conversion_back <- function(x) x + get_microbialkitchen_constant("celsius_kelvin_offset")
     unit <- "K"
   } else if (unit == "F") {
     conversion_fwd <- function(x) {
-      (x - get_mediachemtools_constant("fahrenheit_celsius_offset"))/get_mediachemtools_constant("fahrenheit_celsius_slope") - 
-        get_mediachemtools_constant("celsius_kelvin_offset") 
+      (x - get_microbialkitchen_constant("fahrenheit_celsius_offset"))/get_microbialkitchen_constant("fahrenheit_celsius_slope") -
+        get_microbialkitchen_constant("celsius_kelvin_offset")
     }
     conversion_back <- function(x) {
-      (x + get_mediachemtools_constant("celsius_kelvin_offset")) * get_mediachemtools_constant("fahrenheit_celsius_slope") + 
-        get_mediachemtools_constant("fahrenheit_celsius_offset")
+      (x + get_microbialkitchen_constant("celsius_kelvin_offset")) * get_microbialkitchen_constant("fahrenheit_celsius_slope") +
+        get_microbialkitchen_constant("fahrenheit_celsius_offset")
     }
     unit <- "K"
   }
-  
+
   return(list(unit = unit, conversion_fwd = conversion_fwd, conversion_back = conversion_back))
 }
 
@@ -298,17 +311,17 @@ is_temperature <- function(q) is(q, "MediaChemToolsTemperature")
 # value return ======
 
 #' Get quantity information
-#' 
+#'
 #' @details \code{get_qty_value}: get the value of a quantity in the desired unit. By default returns the quantity in the units it is in.
 #' @name quantity_info
 #' @inheritParams qty
 #' @param transform whether to transform the value with an additional function once in the desired units. Common transformation examples are log10 and log (natural log) but custom transformations are also possible. Default is NO transformation (\link{identity}).
 #' @family quantity functions
-#' @examples 
+#' @examples
 #' qty(0.1, "g") %>% get_qty_value()
 #' qty(0.1, "g") %>% get_qty_value("g")
 #' qty(0.1, "g") %>% get_qty_value("g", log10)
-#' qty(0, "C") %>% get_qty_value("F") 
+#' qty(0, "C") %>% get_qty_value("F")
 #' qty(760, "Torr") %>% get_qty_value("atm")
 #' @export
 get_qty_value <- function(q, unit = get_qty_units(q), transform = identity) UseMethod("get_qty_value", q)
@@ -351,7 +364,7 @@ get_qty_value.MediaChemToolsTemperature <- function(q, unit = get_qty_units(q), 
 #' @rdname quantity_info
 #' @param signif number of significant digits for printing the quantity
 #' @export
-#' @examples 
+#' @examples
 #' qty(0.1, "g") %>% get_qty_text()
 #' qty(0.1, "g") %>% get_qty_text("g")
 #' qty(0:10, "C") %>% get_qty_text("F")
@@ -396,10 +409,10 @@ as_factor.MediaChemToolsQuantity <- function(x) {
 }
 
 #' Concatenate quantities
-#' 
+#'
 #' Concatenate multiple quantity vectors or values. They must all be of the same type (i.e. you cannot combine e.g. a temperature and a mass value). The concatenated values will be scaled according to \code{\link{best_metric}}. Note that the regular `c()` operator automatically calls this function if the first argument is a quantity object.
 #' @param ... \link{quantities} to concatenate
-#' @examples 
+#' @examples
 #' c_qty(qty(5, "g"), qty(c(10, 20), "mg")) # MediaChemToolsMass [mg]: 5000, 10, 20
 #' c(qty(5, "g"), qty(c(10, 20), "mg")) # same (shortcut for the above)
 #' @export
@@ -408,12 +421,12 @@ c_qty <- function(...) {
   # safety check that all quantities are the same classes
   classes <- purrr::map_chr(qs, ~class(.x)[1])
   if (any(classes != classes[1])) {
-    stop(sprintf("cannot combine different types quantities (trying to combine %s). ", 
+    stop(sprintf("cannot combine different types quantities (trying to combine %s). ",
                  paste(unique(classes), collapse = ", ")), call. = FALSE)
   }
   # combine quantities making sure metric scaling is appropriate
-  purrr::map(qs, ~as.numeric(base_metric(.x))) %>% 
-    unlist() %>% 
+  purrr::map(qs, ~as.numeric(base_metric(.x))) %>%
+    unlist() %>%
     qty(get_base_unit(qs[[1]]))
 }
 
@@ -428,13 +441,13 @@ c.MediaChemToolsQuantity <- function(...) {
 #' @details \code{get_qty_units}: get units from a quantity, list of quantities or data frame (returns NA for objects/columns that are not quantities)
 #' @rdname quantity_info
 #' @param q quantity or list of quantities
-#' @examples 
+#' @examples
 #' qty(5000, "g") %>% get_qty_units()
 #' x <- list(a = qty(5000, "g"), b = 42, c = qty(100, "mbar"))
 #' x %>% get_qty_units()
 #' @export
 get_qty_units <- function(q) {
-  if (is_qty(q)) 
+  if (is_qty(q))
     return(q@unit)
   else if (is.list(q))
     return(purrr::map_chr(q, ~if(is_qty(.x)) { .x@unit } else { NA_character_ }))
@@ -445,21 +458,21 @@ get_qty_units <- function(q) {
 #' @details \code{get_qty_units_with_label} get units from a quantity, list of quantities or data frame, with a custom label in the format \code{label [units]}. Objects/columns that are not quantities simply return the label with out the [units] part.
 #' @param label text label to use with the units - single value or vector of the same length as \code{q}. By default uses the names of \code{q}, which only works if \code{q} is a list or data frame.
 #' @rdname quantity_info
-#' @examples 
+#' @examples
 #' # labels with units
 #' get_qty_units_with_label(qty(0.1, "mM"), "concentration")
-#' 
+#'
 #' # make labels with units for data frame columns
 #' x <- data.frame(a = qty(1, "mg"), b = 2, c = qty(100, "mbar"))
-#' get_qty_units_with_label(x) 
+#' get_qty_units_with_label(x)
 #' get_qty_units_with_label(x, "same label")
 #' @export
 get_qty_units_with_label <- function(q, label = names(q)) {
   units <- get_qty_units(q)
   if (length(label) == 1 || length(label) == length(units)) {
-    
+
   } else {
-    sprintf("incompatible number of labels (%d) provided for units (%d)", length(label), length(units)) %>% 
+    sprintf("incompatible number of labels (%d) provided for units (%d)", length(label), length(units)) %>%
       stop(call. = FALSE)
   }
   return(ifelse(is.na(units), label, sprintf("%s [%s]", label, units)))
@@ -468,20 +481,20 @@ get_qty_units_with_label <- function(q, label = names(q)) {
 # metric conversions ======================
 
 #' Metric prefixes
-#' 
+#'
 #' These functions simplify converting between different metric prefixes.
-#' 
+#'
 #' @name metric
 NULL
 
 # convenience function to determine metric scaling factor
 get_metric_scale_factor <- function(q, prefix) {
-  metric_prefix <- get_mediachemtools_constant("metric_prefix")
+  metric_prefix <- get_microbialkitchen_constant("metric_prefix")
   if (!is_qty(q)) stop("not a known type of quantity: ", class(q))
   if (! prefix %in% names(metric_prefix)) stop("not a known metric prefix: ", prefix)
   q_prefix <- get_prefix(q)
   if (q_prefix == prefix) return(1) # already the requested metric (for speed)
-  
+
   # conversion
   scale_factor <- metric_prefix[[which(names(metric_prefix)==q_prefix)]]/ # complication required because of unity unit with "" name
     metric_prefix[[which(names(metric_prefix)==prefix)]]
@@ -500,12 +513,12 @@ scale_metric <- function (q, prefix = "") {
   return(q)
 }
 
-#' @describeIn metric convert to best metric prefix (i.e. one that gives at least 1 significant digit before the decimal), 
+#' @describeIn metric convert to best metric prefix (i.e. one that gives at least 1 significant digit before the decimal),
 #' if the quantity has a vector of values, scales to the best metric prefix for the median of all values
 #' @export
 best_metric <- function(q) {
   if (!is_qty(q)) stop("not a known type of quantity: ", class(q))
-  prefix <- get_mediachemtools_constant("metric_prefix")
+  prefix <- get_microbialkitchen_constant("metric_prefix")
   if (length(q) == 0 || all(is.na(q) | is.infinite(q))) {
     ideal <- which(names(prefix) == "")
   } else {
@@ -516,7 +529,7 @@ best_metric <- function(q) {
 }
 
 
-#' @describeIn metric convert to base metric prefix of mediachemtools (i.e. to mol, L, etc.)
+#' @describeIn metric convert to base metric prefix of microbialkitchen (i.e. to mol, L, etc.)
 #' @export
 base_metric <- function(q) {
   if (!is_qty(q)) stop("not a known type of quantity: ", class(q))
@@ -533,13 +546,12 @@ get_base_unit <- function(q) {
 get_prefix <- function(q) {
   return(get_unit_prefix(q@unit, get_base_unit(q)))
 }
-  
+
 # Get the prefix from a unit
 get_unit_prefix <- function(unit, base_unit) {
   if (! grepl(paste0(base_unit, "$"), unit)) {
     sprintf("not a valid unit for this quantity (base unit '%s'): %s", base_unit, unit) %>%
-      stop(call. = FALSE) 
+      stop(call. = FALSE)
   }
   return(sub(paste0(base_unit, "$"), "", unit))
 }
-

@@ -3,27 +3,13 @@
 \name{arithmetic}
 \alias{arithmetic}
 \title{Arithmetic}
-\usage{
-qty == qty, qty != qty, qty < qty, qty <= qty, qty > qty, qty >= qty
+\arguments{
+\item{qty}{quantity}
 
-qty + qty, qty - qty
-
-qty / qty
-
-qty / number
-
-qty * number
-
-amount / volume = molarity, amount / molarity = volume, molarity * volume = amount
-
-mass / volume = density, mass / density = volume, density * volume = mass
-
-mass / molecular mass = amount, mass / amount = molecular mass, amount * molecular mass = mass
-
-molarity / pressure = solubility, solubility * pressure = molarity, molarity / solubility = pressure
+\item{number}{regular number}
 }
 \description{
-These arithmetic operators for quantities in mediachemtools keep track of units in standard operations (i.e. they ALL take the SI prefix into consideration). Also note that all operations that result in a new quantity object automatically scale the new value using \code{\link{best_metric}}.
+These arithmetic operators for quantities in microbialkitchen keep track of units in standard operations (i.e. they ALL take the SI prefix into consideration). Also note that all operations that result in a new quantity object automatically scale the new value using \code{\link{best_metric}}.
 }
 \details{
 \code{qty ==, !=, <, <=, >, >= qty} allows the comparison of quantities that are the same type (e.g. all mass).

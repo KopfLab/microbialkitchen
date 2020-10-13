@@ -43,7 +43,7 @@ Get quantity information
 qty(0.1, "g") \%>\% get_qty_value()
 qty(0.1, "g") \%>\% get_qty_value("g")
 qty(0.1, "g") \%>\% get_qty_value("g", log10)
-qty(0, "C") \%>\% get_qty_value("F") 
+qty(0, "C") \%>\% get_qty_value("F")
 qty(760, "Torr") \%>\% get_qty_value("atm")
 qty(0.1, "g") \%>\% get_qty_text()
 qty(0.1, "g") \%>\% get_qty_text("g")
@@ -57,7 +57,7 @@ get_qty_units_with_label(qty(0.1, "mM"), "concentration")
 
 # make labels with units for data frame columns
 x <- data.frame(a = qty(1, "mg"), b = 2, c = qty(100, "mbar"))
-get_qty_units_with_label(x) 
+get_qty_units_with_label(x)
 get_qty_units_with_label(x, "same label")
 }
 \seealso{

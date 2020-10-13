@@ -4,7 +4,7 @@ NULL
 
 #' Arithmetic
 #' 
-#' These arithmetic operators for quantities in mediachemtools keep track of units in standard operations (i.e. they ALL take the SI prefix into consideration). Also note that all operations that result in a new quantity object automatically scale the new value using \code{\link{best_metric}}.
+#' These arithmetic operators for quantities in microbialkitchen keep track of units in standard operations (i.e. they ALL take the SI prefix into consideration). Also note that all operations that result in a new quantity object automatically scale the new value using \code{\link{best_metric}}.
 #' 
 #' @name arithmetic
 NULL
@@ -12,7 +12,8 @@ NULL
 
 # Comparisons =======================
 
-#' @usage qty == qty, qty != qty, qty < qty, qty <= qty, qty > qty, qty >= qty
+#' @param qty quantity
+#' @param number regular number
 #' @details
 #' \code{qty ==, !=, <, <=, >, >= qty} allows the comparison of quantities that are the same type (e.g. all mass).
 #' @examples 
@@ -92,7 +93,6 @@ setMethod("!=", signature(e1 = "MediaChemToolsQuantity", e2 = "MediaChemToolsQua
 
 # Addition  ========================
 
-#' @usage qty + qty, qty - qty
 #' @details
 #' \code{qty +- qty} allows the addition/subtraction of quantities that are the same type (e.g. all mass). Note that this operation also scales the new value using \code{\link{best_metric}}.
 #' @examples 
@@ -130,7 +130,6 @@ setMethod("-", signature(e1 = "numeric", e2 = "MediaChemToolsQuantity"), functio
 
 # Division =========================
 
-#' @usage qty / qty
 #' @details
 #' \code{qty / qty} divide quantities of the same type. Returns plain numeric (i.e. the units are divided out).
 #' @examples 
@@ -145,7 +144,6 @@ setMethod("/", signature(e1 = "MediaChemToolsQuantity", e2 = "MediaChemToolsQuan
     operation_error ("division", e1, e2)
 })
 
-#' @usage qty / number
 #' @details
 #' \code{qty / number} divide quantity by a plain number. Returns the quantity automatically rescaled to the best metric.
 #' @examples 
@@ -165,7 +163,6 @@ setMethod("/", signature(e1 = "numeric", e2 = "MediaChemToolsQuantity"), functio
 
 # Multiplication =========================
 
-#' @usage qty * number
 #' @details
 #' \code{qty * number} multiply a quantity by a plain number (either way around is valid). Returns the quantity automatically rescaled to the best metric.
 #' @examples 
@@ -190,7 +187,6 @@ setMethod("*", signature(e1 = "numeric", e2 = "MediaChemToolsQuantity"), functio
 
 # Special operations ==============
 
-#' @usage amount / volume = molarity, amount / molarity = volume, molarity * volume = amount
 #' @details \code{amount / volume} divide an amount by a volume to create a molarity (concentration).
 #' @details \code{amount / molarity} divide an amount by a molarity to create a volume. 
 #' @details \code{molarity * volume} multiply a molarity by a volume (or the other way around) to create an amount.  
@@ -218,7 +214,6 @@ setMethod("*", signature(e1 = "MediaChemToolsVolume", e2 = "MediaChemToolsMolari
 setMethod("*", signature(e1 = "MediaChemToolsMolarity", e2 = "MediaChemToolsVolume"), function(e1, e2) e2 * e1)
 
 
-#' @usage mass / volume = density, mass / density = volume, density * volume = mass
 #' @details \code{mass / volume} divide a mass by a volume to create a density (concentration).
 #' @details \code{mass / density} divide a mass by a density to create a volume. 
 #' @details \code{density * volume} multiply a density by a volume (or the other way around) to create a mass.  
@@ -246,7 +241,6 @@ setMethod("*", signature(e1 = "MediaChemToolsVolume", e2 = "MediaChemToolsDensit
 setMethod("*", signature(e1 = "MediaChemToolsDensity", e2 = "MediaChemToolsVolume"), function(e1, e2) e2 * e1)
 
 
-#' @usage mass / molecular mass = amount, mass / amount = molecular mass, amount * molecular mass = mass
 #' @details \code{mass / MW} divide a mass by a molecular mass to create an amount (mols).
 #' @details \code{mass / amount} divice a mass by an amount (mols) to create a molecular mass.
 #' @details \code{amount * MW} multiply an amount (mols) by a molecular mass to create a mass.
@@ -273,7 +267,6 @@ setMethod("*", signature(e1 = "MediaChemToolsAmount", e2 = "MediaChemToolsMolecu
 })
 setMethod("*", signature(e1 = "MediaChemToolsMolecularMass", e2 = "MediaChemToolsAmount"), function(e1, e2) e2 * e1)
 
-#' @usage molarity / pressure = solubility, solubility * pressure = molarity, molarity / solubility = pressure
 #' @details \code{molarity / pressure} divide a concentration by pressure to create a solubility (M/bar).
 #' @details \code{solubility * pressure} multiply a solubility (M/bar) by pressure (bar) to create molarity (M)
 #' @details \code{molarity / solubility} divide a molarity (M) by a solubility (M/bar) to get partial pressure (bar)
