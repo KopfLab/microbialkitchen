@@ -44,11 +44,10 @@ qty <- function(x = double(), unit, scale_to_best_metric = TRUE) {
 new_qty <- function(x = double(), unit = "undefined units") {
   vctrs::vec_assert(x, ptype = double())
   vctrs::vec_assert(unit, ptype = character(), size = 1)
-  if (is.na(units[1])) stop("units must be set (NA is not permissible)", call. = FALSE)
-  vctrs::new_vctr(x, units = units, class = "microbial_kitchen_quantity")
+  if (is.na(unit[1])) stop("units must be set (NA is not permissible)", call. = FALSE)
+  vctrs::new_vctr(x, unit = unit, class = "microbial_kitchen_quantity")
 }
 
-#' @importFrom methods setOldClass
 methods::setOldClass(c("microbial_kitchen_quantity", "vctrs_vctr"))
 
 #' @details \emph{amount}: base unit \code{mol} but also understands \code{mole}, all metric prefixes allowed
@@ -80,6 +79,22 @@ mass <- function(x, unit, scale_to_best_metric = TRUE) {
   if (scale_to_best_metric) q <- best_metric(q)
   return(q)
 }
+
+# mass constructor
+new_mass <- function(x = double(), unit = NA_character_, scale_to_best_metric = TRUE) {
+  prefix <- get_metric_prefixes()
+  primary_units <- paste0(names(prefix), "g")
+  if (! unit %in% primary_units) stop("not a known mass unit: ", unit, call. = FALSE)
+  
+  vctrs::vec_assert(x, ptype = double())
+  vctrs::vec_assert(unit, ptype = character(), size = 1)
+  q <- vctrs::new_vctr(x, unit = unit, class = c("microbial_kitchen_mass", "microbial_kitchen_quantity"))
+
+  if (scale_to_best_metric) q <- best_metric(q)
+  return(q)
+}
+
+methods::setOldClass(c("microbial_kitchen_mass", "microbial_kitchen_quantity"))
 
 #' @details \emph{molecular mass}: base unit \code{g/mol}, all metric prefixes allowed in the numerator
 #' @name quantities
@@ -262,13 +277,41 @@ get_temperature_unit_conversion <- function(unit) {
   return(list(unit = unit, conversion_fwd = conversion_fwd, conversion_back = conversion_back))
 }
 
+# formatting ================
+
+# get quantity class
+get_qty_class <- function(q) {
+  class(q)[1] %>% stringr::str_remove("microbial_kitchen_") %>% stringr::str_replace("_", " ")
+}
+
+# formatting during printout
+#' @importFrom vctrs vec_ptype_full
+#' @method vec_ptype_full microbial_kitchen_quantity
+#' @export
+vec_ptype_full.microbial_kitchen_quantity <- function(x, ...) {
+  sprintf("%s in '%s'", get_qty_class(x), attr(x, "unit"))
+}
+
+#' @method format microbial_kitchen_quantity
+#' @export
+format.microbial_kitchen_quantity <- function(x, ...) {
+  format(vctrs::vec_data(x), ...)
+}
+
+#' @importFrom vctrs vec_ptype_abbr
+#' @method vec_ptype_abbr microbial_kitchen_quantity
+#' @export
+vec_ptype_abbr.microbial_kitchen_quantity <- function(x, ...) {
+  sprintf("qty[%s]", attr(x, "unit"))
+}
+
 # type checks =================
 
 #' @describeIn quantities check whether something is a quantity
 #' @param q a quantity object
 #' @export
 is_qty <- function(q) {
-  is(q, "MediaChemToolsQuantity")
+  is(q, "microbial_kitchen_quantity")
 }
 
 #' @describeIn quantities check whether something is an amount quantity
@@ -448,9 +491,9 @@ c.MediaChemToolsQuantity <- function(...) {
 #' @export
 get_qty_units <- function(q) {
   if (is_qty(q))
-    return(q@unit)
+    return(attr(q, "unit"))
   else if (is.list(q))
-    return(purrr::map_chr(q, ~if(is_qty(.x)) { .x@unit } else { NA_character_ }))
+    return(purrr::map_chr(q, ~if(is_qty(.x)) { attr(.x, "unit") } else { NA_character_ }))
   else
     return(NA_character_)
 }
@@ -508,8 +551,8 @@ get_metric_scale_factor <- function(q, prefix) {
 #' @export
 scale_metric <- function (q, prefix = "") {
   scale_factor <- get_metric_scale_factor(q, prefix)
-  q@.Data <- scale_factor * q@.Data
-  q@unit <- paste0(prefix, get_base_unit(q))
+  q[] <- scale_factor * vctrs::vec_data(q)
+  attr(q, "unit") <- paste0(prefix, get_base_unit(q))
   return(q)
 }
 
@@ -517,12 +560,12 @@ scale_metric <- function (q, prefix = "") {
 #' if the quantity has a vector of values, scales to the best metric prefix for the median of all values
 #' @export
 best_metric <- function(q) {
-  if (!is_qty(q)) stop("not a known type of quantity: ", class(q))
+  if (!is_qty(q)) stop("not a known type of quantity: ", class(q)[1], call. = FALSE)
   prefix <- get_microbialkitchen_constant("metric_prefix")
   if (length(q) == 0 || all(is.na(q) | is.infinite(q))) {
     ideal <- which(names(prefix) == "")
   } else {
-    values <- as.numeric(base_metric(q)) %>% { .[!is.infinite(.)] }
+    values <- vctrs::vec_data(base_metric(q)) %>% { .[!is.infinite(.)] }
     ideal <- max(1, which( stats::median(abs(values), na.rm = TRUE)/prefix >= 1))
   }
   return(scale_metric(q, names(prefix)[ideal]))
@@ -539,12 +582,12 @@ base_metric <- function(q) {
 
 # Get the base unit of a quantiy
 get_base_unit <- function(q) {
-  return(new(class(q))@unit)
+  return(unname(get_base_units()[get_qty_class(q)]))
 }
 
 # Get the prefix of a quantity
 get_prefix <- function(q) {
-  return(get_unit_prefix(q@unit, get_base_unit(q)))
+  return(get_unit_prefix(attr(q, "unit"), get_base_unit(q)))
 }
 
 # Get the prefix from a unit

@@ -2,7 +2,7 @@
 "_PACKAGE"
 
 #' @importFrom rlang !! .data
-#' @importFrom methods is new
+#' @importFrom methods is new setOldClass
 NULL
 
 #' @importFrom magrittr %>%
