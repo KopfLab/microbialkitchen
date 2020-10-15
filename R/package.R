@@ -3,6 +3,7 @@
 
 #' @importFrom rlang !! .data
 #' @importFrom methods is new setOldClass
+#' @importFrom vctrs vec_ptype2 vec_ptype2.double vec_ptype2.character vec_cast vec_cast.double vec_cast.character
 NULL
 
 #' @importFrom magrittr %>%

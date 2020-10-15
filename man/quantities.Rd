@@ -4,39 +4,9 @@
 \alias{quantities}
 \alias{quantity}
 \alias{qty}
-\alias{is_qty}
-\alias{is_amount}
-\alias{is_mass}
-\alias{is_molecular_mass}
-\alias{is_molarity}
-\alias{is_density}
-\alias{is_volume}
-\alias{is_pressure}
-\alias{is_solubility}
-\alias{is_temperature}
 \title{Quantities}
 \usage{
 qty(x = double(), unit, scale_to_best_metric = TRUE)
-
-is_qty(q)
-
-is_amount(q)
-
-is_mass(q)
-
-is_molecular_mass(q)
-
-is_molarity(q)
-
-is_density(q)
-
-is_volume(q)
-
-is_pressure(q)
-
-is_solubility(q)
-
-is_temperature(q)
 }
 \arguments{
 \item{x}{the numeric value of the quantity, can be a single value or a vector}
@@ -44,54 +14,34 @@ is_temperature(q)
 \item{unit}{the unit of the quantity}
 
 \item{scale_to_best_metric}{whether to automatically scale to the best metric prefix}
-
-\item{q}{a quantity object}
 }
 \description{
 The \code{qty} function makes it easy to keep track of different quantities in chemical calculations. Metric prefixes are fully supported, i.e. any unit can be combined with standard \link{metric} scaling (mL, nmol, kg, etc.). Some quantities can also be used in common \link{arithmetic} operations.
 }
 \details{
-\emph{amount}: base unit \code{mol} but also understands \code{mole}, all metric prefixes allowed
+The following types of quantities are supported.
 
-\emph{mass}: base unit \code{g}, all metric prefixes allowed
+\emph{amount (N)}: base unit \code{mol} but also understands \code{mole}, all metric prefixes allowed
 
-\emph{molecular mass}: base unit \code{g/mol}, all metric prefixes allowed in the numerator
+\emph{mass (m)}: base unit \code{g}, all metric prefixes allowed
 
-\emph{concentration (molarity)}: base unit \code{M} but also understands \code{mol/L}, all metric prefixes allowed in the numerator
+\emph{molecular weight (MW)}: base unit \code{g/mol}, all metric prefixes allowed in the numerator
 
-\emph{concentration (density)}: base unit \code{g/L} but also understands \code{g/l}, all metric prefixes allowed in the numerator
+\emph{molarity concentration (C)}: base unit \code{M} but also understands \code{mol/L}, all metric prefixes allowed in the numerator
 
-\emph{volume}: base unit \code{L} but also understands \code{l}, all metric prefixes allowed
+\emph{mass concentration (C)}: base unit \code{g/L} but also understands \code{g/l}, all metric prefixes allowed in the numerator. This is technically a density and sometimes referred to as such in the microbial kitchen documentation.
 
-\emph{pressure}: base unit \code{bar} but also understands \code{Pa}, all metric prefixes allowed, the common non-metric units \code{atm}, \code{psi}, \code{Torr}, \code{mTorr}, and \code{\% SP} (\% at standard pressure = \% of 1 bar) are also supported and will be automatically converted to \code{bar}.
+\emph{volume (V)}: base unit \code{L} but also understands \code{l}, all metric prefixes allowed
 
-\emph{Henry's law solubility constant}: base unit \code{M/bar}, all metric prefixes allowed in the numerator, the common non-metric unit \code{M/atm} is also supported and will be automatically converted to \code{M/bar}.
+\emph{pressure (P)}: base unit \code{bar} but also understands \code{Pa}, all metric prefixes allowed, the common non-metric units \code{atm}, \code{psi}, \code{Torr}, \code{mTorr}, and \code{\% SP} (\% at standard pressure = \% of 1 bar) are also supported and will be automatically converted to \code{bar}.
 
-\emph{temperature}: base unit \code{K} but also understands \code{C} and \code{F} and converts them to Kelvin
+\emph{gas solubility (S)}: base unit \code{M/bar}, all metric prefixes allowed in the numerator, the common non-metric unit \code{M/atm} is also supported and will be automatically converted to \code{M/bar}. This quantity is used for capturing Henry's law constants.
+
+\emph{temperature (T)}: base unit \code{K} but also understands \code{C} and \code{F} and converts them to Kelvin
 }
 \section{Functions}{
 \itemize{
 \item \code{qty}: generate a quantity object
-
-\item \code{is_qty}: check whether something is a quantity
-
-\item \code{is_amount}: check whether something is an amount quantity
-
-\item \code{is_mass}: check whether something is an amount quantity
-
-\item \code{is_molecular_mass}: check whether something is a molecular mass quantity
-
-\item \code{is_molarity}: check whether something is a molarity quantity
-
-\item \code{is_density}: check whether something is a density quantity
-
-\item \code{is_volume}: check whether something is a volume quantity
-
-\item \code{is_pressure}: check whether something is a pressure quantity
-
-\item \code{is_solubility}: check whether something is a solubility quantity
-
-\item \code{is_temperature}: check whether something is a temperature quantity
 }}
 
 \examples{
@@ -106,7 +56,8 @@ qty(257, "g/mol")
 }
 \seealso{
 Other quantity functions: 
-\code{\link{metric}},
-\code{\link{quantity_info}}
+\code{\link{check_quantities}},
+\code{\link{get_quantity_info}},
+\code{\link{metric_scaling}}
 }
 \concept{quantity functions}

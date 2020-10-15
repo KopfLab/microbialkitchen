@@ -24,7 +24,7 @@ test_that("Testing that ideal gas calculations are working", {
   expect_error(calculate_solubility(), "gas is missing")
   expect_error(calculate_solubility("x"), "no constants")
   expect_error(calculate_solubility("CO2"), "temperature is missing")
-  expect_true(is_solubility(s <- calculate_solubility("CO2", qty(25, "C"))))
+  expect_true(is_gas_solubility(s <- calculate_solubility("CO2", qty(25, "C"))))
   expect_equal(get_qty_units(s), "mM/bar")
   expect_equal(as.numeric(s), 33)
   

@@ -7,14 +7,14 @@ test_that("Testing that units work and can be metric scaled", {
   
   # concentration (molarity) objects
   expect_error(molarity(1, "J"), "not a known concentration")
-  expect_is(molarity(1, "mM"), "MediaChemToolsMolarity")
+  expect_true(is_molarity(molarity(1, "mM")))
   expect_equal(molarity(1, "mM") %>% get_qty_units(), "mM")
   expect_equal(molarity(1, "mmol/L") %>% get_qty_units(), "mM")
   
   # metric conversion
   expect_error(scale_metric(1, "p"), "not a known type of quantity")
   expect_error(scale_metric(molarity(1, "mM"), "x"), "not a known metric prefix")
-  expect_error({a <- molarity(1, "mM"); a@unit <- "J"; scale_metric(a, "m")}, "not a valid unit")
+  expect_error({a <- molarity(1, "mM"); attr(a, "unit") <- "J"; scale_metric(a, "m")}, "not a valid unit")
   expect_equal(scale_metric(molarity(1, "mM"), "n") %>% get_qty_units(), "nM")
   expect_equal(scale_metric(molarity(1, "mM"), "n") %>% get_qty_value(), 1e6)
   expect_equal(scale_metric(molarity(1, "mM"), "n") %>% get_qty_value(transform = log10), 6)

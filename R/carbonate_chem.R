@@ -37,7 +37,7 @@ calculate_DIC <- function(
   if (missing(pH)) stop("pH is required", call. = FALSE)
   if (missing(`H2CO3*`) && missing(pCO2))  stop("either pCO2 or H2CO3* need to be specified", call. = FALSE)
   if (missing(`H2CO3*`)) require_quantity(pCO2_quo, is_pressure)
-  require_quantity(H2CO3_quo, is_molarity)
+  require_quantity(H2CO3_quo, is_molarity_concentration)
   
   # warning
   if (!missing(pCO2) && !missing(`H2CO3*`)) warning("H2CO3* provided, pCO2 parameter will be ignored", call. = FALSE, immediate. = TRUE)
@@ -62,7 +62,7 @@ calculate_carbonic_acid <- function(
     require_quantity(pCO2_quo, is_pressure)
     DIC <- calculate_DIC(pH, pCO2, solubility = solubility, temperature = temperature, pKa1 = pKa1, pKa2 = pKa2)
   } else {
-    require_quantity(DIC_quo, is_molarity)
+    require_quantity(DIC_quo, is_molarity_concentration)
     if (!missing(pCO2)) warning("DIC provided, pCO2 parameter will be ignored", call. = FALSE, immediate. = TRUE)
   }
 
@@ -85,7 +85,7 @@ calculate_bicarbonate <- function(
     require_quantity(pCO2_quo, is_pressure)
     DIC <- calculate_DIC(pH, pCO2, solubility = solubility, temperature = temperature, pKa1 = pKa1, pKa2 = pKa2)
   } else {
-    require_quantity(DIC_quo, is_molarity)
+    require_quantity(DIC_quo, is_molarity_concentration)
     if (!missing(pCO2)) warning("DIC provided, pCO2 parameter will be ignored", call. = FALSE, immediate. = TRUE)
   }
   
@@ -108,7 +108,7 @@ calculate_carbonate <- function(
     require_quantity(pCO2_quo, is_pressure)
     DIC <- calculate_DIC(pH, pCO2, solubility = solubility, temperature = temperature, pKa1 = pKa1, pKa2 = pKa2)
   } else {
-    require_quantity(DIC_quo, is_molarity)
+    require_quantity(DIC_quo, is_molarity_concentration)
     if (!missing(pCO2)) warning("DIC provided, pCO2 parameter will be ignored", call. = FALSE, immediate. = TRUE)
   }
   
@@ -148,13 +148,13 @@ calculate_open_system_pH <- function(
   if (missing(`H2CO3*`) && missing(pCO2))  stop("either pCO2 or H2CO3* need to be specified", call. = FALSE)
   if (!missing(pCO2) && !missing(`H2CO3*`)) warning("H2CO3* provided, pCO2 parameter will be ignored", call. = FALSE, immediate. = TRUE)
   if (missing(`H2CO3*`)) require_quantity(pCO2_quo, is_pressure)
-  require_quantity(H2CO3_quo, is_molarity)
-  require_quantity(buffer_quo, is_molarity)
+  require_quantity(H2CO3_quo, is_molarity_concentration)
+  require_quantity(buffer_quo, is_molarity_concentration)
   if (!missing(buffer) && missing(buffer_pKa))
     stop("must provide a pKa if buffer is provided", call. = FALSE)
   else if (missing(buffer_pKa))
     buffer_pKa <- 7 # place holder value, buffer is 0
-  require_quantity(rlang::enquo(alkalinity), is_molarity)
+  require_quantity(rlang::enquo(alkalinity), is_molarity_concentration)
   
   # calculate
   buffer.M <- get_qty_value(buffer, unit = "M")
@@ -195,8 +195,8 @@ calculate_open_system_alkalinity <- function(
   if (missing(`H2CO3*`) && missing(pCO2))  stop("either pCO2 or H2CO3* need to be specified", call. = FALSE)
   if (!missing(pCO2) && !missing(`H2CO3*`)) warning("H2CO3* provided, pCO2 parameter will be ignored", call. = FALSE, immediate. = TRUE)
   if (missing(`H2CO3*`)) require_quantity(pCO2_quo, is_pressure)
-  require_quantity(H2CO3_quo, is_molarity)
-  require_quantity(buffer_quo, is_molarity)
+  require_quantity(H2CO3_quo, is_molarity_concentration)
+  require_quantity(buffer_quo, is_molarity_concentration)
   if (!missing(buffer) && missing(buffer_pKa))
     stop("must provide a pKa if buffer is provided", call. = FALSE)
   else if (missing(buffer_pKa))
@@ -247,12 +247,12 @@ calculate_closed_system_pH <- function(
   require_quantity(rlang::enquo(V_liquid), is_volume)
   require_quantity(rlang::enquo(temperature), is_temperature)
   buffer_quo <- rlang::enquo(buffer)
-  require_quantity(buffer_quo, is_molarity)
+  require_quantity(buffer_quo, is_molarity_concentration)
   if (!missing(buffer) && missing(buffer_pKa))
     stop("must provide a pKa if buffer is provided", call. = FALSE)
   else if (missing(buffer_pKa))
     buffer_pKa <- 7 # place holder value, buffer is 0
-  require_quantity(rlang::enquo(alkalinity), is_molarity)
+  require_quantity(rlang::enquo(alkalinity), is_molarity_concentration)
   
   # calculate
   TIC.mol <- get_qty_value(TIC, unit = "mol")
@@ -296,7 +296,7 @@ calculate_closed_system_alkalinity <- function(
   require_quantity(rlang::enquo(V_liquid), is_volume)
   require_quantity(rlang::enquo(temperature), is_temperature)
   buffer_quo <- rlang::enquo(buffer)
-  require_quantity(buffer_quo, is_molarity)
+  require_quantity(buffer_quo, is_molarity_concentration)
   if (!missing(buffer) && missing(buffer_pKa))
     stop("must provide a pKa if buffer is provided", call. = FALSE)
   else if (missing(buffer_pKa))

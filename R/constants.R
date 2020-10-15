@@ -8,15 +8,30 @@
   opts <- list(
     # base units
     base_units = c(
+      "quantity" = NA_character_,
       "amount" = "mol",
       "mass" = "g",
-      "molecular_mass" = "g/mol",
-      "molarity" = "M",
-      "density" = "g/L",
+      "molecular_weight" = "g/mol",
+      "molarity_concentration" = "M",
+      "mass_concentration" = "g/L",
       "volume" = "L",
       "pressure" = "bar",
-      "solubility" = "M/bar",
+      "gas_solubility" = "M/bar",
       "temperature" = "K"
+    ),
+    
+    # abbreviation
+    abbreviations = c(
+      "quantity" = "qty",
+      "amount" = "N",
+      "mass" = "m",
+      "molecular_weight" = "MW",
+      "molarity_concentration" = "C",
+      "mass_concentration" = "C",
+      "volume" = "V",
+      "pressure" = "P",
+      "gas_solubility" = "S",
+      "temperature" = "T"
     ),
     
     # metric prefixes
@@ -67,14 +82,4 @@ get_microbialkitchen_constants <- function() {
     key = purrr::map(opts, names) %>% purrr::map( ~ if (is.null(.x)) { NA_character_ } else { .x }),
     value = purrr::map(opts, identity)
   ) %>% unnest(key, value)
-}
-
-# get metric prefixes
-get_base_units <- function() {
-  get_microbialkitchen_constant("base_units")
-}
-
-# get metric prefixes
-get_metric_prefixes <- function() {
-  get_microbialkitchen_constant("metric_prefix")
 }
