@@ -9,7 +9,7 @@
 calculate_open_system_pH(
   pCO2,
   `H2CO3*` = solubility * pCO2,
-  solubility = calculate_solubility("CO2", temperature),
+  solubility = calculate_gas_solubility("CO2", temperature),
   temperature = qty(25, "C"),
   pKa1 = 6.3,
   pKa2 = 10.3,
@@ -23,7 +23,7 @@ calculate_open_system_alkalinity(
   pH,
   pCO2,
   `H2CO3*` = solubility * pCO2,
-  solubility = calculate_solubility("CO2", temperature),
+  solubility = calculate_gas_solubility("CO2", temperature),
   temperature = qty(25, "C"),
   pKa1 = 6.3,
   pKa2 = 10.3,

@@ -19,7 +19,7 @@ calculate_ideal_gas_molarity <- function(pressure, temperature) {
   R_ideal <- get_microbialkitchen_constant("R_in_L_bar_per_K_mol") 
   molarity.M <- pressure.bar / (R_ideal * temperature.K)
   
-  return(molarity(molarity.M, "M"))
+  return(molarity_concentration(molarity.M, "M"))
 }
 
 #' @describeIn gas_calculations calculates the amount of an ideal gas at a specific pressure, temperature and volume. Returns an amount quantity.
@@ -37,7 +37,7 @@ calculate_ideal_gas_amount <- function(pressure, temperature, volume) {
 #' @param temperature temperature quantity
 #' @family calculations
 #' @export
-calculate_solubility <- function(gas, temperature) {
+calculate_gas_solubility <- function(gas, temperature) {
   
   # consider storing more centrally for easy modification/extension?
   constants <- 
@@ -59,5 +59,5 @@ calculate_solubility <- function(gas, temperature) {
   # calculation
   temperature.K <- get_qty_value(temperature, "K")
   KH <- with(gas_constants, H0 * exp(`dH/d(1/T)` * (1/temperature.K - 1/T0) ))
-  return(solubility(KH, "M/bar"))
+  return(gas_solubility(KH, "M/bar"))
 }
