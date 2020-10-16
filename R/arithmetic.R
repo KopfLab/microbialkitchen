@@ -5,22 +5,10 @@
 #' @name arithmetic
 NULL
 
-
-# Comparisons =======================
-# Note: comparisons work automatically because of vctrs implementation
-
-#' @param qty quantity
-#' @param number regular number
-#' @details
-#' \code{qty ==, !=, <, <=, >, >= qty} allows the comparison of quantities that are the same type (e.g. all mass).
-#' @examples
-#' qty(1, "g") == qty(1000, "mg", scale_to_best_metric = FALSE) # TRUE
-#' qty(2, "mg") < qty(5, "ng")  # FALSE
-#' @name arithmetic
-NULL
+# class methods ========================
 
 # helper function to apply vector arithmetic to quantities and scale to best metric
-apply_vec_arith_base_to_qty <- function(op, x, y, to = x, unit = get_qty_units(to), class = get_qty_class(to)) {
+qty_vec_arith_base <- function(op, x, y, to = x, unit = get_qty_units(to), class = get_qty_class(to)) {
   best_metric(new_qty(vctrs::vec_arith_base(op, x, y), unit = unit, class = class))
 }
 
@@ -30,87 +18,14 @@ apply_vec_arith_base_to_qty <- function(op, x, y, to = x, unit = get_qty_units(t
 #' @method vec_arith microbial_kitchen_quantity
 #' @export
 #' @export vec_arith.microbial_kitchen_quantity
-vec_arith.microbial_kitchen_quantity <- function(op, x, y, ...)
+vec_arith.microbial_kitchen_quantity <- function(op, x, y, ...) {
   UseMethod("vec_arith.microbial_kitchen_quantity", y)
+}
 
 #' @method vec_arith.microbial_kitchen_quantity default
 #' @export
 vec_arith.microbial_kitchen_quantity.default <- function(op, x, y, ...)
   vctrs::stop_incompatible_op(op, x, y)
-
-# qty/double, qty * double ========================
-
-#' @details
-#' \code{qty / number} divide quantity by a plain number. Returns the quantity automatically rescaled to the best metric.
-#' @examples
-#' qty(5, "mg") / 1e6 # 5 ng
-#' @name arithmetic
-NULL
-
-#' @details
-#' \code{qty * number} multiply a quantity by a plain number (either way around is valid). Returns the quantity automatically rescaled to the best metric.
-#' @examples
-#' qty(5, "mg") * 1e6 # 5 kg
-#' @name arithmetic
-NULL
-
-#' @method vec_arith.microbial_kitchen_quantity numeric
-#' @export
-vec_arith.microbial_kitchen_quantity.numeric <- function(op, x, y, ...) {
-  # all quantities can be multiplied and divided by a regular number
-  switch(
-    op,
-    "/" = ,
-    "*" = apply_vec_arith_base_to_qty(op, x, y),
-    vctrs::stop_incompatible_op(op, x, y)
-  )
-}
-#' @method vec_arith.numeric microbial_kitchen_quantity
-#' @export
-vec_arith.numeric.microbial_kitchen_quantity <- function(op, x, y, ...) {
-  # regular numbers can be multiplied with all quantities
-  switch(
-    op,
-    "*" = apply_vec_arith_base_to_qty(op, y, x),
-    vctrs::stop_incompatible_op(op, x, y)
-  )
-}
-
-# qty +/- qty & qty/qty  ========================
-
-#' @details
-#' \code{qty +- qty} allows the addition/subtraction of quantities that are the same type (e.g. all mass). Note that this operation also scales the new value using \code{\link{best_metric}}.
-#' @examples
-#' qty(1, "mg") + qty(999.999, "g") # 1 kg
-#' @name arithmetic
-NULL
-
-#' @details
-#' \code{qty / qty} divide quantities of the same type. Returns plain numeric (i.e. the units are divided out).
-#' @examples
-#' qty(5, "mg") / qty(1, "g") # 0.005
-#' @name arithmetic
-NULL
-
-#' @method vec_arith.microbial_kitchen_quantity microbial_kitchen_quantity
-#' @export
-vec_arith.microbial_kitchen_quantity.microbial_kitchen_quantity <- function(op, x, y, ...) {
-  # quantities of the same type can be added and subtracted from each other
-  if (!identical(get_qty_class(x), get_qty_class(y)))
-    vctrs::stop_incompatible_op(op, x, y)
-  x <- base_metric(x)
-  y <- base_metric(y)
-  switch(
-    op,
-    "+" = ,
-    "-" = apply_vec_arith_base_to_qty(op, x, y),
-    "/" = vctrs::vec_arith_base(op, x, y),
-    # rest is not allowed
-    vctrs::stop_incompatible_op(op, x, y)
-  )
-}
-
-# Special operations setup ==============
 
 #' vec_arith for microbial_kitchen_amount objects
 #' @rdname vec_arith
@@ -232,6 +147,220 @@ vec_arith.microbial_kitchen_gas_solubility <- function(op, x, y, ...) {
 vec_arith.microbial_kitchen_gas_solubility.default <- function(op, x, y, ...)
   vctrs::stop_incompatible_op(op, x, y)
 
+#' vec_arith for microbial_kitchen_temperature objects
+#' @rdname vec_arith
+#' @inheritParams vctrs::vec_arith
+#' @method vec_arith microbial_kitchen_temperature
+#' @export
+#' @export vec_arith.microbial_kitchen_temperature
+vec_arith.microbial_kitchen_temperature <- function(op, x, y, ...) {
+  UseMethod("vec_arith.microbial_kitchen_temperature", y)
+}
+
+#' @method vec_arith.microbial_kitchen_temperature default
+#' @export
+vec_arith.microbial_kitchen_temperature.default <- function(op, x, y, ...)
+  vctrs::stop_incompatible_op(op, x, y)
+
+# comparisons =======================
+
+# Note: comparisons work automatically because of vctrs implementation
+
+#' @param qty quantity
+#' @param number regular number
+#' @details
+#' \code{qty ==, !=, <, <=, >, >= qty} allows the comparison of quantities that are the same type (e.g. all mass).
+#' @examples
+#' qty(1, "g") == qty(1000, "mg", scale_to_best_metric = FALSE) # TRUE
+#' qty(2, "mg") < qty(5, "ng")  # FALSE
+#' @name arithmetic
+NULL
+
+# qty/double, qty * double ========================
+
+#' @details
+#' \code{qty / number} divide quantity by a plain number. Returns the quantity automatically rescaled to the best metric.
+#' @examples
+#' qty(5, "mg") / 1e6 # 5 ng
+#' @name arithmetic
+NULL
+
+#' @details
+#' \code{qty * number} multiply a quantity by a plain number (either way around is valid). Returns the quantity automatically rescaled to the best metric.
+#' @examples
+#' qty(5, "mg") * 1e6 # 5 kg
+#' @name arithmetic
+NULL
+
+# helper function for common plus, minus divide operations
+# all quantities can be multiplied and divided by a regular number
+qty_numeric_divide_multiply <- function(op, x, y) {
+  switch(
+    op,
+    "/" = ,
+    "*" = qty_vec_arith_base(op, x, y),
+    vctrs::stop_incompatible_op(op, x, y)
+  )
+}
+
+#' @method vec_arith.numeric microbial_kitchen_quantity
+#' @export
+vec_arith.numeric.microbial_kitchen_quantity <- function(op, x, y, ...) {
+  # regular numbers can be multiplied with all quantities
+  switch(
+    op,
+    "*" = qty_vec_arith_base(op, y, x),
+    vctrs::stop_incompatible_op(op, x, y)
+  )
+}
+
+#' @method vec_arith.microbial_kitchen_quantity numeric
+#' @export
+vec_arith.microbial_kitchen_quantity.numeric <- function(op, x, y, ...) {
+  qty_numeric_divide_multiply(op, x, y)
+}
+
+#' @method vec_arith.microbial_kitchen_amount numeric
+#' @export
+vec_arith.microbial_kitchen_amount.numeric <- function(op, x, y, ...) {
+  qty_numeric_divide_multiply(op, x, y)
+}
+
+#' @method vec_arith.microbial_kitchen_mass numeric
+#' @export
+vec_arith.microbial_kitchen_mass.numeric <- function(op, x, y, ...) {
+  qty_numeric_divide_multiply(op, x, y)
+}
+
+#' @method vec_arith.microbial_kitchen_molecular_weight numeric
+#' @export
+vec_arith.microbial_kitchen_molecular_weight.numeric <- function(op, x, y, ...) {
+  qty_numeric_divide_multiply(op, x, y)
+}
+
+#' @method vec_arith.microbial_kitchen_molarity_concentration numeric
+#' @export
+vec_arith.microbial_kitchen_molarity_concentration.numeric <- function(op, x, y, ...) {
+  qty_numeric_divide_multiply(op, x, y)
+}
+
+#' @method vec_arith.microbial_kitchen_mass_concentration numeric
+#' @export
+vec_arith.microbial_kitchen_mass_concentration.numeric <- function(op, x, y, ...) {
+  qty_numeric_divide_multiply(op, x, y)
+}
+
+#' @method vec_arith.microbial_kitchen_volume numeric
+#' @export
+vec_arith.microbial_kitchen_volume.numeric <- function(op, x, y, ...) {
+  qty_numeric_divide_multiply(op, x, y)
+}
+
+#' @method vec_arith.microbial_kitchen_pressure numeric
+#' @export
+vec_arith.microbial_kitchen_pressure.numeric <- function(op, x, y, ...) {
+  qty_numeric_divide_multiply(op, x, y)
+}
+
+#' @method vec_arith.microbial_kitchen_gas_solubility numeric
+#' @export
+vec_arith.microbial_kitchen_gas_solubility.numeric <- function(op, x, y, ...) {
+  qty_numeric_divide_multiply(op, x, y)
+}
+
+#' @method vec_arith.microbial_kitchen_temperature numeric
+#' @export
+vec_arith.microbial_kitchen_temperature.numeric <- function(op, x, y, ...) {
+  qty_numeric_divide_multiply(op, x, y)
+}
+
+# qty +/- qty & qty/qty  ========================
+
+#' @details
+#' \code{qty +- qty} allows the addition/subtraction of quantities that are the same type (e.g. all mass). Note that this operation also scales the new value using \code{\link{best_metric}}.
+#' @examples
+#' qty(1, "mg") + qty(999.999, "g") # 1 kg
+#' @name arithmetic
+NULL
+
+#' @details
+#' \code{qty / qty} divide quantities of the same type. Returns plain numeric (i.e. the units are divided out).
+#' @examples
+#' qty(5, "mg") / qty(1, "g") # 0.005
+#' @name arithmetic
+NULL
+
+# helper function for common plus, minus divide operations
+qty_qty_plus_minus_divide <- function(op, x, y) {
+  switch(
+    op,
+    "+" = ,
+    "-" = qty_vec_arith_base(op, base_metric(x), base_metric(y)),
+    "/" = vctrs::vec_arith_base(op, base_metric(x), base_metric(y)),
+    vctrs::stop_incompatible_op(op, base_metric(x), base_metric(y))
+  )
+}
+
+#' @method vec_arith.microbial_kitchen_quantity microbial_kitchen_quantity
+#' @export
+vec_arith.microbial_kitchen_quantity.microbial_kitchen_quantity <- function(op, x, y, ...) {
+  qty_qty_plus_minus_divide(op, x, y)
+}
+
+#' @method vec_arith.microbial_kitchen_amount microbial_kitchen_amount
+#' @export
+vec_arith.microbial_kitchen_amount.microbial_kitchen_amount <- function(op, x, y, ...) {
+  qty_qty_plus_minus_divide(op, x, y)
+}
+
+#' @method vec_arith.microbial_kitchen_mass microbial_kitchen_mass
+#' @export
+vec_arith.microbial_kitchen_mass.microbial_kitchen_mass <- function(op, x, y, ...) {
+  qty_qty_plus_minus_divide(op, x, y)
+}
+
+#' @method vec_arith.microbial_kitchen_molecular_weight microbial_kitchen_molecular_weight
+#' @export
+vec_arith.microbial_kitchen_molecular_weight.microbial_kitchen_molecular_weight <- function(op, x, y, ...) {
+  qty_qty_plus_minus_divide(op, x, y)
+}
+
+#' @method vec_arith.microbial_kitchen_molarity_concentration microbial_kitchen_molarity_concentration
+#' @export
+vec_arith.microbial_kitchen_molarity_concentration.microbial_kitchen_molarity_concentration <- function(op, x, y, ...) {
+  qty_qty_plus_minus_divide(op, x, y)
+}
+
+#' @method vec_arith.microbial_kitchen_mass_concentration microbial_kitchen_mass_concentration
+#' @export
+vec_arith.microbial_kitchen_mass_concentration.microbial_kitchen_mass_concentration <- function(op, x, y, ...) {
+  qty_qty_plus_minus_divide(op, x, y)
+}
+
+#' @method vec_arith.microbial_kitchen_volume microbial_kitchen_volume
+#' @export
+vec_arith.microbial_kitchen_volume.microbial_kitchen_volume <- function(op, x, y, ...) {
+  qty_qty_plus_minus_divide(op, x, y)
+}
+
+#' @method vec_arith.microbial_kitchen_pressure microbial_kitchen_pressure
+#' @export
+vec_arith.microbial_kitchen_pressure.microbial_kitchen_pressure <- function(op, x, y, ...) {
+  qty_qty_plus_minus_divide(op, x, y)
+}
+
+#' @method vec_arith.microbial_kitchen_gas_solubility microbial_kitchen_gas_solubility
+#' @export
+vec_arith.microbial_kitchen_gas_solubility.microbial_kitchen_gas_solubility <- function(op, x, y, ...) {
+  qty_qty_plus_minus_divide(op, x, y)
+}
+
+#' @method vec_arith.microbial_kitchen_temperature microbial_kitchen_temperature
+#' @export
+vec_arith.microbial_kitchen_temperature.microbial_kitchen_temperature <- function(op, x, y, ...) {
+  qty_qty_plus_minus_divide(op, x, y)
+}
+
 # molarity = amount / volume ============
 
 #' @details \code{amount / volume} divide an amount by a volume to create a molarity (concentration).
@@ -249,7 +378,7 @@ NULL
 vec_arith.microbial_kitchen_amount.microbial_kitchen_volume <- function(op, x, y, ...) {
   switch(
     op,
-    "/" = apply_vec_arith_base_to_qty(op, base_metric(x), base_metric(y), to = molarity_concentration()),
+    "/" = qty_vec_arith_base(op, base_metric(x), base_metric(y), to = molarity_concentration()),
     vctrs::stop_incompatible_op(op, x, y)
   )
 }
@@ -258,7 +387,7 @@ vec_arith.microbial_kitchen_amount.microbial_kitchen_volume <- function(op, x, y
 vec_arith.microbial_kitchen_amount.microbial_kitchen_molarity_concentration <- function(op, x, y, ...) {
   switch(
     op,
-    "/" = apply_vec_arith_base_to_qty(op, base_metric(x), base_metric(y), to = volume()),
+    "/" = qty_vec_arith_base(op, base_metric(x), base_metric(y), to = volume()),
     vctrs::stop_incompatible_op(op, x, y)
   )
 }
@@ -268,7 +397,7 @@ vec_arith.microbial_kitchen_amount.microbial_kitchen_molarity_concentration <- f
 vec_arith.microbial_kitchen_volume.microbial_kitchen_molarity_concentration <- function(op, x, y, ...) {
   switch(
     op,
-    "*" = apply_vec_arith_base_to_qty(op, base_metric(x), base_metric(y), to = amount()),
+    "*" = qty_vec_arith_base(op, base_metric(x), base_metric(y), to = amount()),
     vctrs::stop_incompatible_op(op, x, y)
   )
 }
@@ -277,7 +406,7 @@ vec_arith.microbial_kitchen_volume.microbial_kitchen_molarity_concentration <- f
 vec_arith.microbial_kitchen_molarity_concentration.microbial_kitchen_volume <- function(op, x, y, ...) {
   switch(
     op,
-    "*" = apply_vec_arith_base_to_qty(op, base_metric(x), base_metric(y), to = amount()),
+    "*" = qty_vec_arith_base(op, base_metric(x), base_metric(y), to = amount()),
     vctrs::stop_incompatible_op(op, x, y)
   )
 }
@@ -299,7 +428,7 @@ NULL
 vec_arith.microbial_kitchen_mass.microbial_kitchen_volume <- function(op, x, y, ...) {
   switch(
     op,
-    "/" = apply_vec_arith_base_to_qty(op, base_metric(x), base_metric(y), to = mass_concentration()),
+    "/" = qty_vec_arith_base(op, base_metric(x), base_metric(y), to = mass_concentration()),
     vctrs::stop_incompatible_op(op, x, y)
   )
 }
@@ -308,7 +437,7 @@ vec_arith.microbial_kitchen_mass.microbial_kitchen_volume <- function(op, x, y, 
 vec_arith.microbial_kitchen_mass.microbial_kitchen_mass_concentration <- function(op, x, y, ...) {
   switch(
     op,
-    "/" = apply_vec_arith_base_to_qty(op, base_metric(x), base_metric(y), to = volume()),
+    "/" = qty_vec_arith_base(op, base_metric(x), base_metric(y), to = volume()),
     vctrs::stop_incompatible_op(op, x, y)
   )
 }
@@ -318,7 +447,7 @@ vec_arith.microbial_kitchen_mass.microbial_kitchen_mass_concentration <- functio
 vec_arith.microbial_kitchen_volume.microbial_kitchen_mass_concentration <- function(op, x, y, ...) {
   switch(
     op,
-    "*" = apply_vec_arith_base_to_qty(op, base_metric(x), base_metric(y), to = mass()),
+    "*" = qty_vec_arith_base(op, base_metric(x), base_metric(y), to = mass()),
     vctrs::stop_incompatible_op(op, x, y)
   )
 }
@@ -327,7 +456,7 @@ vec_arith.microbial_kitchen_volume.microbial_kitchen_mass_concentration <- funct
 vec_arith.microbial_kitchen_mass_concentration.microbial_kitchen_volume <- function(op, x, y, ...) {
   switch(
     op,
-    "*" = apply_vec_arith_base_to_qty(op, base_metric(x), base_metric(y), to = mass()),
+    "*" = qty_vec_arith_base(op, base_metric(x), base_metric(y), to = mass()),
     vctrs::stop_incompatible_op(op, x, y)
   )
 }
@@ -349,7 +478,7 @@ NULL
 vec_arith.microbial_kitchen_mass.microbial_kitchen_molecular_weight <- function(op, x, y, ...) {
   switch(
     op,
-    "/" = apply_vec_arith_base_to_qty(op, base_metric(x), base_metric(y), to = amount()),
+    "/" = qty_vec_arith_base(op, base_metric(x), base_metric(y), to = amount()),
     vctrs::stop_incompatible_op(op, x, y)
   )
 }
@@ -358,7 +487,7 @@ vec_arith.microbial_kitchen_mass.microbial_kitchen_molecular_weight <- function(
 vec_arith.microbial_kitchen_mass.microbial_kitchen_amount <- function(op, x, y, ...) {
   switch(
     op,
-    "/" = apply_vec_arith_base_to_qty(op, base_metric(x), base_metric(y), to = molecular_weight()),
+    "/" = qty_vec_arith_base(op, base_metric(x), base_metric(y), to = molecular_weight()),
     vctrs::stop_incompatible_op(op, x, y)
   )
 }
@@ -368,7 +497,7 @@ vec_arith.microbial_kitchen_mass.microbial_kitchen_amount <- function(op, x, y, 
 vec_arith.microbial_kitchen_amount.microbial_kitchen_molecular_weight <- function(op, x, y, ...) {
   switch(
     op,
-    "*" = apply_vec_arith_base_to_qty(op, base_metric(x), base_metric(y), to = mass()),
+    "*" = qty_vec_arith_base(op, base_metric(x), base_metric(y), to = mass()),
     vctrs::stop_incompatible_op(op, x, y)
   )
 }
@@ -377,7 +506,7 @@ vec_arith.microbial_kitchen_amount.microbial_kitchen_molecular_weight <- functio
 vec_arith.microbial_kitchen_molecular_weight.microbial_kitchen_amount <- function(op, x, y, ...) {
   switch(
     op,
-    "*" = apply_vec_arith_base_to_qty(op, base_metric(x), base_metric(y), to = mass()),
+    "*" = qty_vec_arith_base(op, base_metric(x), base_metric(y), to = mass()),
     vctrs::stop_incompatible_op(op, x, y)
   )
 }
@@ -399,7 +528,7 @@ NULL
 vec_arith.microbial_kitchen_molarity_concentration.microbial_kitchen_pressure <- function(op, x, y, ...) {
   switch(
     op,
-    "/" = apply_vec_arith_base_to_qty(op, base_metric(x), base_metric(y), to = gas_solubility()),
+    "/" = qty_vec_arith_base(op, base_metric(x), base_metric(y), to = gas_solubility()),
     vctrs::stop_incompatible_op(op, x, y)
   )
 }
@@ -408,7 +537,7 @@ vec_arith.microbial_kitchen_molarity_concentration.microbial_kitchen_pressure <-
 vec_arith.microbial_kitchen_molarity_concentration.microbial_kitchen_gas_solubility <- function(op, x, y, ...) {
   switch(
     op,
-    "/" = apply_vec_arith_base_to_qty(op, base_metric(x), base_metric(y), to = pressure()),
+    "/" = qty_vec_arith_base(op, base_metric(x), base_metric(y), to = pressure()),
     vctrs::stop_incompatible_op(op, x, y)
   )
 }
@@ -418,7 +547,7 @@ vec_arith.microbial_kitchen_molarity_concentration.microbial_kitchen_gas_solubil
 vec_arith.microbial_kitchen_gas_solubility.microbial_kitchen_pressure <- function(op, x, y, ...) {
   switch(
     op,
-    "*" = apply_vec_arith_base_to_qty(op, base_metric(x), base_metric(y), to = molarity_concentration()),
+    "*" = qty_vec_arith_base(op, base_metric(x), base_metric(y), to = molarity_concentration()),
     vctrs::stop_incompatible_op(op, x, y)
   )
 }
@@ -427,29 +556,7 @@ vec_arith.microbial_kitchen_gas_solubility.microbial_kitchen_pressure <- functio
 vec_arith.microbial_kitchen_pressure.microbial_kitchen_gas_solubility <- function(op, x, y, ...) {
   switch(
     op,
-    "*" = apply_vec_arith_base_to_qty(op, base_metric(x), base_metric(y), to = molarity_concentration()),
+    "*" = qty_vec_arith_base(op, base_metric(x), base_metric(y), to = molarity_concentration()),
     vctrs::stop_incompatible_op(op, x, y)
   )
 }
-
-
-
-#' 
-#' # molarity / pressure = solubility
-#' setMethod("/", signature(e1 = "MediaChemToolsMolarity", e2 = "MediaChemToolsPressure"), function(e1, e2) {
-#'   return (solubility( scale_metric(e1, get_prefix(e2))@.Data / e2@.Data, "M/bar" ))
-#' })
-#' 
-#' # molarity / solubility = pressure
-#' setMethod("/", signature(e1 = "MediaChemToolsMolarity", e2 = "MediaChemToolsSolubility"), function(e1, e2) {
-#'   return (pressure( base_metric(e1)@.Data / base_metric(e2)@.Data, "bar") )
-#' })
-#' 
-#' # solubility * pressure = molarity
-#' setMethod("*", signature(e1 = "MediaChemToolsSolubility", e2 = "MediaChemToolsPressure"), function(e1, e2) {
-#'   return (molarity( base_metric(e1)@.Data * base_metric(e2)@.Data, "M"))
-#' })
-#' setMethod("*", signature(e1 = "MediaChemToolsPressure", e2 = "MediaChemToolsSolubility"), function(e1, e2) e2 * e1)
-#' 
-#' 
-#' 

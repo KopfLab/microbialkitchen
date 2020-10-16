@@ -10,6 +10,7 @@
 \alias{vec_arith.microbial_kitchen_volume}
 \alias{vec_arith.microbial_kitchen_pressure}
 \alias{vec_arith.microbial_kitchen_gas_solubility}
+\alias{vec_arith.microbial_kitchen_temperature}
 \title{vec_arith for microbial_kitchen_quantity objects}
 \usage{
 \method{vec_arith}{microbial_kitchen_quantity}(op, x, y, ...)
@@ -29,6 +30,8 @@
 \method{vec_arith}{microbial_kitchen_pressure}(op, x, y, ...)
 
 \method{vec_arith}{microbial_kitchen_gas_solubility}(op, x, y, ...)
+
+\method{vec_arith}{microbial_kitchen_temperature}(op, x, y, ...)
 }
 \arguments{
 \item{op}{An arithmetic operator as a string}
@@ -59,4 +62,6 @@ vec_arith for microbial_kitchen_volume objects
 vec_arith for microbial_kitchen_pressure objects
 
 vec_arith for microbial_kitchen_gas_solubility objects
+
+vec_arith for microbial_kitchen_temperature objects
 }

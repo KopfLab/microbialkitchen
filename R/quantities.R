@@ -346,7 +346,7 @@ is_molecular_weight <- function(q) { is(q, "microbial_kitchen_molecular_weight")
 
 #' @describeIn check_quantities check whether something is a molarity concentration quantity
 #' @export
-is_molarity_concentration <- function(q) { is(q, "microbial_molarity_concentration") }
+is_molarity_concentration <- function(q) { is(q, "microbial_kitchen_molarity_concentration") }
 
 #' @describeIn check_quantities check whether something is a mass concentration quantity
 #' @export
@@ -545,63 +545,63 @@ vec_cast.character.microbial_kitchen_quantity <- function(x, to, ...) { get_text
 vec_ptype2.character.microbial_kitchen_amount <- function(x, y, ..., x_arg = "x", y_arg = "y") character()
 #' @method vec_cast.character microbial_kitchen_amount
 #' @export
-vec_cast.character.microbial_kitchen_amount <- function(x, to, ...) { get_value(x, ...) }
+vec_cast.character.microbial_kitchen_amount <- function(x, to, ...) { get_text(x, ...) }
 
 #' @method vec_ptype2.character microbial_kitchen_mass
 #' @export
 vec_ptype2.character.microbial_kitchen_mass <- function(x, y, ..., x_arg = "x", y_arg = "y") character()
 #' @method vec_cast.character microbial_kitchen_mass
 #' @export
-vec_cast.character.microbial_kitchen_mass <- function(x, to, ...) { get_value(x, ...) }
+vec_cast.character.microbial_kitchen_mass <- function(x, to, ...) { get_text(x, ...) }
 
 #' @method vec_ptype2.character microbial_kitchen_molecular_weight
 #' @export
 vec_ptype2.character.microbial_kitchen_molecular_weight <- function(x, y, ..., x_arg = "x", y_arg = "y") character()
 #' @method vec_cast.character microbial_kitchen_molecular_weight
 #' @export
-vec_cast.character.microbial_kitchen_molecular_weight <- function(x, to, ...) { get_value(x, ...) }
+vec_cast.character.microbial_kitchen_molecular_weight <- function(x, to, ...) { get_text(x, ...) }
 
 #' @method vec_ptype2.character microbial_kitchen_molarity_concentration
 #' @export
 vec_ptype2.character.microbial_kitchen_molarity_concentration <- function(x, y, ..., x_arg = "x", y_arg = "y") character()
 #' @method vec_cast.character microbial_kitchen_molarity_concentration
 #' @export
-vec_cast.character.microbial_kitchen_molarity_concentration <- function(x, to, ...) { get_value(x, ...) }
+vec_cast.character.microbial_kitchen_molarity_concentration <- function(x, to, ...) { get_text(x, ...) }
 
 #' @method vec_ptype2.character microbial_kitchen_mass_concentration
 #' @export
 vec_ptype2.character.microbial_kitchen_mass_concentration <- function(x, y, ..., x_arg = "x", y_arg = "y") character()
 #' @method vec_cast.character microbial_kitchen_mass_concentration
 #' @export
-vec_cast.character.microbial_kitchen_mass_concentration <- function(x, to, ...) { get_value(x, ...) }
+vec_cast.character.microbial_kitchen_mass_concentration <- function(x, to, ...) { get_text(x, ...) }
 
 #' @method vec_ptype2.character microbial_kitchen_volume
 #' @export
 vec_ptype2.character.microbial_kitchen_volume <- function(x, y, ..., x_arg = "x", y_arg = "y") character()
 #' @method vec_cast.character microbial_kitchen_volume
 #' @export
-vec_cast.character.microbial_kitchen_volume <- function(x, to, ...) { get_value(x, ...) }
+vec_cast.character.microbial_kitchen_volume <- function(x, to, ...) { get_text(x, ...) }
 
 #' @method vec_ptype2.character microbial_kitchen_pressure
 #' @export
 vec_ptype2.character.microbial_kitchen_pressure <- function(x, y, ..., x_arg = "x", y_arg = "y") character()
 #' @method vec_cast.character microbial_kitchen_pressure
 #' @export
-vec_cast.character.microbial_kitchen_pressure <- function(x, to, ...) { get_value(x, ...) }
+vec_cast.character.microbial_kitchen_pressure <- function(x, to, ...) { get_text(x, ...) }
 
 #' @method vec_ptype2.character microbial_kitchen_gas_solubility
 #' @export
 vec_ptype2.character.microbial_kitchen_gas_solubility <- function(x, y, ..., x_arg = "x", y_arg = "y") character()
 #' @method vec_cast.character microbial_kitchen_gas_solubility
 #' @export
-vec_cast.character.microbial_kitchen_gas_solubility <- function(x, to, ...) { get_value(x, ...) }
+vec_cast.character.microbial_kitchen_gas_solubility <- function(x, to, ...) { get_text(x, ...) }
 
 #' @method vec_ptype2.character microbial_kitchen_temperature
 #' @export
 vec_ptype2.character.microbial_kitchen_temperature <- function(x, y, ..., x_arg = "x", y_arg = "y") character()
 #' @method vec_cast.character microbial_kitchen_temperature
 #' @export
-vec_cast.character.microbial_kitchen_temperature <- function(x, to, ...) { get_value(x, ...) }
+vec_cast.character.microbial_kitchen_temperature <- function(x, to, ...) { get_text(x, ...) }
 
 # type casts: to same quantity type (=c) ====
 
@@ -1087,4 +1087,11 @@ get_unit_prefix <- function(unit, base_unit) {
       stop(call. = FALSE)
   }
   return(sub(paste0(base_unit, "$"), "", unit))
+}
+
+# factors ========
+
+#' @export
+as_factor.microbial_kitchen_quantity <- function(x) {
+  return(forcats::as_factor(as.character(x)))
 }
