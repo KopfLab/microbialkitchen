@@ -1,7 +1,3 @@
-# make sure classes are loaded before everything else
-#' @include classes.R
-NULL
-
 #' Arithmetic
 #' 
 #' These arithmetic operators for quantities in microbialkitchen keep track of units in standard operations (i.e. they ALL take the SI prefix into consideration). Also note that all operations that result in a new quantity object automatically scale the new value using \code{\link{best_metric}}.
@@ -9,289 +5,558 @@ NULL
 #' @name arithmetic
 NULL
 
+# class methods ========================
 
-# Comparisons =======================
+# helper function to apply vector arithmetic to quantities and scale to best metric
+qty_vec_arith_base <- function(op, x, y, to = x, unit = get_qty_units(to), class = get_qty_class(to)) {
+  best_metric(new_qty(vctrs::vec_arith_base(op, x, y), unit = unit, class = class))
+}
+
+#' vec_arith for microbial_kitchen_quantity objects
+#' @rdname vec_arith
+#' @inheritParams vctrs::vec_arith
+#' @method vec_arith microbial_kitchen_quantity
+#' @export
+#' @export vec_arith.microbial_kitchen_quantity
+vec_arith.microbial_kitchen_quantity <- function(op, x, y, ...) {
+  UseMethod("vec_arith.microbial_kitchen_quantity", y)
+}
+
+#' @method vec_arith.microbial_kitchen_quantity default
+#' @export
+vec_arith.microbial_kitchen_quantity.default <- function(op, x, y, ...)
+  vctrs::stop_incompatible_op(op, x, y)
+
+#' vec_arith for microbial_kitchen_amount objects
+#' @rdname vec_arith
+#' @inheritParams vctrs::vec_arith
+#' @method vec_arith microbial_kitchen_amount
+#' @export
+#' @export vec_arith.microbial_kitchen_amount
+vec_arith.microbial_kitchen_amount <- function(op, x, y, ...) {
+  UseMethod("vec_arith.microbial_kitchen_amount", y)
+}
+
+#' @method vec_arith.microbial_kitchen_amount default
+#' @export
+vec_arith.microbial_kitchen_amount.default <- function(op, x, y, ...)
+  vctrs::stop_incompatible_op(op, x, y)
+
+#' vec_arith for microbial_kitchen_mass objects
+#' @rdname vec_arith
+#' @inheritParams vctrs::vec_arith
+#' @method vec_arith microbial_kitchen_mass
+#' @export
+#' @export vec_arith.microbial_kitchen_mass
+vec_arith.microbial_kitchen_mass <- function(op, x, y, ...) {
+  UseMethod("vec_arith.microbial_kitchen_mass", y)
+}
+
+#' @method vec_arith.microbial_kitchen_mass default
+#' @export
+vec_arith.microbial_kitchen_mass.default <- function(op, x, y, ...)
+  vctrs::stop_incompatible_op(op, x, y)
+
+#' vec_arith for microbial_kitchen_molecular_weight objects
+#' @rdname vec_arith
+#' @inheritParams vctrs::vec_arith
+#' @method vec_arith microbial_kitchen_molecular_weight
+#' @export
+#' @export vec_arith.microbial_kitchen_molecular_weight
+vec_arith.microbial_kitchen_molecular_weight <- function(op, x, y, ...) {
+  UseMethod("vec_arith.microbial_kitchen_molecular_weight", y)
+}
+
+#' @method vec_arith.microbial_kitchen_molecular_weight default
+#' @export
+vec_arith.microbial_kitchen_molecular_weight.default <- function(op, x, y, ...)
+  vctrs::stop_incompatible_op(op, x, y)
+
+#' vec_arith for microbial_kitchen_molarity_concentration objects
+#' @rdname vec_arith
+#' @inheritParams vctrs::vec_arith
+#' @method vec_arith microbial_kitchen_molarity_concentration
+#' @export
+#' @export vec_arith.microbial_kitchen_molarity_concentration
+vec_arith.microbial_kitchen_molarity_concentration <- function(op, x, y, ...) {
+  UseMethod("vec_arith.microbial_kitchen_molarity_concentration", y)
+}
+
+#' @method vec_arith.microbial_kitchen_molarity_concentration default
+#' @export
+vec_arith.microbial_kitchen_molarity_concentration.default <- function(op, x, y, ...)
+  vctrs::stop_incompatible_op(op, x, y)
+
+#' vec_arith for microbial_kitchen_mass_concentration objects
+#' @rdname vec_arith
+#' @inheritParams vctrs::vec_arith
+#' @method vec_arith microbial_kitchen_mass_concentration
+#' @export
+#' @export vec_arith.microbial_kitchen_mass_concentration
+vec_arith.microbial_kitchen_mass_concentration <- function(op, x, y, ...) {
+  UseMethod("vec_arith.microbial_kitchen_mass_concentration", y)
+}
+
+#' @method vec_arith.microbial_kitchen_mass_concentration default
+#' @export
+vec_arith.microbial_kitchen_mass_concentration.default <- function(op, x, y, ...)
+  vctrs::stop_incompatible_op(op, x, y)
+
+#' vec_arith for microbial_kitchen_volume objects
+#' @rdname vec_arith
+#' @inheritParams vctrs::vec_arith
+#' @method vec_arith microbial_kitchen_volume
+#' @export
+#' @export vec_arith.microbial_kitchen_volume
+vec_arith.microbial_kitchen_volume <- function(op, x, y, ...) {
+  UseMethod("vec_arith.microbial_kitchen_volume", y)
+}
+
+#' @method vec_arith.microbial_kitchen_volume default
+#' @export
+vec_arith.microbial_kitchen_volume.default <- function(op, x, y, ...)
+  vctrs::stop_incompatible_op(op, x, y)
+
+#' vec_arith for microbial_kitchen_pressure objects
+#' @rdname vec_arith
+#' @inheritParams vctrs::vec_arith
+#' @method vec_arith microbial_kitchen_pressure
+#' @export
+#' @export vec_arith.microbial_kitchen_pressure
+vec_arith.microbial_kitchen_pressure <- function(op, x, y, ...) {
+  UseMethod("vec_arith.microbial_kitchen_pressure", y)
+}
+
+#' @method vec_arith.microbial_kitchen_pressure default
+#' @export
+vec_arith.microbial_kitchen_pressure.default <- function(op, x, y, ...)
+  vctrs::stop_incompatible_op(op, x, y)
+
+#' vec_arith for microbial_kitchen_gas_solubility objects
+#' @rdname vec_arith
+#' @inheritParams vctrs::vec_arith
+#' @method vec_arith microbial_kitchen_gas_solubility
+#' @export
+#' @export vec_arith.microbial_kitchen_gas_solubility
+vec_arith.microbial_kitchen_gas_solubility <- function(op, x, y, ...) {
+  UseMethod("vec_arith.microbial_kitchen_gas_solubility", y)
+}
+
+#' @method vec_arith.microbial_kitchen_gas_solubility default
+#' @export
+vec_arith.microbial_kitchen_gas_solubility.default <- function(op, x, y, ...)
+  vctrs::stop_incompatible_op(op, x, y)
+
+#' vec_arith for microbial_kitchen_temperature objects
+#' @rdname vec_arith
+#' @inheritParams vctrs::vec_arith
+#' @method vec_arith microbial_kitchen_temperature
+#' @export
+#' @export vec_arith.microbial_kitchen_temperature
+vec_arith.microbial_kitchen_temperature <- function(op, x, y, ...) {
+  UseMethod("vec_arith.microbial_kitchen_temperature", y)
+}
+
+#' @method vec_arith.microbial_kitchen_temperature default
+#' @export
+vec_arith.microbial_kitchen_temperature.default <- function(op, x, y, ...)
+  vctrs::stop_incompatible_op(op, x, y)
+
+# comparisons =======================
+
+# Note: comparisons work automatically because of vctrs implementation
 
 #' @param qty quantity
 #' @param number regular number
 #' @details
 #' \code{qty ==, !=, <, <=, >, >= qty} allows the comparison of quantities that are the same type (e.g. all mass).
-#' @examples 
-#' qty(1, "g") == qty(1000, "mg") # TRUE
+#' @examples
+#' qty(1, "g") == qty(1000, "mg", scale_to_best_metric = FALSE) # TRUE
 #' qty(2, "mg") < qty(5, "ng")  # FALSE
-#' @name arithmetic 
+#' @name arithmetic
 NULL
 
-setMethod("<", signature(e1 = "MediaChemToolsQuantity", e2 = "MediaChemToolsQuantity"), function(e1, e2) {
-  class_check ("comparison", e1, e2)
-  return (scale_metric(e1, get_prefix(e2))@.Data < e2@.Data)
-})
-
-setMethod("<=", signature(e1 = "MediaChemToolsQuantity", e2 = "MediaChemToolsQuantity"), function(e1, e2) {
-  class_check ("comparison", e1, e2)
-  return (scale_metric(e1, get_prefix(e2))@.Data <= e2@.Data)
-})
-
-setMethod(">", signature(e1 = "MediaChemToolsQuantity", e2 = "MediaChemToolsQuantity"), function(e1, e2) {
-  class_check ("comparison", e1, e2)
-  return (scale_metric(e1, get_prefix(e2))@.Data > e2@.Data)
-})
-
-setMethod(">=", signature(e1 = "MediaChemToolsQuantity", e2 = "MediaChemToolsQuantity"), function(e1, e2) {
-  class_check ("comparison", e1, e2)
-  return (scale_metric(e1, get_prefix(e2))@.Data >= e2@.Data)
-})
-
-setMethod("==", signature(e1 = "MediaChemToolsQuantity", e2 = "MediaChemToolsQuantity"), function(e1, e2) {
-  class_check ("comparison", e1, e2)
-  return (scale_metric(e1, get_prefix(e2))@.Data == e2@.Data)
-})
-
-setMethod("!=", signature(e1 = "MediaChemToolsQuantity", e2 = "MediaChemToolsQuantity"), function(e1, e2) {
-  class_check ("comparison", e1, e2)
-  return (scale_metric(e1, get_prefix(e2))@.Data != e2@.Data)
-})
-
-# the following are not allowed b/c of ambiguity (no unit for second number)
-# update: these are used so frequently in other functions (e.g. ggplots), it is difficult to restrict them
-
-# setMethod("<", signature(e1 = "MediaChemToolsQuantity", e2 = "numeric"), function(e1, e2) 
-#   operation_error("comparison", e1, e2))
-# 
-# setMethod("<", signature(e1 = "numeric", e2 = "MediaChemToolsQuantity"), function(e1, e2) 
-#   operation_error("comparison", e1, e2))
-# 
-# setMethod("<=", signature(e1 = "MediaChemToolsQuantity", e2 = "numeric"), function(e1, e2) 
-#   operation_error("comparison", e1, e2))
-# 
-# setMethod("<=", signature(e1 = "numeric", e2 = "MediaChemToolsQuantity"), function(e1, e2) 
-#   operation_error("comparison", e1, e2))
-# 
-# setMethod(">", signature(e1 = "MediaChemToolsQuantity", e2 = "numeric"), function(e1, e2) 
-#   operation_error("comparison", e1, e2))
-# 
-# setMethod(">", signature(e1 = "numeric", e2 = "MediaChemToolsQuantity"), function(e1, e2) 
-#   operation_error("comparison", e1, e2))
-# 
-# setMethod(">=", signature(e1 = "MediaChemToolsQuantity", e2 = "numeric"), function(e1, e2) 
-#   operation_error("comparison", e1, e2))
-# 
-# setMethod(">=", signature(e1 = "numeric", e2 = "MediaChemToolsQuantity"), function(e1, e2) 
-#   operation_error("comparison", e1, e2))
-# 
-# setMethod("==", signature(e1 = "MediaChemToolsQuantity", e2 = "numeric"), function(e1, e2) 
-#   operation_error("comparison", e1, e2))
-# 
-# setMethod("==", signature(e1 = "numeric", e2 = "MediaChemToolsQuantity"), function(e1, e2) 
-#   operation_error("comparison", e1, e2))
-# 
-# setMethod("!=", signature(e1 = "MediaChemToolsQuantity", e2 = "numeric"), function(e1, e2) 
-#   operation_error("comparison", e1, e2))
-# 
-# setMethod("!=", signature(e1 = "numeric", e2 = "MediaChemToolsQuantity"), function(e1, e2) 
-#   operation_error("comparison", e1, e2))
-
-# Addition  ========================
-
-#' @details
-#' \code{qty +- qty} allows the addition/subtraction of quantities that are the same type (e.g. all mass). Note that this operation also scales the new value using \code{\link{best_metric}}.
-#' @examples 
-#' qty(1000, "mg") + qty(999, "g") # 1 kg
-#' @name arithmetic 
-NULL
-
-
-setMethod("+", signature(e1 = "MediaChemToolsQuantity", e2 = "MediaChemToolsQuantity"), function(e1, e2) {
-  class_check ("addition", e1, e2)
-  e1 <- scale_metric(e1, get_prefix(e2))
-  e1@.Data <- e1@.Data + e2@.Data
-  return(best_metric(e1))
-})
-
-setMethod("-", signature(e1 = "MediaChemToolsQuantity", e2 = "MediaChemToolsQuantity"), function(e1, e2)  {
-  class_check ("subtraction", e1, e2)
-  e1 <- scale_metric(e1, get_prefix(e2))
-  e1@.Data <- e1@.Data - e2@.Data
-  return(best_metric(e1))
-})
-
-# the following are not allowed b/c of ambiguity (no unit for second number)
-setMethod("+", signature(e1 = "MediaChemToolsQuantity", e2 = "numeric"), function(e1, e2) 
-  operation_error("addition", e1, e2))
-
-setMethod("+", signature(e1 = "numeric", e2 = "MediaChemToolsQuantity"), function(e1, e2) 
-  operation_error("addition", e1, e2))
-
-setMethod("-", signature(e1 = "MediaChemToolsQuantity", e2 = "numeric"), function(e1, e2) 
-  operation_error("subtraction", e1, e2))
-
-setMethod("-", signature(e1 = "numeric", e2 = "MediaChemToolsQuantity"), function(e1, e2) 
-  operation_error("subtraction", e1, e2))
-
-# Division =========================
-
-#' @details
-#' \code{qty / qty} divide quantities of the same type. Returns plain numeric (i.e. the units are divided out).
-#' @examples 
-#' qty(5, "mg") / qty(1, "g") # 0.005
-#' @name arithmetic 
-NULL
-
-setMethod("/", signature(e1 = "MediaChemToolsQuantity", e2 = "MediaChemToolsQuantity"), function(e1, e2) {
-  if (class(e1) == class(e2))
-    return (scale_metric(e1, get_prefix(e2))@.Data / e2@.Data)
-  else
-    operation_error ("division", e1, e2)
-})
+# qty/double, qty * double ========================
 
 #' @details
 #' \code{qty / number} divide quantity by a plain number. Returns the quantity automatically rescaled to the best metric.
-#' @examples 
+#' @examples
 #' qty(5, "mg") / 1e6 # 5 ng
-#' @name arithmetic 
+#' @name arithmetic
 NULL
-
-setMethod("/", signature(e1 = "MediaChemToolsQuantity", e2 = "numeric"), function(e1, e2) {
-  e1@.Data <- e1@.Data / e2
-  return (best_metric(e1))
-})
-
-# don't allow number / quantity
-setMethod("/", signature(e1 = "numeric", e2 = "MediaChemToolsQuantity"), function(e1, e2) {
-  operation_error ("division", e1, e2)
-})
-
-# Multiplication =========================
 
 #' @details
 #' \code{qty * number} multiply a quantity by a plain number (either way around is valid). Returns the quantity automatically rescaled to the best metric.
-#' @examples 
+#' @examples
 #' qty(5, "mg") * 1e6 # 5 kg
-#' @name arithmetic 
+#' @name arithmetic
 NULL
 
-# don't allow default quantity * quantity
-setMethod("*", signature(e1 = "MediaChemToolsQuantity", e2 = "MediaChemToolsQuantity"), function(e1, e2) {
-  operation_error ("multiplication", e1, e2)
-})
+# helper function for common plus, minus divide operations
+# all quantities can be multiplied and divided by a regular number
+qty_numeric_divide_multiply <- function(op, x, y) {
+  switch(
+    op,
+    "/" = ,
+    "*" = qty_vec_arith_base(op, x, y),
+    vctrs::stop_incompatible_op(op, x, y)
+  )
+}
 
-# don't allow default quantity * quantity
-setMethod("*", signature(e1 = "MediaChemToolsQuantity", e2 = "numeric"), function(e1, e2) {
-  e1@.Data <- e1@.Data * e2
-  return (best_metric(e1))
-})
+#' @method vec_arith.numeric microbial_kitchen_quantity
+#' @export
+vec_arith.numeric.microbial_kitchen_quantity <- function(op, x, y, ...) {
+  # regular numbers can be multiplied with all quantities
+  switch(
+    op,
+    "*" = qty_vec_arith_base(op, y, x),
+    vctrs::stop_incompatible_op(op, x, y)
+  )
+}
 
-setMethod("*", signature(e1 = "numeric", e2 = "MediaChemToolsQuantity"), function(e1, e2) {
-  return (e2 * e1)
-})
+#' @method vec_arith.microbial_kitchen_quantity numeric
+#' @export
+vec_arith.microbial_kitchen_quantity.numeric <- function(op, x, y, ...) {
+  qty_numeric_divide_multiply(op, x, y)
+}
 
-# Special operations ==============
+#' @method vec_arith.microbial_kitchen_amount numeric
+#' @export
+vec_arith.microbial_kitchen_amount.numeric <- function(op, x, y, ...) {
+  qty_numeric_divide_multiply(op, x, y)
+}
+
+#' @method vec_arith.microbial_kitchen_mass numeric
+#' @export
+vec_arith.microbial_kitchen_mass.numeric <- function(op, x, y, ...) {
+  qty_numeric_divide_multiply(op, x, y)
+}
+
+#' @method vec_arith.microbial_kitchen_molecular_weight numeric
+#' @export
+vec_arith.microbial_kitchen_molecular_weight.numeric <- function(op, x, y, ...) {
+  qty_numeric_divide_multiply(op, x, y)
+}
+
+#' @method vec_arith.microbial_kitchen_molarity_concentration numeric
+#' @export
+vec_arith.microbial_kitchen_molarity_concentration.numeric <- function(op, x, y, ...) {
+  qty_numeric_divide_multiply(op, x, y)
+}
+
+#' @method vec_arith.microbial_kitchen_mass_concentration numeric
+#' @export
+vec_arith.microbial_kitchen_mass_concentration.numeric <- function(op, x, y, ...) {
+  qty_numeric_divide_multiply(op, x, y)
+}
+
+#' @method vec_arith.microbial_kitchen_volume numeric
+#' @export
+vec_arith.microbial_kitchen_volume.numeric <- function(op, x, y, ...) {
+  qty_numeric_divide_multiply(op, x, y)
+}
+
+#' @method vec_arith.microbial_kitchen_pressure numeric
+#' @export
+vec_arith.microbial_kitchen_pressure.numeric <- function(op, x, y, ...) {
+  qty_numeric_divide_multiply(op, x, y)
+}
+
+#' @method vec_arith.microbial_kitchen_gas_solubility numeric
+#' @export
+vec_arith.microbial_kitchen_gas_solubility.numeric <- function(op, x, y, ...) {
+  qty_numeric_divide_multiply(op, x, y)
+}
+
+#' @method vec_arith.microbial_kitchen_temperature numeric
+#' @export
+vec_arith.microbial_kitchen_temperature.numeric <- function(op, x, y, ...) {
+  qty_numeric_divide_multiply(op, x, y)
+}
+
+# qty +/- qty & qty/qty  ========================
+
+#' @details
+#' \code{qty +- qty} allows the addition/subtraction of quantities that are the same type (e.g. all mass). Note that this operation also scales the new value using \code{\link{best_metric}}.
+#' @examples
+#' qty(1, "mg") + qty(999.999, "g") # 1 kg
+#' @name arithmetic
+NULL
+
+#' @details
+#' \code{qty / qty} divide quantities of the same type. Returns plain numeric (i.e. the units are divided out).
+#' @examples
+#' qty(5, "mg") / qty(1, "g") # 0.005
+#' @name arithmetic
+NULL
+
+# helper function for common plus, minus divide operations
+qty_qty_plus_minus_divide <- function(op, x, y) {
+  switch(
+    op,
+    "+" = ,
+    "-" = qty_vec_arith_base(op, base_metric(x), base_metric(y)),
+    "/" = vctrs::vec_arith_base(op, base_metric(x), base_metric(y)),
+    vctrs::stop_incompatible_op(op, base_metric(x), base_metric(y))
+  )
+}
+
+#' @method vec_arith.microbial_kitchen_quantity microbial_kitchen_quantity
+#' @export
+vec_arith.microbial_kitchen_quantity.microbial_kitchen_quantity <- function(op, x, y, ...) {
+  qty_qty_plus_minus_divide(op, x, y)
+}
+
+#' @method vec_arith.microbial_kitchen_amount microbial_kitchen_amount
+#' @export
+vec_arith.microbial_kitchen_amount.microbial_kitchen_amount <- function(op, x, y, ...) {
+  qty_qty_plus_minus_divide(op, x, y)
+}
+
+#' @method vec_arith.microbial_kitchen_mass microbial_kitchen_mass
+#' @export
+vec_arith.microbial_kitchen_mass.microbial_kitchen_mass <- function(op, x, y, ...) {
+  qty_qty_plus_minus_divide(op, x, y)
+}
+
+#' @method vec_arith.microbial_kitchen_molecular_weight microbial_kitchen_molecular_weight
+#' @export
+vec_arith.microbial_kitchen_molecular_weight.microbial_kitchen_molecular_weight <- function(op, x, y, ...) {
+  qty_qty_plus_minus_divide(op, x, y)
+}
+
+#' @method vec_arith.microbial_kitchen_molarity_concentration microbial_kitchen_molarity_concentration
+#' @export
+vec_arith.microbial_kitchen_molarity_concentration.microbial_kitchen_molarity_concentration <- function(op, x, y, ...) {
+  qty_qty_plus_minus_divide(op, x, y)
+}
+
+#' @method vec_arith.microbial_kitchen_mass_concentration microbial_kitchen_mass_concentration
+#' @export
+vec_arith.microbial_kitchen_mass_concentration.microbial_kitchen_mass_concentration <- function(op, x, y, ...) {
+  qty_qty_plus_minus_divide(op, x, y)
+}
+
+#' @method vec_arith.microbial_kitchen_volume microbial_kitchen_volume
+#' @export
+vec_arith.microbial_kitchen_volume.microbial_kitchen_volume <- function(op, x, y, ...) {
+  qty_qty_plus_minus_divide(op, x, y)
+}
+
+#' @method vec_arith.microbial_kitchen_pressure microbial_kitchen_pressure
+#' @export
+vec_arith.microbial_kitchen_pressure.microbial_kitchen_pressure <- function(op, x, y, ...) {
+  qty_qty_plus_minus_divide(op, x, y)
+}
+
+#' @method vec_arith.microbial_kitchen_gas_solubility microbial_kitchen_gas_solubility
+#' @export
+vec_arith.microbial_kitchen_gas_solubility.microbial_kitchen_gas_solubility <- function(op, x, y, ...) {
+  qty_qty_plus_minus_divide(op, x, y)
+}
+
+#' @method vec_arith.microbial_kitchen_temperature microbial_kitchen_temperature
+#' @export
+vec_arith.microbial_kitchen_temperature.microbial_kitchen_temperature <- function(op, x, y, ...) {
+  qty_qty_plus_minus_divide(op, x, y)
+}
+
+# molarity = amount / volume ============
 
 #' @details \code{amount / volume} divide an amount by a volume to create a molarity (concentration).
-#' @details \code{amount / molarity} divide an amount by a molarity to create a volume. 
-#' @details \code{molarity * volume} multiply a molarity by a volume (or the other way around) to create an amount.  
-#' @examples 
+#' @details \code{amount / molarity} divide an amount by a molarity concentration to create a volume.
+#' @details \code{molarity * volume} multiply a molarity concentration by a volume (or the other way around) to create an amount.
+#' @examples
 #' qty(5, "nmol") / qty(50, "mL") # 100 nM
 #' qty(5, "nmol") / qty(100, "nM") # 50 mL
 #' qty(100, "nM") * qty(50, "mL") # 5 nmol
-#' @name arithmetic 
+#' @name arithmetic
 NULL
 
-# amount / volume = molarity
-setMethod("/", signature(e1 = "MediaChemToolsAmount", e2 = "MediaChemToolsVolume"), function(e1, e2) {
-  return (molarity( e1@.Data / base_metric(e2)@.Data, paste0(e1@unit, "/L") ))
-})
+#' @method vec_arith.microbial_kitchen_amount microbial_kitchen_volume
+#' @export
+vec_arith.microbial_kitchen_amount.microbial_kitchen_volume <- function(op, x, y, ...) {
+  switch(
+    op,
+    "/" = qty_vec_arith_base(op, base_metric(x), base_metric(y), to = molarity_concentration()),
+    vctrs::stop_incompatible_op(op, x, y)
+  )
+}
+#' @method vec_arith.microbial_kitchen_amount microbial_kitchen_molarity_concentration
+#' @export
+vec_arith.microbial_kitchen_amount.microbial_kitchen_molarity_concentration <- function(op, x, y, ...) {
+  switch(
+    op,
+    "/" = qty_vec_arith_base(op, base_metric(x), base_metric(y), to = volume()),
+    vctrs::stop_incompatible_op(op, x, y)
+  )
+}
 
-# amount / molarity = volume
-setMethod("/", signature(e1 = "MediaChemToolsAmount", e2 = "MediaChemToolsMolarity"), function(e1, e2) {
-  return (volume( scale_metric(e1, get_prefix(e2))@.Data / e2@.Data, "L" ))
-})
+#' @method vec_arith.microbial_kitchen_volume microbial_kitchen_molarity_concentration
+#' @export
+vec_arith.microbial_kitchen_volume.microbial_kitchen_molarity_concentration <- function(op, x, y, ...) {
+  switch(
+    op,
+    "*" = qty_vec_arith_base(op, base_metric(x), base_metric(y), to = amount()),
+    vctrs::stop_incompatible_op(op, x, y)
+  )
+}
+#' @method vec_arith.microbial_kitchen_molarity_concentration microbial_kitchen_volume
+#' @export
+vec_arith.microbial_kitchen_molarity_concentration.microbial_kitchen_volume <- function(op, x, y, ...) {
+  switch(
+    op,
+    "*" = qty_vec_arith_base(op, base_metric(x), base_metric(y), to = amount()),
+    vctrs::stop_incompatible_op(op, x, y)
+  )
+}
 
-# volume * molarity = amount
-setMethod("*", signature(e1 = "MediaChemToolsVolume", e2 = "MediaChemToolsMolarity"), function(e1, e2) {
-  return (amount( base_metric(e1)@.Data * base_metric(e2)@.Data, "mol"))
-})
-setMethod("*", signature(e1 = "MediaChemToolsMolarity", e2 = "MediaChemToolsVolume"), function(e1, e2) e2 * e1)
+# density = mass / volume ==================
 
-
-#' @details \code{mass / volume} divide a mass by a volume to create a density (concentration).
-#' @details \code{mass / density} divide a mass by a density to create a volume. 
-#' @details \code{density * volume} multiply a density by a volume (or the other way around) to create a mass.  
-#' @examples 
+#' @details \code{mass / volume} divide a mass by a volume to create mass concentration (density).
+#' @details \code{mass / density} divide a mass by a mass concentration (density) to create a volume.
+#' @details \code{density * volume} multiply a mass concentration (density) by a volume (or the other way around) to create a mass.
+#' @examples
 #' qty(5, "ng") / qty(50, "mL") # 100 ng/L
 #' qty(5, "ng") / qty(100, "ng/L") # 50 mL
 #' qty(100, "ng/L") * qty(50, "mL") # 5 ng
-#' @name arithmetic 
+#' @name arithmetic
 NULL
 
-# amount / volume = molarity
-setMethod("/", signature(e1 = "MediaChemToolsMass", e2 = "MediaChemToolsVolume"), function(e1, e2) {
-  return (density( e1@.Data / base_metric(e2)@.Data, paste0(e1@unit, "/L") ))
-})
+#' @method vec_arith.microbial_kitchen_mass microbial_kitchen_volume
+#' @export
+vec_arith.microbial_kitchen_mass.microbial_kitchen_volume <- function(op, x, y, ...) {
+  switch(
+    op,
+    "/" = qty_vec_arith_base(op, base_metric(x), base_metric(y), to = mass_concentration()),
+    vctrs::stop_incompatible_op(op, x, y)
+  )
+}
+#' @method vec_arith.microbial_kitchen_mass microbial_kitchen_mass_concentration
+#' @export
+vec_arith.microbial_kitchen_mass.microbial_kitchen_mass_concentration <- function(op, x, y, ...) {
+  switch(
+    op,
+    "/" = qty_vec_arith_base(op, base_metric(x), base_metric(y), to = volume()),
+    vctrs::stop_incompatible_op(op, x, y)
+  )
+}
 
-# amount / molarity = volume
-setMethod("/", signature(e1 = "MediaChemToolsMass", e2 = "MediaChemToolsDensity"), function(e1, e2) {
-  return (volume( scale_metric(e1, get_prefix(e2))@.Data / e2@.Data, "L" ))
-})
+#' @method vec_arith.microbial_kitchen_volume microbial_kitchen_mass_concentration
+#' @export
+vec_arith.microbial_kitchen_volume.microbial_kitchen_mass_concentration <- function(op, x, y, ...) {
+  switch(
+    op,
+    "*" = qty_vec_arith_base(op, base_metric(x), base_metric(y), to = mass()),
+    vctrs::stop_incompatible_op(op, x, y)
+  )
+}
+#' @method vec_arith.microbial_kitchen_mass_concentration microbial_kitchen_volume
+#' @export
+vec_arith.microbial_kitchen_mass_concentration.microbial_kitchen_volume <- function(op, x, y, ...) {
+  switch(
+    op,
+    "*" = qty_vec_arith_base(op, base_metric(x), base_metric(y), to = mass()),
+    vctrs::stop_incompatible_op(op, x, y)
+  )
+}
 
-# volume * molarity = amount
-setMethod("*", signature(e1 = "MediaChemToolsVolume", e2 = "MediaChemToolsDensity"), function(e1, e2) {
-  return (mass( base_metric(e1)@.Data * base_metric(e2)@.Data, "g"))
-})
-setMethod("*", signature(e1 = "MediaChemToolsDensity", e2 = "MediaChemToolsVolume"), function(e1, e2) e2 * e1)
+# molecular weight = mass / amount ================
 
-
-#' @details \code{mass / MW} divide a mass by a molecular mass to create an amount (mols).
-#' @details \code{mass / amount} divice a mass by an amount (mols) to create a molecular mass.
-#' @details \code{amount * MW} multiply an amount (mols) by a molecular mass to create a mass.
-#' @examples 
-#' qty(10, "g") / qty (50, "g/mol") # 200 nmol
+#' @details \code{mass / MW} divide a mass by a molecular weight to create an amount (mols).
+#' @details \code{mass / amount} divide a mass by an amount (mols) to create a molecular weight.
+#' @details \code{amount * MW} multiply an amount (mols) by a molecular weight to create a mass.
+#' @examples
+#' qty(10, "g") / qty (50, "g/mol") # 200 mmol
 #' qty(10, "g") / qty(200, "mmol") # 50 g/mol
 #' qty(200, "mmol") * qty (50, "g/mol") # 10 g
-#' @name arithmetic 
+#' @name arithmetic
 NULL
 
-# mass / MW = amount
-setMethod("/", signature(e1 = "MediaChemToolsMass", e2 = "MediaChemToolsMolecularMass"), function(e1, e2) {
-  return (amount( scale_metric(e1, get_prefix(e2))@.Data / e2@.Data, "mol" ))
-})
+#' @method vec_arith.microbial_kitchen_mass microbial_kitchen_molecular_weight
+#' @export
+vec_arith.microbial_kitchen_mass.microbial_kitchen_molecular_weight <- function(op, x, y, ...) {
+  switch(
+    op,
+    "/" = qty_vec_arith_base(op, base_metric(x), base_metric(y), to = amount()),
+    vctrs::stop_incompatible_op(op, x, y)
+  )
+}
+#' @method vec_arith.microbial_kitchen_mass microbial_kitchen_amount
+#' @export
+vec_arith.microbial_kitchen_mass.microbial_kitchen_amount <- function(op, x, y, ...) {
+  switch(
+    op,
+    "/" = qty_vec_arith_base(op, base_metric(x), base_metric(y), to = molecular_weight()),
+    vctrs::stop_incompatible_op(op, x, y)
+  )
+}
 
-# mass / amount = MW
-setMethod("/", signature(e1 = "MediaChemToolsMass", e2 = "MediaChemToolsAmount"), function(e1, e2) {
-  return (molecular_mass( base_metric(e1)@.Data / base_metric(e2)@.Data, "g/mol") )
-})
+#' @method vec_arith.microbial_kitchen_amount microbial_kitchen_molecular_weight
+#' @export
+vec_arith.microbial_kitchen_amount.microbial_kitchen_molecular_weight <- function(op, x, y, ...) {
+  switch(
+    op,
+    "*" = qty_vec_arith_base(op, base_metric(x), base_metric(y), to = mass()),
+    vctrs::stop_incompatible_op(op, x, y)
+  )
+}
+#' @method vec_arith.microbial_kitchen_molecular_weight microbial_kitchen_amount
+#' @export
+vec_arith.microbial_kitchen_molecular_weight.microbial_kitchen_amount <- function(op, x, y, ...) {
+  switch(
+    op,
+    "*" = qty_vec_arith_base(op, base_metric(x), base_metric(y), to = mass()),
+    vctrs::stop_incompatible_op(op, x, y)
+  )
+}
 
-# amount * MW = mass
-setMethod("*", signature(e1 = "MediaChemToolsAmount", e2 = "MediaChemToolsMolecularMass"), function(e1, e2) {
-  return (mass( base_metric(e1)@.Data * base_metric(e2)@.Data, "g"))
-})
-setMethod("*", signature(e1 = "MediaChemToolsMolecularMass", e2 = "MediaChemToolsAmount"), function(e1, e2) e2 * e1)
+# gas solubility = molarity / pressure ===============
 
-#' @details \code{molarity / pressure} divide a concentration by pressure to create a solubility (M/bar).
-#' @details \code{solubility * pressure} multiply a solubility (M/bar) by pressure (bar) to create molarity (M)
-#' @details \code{molarity / solubility} divide a molarity (M) by a solubility (M/bar) to get partial pressure (bar)
-#' @examples 
+#' @details \code{molarity / pressure} divide a concentration by pressure to create a  gas solubility (M/bar).
+#' @details \code{molarity / solubility} divide a molarity (M) by a gas solubility (M/bar) to get partial pressure (bar)
+#' @details \code{solubility * pressure} multiply a gas solubility (M/bar) by pressure (bar) to create molarity (M)
+#' @examples
 #' qty(10, "mM") / qty(200, "mbar") # 50 mM/bar
 #' qty(10, "mM") / qty(50, "mM/bar") # 200 mbar
 #' qty(50, "mM/bar") * qty (200, "mbar") # 10 mM
-#' @name arithmetic 
+#' @name arithmetic
 NULL
 
-# molarity / pressure = solubility
-setMethod("/", signature(e1 = "MediaChemToolsMolarity", e2 = "MediaChemToolsPressure"), function(e1, e2) {
-  return (solubility( scale_metric(e1, get_prefix(e2))@.Data / e2@.Data, "M/bar" ))
-})
+#' @method vec_arith.microbial_kitchen_molarity_concentration microbial_kitchen_pressure
+#' @export
+vec_arith.microbial_kitchen_molarity_concentration.microbial_kitchen_pressure <- function(op, x, y, ...) {
+  switch(
+    op,
+    "/" = qty_vec_arith_base(op, base_metric(x), base_metric(y), to = gas_solubility()),
+    vctrs::stop_incompatible_op(op, x, y)
+  )
+}
+#' @method vec_arith.microbial_kitchen_molarity_concentration microbial_kitchen_gas_solubility
+#' @export
+vec_arith.microbial_kitchen_molarity_concentration.microbial_kitchen_gas_solubility <- function(op, x, y, ...) {
+  switch(
+    op,
+    "/" = qty_vec_arith_base(op, base_metric(x), base_metric(y), to = pressure()),
+    vctrs::stop_incompatible_op(op, x, y)
+  )
+}
 
-# molarity / solubility = pressure
-setMethod("/", signature(e1 = "MediaChemToolsMolarity", e2 = "MediaChemToolsSolubility"), function(e1, e2) {
-  return (pressure( base_metric(e1)@.Data / base_metric(e2)@.Data, "bar") )
-})
-
-# solubility * pressure = molarity
-setMethod("*", signature(e1 = "MediaChemToolsSolubility", e2 = "MediaChemToolsPressure"), function(e1, e2) {
-  return (molarity( base_metric(e1)@.Data * base_metric(e2)@.Data, "M"))
-})
-setMethod("*", signature(e1 = "MediaChemToolsPressure", e2 = "MediaChemToolsSolubility"), function(e1, e2) e2 * e1)
-
-
-
+#' @method vec_arith.microbial_kitchen_gas_solubility microbial_kitchen_pressure
+#' @export
+vec_arith.microbial_kitchen_gas_solubility.microbial_kitchen_pressure <- function(op, x, y, ...) {
+  switch(
+    op,
+    "*" = qty_vec_arith_base(op, base_metric(x), base_metric(y), to = molarity_concentration()),
+    vctrs::stop_incompatible_op(op, x, y)
+  )
+}
+#' @method vec_arith.microbial_kitchen_pressure microbial_kitchen_gas_solubility
+#' @export
+vec_arith.microbial_kitchen_pressure.microbial_kitchen_gas_solubility <- function(op, x, y, ...) {
+  switch(
+    op,
+    "*" = qty_vec_arith_base(op, base_metric(x), base_metric(y), to = molarity_concentration()),
+    vctrs::stop_incompatible_op(op, x, y)
+  )
+}

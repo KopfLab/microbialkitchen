@@ -4,8 +4,37 @@
   
   bar_per_atm <- 1.01325
   
-  # metric
+  # constants
   opts <- list(
+    # base units
+    base_units = c(
+      "quantity" = NA_character_,
+      "amount" = "mol",
+      "mass" = "g",
+      "molecular_weight" = "g/mol",
+      "molarity_concentration" = "M",
+      "mass_concentration" = "g/L",
+      "volume" = "L",
+      "pressure" = "bar",
+      "gas_solubility" = "M/bar",
+      "temperature" = "K"
+    ),
+    
+    # abbreviation
+    abbreviations = c(
+      "quantity" = "qty",
+      "amount" = "N",
+      "mass" = "m",
+      "molecular_weight" = "MW",
+      "molarity_concentration" = "C",
+      "mass_concentration" = "C",
+      "volume" = "V",
+      "pressure" = "P",
+      "gas_solubility" = "S",
+      "temperature" = "T"
+    ),
+    
+    # metric prefixes
     metric_prefix = 
       c(f = 1e-15, p = 1e-12, n = 1e-9, '\U00B5' = 1e-6, m = 1e-3, 1, 
         k = 1e3, M = 1e6, G = 1e9, T = 1e12),
@@ -48,9 +77,9 @@ get_microbialkitchen_constant <- function(name) {
 #' @export
 get_microbialkitchen_constants <- function() {
   opts <- options() %>% {.[names(.) %>% stringr::str_detect("^microbialkitchen_")]}
-  data_frame(
+  tibble(
     constant = names(opts) %>% stringr::str_replace("^microbialkitchen_", ""),
     key = purrr::map(opts, names) %>% purrr::map( ~ if (is.null(.x)) { NA_character_ } else { .x }),
     value = purrr::map(opts, identity)
-  ) %>% unnest(key, value)
+  ) %>% tidyr::unnest(.data$key, .data$value)
 }

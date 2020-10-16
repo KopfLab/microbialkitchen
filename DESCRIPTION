@@ -2,7 +2,7 @@ Package: microbialkitchen
 Type: Package
 Title: Culture Media Tools
 Description: Package to simplify working with defined culture medium.
-Version: 0.3.2.9999
+Version: 0.4.0
 Authors@R: person("Sebastian", "Kopf", email = "sebastian.kopf@colorado.edu",
     role = c("aut", "cre"))
 URL: https://github.com/kopflab/microbialkitchen
@@ -16,6 +16,7 @@ Imports:
     forcats,
     tibble,
     dplyr,
+    tidyr,
     vctrs,
     stringr
 Suggests:
@@ -29,13 +30,3 @@ Encoding: UTF-8
 LazyData: true
 VignetteBuilder: knitr
 RoxygenNote: 7.1.1
-Collate:
-    'classes.R'
-    'arithmetic.R'
-    'calculations.R'
-    'carbonate_chem.R'
-    'constants.R'
-    'package.R'
-    'quantities.R'
-    'utils.R'
-    'visualization.R'

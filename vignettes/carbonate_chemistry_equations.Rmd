@@ -12,7 +12,7 @@ This vignette describes the conceptual approach to carbonate chemistry. See the 
 
 # CO$_2$ solubility
 
-> Key functions: `calculate_solubility`
+> Key functions: `calculate_gas_solubility`
 
 [See examples](carbonate_chemistry_examples.html#co2-solubility).
 

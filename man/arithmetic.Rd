@@ -14,52 +14,52 @@ These arithmetic operators for quantities in microbialkitchen keep track of unit
 \details{
 \code{qty ==, !=, <, <=, >, >= qty} allows the comparison of quantities that are the same type (e.g. all mass).
 
-\code{qty +- qty} allows the addition/subtraction of quantities that are the same type (e.g. all mass). Note that this operation also scales the new value using \code{\link{best_metric}}.
-
-\code{qty / qty} divide quantities of the same type. Returns plain numeric (i.e. the units are divided out).
-
 \code{qty / number} divide quantity by a plain number. Returns the quantity automatically rescaled to the best metric.
 
 \code{qty * number} multiply a quantity by a plain number (either way around is valid). Returns the quantity automatically rescaled to the best metric.
 
+\code{qty +- qty} allows the addition/subtraction of quantities that are the same type (e.g. all mass). Note that this operation also scales the new value using \code{\link{best_metric}}.
+
+\code{qty / qty} divide quantities of the same type. Returns plain numeric (i.e. the units are divided out).
+
 \code{amount / volume} divide an amount by a volume to create a molarity (concentration).
 
-\code{amount / molarity} divide an amount by a molarity to create a volume.
+\code{amount / molarity} divide an amount by a molarity concentration to create a volume.
 
-\code{molarity * volume} multiply a molarity by a volume (or the other way around) to create an amount.
+\code{molarity * volume} multiply a molarity concentration by a volume (or the other way around) to create an amount.
 
-\code{mass / volume} divide a mass by a volume to create a density (concentration).
+\code{mass / volume} divide a mass by a volume to create mass concentration (density).
 
-\code{mass / density} divide a mass by a density to create a volume.
+\code{mass / density} divide a mass by a mass concentration (density) to create a volume.
 
-\code{density * volume} multiply a density by a volume (or the other way around) to create a mass.
+\code{density * volume} multiply a mass concentration (density) by a volume (or the other way around) to create a mass.
 
-\code{mass / MW} divide a mass by a molecular mass to create an amount (mols).
+\code{mass / MW} divide a mass by a molecular weight to create an amount (mols).
 
-\code{mass / amount} divice a mass by an amount (mols) to create a molecular mass.
+\code{mass / amount} divide a mass by an amount (mols) to create a molecular weight.
 
-\code{amount * MW} multiply an amount (mols) by a molecular mass to create a mass.
+\code{amount * MW} multiply an amount (mols) by a molecular weight to create a mass.
 
-\code{molarity / pressure} divide a concentration by pressure to create a solubility (M/bar).
+\code{molarity / pressure} divide a concentration by pressure to create a  gas solubility (M/bar).
 
-\code{solubility * pressure} multiply a solubility (M/bar) by pressure (bar) to create molarity (M)
+\code{molarity / solubility} divide a molarity (M) by a gas solubility (M/bar) to get partial pressure (bar)
 
-\code{molarity / solubility} divide a molarity (M) by a solubility (M/bar) to get partial pressure (bar)
+\code{solubility * pressure} multiply a gas solubility (M/bar) by pressure (bar) to create molarity (M)
 }
 \examples{
-qty(1, "g") == qty(1000, "mg") # TRUE
+qty(1, "g") == qty(1000, "mg", scale_to_best_metric = FALSE) # TRUE
 qty(2, "mg") < qty(5, "ng")  # FALSE
-qty(1000, "mg") + qty(999, "g") # 1 kg
-qty(5, "mg") / qty(1, "g") # 0.005
 qty(5, "mg") / 1e6 # 5 ng
 qty(5, "mg") * 1e6 # 5 kg
+qty(1, "mg") + qty(999.999, "g") # 1 kg
+qty(5, "mg") / qty(1, "g") # 0.005
 qty(5, "nmol") / qty(50, "mL") # 100 nM
 qty(5, "nmol") / qty(100, "nM") # 50 mL
 qty(100, "nM") * qty(50, "mL") # 5 nmol
 qty(5, "ng") / qty(50, "mL") # 100 ng/L
 qty(5, "ng") / qty(100, "ng/L") # 50 mL
 qty(100, "ng/L") * qty(50, "mL") # 5 ng
-qty(10, "g") / qty (50, "g/mol") # 200 nmol
+qty(10, "g") / qty (50, "g/mol") # 200 mmol
 qty(10, "g") / qty(200, "mmol") # 50 g/mol
 qty(200, "mmol") * qty (50, "g/mol") # 10 g
 qty(10, "mM") / qty(200, "mbar") # 50 mM/bar

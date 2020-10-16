@@ -28,7 +28,7 @@ NULL
 #' @export
 calculate_DIC <- function(
   pH, pCO2, 
-  `H2CO3*` = solubility * pCO2, solubility = calculate_solubility("CO2", temperature), temperature = qty(25, "C"),
+  `H2CO3*` = solubility * pCO2, solubility = calculate_gas_solubility("CO2", temperature), temperature = qty(25, "C"),
   pKa1 = 6.3, pKa2 = 10.3) {
   
   # safety checks
@@ -37,7 +37,7 @@ calculate_DIC <- function(
   if (missing(pH)) stop("pH is required", call. = FALSE)
   if (missing(`H2CO3*`) && missing(pCO2))  stop("either pCO2 or H2CO3* need to be specified", call. = FALSE)
   if (missing(`H2CO3*`)) require_quantity(pCO2_quo, is_pressure)
-  require_quantity(H2CO3_quo, is_molarity)
+  require_quantity(H2CO3_quo, is_molarity_concentration)
   
   # warning
   if (!missing(pCO2) && !missing(`H2CO3*`)) warning("H2CO3* provided, pCO2 parameter will be ignored", call. = FALSE, immediate. = TRUE)
@@ -50,7 +50,7 @@ calculate_DIC <- function(
 #' @param DIC dissolved inorganic carbon (a molarity quantity)
 #' @export
 calculate_carbonic_acid <- function(
-  pH, pCO2, DIC, solubility = calculate_solubility("CO2", temperature), temperature = qty(25, "C"),
+  pH, pCO2, DIC, solubility = calculate_gas_solubility("CO2", temperature), temperature = qty(25, "C"),
   pKa1 = 6.3, pKa2 = 10.3) {
   
   # safety checks
@@ -62,7 +62,7 @@ calculate_carbonic_acid <- function(
     require_quantity(pCO2_quo, is_pressure)
     DIC <- calculate_DIC(pH, pCO2, solubility = solubility, temperature = temperature, pKa1 = pKa1, pKa2 = pKa2)
   } else {
-    require_quantity(DIC_quo, is_molarity)
+    require_quantity(DIC_quo, is_molarity_concentration)
     if (!missing(pCO2)) warning("DIC provided, pCO2 parameter will be ignored", call. = FALSE, immediate. = TRUE)
   }
 
@@ -73,7 +73,7 @@ calculate_carbonic_acid <- function(
 #' @describeIn speciation calculates the concentration of bicarbonate based on pH and either pCO2 or DIC. Returns bicarbonate concentration as a molarity quantity.
 #' @export
 calculate_bicarbonate <- function(
-  pH, pCO2, DIC, solubility = calculate_solubility("CO2", temperature), temperature = qty(25, "C"),
+  pH, pCO2, DIC, solubility = calculate_gas_solubility("CO2", temperature), temperature = qty(25, "C"),
   pKa1 = 6.3, pKa2 = 10.3) {
   
   # safety checks
@@ -85,7 +85,7 @@ calculate_bicarbonate <- function(
     require_quantity(pCO2_quo, is_pressure)
     DIC <- calculate_DIC(pH, pCO2, solubility = solubility, temperature = temperature, pKa1 = pKa1, pKa2 = pKa2)
   } else {
-    require_quantity(DIC_quo, is_molarity)
+    require_quantity(DIC_quo, is_molarity_concentration)
     if (!missing(pCO2)) warning("DIC provided, pCO2 parameter will be ignored", call. = FALSE, immediate. = TRUE)
   }
   
@@ -96,7 +96,7 @@ calculate_bicarbonate <- function(
 #' @describeIn speciation calculates the concentration of carbonate based on pH and either pCO2 or DIC. Returns carbonate concentration as a molarity quantity.
 #' @export
 calculate_carbonate <- function(
-  pH, pCO2, DIC, solubility = calculate_solubility("CO2", temperature), temperature = qty(25, "C"),
+  pH, pCO2, DIC, solubility = calculate_gas_solubility("CO2", temperature), temperature = qty(25, "C"),
   pKa1 = 6.3, pKa2 = 10.3) {
   
   # safety checks
@@ -108,7 +108,7 @@ calculate_carbonate <- function(
     require_quantity(pCO2_quo, is_pressure)
     DIC <- calculate_DIC(pH, pCO2, solubility = solubility, temperature = temperature, pKa1 = pKa1, pKa2 = pKa2)
   } else {
-    require_quantity(DIC_quo, is_molarity)
+    require_quantity(DIC_quo, is_molarity_concentration)
     if (!missing(pCO2)) warning("DIC provided, pCO2 parameter will be ignored", call. = FALSE, immediate. = TRUE)
   }
   
@@ -137,7 +137,7 @@ NULL
 #' @export
 calculate_open_system_pH <- function(
   pCO2, 
-  `H2CO3*` = solubility * pCO2, solubility = calculate_solubility("CO2", temperature), temperature = qty(25, "C"),
+  `H2CO3*` = solubility * pCO2, solubility = calculate_gas_solubility("CO2", temperature), temperature = qty(25, "C"),
   pKa1 = 6.3, pKa2 = 10.3, pKw = 14,
   buffer = qty(0, "M"), buffer_pKa, alkalinity = qty(0, "M")) {
   
@@ -148,13 +148,13 @@ calculate_open_system_pH <- function(
   if (missing(`H2CO3*`) && missing(pCO2))  stop("either pCO2 or H2CO3* need to be specified", call. = FALSE)
   if (!missing(pCO2) && !missing(`H2CO3*`)) warning("H2CO3* provided, pCO2 parameter will be ignored", call. = FALSE, immediate. = TRUE)
   if (missing(`H2CO3*`)) require_quantity(pCO2_quo, is_pressure)
-  require_quantity(H2CO3_quo, is_molarity)
-  require_quantity(buffer_quo, is_molarity)
+  require_quantity(H2CO3_quo, is_molarity_concentration)
+  require_quantity(buffer_quo, is_molarity_concentration)
   if (!missing(buffer) && missing(buffer_pKa))
     stop("must provide a pKa if buffer is provided", call. = FALSE)
   else if (missing(buffer_pKa))
     buffer_pKa <- 7 # place holder value, buffer is 0
-  require_quantity(rlang::enquo(alkalinity), is_molarity)
+  require_quantity(rlang::enquo(alkalinity), is_molarity_concentration)
   
   # calculate
   buffer.M <- get_qty_value(buffer, unit = "M")
@@ -183,7 +183,7 @@ calculate_open_system_pH <- function(
 #' @export
 calculate_open_system_alkalinity <- function(
   pH, pCO2, `H2CO3*` = solubility * pCO2, 
-  solubility = calculate_solubility("CO2", temperature), temperature = qty(25, "C"),
+  solubility = calculate_gas_solubility("CO2", temperature), temperature = qty(25, "C"),
   pKa1 = 6.3, pKa2 = 10.3, pKw = 14,
   buffer = qty(0, "M"), buffer_pKa) {
   
@@ -195,8 +195,8 @@ calculate_open_system_alkalinity <- function(
   if (missing(`H2CO3*`) && missing(pCO2))  stop("either pCO2 or H2CO3* need to be specified", call. = FALSE)
   if (!missing(pCO2) && !missing(`H2CO3*`)) warning("H2CO3* provided, pCO2 parameter will be ignored", call. = FALSE, immediate. = TRUE)
   if (missing(`H2CO3*`)) require_quantity(pCO2_quo, is_pressure)
-  require_quantity(H2CO3_quo, is_molarity)
-  require_quantity(buffer_quo, is_molarity)
+  require_quantity(H2CO3_quo, is_molarity_concentration)
+  require_quantity(buffer_quo, is_molarity_concentration)
   if (!missing(buffer) && missing(buffer_pKa))
     stop("must provide a pKa if buffer is provided", call. = FALSE)
   else if (missing(buffer_pKa))
@@ -208,7 +208,7 @@ calculate_open_system_alkalinity <- function(
   alkalinity <- 
     calculate_open_system_alkalinity_formula(
       pH, `H2CO3*.M`, pKa1, pKa2, pKw, buffer.M, buffer_pKa)
-  return(molarity(alkalinity, "M"))
+  return(molarity_concentration(alkalinity, "M"))
 }
 
 # helper function for calculating unbalanced ions
@@ -237,7 +237,7 @@ NULL
 #' @export
 calculate_closed_system_pH <- function(
   TIC, V_liquid, V_gas, 
-  solubility = calculate_solubility("CO2", temperature), temperature = qty(25, "C"),
+  solubility = calculate_gas_solubility("CO2", temperature), temperature = qty(25, "C"),
   pKa1 = 6.3, pKa2 = 10.3, pKw = 14,
   buffer = qty(0, "M"), buffer_pKa, alkalinity = qty(0, "M")){
   
@@ -247,12 +247,12 @@ calculate_closed_system_pH <- function(
   require_quantity(rlang::enquo(V_liquid), is_volume)
   require_quantity(rlang::enquo(temperature), is_temperature)
   buffer_quo <- rlang::enquo(buffer)
-  require_quantity(buffer_quo, is_molarity)
+  require_quantity(buffer_quo, is_molarity_concentration)
   if (!missing(buffer) && missing(buffer_pKa))
     stop("must provide a pKa if buffer is provided", call. = FALSE)
   else if (missing(buffer_pKa))
     buffer_pKa <- 7 # place holder value, buffer is 0
-  require_quantity(rlang::enquo(alkalinity), is_molarity)
+  require_quantity(rlang::enquo(alkalinity), is_molarity_concentration)
   
   # calculate
   TIC.mol <- get_qty_value(TIC, unit = "mol")
@@ -285,7 +285,7 @@ calculate_closed_system_pH <- function(
 #' @export
 calculate_closed_system_alkalinity <- function(
   pH, TIC, V_liquid, V_gas, 
-  solubility = calculate_solubility("CO2", temperature), temperature = qty(25, "C"),
+  solubility = calculate_gas_solubility("CO2", temperature), temperature = qty(25, "C"),
   pKa1 = 6.3, pKa2 = 10.3, pKw = 14,
   buffer = qty(0, "M"), buffer_pKa) {
   
@@ -296,7 +296,7 @@ calculate_closed_system_alkalinity <- function(
   require_quantity(rlang::enquo(V_liquid), is_volume)
   require_quantity(rlang::enquo(temperature), is_temperature)
   buffer_quo <- rlang::enquo(buffer)
-  require_quantity(buffer_quo, is_molarity)
+  require_quantity(buffer_quo, is_molarity_concentration)
   if (!missing(buffer) && missing(buffer_pKa))
     stop("must provide a pKa if buffer is provided", call. = FALSE)
   else if (missing(buffer_pKa))
@@ -312,7 +312,7 @@ calculate_closed_system_alkalinity <- function(
   alkalinity <- 
     calculate_closed_system_alkalinity_formula(
       pH, TIC.mol, V_liquid.L, V_gas.L, pKa1, pKa2, pKw, buffer.M, buffer_pKa, temperature.K, solubility.M_bar)
-  return(molarity(alkalinity, "M"))
+  return(molarity_concentration(alkalinity, "M"))
 }
 
 # helper function for calculating unbalanced ions
@@ -352,7 +352,7 @@ calculate_closed_system_TIC <- function(pH, pCO2, V_gas, V_liquid, temperature =
 #' @export
 calculate_closed_system_pCO2 <- function(
   pH, TIC, V_gas, V_liquid, 
-  solubility = calculate_solubility("CO2", temperature), temperature = qty(25, "C"),
+  solubility = calculate_gas_solubility("CO2", temperature), temperature = qty(25, "C"),
   pKa1 = 6.3, pKa2 = 10.3) {
   
   # safety checks
