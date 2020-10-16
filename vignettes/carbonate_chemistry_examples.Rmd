@@ -20,7 +20,6 @@ This vignette provides examples of the carbonate chemistry tools implemented by 
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 library(tidyverse) # load tidyverse tools
-library(plotly) # load interactive plotting
 library(microbialkitchen) # load microbial kitchen library
 ```
 
@@ -240,12 +239,6 @@ plot_df <- df_base_w_buffer_vs_pH %>%
 p_log %+% filter(plot_df, buffer_pKa == 7.5) %+%
   aes(linetype = Buffer) +
   labs(title = "Different concentrations of a weak acid buffer")
-```
-
-#### Interactive
-
-```{r "unbalanced ions for pH with buffer interactive", fig.width = 9, fig.height = 6}
-ggplotly()
 ```
 
 ### Same concentration of weak acid (different pKa)
