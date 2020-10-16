@@ -12,7 +12,7 @@ methods::setOldClass(c("microbial_kitchen_quantity", "vctrs_vctr"))
 
 #' Quantities
 #'
-#' The \code{qty} function makes it easy to keep track of different quantities in chemical calculations. Metric prefixes are fully supported, i.e. any unit can be combined with standard \link{metric} scaling (mL, nmol, kg, etc.). Some quantities can also be used in common \link{arithmetic} operations.
+#' The \code{qty} function makes it easy to keep track of different quantities in chemical calculations. Metric prefixes are fully supported, i.e. any unit can be combined with standard \link{metric_scaling} scaling (mL, nmol, kg, etc.). Some quantities can also be used in common \link{arithmetic} operations.
 #' @details The following types of quantities are supported.
 #' @name quantities
 #' @aliases quantity
@@ -1091,6 +1091,7 @@ get_unit_prefix <- function(unit, base_unit) {
 
 # factors ========
 
+#' @method as_factor microbial_kitchen_quantity
 #' @export
 as_factor.microbial_kitchen_quantity <- function(x) {
   return(forcats::as_factor(as.character(x)))

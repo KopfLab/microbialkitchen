@@ -77,9 +77,9 @@ get_microbialkitchen_constant <- function(name) {
 #' @export
 get_microbialkitchen_constants <- function() {
   opts <- options() %>% {.[names(.) %>% stringr::str_detect("^microbialkitchen_")]}
-  data_frame(
+  tibble(
     constant = names(opts) %>% stringr::str_replace("^microbialkitchen_", ""),
     key = purrr::map(opts, names) %>% purrr::map( ~ if (is.null(.x)) { NA_character_ } else { .x }),
     value = purrr::map(opts, identity)
-  ) %>% unnest(key, value)
+  ) %>% tidyr::unnest(.data$key, .data$value)
 }
