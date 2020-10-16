@@ -371,7 +371,7 @@ df_CO2_consumption %>%
   ggplot() +
   aes(TIC_used, val, color = var, linetype = buffer) +
   geom_line() +
-  scale_x_continuous("TIC consumed", labels = scales::percent, expand = c(0, 0)) +
+  scale_x_continuous("TIC consumed", labels = function(x) sprintf("%.0f%%", 100*x), expand = c(0, 0)) +
   scale_y_continuous(
     breaks = c(-12:0, 7:14),
     labels = function(labels,...) {
@@ -452,7 +452,7 @@ df_CO2_production %>%
   ggplot() +
   aes(Corg_used, val, color = var, linetype = buffer) +
   geom_line() +
-  scale_x_continuous("Organic C consumed", labels = scales::percent, expand = c(0, 0)) +
+  scale_x_continuous("Organic C consumed", labels = function(x) sprintf("%.0f%%", 100*x), expand = c(0, 0)) +
   scale_y_continuous(
     breaks = c(-12:0, 1:7),
     labels = function(labels,...) {
