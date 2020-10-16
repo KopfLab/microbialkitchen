@@ -57,7 +57,9 @@ qty(257, "g/mol")
 \seealso{
 Other quantity functions: 
 \code{\link{check_quantities}},
-\code{\link{get_quantity_info}},
-\code{\link{metric_scaling}}
+\code{\link{make_qty_units_explicit}()},
+\code{\link{metric_scaling}},
+\code{\link{quantity_data}},
+\code{\link{quantity_units}}
 }
 \concept{quantity functions}

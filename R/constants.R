@@ -36,8 +36,10 @@
     
     # metric prefixes
     metric_prefix = 
-      c(f = 1e-15, p = 1e-12, n = 1e-9, '\U00B5' = 1e-6, m = 1e-3, 1, 
-        k = 1e3, M = 1e6, G = 1e9, T = 1e12),
+      rlang::set_names(
+        c(1e-15, 1e-12, 1e-9, 1e-6, 1e-3, 1, 1e3, 1e6, 1e9, 1e12),
+        c("f", "p", "n", stringi::stri_encode("\U00B5"), "m", "", "k", "M", "G", "T")
+      ),
     
     # pressure units
     bar_per_pa = 1e-5,

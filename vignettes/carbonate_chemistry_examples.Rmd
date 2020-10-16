@@ -1,18 +1,27 @@
 ---
 title: "Carbonate Chemistry Examples"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+output: 
+  rmarkdown::html_vignette:
+  html_document:
+    code_folding: show
+    df_print: paged
+    number_sections: yes
+    toc: yes
+    toc_depth: 3
+    toc_float: yes
+editor_options:
+  chunk_output_type: console
 vignette: >
   %\VignetteIndexEntry{Carbonate Chemistry Examples}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
 ---
 
 This vignette provides examples of the carbonate chemistry tools implemented by the **microbialkitchen** package to explore carbonate solubility and pH control in open and closed media systems. See the [carbonate chemistry equations vignette](carbonate_chemistry_equations.html) for conceptual background.
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 library(tidyverse) # load tidyverse tools
-library(plotly) # load interactive plotting
 library(microbialkitchen) # load microbial kitchen library
 ```
 
@@ -26,12 +35,11 @@ solubilities <- tibble(
   solubility = calculate_gas_solubility("CO2", temperature)
 )
 
-ggplot(solubilities) +
-  aes(get_qty_value(temperature, "C"), get_qty_value(solubility, "mM/bar")) +
+solubilities %>% 
+  make_qty_units_explicit(temperature = "C", solubility = "mM/bar") %>% 
+  ggplot() +
+  aes(`temperature [C]`, `solubility [mM/bar]`) +
   geom_line(size = 2) +
-  labs(
-    x = "T [C]",
-    y = "Henry's law solubility [mM/bar]") +
   theme_bw()
 ```
 
@@ -234,12 +242,6 @@ p_log %+% filter(plot_df, buffer_pKa == 7.5) %+%
   labs(title = "Different concentrations of a weak acid buffer")
 ```
 
-#### Interactive
-
-```{r "unbalanced ions for pH with buffer interactive", fig.width = 9, fig.height = 6}
-ggplotly()
-```
-
 ### Same concentration of weak acid (different pKa)
 
 ```{r "unbalanced ions for pH with buffer difference pKa", fig.width = 9, fig.height = 6}
@@ -363,7 +365,7 @@ df_CO2_consumption %>%
   ggplot() +
   aes(TIC_used, val, color = var, linetype = buffer) +
   geom_line() +
-  scale_x_continuous("TIC consumed", labels = scales::percent, expand = c(0, 0)) +
+  scale_x_continuous("TIC consumed", labels = function(x) sprintf("%.0f%%", 100*x), expand = c(0, 0)) +
   scale_y_continuous(
     breaks = c(-12:0, 7:14),
     labels = function(labels,...) {
@@ -444,7 +446,7 @@ df_CO2_production %>%
   ggplot() +
   aes(Corg_used, val, color = var, linetype = buffer) +
   geom_line() +
-  scale_x_continuous("Organic C consumed", labels = scales::percent, expand = c(0, 0)) +
+  scale_x_continuous("Organic C consumed", labels = function(x) sprintf("%.0f%%", 100*x), expand = c(0, 0)) +
   scale_y_continuous(
     breaks = c(-12:0, 1:7),
     labels = function(labels,...) {
@@ -460,11 +462,3 @@ df_CO2_production %>%
   theme_bw() + theme(panel.grid.minor = element_blank()) +
   labs(y = "", color = "", title = "CO2 production in closed system")
 ```
-
-## CO2 loss through headspace exchange
-
-Coming soon...
-
-## CO2 gain through headspace exchange
-
-Coming soon...

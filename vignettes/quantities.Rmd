@@ -1,11 +1,21 @@
 ---
 title: "Quantities"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+output: 
+  rmarkdown::html_vignette:
+  html_document:
+    code_folding: show
+    df_print: paged
+    number_sections: yes
+    toc: yes
+    toc_depth: 3
+    toc_float: yes
+editor_options:
+  chunk_output_type: inline
 vignette: >
   %\VignetteIndexEntry{Quantities}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
 ---
 
 All quantity data types are accessible via the universal `qty` function. The `qty` function always takes a numeric value (either single value or vector) and a unit that must match one of the supported units. For al available quantities, the standard SI units and metric prefixes are supported as well as a few frequently used non-SI units (e.g. `atm` for pressure, `C` for temperature). However, non-standard units are automatically converted to the corresponding SI unit. Additionally, the `qty` function takes the optional argument `scale_to_best_metric` which determines whether the values should be automatically scaled to the most appropriate metric prefix (e.g. `10 mg` instead of `0.01 g`). By default, this is done (i.e. `scale_to_best_metric = TRUE`). If the quantity is a vector, the best scaling is determined based on the median of all values.
