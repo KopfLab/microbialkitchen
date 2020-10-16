@@ -1,7 +1,15 @@
 ---
 title: "Carbonate Chemistry Examples"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+output: 
+  rmarkdown::html_vignette:
+  html_document:
+    code_folding: show
+    df_print: paged
+    number_sections: yes
+    toc: yes
+    toc_depth: 3
+    toc_float: yes
 vignette: >
   %\VignetteIndexEntry{Carbonate Chemistry Examples}
   %\VignetteEngine{knitr::rmarkdown}
@@ -460,11 +468,3 @@ df_CO2_production %>%
   theme_bw() + theme(panel.grid.minor = element_blank()) +
   labs(y = "", color = "", title = "CO2 production in closed system")
 ```
-
-## CO2 loss through headspace exchange
-
-Coming soon...
-
-## CO2 gain through headspace exchange
-
-Coming soon...

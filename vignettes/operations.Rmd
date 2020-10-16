@@ -3,6 +3,13 @@ title: "Operations"
 date: "`r Sys.Date()`"
 output: 
   rmarkdown::html_vignette:
+  html_document:
+    code_folding: show
+    df_print: paged
+    number_sections: yes
+    toc: yes
+    toc_depth: 3
+    toc_float: yes
 vignette: >
   %\VignetteIndexEntry{Operations}
   %\VignetteEngine{knitr::rmarkdown}
