@@ -10,10 +10,12 @@ output:
     toc: yes
     toc_depth: 3
     toc_float: yes
+editor_options:
+  chunk_output_type: console
 vignette: >
   %\VignetteIndexEntry{Carbonate Chemistry Examples}
-  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
 ---
 
 This vignette provides examples of the carbonate chemistry tools implemented by the **microbialkitchen** package to explore carbonate solubility and pH control in open and closed media systems. See the [carbonate chemistry equations vignette](carbonate_chemistry_equations.html) for conceptual background.
@@ -33,12 +35,11 @@ solubilities <- tibble(
   solubility = calculate_gas_solubility("CO2", temperature)
 )
 
-ggplot(solubilities) +
-  aes(get_qty_value(temperature, "C"), get_qty_value(solubility, "mM/bar")) +
+solubilities %>% 
+  make_qty_units_explicit(temperature = "C", solubility = "mM/bar") %>% 
+  ggplot() +
+  aes(`temperature [C]`, `solubility [mM/bar]`) +
   geom_line(size = 2) +
-  labs(
-    x = "T [C]",
-    y = "Henry's law solubility [mM/bar]") +
   theme_bw()
 ```
 
