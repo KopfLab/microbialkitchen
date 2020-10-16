@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>General gas calculations — gas_calculations • microbialkitchen</title>
+<title>Make units explicit — make_qty_units_explicit • microbialkitchen</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="General gas calculations — gas_calculations" />
-<meta property="og:description" content="General gas calculations" />
+<meta property="og:title" content="Make units explicit — make_qty_units_explicit" />
+<meta property="og:description" content="This function is intended for data frames / tibbles only and makes the specified columns explicit with the target units in the column name." />
 
 
 
@@ -133,51 +133,77 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>General gas calculations</h1>
-    <small class="dont-index">Source: <a href='https://github.com/kopflab/microbialkitchen/blob/master/R/calculations.R'><code>R/calculations.R</code></a></small>
-    <div class="hidden name"><code>gas_calculations.Rd</code></div>
+    <h1>Make units explicit</h1>
+    <small class="dont-index">Source: <a href='https://github.com/kopflab/microbialkitchen/blob/master/R/units.R'><code>R/units.R</code></a></small>
+    <div class="hidden name"><code>make_qty_units_explicit.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>General gas calculations</p>
+    <p>This function is intended for data frames / tibbles only and makes the specified columns explicit with the target units in the column name.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>calculate_ideal_gas_molarity</span><span class='op'>(</span><span class='va'>pressure</span>, <span class='va'>temperature</span><span class='op'>)</span>
-
-<span class='fu'>calculate_ideal_gas_amount</span><span class='op'>(</span><span class='va'>pressure</span>, <span class='va'>temperature</span>, <span class='va'>volume</span><span class='op'>)</span>
-
-<span class='fu'>calculate_gas_solubility</span><span class='op'>(</span><span class='va'>gas</span>, <span class='va'>temperature</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>make_qty_units_explicit</span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>...</span>, prefix <span class='op'>=</span> <span class='st'>" ["</span>, suffix <span class='op'>=</span> <span class='st'>"]"</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>pressure</th>
-      <td><p>the pressure quantity of the gas</p></td>
+      <th>df</th>
+      <td><p>the data frame in which to make the units explicit</p></td>
     </tr>
     <tr>
-      <th>temperature</th>
-      <td><p>temperature quantity</p></td>
+      <th>...</th>
+      <td><p>named arguments for the columns that should be made explicit and their units, e.g. <code>salt_weight = "mg", salt_concentration = "M"</code>.</p></td>
     </tr>
     <tr>
-      <th>volume</th>
-      <td><p>the volume quantity of the gas</p></td>
+      <th>prefix</th>
+      <td><p>the prefix for the units</p></td>
     </tr>
     <tr>
-      <th>gas</th>
-      <td><p>name of the gas</p></td>
+      <th>suffix</th>
+      <td><p>the suffix for the units</p></td>
     </tr>
     </table>
 
-    <h2 class="hasAnchor" id="functions"><a class="anchor" href="#functions"></a>Functions</h2>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    
-<ul>
-<li><p><code>calculate_ideal_gas_molarity</code>: calculate the gas phase equivalent concentration of an ideal gas at a specific temperature (i.e. mol of gas / L of volume). Returns a molarity quantity.</p></li>
-<li><p><code>calculate_ideal_gas_amount</code>: calculates the amount of an ideal gas at a specific pressure, temperature and volume. Returns an amount quantity.</p></li>
-<li><p><code>calculate_gas_solubility</code>: calculates Henry's law solubility constant for a gas at a specific temperature. Henry's law constants are from: Sander, R. Compilation of Henry's law constants (version 4.0) for water as solvent. Atmos Chem Phys 15, 4399–4981 (2015). https://www.atmos-chem-phys.net/15/4399/2015/. Returns a solubility quantity.</p></li>
-</ul>
+    <div class='dont-index'><p>Other quantity functions: 
+<code><a href='check_quantities.html'>check_quantities</a></code>,
+<code><a href='metric_scaling.html'>metric_scaling</a></code>,
+<code><a href='quantities.html'>quantities</a></code>,
+<code><a href='quantity_data.html'>quantity_data</a></code>,
+<code><a href='quantity_units.html'>quantity_units</a></code></p></div>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># data frame with quantities</span>
+<span class='va'>df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='quantities.html'>qty</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>, <span class='st'>"mg"</span><span class='op'>)</span>, y <span class='op'>=</span> <span class='fu'><a href='quantities.html'>qty</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>5</span>, <span class='st'>"L"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>df</span>
+</div><div class='output co'>#&gt; <span style='color: #555555;'># A tibble: 5 x 2</span><span>
+#&gt;         x      y
+#&gt;   </span><span style='color: #555555;font-style: italic;'>&lt;m[mg]&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;V[L]&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span>       1      1
+#&gt; </span><span style='color: #555555;'>2</span><span>       2      2
+#&gt; </span><span style='color: #555555;'>3</span><span>       3      3
+#&gt; </span><span style='color: #555555;'>4</span><span>       4      4
+#&gt; </span><span style='color: #555555;'>5</span><span>       5      5</div><div class='input'>
+<span class='co'># show with explicit units</span>
+<span class='fu'>make_qty_units_explicit</span><span class='op'>(</span><span class='va'>df</span>, x <span class='op'>=</span> <span class='st'>"mg"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 5 x 2</span><span>
+#&gt;   `x [mg]`      y
+#&gt;      </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span> </span><span style='color: #555555;font-style: italic;'>&lt;V[L]&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span>        1      1
+#&gt; </span><span style='color: #555555;'>2</span><span>        2      2
+#&gt; </span><span style='color: #555555;'>3</span><span>        3      3
+#&gt; </span><span style='color: #555555;'>4</span><span>        4      4
+#&gt; </span><span style='color: #555555;'>5</span><span>        5      5</div><div class='input'><span class='fu'>make_qty_units_explicit</span><span class='op'>(</span><span class='va'>df</span>, x <span class='op'>=</span> <span class='st'>"g"</span>, y <span class='op'>=</span> <span class='st'>"mL"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; </span><span style='color: #555555;'># A tibble: 5 x 2</span><span>
+#&gt;   `x [g]` `y [mL]`
+#&gt;     </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>    </span><span style='color: #555555;font-style: italic;'>&lt;dbl&gt;</span><span>
+#&gt; </span><span style='color: #555555;'>1</span><span>   0.001     </span><span style='text-decoration: underline;'>1</span><span>000
+#&gt; </span><span style='color: #555555;'>2</span><span>   0.002     </span><span style='text-decoration: underline;'>2</span><span>000
+#&gt; </span><span style='color: #555555;'>3</span><span>   0.003     </span><span style='text-decoration: underline;'>3</span><span>000
+#&gt; </span><span style='color: #555555;'>4</span><span>   0.004     </span><span style='text-decoration: underline;'>4</span><span>000
+#&gt; </span><span style='color: #555555;'>5</span><span>   0.005     </span><span style='text-decoration: underline;'>5</span><span>000</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

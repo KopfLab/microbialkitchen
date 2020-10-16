@@ -22,7 +22,7 @@
     <loc>https://microbialkitchen.kopflab.org//reference/gas_calculations.html</loc>
   </url>
   <url>
-    <loc>https://microbialkitchen.kopflab.org//reference/get_quantity_info.html</loc>
+    <loc>https://microbialkitchen.kopflab.org//reference/make_qty_units_explicit.html</loc>
   </url>
   <url>
     <loc>https://microbialkitchen.kopflab.org//reference/metric_scaling.html</loc>
@@ -35,6 +35,12 @@
   </url>
   <url>
     <loc>https://microbialkitchen.kopflab.org//reference/quantities.html</loc>
+  </url>
+  <url>
+    <loc>https://microbialkitchen.kopflab.org//reference/quantity_data.html</loc>
+  </url>
+  <url>
+    <loc>https://microbialkitchen.kopflab.org//reference/quantity_units.html</loc>
   </url>
   <url>
     <loc>https://microbialkitchen.kopflab.org//reference/reexports.html</loc>

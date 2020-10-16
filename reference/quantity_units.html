@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>General gas calculations — gas_calculations • microbialkitchen</title>
+<title>Work with quantity units. — quantity_units • microbialkitchen</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="General gas calculations — gas_calculations" />
-<meta property="og:description" content="General gas calculations" />
+<meta property="og:title" content="Work with quantity units. — quantity_units" />
+<meta property="og:description" content="Work with quantity units." />
 
 
 
@@ -133,39 +133,29 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>General gas calculations</h1>
-    <small class="dont-index">Source: <a href='https://github.com/kopflab/microbialkitchen/blob/master/R/calculations.R'><code>R/calculations.R</code></a></small>
-    <div class="hidden name"><code>gas_calculations.Rd</code></div>
+    <h1>Work with quantity units.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/kopflab/microbialkitchen/blob/master/R/units.R'><code>R/units.R</code></a></small>
+    <div class="hidden name"><code>quantity_units.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>General gas calculations</p>
+    <p>Work with quantity units.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>calculate_ideal_gas_molarity</span><span class='op'>(</span><span class='va'>pressure</span>, <span class='va'>temperature</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'>get_qty_units</span><span class='op'>(</span><span class='va'>q</span><span class='op'>)</span>
 
-<span class='fu'>calculate_ideal_gas_amount</span><span class='op'>(</span><span class='va'>pressure</span>, <span class='va'>temperature</span>, <span class='va'>volume</span><span class='op'>)</span>
-
-<span class='fu'>calculate_gas_solubility</span><span class='op'>(</span><span class='va'>gas</span>, <span class='va'>temperature</span><span class='op'>)</span></pre>
+<span class='fu'>get_qty_units_with_label</span><span class='op'>(</span><span class='va'>q</span>, label <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>q</span><span class='op'>)</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>pressure</th>
-      <td><p>the pressure quantity of the gas</p></td>
+      <th>q</th>
+      <td><p>quantities</p></td>
     </tr>
     <tr>
-      <th>temperature</th>
-      <td><p>temperature quantity</p></td>
-    </tr>
-    <tr>
-      <th>volume</th>
-      <td><p>the volume quantity of the gas</p></td>
-    </tr>
-    <tr>
-      <th>gas</th>
-      <td><p>name of the gas</p></td>
+      <th>label</th>
+      <td><p>text label to use with the units - single value or vector of the same length as <code>q</code>. By default uses the names of <code>q</code>, which only works if <code>q</code> is a list or data frame.</p></td>
     </tr>
     </table>
 
@@ -173,11 +163,35 @@
 
     
 <ul>
-<li><p><code>calculate_ideal_gas_molarity</code>: calculate the gas phase equivalent concentration of an ideal gas at a specific temperature (i.e. mol of gas / L of volume). Returns a molarity quantity.</p></li>
-<li><p><code>calculate_ideal_gas_amount</code>: calculates the amount of an ideal gas at a specific pressure, temperature and volume. Returns an amount quantity.</p></li>
-<li><p><code>calculate_gas_solubility</code>: calculates Henry's law solubility constant for a gas at a specific temperature. Henry's law constants are from: Sander, R. Compilation of Henry's law constants (version 4.0) for water as solvent. Atmos Chem Phys 15, 4399–4981 (2015). https://www.atmos-chem-phys.net/15/4399/2015/. Returns a solubility quantity.</p></li>
+<li><p><code>get_qty_units</code>: get units from a quantity, list of quantities or data frame (returns NA for objects/columns that are not quantities)</p></li>
+<li><p><code>get_qty_units_with_label</code>: get units from a quantity, list of quantities or data frame, with a custom label in the format <code>label [units]</code>. Objects/columns that are not quantities simply return the label with out the [units] part.</p></li>
 </ul>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
+    <div class='dont-index'><p>Other quantity functions: 
+<code><a href='check_quantities.html'>check_quantities</a></code>,
+<code><a href='make_qty_units_explicit.html'>make_qty_units_explicit</a>()</code>,
+<code><a href='metric_scaling.html'>metric_scaling</a></code>,
+<code><a href='quantities.html'>quantities</a></code>,
+<code><a href='quantity_data.html'>quantity_data</a></code></p></div>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'>
+<span class='co'># quantity units examples</span>
+<span class='fu'><a href='quantities.html'>qty</a></span><span class='op'>(</span><span class='fl'>5000</span>, <span class='st'>"g"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'>get_qty_units</span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "kg"</div><div class='input'><span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>a <span class='op'>=</span> <span class='fu'><a href='quantities.html'>qty</a></span><span class='op'>(</span><span class='fl'>5000</span>, <span class='st'>"g"</span><span class='op'>)</span>, b <span class='op'>=</span> <span class='fl'>42</span>, c <span class='op'>=</span> <span class='fu'><a href='quantities.html'>qty</a></span><span class='op'>(</span><span class='fl'>100</span>, <span class='st'>"mbar"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>x</span> <span class='op'>%&gt;%</span> <span class='fu'>get_qty_units</span><span class='op'>(</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;      a      b      c 
+#&gt;   "kg"     NA "mbar" </div><div class='input'><span class='co'># labels with units</span>
+<span class='fu'>get_qty_units_with_label</span><span class='op'>(</span><span class='fu'><a href='quantities.html'>qty</a></span><span class='op'>(</span><span class='fl'>0.1</span>, <span class='st'>"mM"</span><span class='op'>)</span>, <span class='st'>"concentration"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "concentration [µM]"</div><div class='input'>
+<span class='co'># make labels with units for data frame columns</span>
+<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>a <span class='op'>=</span> <span class='fu'><a href='quantities.html'>qty</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='st'>"mg"</span><span class='op'>)</span>, b <span class='op'>=</span> <span class='fl'>2</span>, c <span class='op'>=</span> <span class='fu'><a href='quantities.html'>qty</a></span><span class='op'>(</span><span class='fl'>100</span>, <span class='st'>"mbar"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'>get_qty_units_with_label</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;          a          b          c 
+#&gt;   "a [mg]"        "b" "c [mbar]" </div><div class='input'><span class='fu'>get_qty_units_with_label</span><span class='op'>(</span><span class='va'>x</span>, <span class='st'>"same label"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;                   a                   b                   c 
+#&gt;   "same label [mg]"        "same label" "same label [mbar]" </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

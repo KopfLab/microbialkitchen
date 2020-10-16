@@ -37,7 +37,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">microbialkitchen</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="in active development">0.4.0</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="in active development">0.4.1</span>
       </span>
     </div>
 
@@ -128,42 +128,42 @@
 <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">100</span>, <span class="st">"mg"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/metric_scaling.html">scale_metric</a></span><span class="op">(</span><span class="st">"k"</span><span class="op">)</span></pre></div>
 <pre><code>## &lt;m (mass) in 'kg'[1]&gt;
 ## [1] 1e-04</code></pre>
-<p>The actual numeric value of a quantity can be retrieved via the <code><a href="../reference/get_quantity_info.html">get_qty_value()</a></code> function which takes an optional parameter to specify which unit the value should be retrieved in (by default it is the unit that the quantity is currently in). Additionally, a transformation function can be specified for easy log or other transformations.</p>
+<p>The actual numeric value of a quantity can be retrieved via the <code><a href="../reference/quantity_data.html">get_qty_value()</a></code> function which takes an optional parameter to specify which unit the value should be retrieved in (by default it is the unit that the quantity is currently in). Additionally, a transformation function can be specified for easy log or other transformations.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit">
-<span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">100</span>, <span class="st">"mg"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/get_quantity_info.html">get_qty_value</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># returns 100</span></pre></div>
+<span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">100</span>, <span class="st">"mg"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/quantity_data.html">get_qty_value</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># returns 100</span></pre></div>
 <pre><code>## [1] 100</code></pre>
 <div class="sourceCode" id="cb14"><pre class="downlit">
-<span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="st">"g"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/get_quantity_info.html">get_qty_value</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># returns 100 because the units are "mg"</span></pre></div>
+<span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="st">"g"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/quantity_data.html">get_qty_value</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># returns 100 because the units are "mg"</span></pre></div>
 <pre><code>## [1] 100</code></pre>
 <div class="sourceCode" id="cb16"><pre class="downlit">
-<span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="st">"g"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/get_quantity_info.html">get_qty_value</a></span><span class="op">(</span><span class="st">"g"</span><span class="op">)</span> <span class="co"># better to be specific upon retrieval</span></pre></div>
+<span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="st">"g"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/quantity_data.html">get_qty_value</a></span><span class="op">(</span><span class="st">"g"</span><span class="op">)</span> <span class="co"># better to be specific upon retrieval</span></pre></div>
 <pre><code>## [1] 0.1</code></pre>
 <div class="sourceCode" id="cb18"><pre class="downlit">
-<span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="st">"g"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/get_quantity_info.html">get_qty_value</a></span><span class="op">(</span><span class="st">"g"</span>, <span class="va">log10</span><span class="op">)</span> <span class="co"># applies a log10 transform</span></pre></div>
+<span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="st">"g"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/quantity_data.html">get_qty_value</a></span><span class="op">(</span><span class="st">"g"</span>, <span class="va">log10</span><span class="op">)</span> <span class="co"># applies a log10 transform</span></pre></div>
 <pre><code>## [1] -1</code></pre>
 <div class="sourceCode" id="cb20"><pre class="downlit">
-<span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="st">"g"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/get_quantity_info.html">get_qty_value</a></span><span class="op">(</span><span class="st">"kg"</span><span class="op">)</span> <span class="co"># can use any valid unit</span></pre></div>
+<span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="st">"g"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/quantity_data.html">get_qty_value</a></span><span class="op">(</span><span class="st">"kg"</span><span class="op">)</span> <span class="co"># can use any valid unit</span></pre></div>
 <pre><code>## [1] 1e-04</code></pre>
 <div class="sourceCode" id="cb22"><pre class="downlit">
-<span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="st">"g"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/get_quantity_info.html">get_qty_value</a></span><span class="op">(</span><span class="st">"kg"</span>, <span class="va">sqrt</span><span class="op">)</span> <span class="co"># and any transformation</span></pre></div>
+<span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="st">"g"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/quantity_data.html">get_qty_value</a></span><span class="op">(</span><span class="st">"kg"</span>, <span class="va">sqrt</span><span class="op">)</span> <span class="co"># and any transformation</span></pre></div>
 <pre><code>## [1] 0.01</code></pre>
 <div class="sourceCode" id="cb24"><pre class="downlit">
-<span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">0</span>, <span class="st">"C"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/get_quantity_info.html">get_qty_value</a></span><span class="op">(</span><span class="st">"F"</span><span class="op">)</span> <span class="co"># or use it for unit conversion</span></pre></div>
+<span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">0</span>, <span class="st">"C"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/quantity_data.html">get_qty_value</a></span><span class="op">(</span><span class="st">"F"</span><span class="op">)</span> <span class="co"># or use it for unit conversion</span></pre></div>
 <pre><code>## [1] 32</code></pre>
 <div class="sourceCode" id="cb26"><pre class="downlit">
-<span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">760</span>, <span class="st">"Torr"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/get_quantity_info.html">get_qty_value</a></span><span class="op">(</span><span class="st">"atm"</span><span class="op">)</span> <span class="co"># or use it for unit conversion</span></pre></div>
+<span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">760</span>, <span class="st">"Torr"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/quantity_data.html">get_qty_value</a></span><span class="op">(</span><span class="st">"atm"</span><span class="op">)</span> <span class="co"># or use it for unit conversion</span></pre></div>
 <pre><code>## [1] 1</code></pre>
-<p>To retrieven numeric values as text that includes their units, simply use <code><a href="../reference/get_quantity_info.html">get_qty_text()</a></code> instead of <code><a href="../reference/get_quantity_info.html">get_qty_value()</a></code>.</p>
+<p>To retrieven numeric values as text that includes their units, simply use <code><a href="../reference/quantity_data.html">get_qty_text()</a></code> instead of <code><a href="../reference/quantity_data.html">get_qty_value()</a></code>.</p>
 <div class="sourceCode" id="cb28"><pre class="downlit">
 <span class="co"># get quantity with unit</span>
-<span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">100</span>, <span class="st">"mg"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/get_quantity_info.html">get_qty_text</a></span><span class="op">(</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">100</span>, <span class="st">"mg"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/quantity_data.html">get_qty_text</a></span><span class="op">(</span><span class="op">)</span></pre></div>
 <pre><code>## [1] "100 mg"</code></pre>
 <div class="sourceCode" id="cb30"><pre class="downlit">
-<span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">0</span><span class="op">:</span><span class="fl">10</span>, <span class="st">"C"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/get_quantity_info.html">get_qty_text</a></span><span class="op">(</span><span class="st">"F"</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">0</span><span class="op">:</span><span class="fl">10</span>, <span class="st">"C"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/quantity_data.html">get_qty_text</a></span><span class="op">(</span><span class="st">"F"</span><span class="op">)</span></pre></div>
 <pre><code>##  [1] "32 F"   "33.8 F" "35.6 F" "37.4 F" "39.2 F" "41 F"   "42.8 F" "44.6 F"
 ##  [9] "46.4 F" "48.2 F" "50 F"</code></pre>
 <div class="sourceCode" id="cb32"><pre class="downlit">
-<span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">760</span>, <span class="st">"Torr"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/get_quantity_info.html">get_qty_text</a></span><span class="op">(</span><span class="st">"atm"</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">760</span>, <span class="st">"Torr"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/quantity_data.html">get_qty_text</a></span><span class="op">(</span><span class="st">"atm"</span><span class="op">)</span></pre></div>
 <pre><code>## [1] "1 atm"</code></pre>
 <p>To include this type of quantity text in axis tickmark labels, color/shape/linetype scale labels or facet labels, generate a labeller function using <code><a href="../reference/visualization.html">make_qty_text_labeller()</a></code> and use it as the <code>labels</code> parameter for scales or the <code>labeller</code> parameter for facets.</p>
 <div class="sourceCode" id="cb34"><pre class="downlit">
@@ -176,9 +176,9 @@
 <span class="va">specific_units_labeller</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/visualization.html">make_qty_text_labeller</a></span><span class="op">(</span><span class="va">q</span>, <span class="st">"g"</span><span class="op">)</span>
 <span class="fu">specific_units_labeller</span><span class="op">(</span><span class="va">q</span><span class="op">)</span></pre></div>
 <pre><code>## [1] "0.1 g"  "1 g"    "1000 g"</code></pre>
-<p>The units of a quantity object can also be retrieved directly with the <code><a href="../reference/get_quantity_info.html">get_qty_units()</a></code> function for a single quantity, list of quantities as well as entire data frames (see details on the latter in the <a href="#data-frames">data frames section</a>).</p>
+<p>The units of a quantity object can also be retrieved directly with the <code><a href="../reference/quantity_units.html">get_qty_units()</a></code> function for a single quantity, list of quantities as well as entire data frames (see details on the latter in the <a href="#data-frames">data frames section</a>).</p>
 <div class="sourceCode" id="cb38"><pre class="downlit">
-<span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">5000</span>, <span class="st">"g"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/get_quantity_info.html">get_qty_units</a></span><span class="op">(</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">5000</span>, <span class="st">"g"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/quantity_units.html">get_qty_units</a></span><span class="op">(</span><span class="op">)</span></pre></div>
 <pre><code>## [1] "kg"</code></pre>
 <div class="sourceCode" id="cb40"><pre class="downlit">
 <span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
@@ -186,23 +186,23 @@
   b <span class="op">=</span> <span class="fl">42</span>,
   c <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">100</span>, <span class="st">"mbar"</span><span class="op">)</span>
 <span class="op">)</span> 
-<span class="va">x</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/get_quantity_info.html">get_qty_units</a></span><span class="op">(</span><span class="op">)</span></pre></div>
+<span class="va">x</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/quantity_units.html">get_qty_units</a></span><span class="op">(</span><span class="op">)</span></pre></div>
 <pre><code>##      a      b      c 
 ##   "kg"     NA "mbar"</code></pre>
-<p>For easy construction of plot axis or legend labels, the function <code><a href="../reference/get_quantity_info.html">get_qty_units_with_label()</a></code> further provides an easy way to combine labels with the units. By default (for lists and data frames), it uses the names of the list variable/data frame columns (see details on the latter in the <a href="#data-frames">data frames section</a>).</p>
+<p>For easy construction of plot axis or legend labels, the function <code><a href="../reference/quantity_units.html">get_qty_units_with_label()</a></code> further provides an easy way to combine labels with the units. By default (for lists and data frames), it uses the names of the list variable/data frame columns (see details on the latter in the <a href="#data-frames">data frames section</a>).</p>
 <div class="sourceCode" id="cb42"><pre class="downlit">
-<span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">5000</span>, <span class="st">"g"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/get_quantity_info.html">get_qty_units_with_label</a></span><span class="op">(</span><span class="st">"weight"</span><span class="op">)</span></pre></div>
+<span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">5000</span>, <span class="st">"g"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/quantity_units.html">get_qty_units_with_label</a></span><span class="op">(</span><span class="st">"weight"</span><span class="op">)</span></pre></div>
 <pre><code>## [1] "weight [kg]"</code></pre>
 <div class="sourceCode" id="cb44"><pre class="downlit">
-<span class="va">x</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/get_quantity_info.html">get_qty_units_with_label</a></span><span class="op">(</span><span class="op">)</span></pre></div>
+<span class="va">x</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/quantity_units.html">get_qty_units_with_label</a></span><span class="op">(</span><span class="op">)</span></pre></div>
 <pre><code>##          a          b          c 
 ##   "a [kg]"        "b" "c [mbar]"</code></pre>
 <div class="sourceCode" id="cb46"><pre class="downlit">
-<span class="va">x</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/get_quantity_info.html">get_qty_units_with_label</a></span><span class="op">(</span><span class="st">"same label"</span><span class="op">)</span></pre></div>
+<span class="va">x</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/quantity_units.html">get_qty_units_with_label</a></span><span class="op">(</span><span class="st">"same label"</span><span class="op">)</span></pre></div>
 <pre><code>##                   a                   b                   c 
 ##   "same label [kg]"        "same label" "same label [mbar]"</code></pre>
 <div class="sourceCode" id="cb48"><pre class="downlit">
-<span class="va">x</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/get_quantity_info.html">get_qty_units_with_label</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"apple"</span>, <span class="st">"banana"</span>, <span class="st">"carrot"</span><span class="op">)</span><span class="op">)</span></pre></div>
+<span class="va">x</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/quantity_units.html">get_qty_units_with_label</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"apple"</span>, <span class="st">"banana"</span>, <span class="st">"carrot"</span><span class="op">)</span><span class="op">)</span></pre></div>
 <pre><code>##               a               b               c 
 ##    "apple [kg]"        "banana" "carrot [mbar]"</code></pre>
 </div>
@@ -325,12 +325,8 @@
 <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">5</span>, <span class="st">"mg"</span><span class="op">)</span> <span class="op">!=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">5</span>, <span class="st">"g"</span><span class="op">)</span></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <div class="sourceCode" id="cb94"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/conditions.html">tryCatch</a></span><span class="op">(</span>
-  <span class="co"># not allowed (different quantities)</span>
-  <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">1</span>, <span class="st">"mg"</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">1</span>, <span class="st">"L"</span><span class="op">)</span>, 
-  error <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">e</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/message.html">message</a></span><span class="op">(</span><span class="va">e</span><span class="op">$</span><span class="va">message</span><span class="op">)</span>
-<span class="op">)</span> </pre></div>
-<pre><code>## Can't combine `..1` &lt;m (mass) in 'mg'&gt; and `..2` &lt;V (volume) in 'L'&gt;.</code></pre>
+<span class="kw"><a href="https://rdrr.io/r/base/try.html">try</a></span><span class="op">(</span><span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">1</span>, <span class="st">"mg"</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">1</span>, <span class="st">"L"</span><span class="op">)</span><span class="op">)</span> <span class="co"># not allowed (different quantities)</span></pre></div>
+<pre><code>## Error : Can't combine `..1` &lt;m (mass) in 'mg'&gt; and `..2` &lt;V (volume) in 'L'&gt;.</code></pre>
 <p>It is important to note that due to machine errors, the <code><a href="https://rdrr.io/r/base/Comparison.html">==</a></code> is best avoided in favor of more reliable comparisions such as tests that check whether the difference between quantities is smaller than a tiny quantity:</p>
 <div class="sourceCode" id="cb96"><pre class="downlit">
 <span class="op">(</span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">1</span>, <span class="st">"mg"</span><span class="op">)</span><span class="op">)</span></pre></div>
@@ -354,10 +350,10 @@
 </div>
 <div id="data-frames-tibbles" class="section level1">
 <h1 class="hasAnchor">
-<a href="#data-frames-tibbles" class="anchor"></a>Data Frames / Tibbles</h1>
-<p>Quantities are fully supported in dplyr type data frames and the units of a quantity are displayed underneath the column headers, e.g. <code>&lt;mg&gt;</code> to indicate a quantity column that has the units of <code>mg</code> (and thus is a mass).</p>
+<a href="#data-frames-tibbles" class="anchor"></a>Data Frames (Tibbles)</h1>
+<p>Quantities are fully supported in dplyr type data frames and the type and units of a quantity are displayed underneath the column headers, e.g. <code>V&lt;mL&gt;</code> to indicate a quantity column that is a volume and has the units of <code>mL</code>.</p>
 <div class="sourceCode" id="cb106"><pre class="downlit">
-<span class="fu">tibble</span><span class="op">(</span>
+<span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>
   weight <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="st">"mg"</span><span class="op">)</span>,
   volume <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">20</span>, <span class="st">"mL"</span><span class="op">)</span>
 <span class="op">)</span></pre></div>
@@ -369,46 +365,58 @@
 ## 3       3      20
 ## 4       4      20
 ## 5       5      20</code></pre>
-<p>This also means that all common arithmetic operations are allowed within data frames.</p>
+<p>This also means that all arithmetic operations are allowed within data frames.</p>
 <div class="sourceCode" id="cb108"><pre class="downlit">
-<span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>
+<span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>
   weight <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="st">"mg"</span><span class="op">)</span>,
   vol <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">20</span>, <span class="st">"mL"</span><span class="op">)</span>,
   mw <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">500</span>, <span class="st">"g/mol"</span><span class="op">)</span>,
   amount <span class="op">=</span> <span class="va">weight</span> <span class="op">/</span> <span class="va">mw</span>,
-  conc <span class="op">=</span> <span class="va">amount</span> <span class="op">/</span> <span class="va">vol</span>,
-  new_vol <span class="op">=</span> <span class="fl">50</span> <span class="op">*</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">20</span>, <span class="st">"mL"</span><span class="op">)</span>,
-  new_weight <span class="op">=</span> <span class="va">conc</span> <span class="op">*</span> <span class="va">new_vol</span> <span class="op">*</span> <span class="va">mw</span>,
-  `correct?` <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="fl">50</span> <span class="op">*</span> <span class="va">weight</span> <span class="op">-</span> <span class="va">new_weight</span><span class="op">)</span> <span class="op">&lt;</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">1</span>, <span class="st">"fg"</span><span class="op">)</span>
+  conc <span class="op">=</span> <span class="va">amount</span> <span class="op">/</span> <span class="va">vol</span>
 <span class="op">)</span>
 <span class="va">df</span></pre></div>
-<pre><code>## # A tibble: 5 x 8
-##    weight     vol          mw    amount    conc new_vol new_weight `correct?`
-##   &lt;m[mg]&gt; &lt;V[mL]&gt; &lt;MW[g/mol]&gt; &lt;N[µmol]&gt; &lt;C[µM]&gt;  &lt;V[L]&gt;    &lt;m[mg]&gt; &lt;lgl&gt;     
-## 1       1      20         500         2     100       1         50 TRUE      
-## 2       2      20         500         4     200       1        100 TRUE      
-## 3       3      20         500         6     300       1        150 TRUE      
-## 4       4      20         500         8     400       1        200 TRUE      
-## 5       5      20         500        10     500       1        250 TRUE</code></pre>
-<p>To get the quantities’ units or full labels, simply use <code><a href="../reference/get_quantity_info.html">get_qty_units()</a></code> and <code><a href="../reference/get_quantity_info.html">get_qty_units_with_label()</a></code></p>
+<pre><code>## # A tibble: 5 x 5
+##    weight     vol          mw    amount    conc
+##   &lt;m[mg]&gt; &lt;V[mL]&gt; &lt;MW[g/mol]&gt; &lt;N[µmol]&gt; &lt;C[µM]&gt;
+## 1       1      20         500         2     100
+## 2       2      20         500         4     200
+## 3       3      20         500         6     300
+## 4       4      20         500         8     400
+## 5       5      20         500        10     500</code></pre>
+<p>To get the columns’ units use <code><a href="../reference/quantity_units.html">get_qty_units()</a></code></p>
 <div class="sourceCode" id="cb110"><pre class="downlit">
-<span class="va">df</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/get_quantity_info.html">get_qty_units</a></span><span class="op">(</span><span class="op">)</span></pre></div>
-<pre><code>##     weight        vol         mw     amount       conc    new_vol new_weight 
-##       "mg"       "mL"    "g/mol"     "µmol"       "µM"        "L"       "mg" 
-##   correct? 
-##         NA</code></pre>
+<span class="va">df</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/quantity_units.html">get_qty_units</a></span><span class="op">(</span><span class="op">)</span></pre></div>
+<pre><code>##  weight     vol      mw  amount    conc 
+##    "mg"    "mL" "g/mol"  "µmol"    "µM"</code></pre>
+<p>To make units of specific columns explicit, use <code><a href="../reference/make_qty_units_explicit.html">make_qty_units_explicit()</a></code></p>
 <div class="sourceCode" id="cb112"><pre class="downlit">
-<span class="va">df</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/get_quantity_info.html">get_qty_units_with_label</a></span><span class="op">(</span><span class="op">)</span></pre></div>
-<pre><code>##            weight               vol                mw            amount 
-##     "weight [mg]"        "vol [mL]"      "mw [g/mol]"   "amount [µmol]" 
-##              conc           new_vol        new_weight          correct? 
-##       "conc [µM]"     "new_vol [L]" "new_weight [mg]"        "correct?"</code></pre>
+<span class="co"># make weight and concentration explicit</span>
+<span class="va">df</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/make_qty_units_explicit.html">make_qty_units_explicit</a></span><span class="op">(</span>weight <span class="op">=</span> <span class="st">"g"</span>, conc <span class="op">=</span> <span class="st">"mM"</span><span class="op">)</span></pre></div>
+<pre><code>## # A tibble: 5 x 5
+##   `weight [g]`     vol          mw    amount `conc [mM]`
+##          &lt;dbl&gt; &lt;V[mL]&gt; &lt;MW[g/mol]&gt; &lt;N[µmol]&gt;       &lt;dbl&gt;
+## 1        0.001      20         500         2       0.10 
+## 2        0.002      20         500         4       0.20 
+## 3        0.003      20         500         6       0.3  
+## 4        0.004      20         500         8       0.40 
+## 5        0.005      20         500        10       0.500</code></pre>
+<div class="sourceCode" id="cb114"><pre class="downlit">
+<span class="co"># change the format for the units</span>
+<span class="va">df</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/make_qty_units_explicit.html">make_qty_units_explicit</a></span><span class="op">(</span>weight <span class="op">=</span> <span class="st">"g"</span>, conc <span class="op">=</span> <span class="st">"mM"</span>, prefix <span class="op">=</span> <span class="st">"."</span>, suffix <span class="op">=</span> <span class="st">""</span><span class="op">)</span></pre></div>
+<pre><code>## # A tibble: 5 x 5
+##   weight.g     vol          mw    amount conc.mM
+##      &lt;dbl&gt; &lt;V[mL]&gt; &lt;MW[g/mol]&gt; &lt;N[µmol]&gt;   &lt;dbl&gt;
+## 1    0.001      20         500         2   0.10 
+## 2    0.002      20         500         4   0.20 
+## 3    0.003      20         500         6   0.3  
+## 4    0.004      20         500         8   0.40 
+## 5    0.005      20         500        10   0.500</code></pre>
 </div>
 <div id="concatenation" class="section level1">
 <h1 class="hasAnchor">
 <a href="#concatenation" class="anchor"></a>Concatenation</h1>
 <p>Quantities can be concatenated using the regular <code><a href="https://rdrr.io/r/base/c.html">c()</a></code> function (or the more explicit <code><a href="../reference/c_qty.html">c_qty()</a></code>) as long as they are the same type of quantity (e.g. all masses). Concatenation make sure that the metric prefix is taken into consideration and scales the new vector to the best metric of the median.</p>
-<div class="sourceCode" id="cb114"><pre class="downlit">
+<div class="sourceCode" id="cb116"><pre class="downlit">
 <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
   <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">1</span>, <span class="st">"g"</span><span class="op">)</span>, 
   <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="st">"mg"</span><span class="op">)</span>,
@@ -421,18 +429,18 @@
 <h1 class="hasAnchor">
 <a href="#missing-data" class="anchor"></a>Missing data</h1>
 <p>Missing data (<code>NA</code>), empty vector (<code><a href="https://rdrr.io/r/base/numeric.html">numeric(0)</a></code>) and infinity placeholders (<code>Inf</code>, <code>-Inf</code>) are supported in all quantities and work the same as in any other R vectors.</p>
-<div class="sourceCode" id="cb116"><pre class="downlit">
+<div class="sourceCode" id="cb118"><pre class="downlit">
 <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="st">"mg"</span><span class="op">)</span></pre></div>
 <pre><code>## &lt;m (mass) in 'g'[1]&gt;
 ## [1] NA</code></pre>
-<div class="sourceCode" id="cb118"><pre class="downlit">
+<div class="sourceCode" id="cb120"><pre class="downlit">
 <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="cn">Inf</span>, <span class="st">"mg"</span><span class="op">)</span></pre></div>
 <pre><code>## &lt;m (mass) in 'g'[1]&gt;
 ## [1] Inf</code></pre>
-<div class="sourceCode" id="cb120"><pre class="downlit">
+<div class="sourceCode" id="cb122"><pre class="downlit">
 <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>, <span class="st">"mg"</span><span class="op">)</span></pre></div>
 <pre><code>## &lt;m (mass) in 'g'[0]&gt;</code></pre>
-<div class="sourceCode" id="cb122"><pre class="downlit">
+<div class="sourceCode" id="cb124"><pre class="downlit">
 <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="cn">NA</span>, <span class="op">-</span><span class="cn">Inf</span>, <span class="cn">Inf</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span><span class="op">)</span>, <span class="st">"mg"</span><span class="op">)</span></pre></div>
 <pre><code>## &lt;m (mass) in 'mg'[4]&gt;
 ## [1]   10   NA -Inf  Inf</code></pre>
@@ -440,11 +448,14 @@
 <div id="miscellaneous" class="section level1">
 <h1 class="hasAnchor">
 <a href="#miscellaneous" class="anchor"></a>Miscellaneous</h1>
-<p>To check whether something is a quantity, use the <code><a href="../reference/check_quantities.html">is_qty()</a></code> function.</p>
-<div class="sourceCode" id="cb124"><pre class="downlit">
+<p>To check whether something is a quantity, use the <code><a href="../reference/check_quantities.html">is_qty()</a></code> function. To check whether something is a specific type of quantity, use e.g. <code><a href="../reference/check_quantities.html">is_mass()</a></code>.</p>
+<div class="sourceCode" id="cb126"><pre class="downlit">
 <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">1</span>, <span class="st">"mg"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/check_quantities.html">is_qty</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># is a quantity</span></pre></div>
 <pre><code>## [1] TRUE</code></pre>
-<div class="sourceCode" id="cb126"><pre class="downlit">
+<div class="sourceCode" id="cb128"><pre class="downlit">
+<span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">1</span>, <span class="st">"mg"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/check_quantities.html">is_mass</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># is a mass</span></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb130"><pre class="downlit">
 <span class="fl">1</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/check_quantities.html">is_qty</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># not a quantity</span></pre></div>
 <pre><code>## [1] FALSE</code></pre>
 </div>
