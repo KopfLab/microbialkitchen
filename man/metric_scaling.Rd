@@ -34,7 +34,9 @@ if the quantity has a vector of values, scales to the best metric prefix for the
 \seealso{
 Other quantity functions: 
 \code{\link{check_quantities}},
-\code{\link{get_quantity_info}},
-\code{\link{quantities}}
+\code{\link{make_units_explicit}()},
+\code{\link{quantities}},
+\code{\link{quantity_data}},
+\code{\link{quantity_units}}
 }
 \concept{quantity functions}

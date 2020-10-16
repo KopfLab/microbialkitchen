@@ -65,8 +65,10 @@ These functions check whether something is a specific type of quantity.
 
 \seealso{
 Other quantity functions: 
-\code{\link{get_quantity_info}},
+\code{\link{make_units_explicit}()},
 \code{\link{metric_scaling}},
-\code{\link{quantities}}
+\code{\link{quantities}},
+\code{\link{quantity_data}},
+\code{\link{quantity_units}}
 }
 \concept{quantity functions}
