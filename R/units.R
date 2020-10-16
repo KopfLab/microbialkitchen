@@ -21,10 +21,10 @@ NULL
 #' df
 #'
 #' # show with explicit units
-#' make_units_explicit(df, x = "mg")
-#' make_units_explicit(df, x = "g", y = "mL")
+#' make_qty_units_explicit(df, x = "mg")
+#' make_qty_units_explicit(df, x = "g", y = "mL")
 #' @export
-make_units_explicit <- function(df, ..., prefix = " [", suffix = "]") {
+make_qty_units_explicit <- function(df, ..., prefix = " [", suffix = "]") {
   
   # columns
   cols <- list(...)
@@ -44,8 +44,8 @@ make_units_explicit <- function(df, ..., prefix = " [", suffix = "]") {
   
   # make units explicit
   cols_idx <- match(col_names, names(df))
-  new_cols <- sprintf("%s%s%s%s", col_names, prefix, get_qty_units(df[col_names]), suffix)
   df[cols_idx] <- purrr::map2(df[cols_idx], cols, get_qty_value)
+  new_cols <- sprintf("%s%s%s%s", col_names, prefix, cols, suffix)
   names(df)[cols_idx] <- new_cols
   return(df)
 }

@@ -3,6 +3,7 @@
 \docType{import}
 \name{reexports}
 \alias{reexports}
+\alias{tibble}
 \alias{\%>\%}
 \alias{as.factor}
 \alias{as_factor}
@@ -18,5 +19,7 @@ below to see their documentation.
   \item{generics}{\code{\link[generics:coercion-factor]{as.factor}}}
 
   \item{magrittr}{\code{\link[magrittr:pipe]{\%>\%}}}
+
+  \item{tibble}{\code{\link[tibble]{tibble}}}
 }}
 

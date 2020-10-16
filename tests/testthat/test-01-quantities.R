@@ -21,7 +21,7 @@ test_that("Testing that units work and can be metric scaled", {
   expect_equal(scale_metric(molarity_concentration(1, "mM"), "n") %>% get_qty_value(), 1e6)
   expect_equal(scale_metric(molarity_concentration(1, "mM"), "n") %>% get_qty_value(transform = log10), 6)
   expect_equal(scale_metric(molarity_concentration(1, "M"), "m") %>% get_qty_value(), 1e3)
-  expect_equal(scale_metric(molarity_concentration(1, paste0(micro, "5M")), "") %>% get_qty_value(), 1e-6)
+  expect_equal(scale_metric(molarity_concentration(1, paste0(micro, "M")), "") %>% get_qty_value(), 1e-6)
   expect_error(base_metric(1), "not a known type of quantity")
   expect_equal(base_metric(molarity_concentration(1, "kM")) %>% get_qty_value(), 1e3)
   expect_equal(molarity_concentration(1, "kM") %>% get_qty_value("M"), 1e3)

@@ -36,7 +36,7 @@
     
     # metric prefixes
     metric_prefix = 
-      setNames(
+      rlang::set_names(
         c(1e-15, 1e-12, 1e-9, 1e-6, 1e-3, 1, 1e3, 1e6, 1e9, 1e12),
         c("f", "p", "n", stringi::stri_encode("\U00B5"), "m", "", "k", "M", "G", "T")
       ),
