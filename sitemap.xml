@@ -1,69 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>http://kopflab.github.io/microbialkitchen//index.html</loc>
+    <loc>https://microbialkitchen.kopflab.org//index.html</loc>
   </url>
   <url>
-    <loc>http://kopflab.github.io/microbialkitchen//reference/arithmetic.html</loc>
+    <loc>https://microbialkitchen.kopflab.org//reference/arithmetic.html</loc>
   </url>
   <url>
-    <loc>http://kopflab.github.io/microbialkitchen//reference/c_qty.html</loc>
+    <loc>https://microbialkitchen.kopflab.org//reference/c_qty.html</loc>
   </url>
   <url>
-    <loc>http://kopflab.github.io/microbialkitchen//reference/check_quantities.html</loc>
+    <loc>https://microbialkitchen.kopflab.org//reference/check_quantities.html</loc>
   </url>
   <url>
-    <loc>http://kopflab.github.io/microbialkitchen//reference/closed_system.html</loc>
+    <loc>https://microbialkitchen.kopflab.org//reference/closed_system.html</loc>
   </url>
   <url>
-    <loc>http://kopflab.github.io/microbialkitchen//reference/constants.html</loc>
+    <loc>https://microbialkitchen.kopflab.org//reference/constants.html</loc>
   </url>
   <url>
-    <loc>http://kopflab.github.io/microbialkitchen//reference/gas_calculations.html</loc>
+    <loc>https://microbialkitchen.kopflab.org//reference/gas_calculations.html</loc>
   </url>
   <url>
-    <loc>http://kopflab.github.io/microbialkitchen//reference/get_quantity_info.html</loc>
+    <loc>https://microbialkitchen.kopflab.org//reference/get_quantity_info.html</loc>
   </url>
   <url>
-    <loc>http://kopflab.github.io/microbialkitchen//reference/metric_scaling.html</loc>
+    <loc>https://microbialkitchen.kopflab.org//reference/metric_scaling.html</loc>
   </url>
   <url>
-    <loc>http://kopflab.github.io/microbialkitchen//reference/microbialkitchen-package.html</loc>
+    <loc>https://microbialkitchen.kopflab.org//reference/microbialkitchen-package.html</loc>
   </url>
   <url>
-    <loc>http://kopflab.github.io/microbialkitchen//reference/open_system.html</loc>
+    <loc>https://microbialkitchen.kopflab.org//reference/open_system.html</loc>
   </url>
   <url>
-    <loc>http://kopflab.github.io/microbialkitchen//reference/quantities.html</loc>
+    <loc>https://microbialkitchen.kopflab.org//reference/quantities.html</loc>
   </url>
   <url>
-    <loc>http://kopflab.github.io/microbialkitchen//reference/reexports.html</loc>
+    <loc>https://microbialkitchen.kopflab.org//reference/reexports.html</loc>
   </url>
   <url>
-    <loc>http://kopflab.github.io/microbialkitchen//reference/speciation.html</loc>
+    <loc>https://microbialkitchen.kopflab.org//reference/speciation.html</loc>
   </url>
   <url>
-    <loc>http://kopflab.github.io/microbialkitchen//reference/vec_arith.html</loc>
+    <loc>https://microbialkitchen.kopflab.org//reference/vec_arith.html</loc>
   </url>
   <url>
-    <loc>http://kopflab.github.io/microbialkitchen//reference/vec_cast.html</loc>
+    <loc>https://microbialkitchen.kopflab.org//reference/vec_cast.html</loc>
   </url>
   <url>
-    <loc>http://kopflab.github.io/microbialkitchen//reference/vec_ptype2.html</loc>
+    <loc>https://microbialkitchen.kopflab.org//reference/vec_ptype2.html</loc>
   </url>
   <url>
-    <loc>http://kopflab.github.io/microbialkitchen//reference/visualization.html</loc>
+    <loc>https://microbialkitchen.kopflab.org//reference/visualization.html</loc>
   </url>
   <url>
-    <loc>http://kopflab.github.io/microbialkitchen//articles/carbonate_chemistry_equations.html</loc>
+    <loc>https://microbialkitchen.kopflab.org//articles/carbonate_chemistry_equations.html</loc>
   </url>
   <url>
-    <loc>http://kopflab.github.io/microbialkitchen//articles/carbonate_chemistry_examples.html</loc>
+    <loc>https://microbialkitchen.kopflab.org//articles/carbonate_chemistry_examples.html</loc>
   </url>
   <url>
-    <loc>http://kopflab.github.io/microbialkitchen//articles/operations.html</loc>
+    <loc>https://microbialkitchen.kopflab.org//articles/operations.html</loc>
   </url>
   <url>
-    <loc>http://kopflab.github.io/microbialkitchen//articles/quantities.html</loc>
+    <loc>https://microbialkitchen.kopflab.org//articles/quantities.html</loc>
   </url>
 </urlset>
