@@ -306,6 +306,7 @@ format.microbial_kitchen_quantity <- function(x, ...) {
   format(vctrs::vec_data(x), ...)
 }
 
+# note: this is not yet used by rmarkdown::paged_table and hence the headers don't show up nicely, see https://github.com/rstudio/rmarkdown/issues/1487 for details
 #' @importFrom vctrs vec_ptype_abbr
 #' @method vec_ptype_abbr microbial_kitchen_quantity
 #' @export
@@ -370,17 +371,17 @@ is_temperature <- function(q) { is(q, "microbial_kitchen_temperature") }
 
 # type casts: to value (=as.numeric) =====
 
-#' Get quantity information
+#' Get quantity data
 #'
-#' Get information about quantity objects including their values and text representations.
+#' Get data from quantity objects including their values (equivalent of \link[base]{as.numeric}) and text representations (equivalent of \link[base]{as.character}).
 #'
-#' @name get_quantity_info
+#' @name quantity_data
 #' @family quantity functions
 NULL 
 
 #' @param q quantities
-#' @param unit which units to retrieve quantity information in (by default the unit the quantity is in)
-#' @describeIn get_quantity_info get the value of a quantity in the desired unit. By default returns the quantity in the units it is in.
+#' @param unit which units to retrieve quantity data in (by default the unit the quantity is in)
+#' @describeIn quantity_data get the value of a quantity in the desired unit. By default returns the quantity in the units it is in. Functionally equivalent to \code{\link[base]{as.numeric}} and \code{\link[base]{as.double}}.
 #' @param transform whether to transform the value with an additional function once in the desired units. Common transformation examples are log10 and log (natural log) but custom transformations are also possible. Default is NO transformation (\link{identity}).
 #' @examples
 #' # quantity value examples
@@ -392,6 +393,15 @@ NULL
 #' @export
 get_qty_value <- function(q, unit = get_qty_units(q), transform = identity) {
   vec_cast.double(q, unit = unit, transform = transform)
+}
+
+#' @describeIn quantity_data S3 extension of \code{\link[base]{as.numeric}} and \link[base]{as.double} with optional \code{unit} argument
+#' @examples 
+#' qty(760, "Torr") %>% as.numeric("atm")
+#' @method as.double microbial_kitchen_quantity
+#' @export
+as.double.microbial_kitchen_quantity <- function(x, unit = get_qty_units(x), ...) {
+  vec_cast.double(x, unit = unit, ...)
 }
 
 # helper functions for value retrieval
@@ -514,7 +524,7 @@ vec_cast.double.microbial_kitchen_temperature <- function(x, to, ...) {
 
 # type casts: to text (=as.character) =====
 
-#' @describeIn get_quantity_info get the value of the quantity in the desired unit as a text string with the unit appended
+#' @describeIn quantity_data get the value of the quantity in the desired unit as a text string with the unit appended. Functionally equivalent to \code{\link[base]{as.character}}.
 #' @param signif number of significant digits for printing the quantity
 #' @export
 #' @examples
@@ -526,6 +536,15 @@ vec_cast.double.microbial_kitchen_temperature <- function(x, to, ...) {
 #' qty(760, "Torr") %>% get_qty_text("atm")
 get_qty_text <- function(q, unit = get_qty_units(q), signif = 5) {
   return(get_text(q, unit, signif))
+}
+
+#' @describeIn quantity_data S3 implementation of \code{\link[base]{as.character}} with optional \code{unit} argument
+#' @examples 
+#' qty(760, "Torr") %>% as.character("atm")
+#' @method as.character microbial_kitchen_quantity
+#' @export
+as.character.microbial_kitchen_quantity <- function(x, unit = get_qty_units(x), ...) {
+  vec_cast.character(x, unit = unit, ...)
 }
 
 # helper function for getting text representation
@@ -602,6 +621,31 @@ vec_ptype2.character.microbial_kitchen_temperature <- function(x, y, ..., x_arg 
 #' @method vec_cast.character microbial_kitchen_temperature
 #' @export
 vec_cast.character.microbial_kitchen_temperature <- function(x, to, ...) { get_text(x, ...) }
+
+# type casts: to factor ====
+
+#' @importFrom generics as.factor
+#' @export
+generics::as.factor
+
+#' @method as.factor microbial_kitchen_quantity
+#' @export
+as.factor.microbial_kitchen_quantity <- function(x, unit = get_qty_units(x), ...) {
+  x <- as.character(x, unit = unit)
+  return(generics::as.factor(x, ...))
+}
+
+
+#' @importFrom forcats as_factor
+#' @export
+forcats::as_factor
+
+#' @method as_factor microbial_kitchen_quantity
+#' @export
+as_factor.microbial_kitchen_quantity <- function(x, unit = get_qty_units(x), ...) {
+  x <- as.character(x, unit = unit)
+  forcats::as_factor(x, ...)
+}
 
 # type casts: to same quantity type (=c) ====
 
@@ -949,46 +993,6 @@ vec_cast.microbial_kitchen_temperature.microbial_kitchen_temperature <- function
   scale_metric(x, prefix = get_prefix(to))
 }
 
-# unit retrieval ====================
-
-#' @describeIn get_quantity_info get units from a quantity, list of quantities or data frame (returns NA for objects/columns that are not quantities)
-#' @examples
-#' 
-#' # quantity units examples
-#' qty(5000, "g") %>% get_qty_units()
-#' x <- list(a = qty(5000, "g"), b = 42, c = qty(100, "mbar"))
-#' x %>% get_qty_units()
-#' @export
-get_qty_units <- function(q) {
-  if (is_qty(q))
-    return(attr(q, "unit"))
-  else if (is.list(q))
-    return(purrr::map_chr(q, ~if(is_qty(.x)) { attr(.x, "unit") } else { NA_character_ }))
-  else
-    return(NA_character_)
-}
-
-#' @describeIn get_quantity_info get units from a quantity, list of quantities or data frame, with a custom label in the format \code{label [units]}. Objects/columns that are not quantities simply return the label with out the [units] part.
-#' @param label text label to use with the units - single value or vector of the same length as \code{q}. By default uses the names of \code{q}, which only works if \code{q} is a list or data frame.
-#' @examples
-#' # labels with units
-#' get_qty_units_with_label(qty(0.1, "mM"), "concentration")
-#'
-#' # make labels with units for data frame columns
-#' x <- data.frame(a = qty(1, "mg"), b = 2, c = qty(100, "mbar"))
-#' get_qty_units_with_label(x)
-#' get_qty_units_with_label(x, "same label")
-#' @export
-get_qty_units_with_label <- function(q, label = names(q)) {
-  units <- get_qty_units(q)
-  if (length(label) == 1 || length(label) == length(units)) {
-
-  } else {
-    sprintf("incompatible number of labels (%d) provided for units (%d)", length(label), length(units)) %>%
-      stop(call. = FALSE)
-  }
-  return(ifelse(is.na(units), label, sprintf("%s [%s]", label, units)))
-}
 
 # metric conversions ======================
 
@@ -1087,12 +1091,4 @@ get_unit_prefix <- function(unit, base_unit) {
       stop(call. = FALSE)
   }
   return(sub(paste0(base_unit, "$"), "", unit))
-}
-
-# factors ========
-
-#' @method as_factor microbial_kitchen_quantity
-#' @export
-as_factor.microbial_kitchen_quantity <- function(x, ...) {
-  return(forcats::as_factor(as.character(x)))
 }

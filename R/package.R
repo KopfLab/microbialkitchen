@@ -11,10 +11,6 @@ NULL
 #' @export
 magrittr::`%>%`
 
-#' @importFrom forcats as_factor
-#' @export
-forcats::as_factor
-
 # quiets concerns of R CMD check about . in pipelineds
 # and .data in tidyverse functions
 utils::globalVariables(".")

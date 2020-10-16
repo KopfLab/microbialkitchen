@@ -1,7 +1,9 @@
 context("Units")
 
-test_that("Testing that units work and can be metric scaled", {
+micro <- stringi::stri_encode("\U00B5")
 
+test_that("Testing that units work and can be metric scaled", {
+  
   # constants
   expect_error(get_microbialkitchen_constant("bla"), "not specified")
 
@@ -19,13 +21,13 @@ test_that("Testing that units work and can be metric scaled", {
   expect_equal(scale_metric(molarity_concentration(1, "mM"), "n") %>% get_qty_value(), 1e6)
   expect_equal(scale_metric(molarity_concentration(1, "mM"), "n") %>% get_qty_value(transform = log10), 6)
   expect_equal(scale_metric(molarity_concentration(1, "M"), "m") %>% get_qty_value(), 1e3)
-  expect_equal(scale_metric(molarity_concentration(1, "\U00B5M"), "") %>% get_qty_value(), 1e-6)
+  expect_equal(scale_metric(molarity_concentration(1, paste0(micro, "5M")), "") %>% get_qty_value(), 1e-6)
   expect_error(base_metric(1), "not a known type of quantity")
   expect_equal(base_metric(molarity_concentration(1, "kM")) %>% get_qty_value(), 1e3)
   expect_equal(molarity_concentration(1, "kM") %>% get_qty_value("M"), 1e3)
   expect_equal(molarity_concentration(1, "kM") %>% get_qty_value("mM"), 1e6)
   expect_equal(best_metric(molarity_concentration(0.2, "M", scale_to_best_metric = FALSE)) %>% get_qty_units(), "mM")
-  expect_equal(best_metric(molarity_concentration(-5000, "nM", scale_to_best_metric = FALSE)) %>% get_qty_units(), "\U00B5M")
+  expect_equal(best_metric(molarity_concentration(-5000, "nM", scale_to_best_metric = FALSE)) %>% get_qty_units(), paste0(micro, "M"))
   expect_equal(best_metric(molarity_concentration(c(100, 1200, 1500), "pM", scale_to_best_metric = FALSE)) %>% get_qty_units(), "nM")
 
   # mass concentration
@@ -40,6 +42,9 @@ test_that("Testing that units work and can be metric scaled", {
   expect_equal(mass_concentration(0.1, "ng/L") %>% get_qty_value(), 100)
   expect_equal(mass_concentration(0.1, "ng/L") %>% get_qty_value(transform = log10), 2)
   expect_equal(mass_concentration(0.1, "ng/L") %>% get_qty_value("ng/L"), 0.1)
+  expect_equal(mass_concentration(0.1, "ng/L") %>% as.numeric("ng/L"), 0.1)
+  expect_equal(mass_concentration(0.1, "ng/L") %>% get_qty_text("ng/L"), "0.1 ng/L")
+  expect_equal(mass_concentration(0.1, "ng/L") %>% as.character("ng/L"), "0.1 ng/L")
   expect_equal(mass_concentration(0.1, "ng/L") %>% get_qty_value("ng/L", log10), -1)
   expect_equal(mass_concentration(0.1, "ng/L") %>% get_qty_value("ng/L", function(x) x*10), 1)
 
@@ -49,12 +54,16 @@ test_that("Testing that units work and can be metric scaled", {
   expect_equal(amount(1, "nmol") %>% get_qty_units(), "nmol")
   expect_equal(amount(1, "mole") %>% get_qty_units(), "mol")
   expect_equal(amount(1000, "nmol", scale_to_best_metric = F) %>% get_qty_units(), "nmol")
-  expect_equal(amount(1000, "nmol", scale_to_best_metric = T) %>% get_qty_units(), "\U00B5mol")
+  expect_equal(amount(1000, "nmol", scale_to_best_metric = T) %>% get_qty_units(), paste0(micro, "mol"))
   expect_equal(amount(1000, "nmol", scale_to_best_metric = T) %>% get_qty_value(), 1)
-  expect_equal(amount(1, "nmol") %>% get_qty_value("pmol"), 1000)
   expect_equal(amount(0.1, "nmol") %>% get_qty_value(), 100)
   expect_equal(amount(0.1, "nmol") %>% as.numeric(), 100)
+  expect_equal(amount(0.1, "nmol") %>% get_qty_text(), "100 pmol")
   expect_equal(amount(0.1, "nmol") %>% as.character(), "100 pmol")
+  expect_equal(amount(1, "nmol") %>% get_qty_value("pmol"), 1000)
+  expect_equal(amount(1, "nmol") %>% as.numeric("pmol"), 1000)
+  expect_equal(amount(1, "nmol") %>% get_qty_text("pmol"), "1000 pmol")
+  expect_equal(amount(1, "nmol") %>% as.character("pmol"), "1000 pmol")
 
   # mass
   expect_error(mass(1, "J"), "not a known mass unit")
@@ -65,6 +74,8 @@ test_that("Testing that units work and can be metric scaled", {
   expect_equal(mass(0.01, "g") %>% as.numeric(), 10)
   expect_equal(mass(0.01, "g") %>% as.character(), "10 mg")
   expect_equal(mass(0.01, "g") %>% get_qty_value("g"), 0.01)
+  expect_equal(mass(0.01, "g") %>% as.numeric("g"), 0.01)
+  expect_equal(mass(0.01, "g") %>% as.character("g"), "0.01 g")
 
   # molecular mass
   expect_error(molecular_weight(1, "J"), "not a known molecular weight unit")
@@ -74,6 +85,8 @@ test_that("Testing that units work and can be metric scaled", {
   expect_equal(molecular_weight(1257, "g/mol") %>% as.numeric(), 1.257)
   expect_equal(molecular_weight(1257, "g/mol") %>% as.character(), "1.257 kg/mol")
   expect_equal(molecular_weight(1257, "g/mol") %>% get_qty_value("g/mol"), 1257)
+  expect_equal(molecular_weight(1257, "g/mol") %>% as.numeric("g/mol"), 1257)
+  expect_equal(molecular_weight(1257, "g/mol") %>% as.character("g/mol"), "1257 g/mol")
   expect_equal(molecular_weight(2, "kDa") %>% get_qty_units(), "kg/mol")
   expect_equal(molecular_weight(2, "kDa") %>% get_qty_value(), 2)
   expect_equal(molecular_weight(0.2, "kDa") %>% get_qty_value(), 200)
@@ -86,6 +99,8 @@ test_that("Testing that units work and can be metric scaled", {
   expect_equal(volume(0.1, "nL") %>% as.numeric(), 100)
   expect_equal(volume(0.1, "nL") %>% as.character(), "100 pL")
   expect_equal(volume(1, "nL") %>% get_qty_value("pL"), 1000)
+  expect_equal(volume(1, "nL") %>% as.numeric("pL"), 1000)
+  expect_equal(volume(1, "nL") %>% as.character("pL"), "1000 pL")
 
   # pressure
   expect_error(pressure(1, "J"), "not a known pressure unit")
@@ -101,6 +116,9 @@ test_that("Testing that units work and can be metric scaled", {
   expect_equal(pressure(760, "Torr") %>% get_qty_units(), "bar")
   expect_equal(pressure(760, "Torr") %>% get_qty_value(), 1.01325)
   expect_equal(pressure(760, "Torr") %>% get_qty_value("Torr"), 760)
+  expect_equal(pressure(760, "Torr") %>% as.numeric("Torr"), 760)
+  expect_equal(pressure(760, "Torr") %>% get_qty_text("Torr"), "760 Torr")
+  expect_equal(pressure(760, "Torr") %>% as.character("Torr"), "760 Torr")
   expect_equal(pressure(760, "Torr") %>% get_qty_value("atm"), 1)
   expect_equal(pressure(760, "mTorr") %>% get_qty_units(), "mbar")
   expect_equal(pressure(760, "mTorr") %>% get_qty_value(), 1.01325)
@@ -120,8 +138,9 @@ test_that("Testing that units work and can be metric scaled", {
   expect_equal(gas_solubility(0.1, "M/bar") %>% as.numeric(), 100)
   expect_equal(gas_solubility(0.1, "M/bar") %>% as.character(), "100 mM/bar")
   expect_equal(gas_solubility(10, "mM/atm") %>% get_qty_value(), 10/get_microbialkitchen_constant("bar_per_atm"))
-  expect_equal(gas_solubility(10, "mM/atm") %>% get_qty_value("mM/atm"), 10)
   expect_equal(gas_solubility(10, "mM/atm") %>% get_qty_value("M/atm"), 0.01)
+  expect_equal(gas_solubility(10, "mM/atm") %>% as.numeric("M/atm"), 0.01)
+  expect_equal(gas_solubility(10, "mM/atm") %>% as.character("M/atm"), "0.01 M/atm")
 
   # temperature
   expect_error(temperature(1, "J"), "not a known temperature unit")
@@ -131,6 +150,8 @@ test_that("Testing that units work and can be metric scaled", {
   expect_equal(temperature(100, "C") %>% as.numeric(), 373.15)
   expect_equal(temperature(100, "C") %>% as.character(), "373.15 K")
   expect_equal(temperature(100, "C") %>% get_qty_value("C"), 100)
+  expect_equal(temperature(100, "C") %>% as.numeric("C"), 100)
+  expect_equal(temperature(100, "C") %>% as.character("C"), "100 C")
   expect_equal(temperature(50, "F") %>% get_qty_units(), "K")
   expect_equal(temperature(50, "F") %>% get_qty_value(), 283.15)
   expect_equal(temperature(50, "F") %>% get_qty_value("F"), 50)
@@ -163,7 +184,8 @@ test_that("Testing that units work and can be metric scaled", {
   expect_true(is_qty(qty(1, "mg")))
   expect_false(is_qty(1))
 
-  # as factor (order preserved)
+  # as factor
+  expect_equal(as.factor(qty(c(1, 3, 2), "mg")) %>% levels(), c("1 mg" , "2 mg", "3 mg"))
   expect_equal(as_factor(qty(c(1, 3, 2), "mg")) %>% levels(), c("1 mg" , "3 mg", "2 mg"))
 
   # get units
