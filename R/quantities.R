@@ -1093,6 +1093,6 @@ get_unit_prefix <- function(unit, base_unit) {
 
 #' @method as_factor microbial_kitchen_quantity
 #' @export
-as_factor.microbial_kitchen_quantity <- function(x) {
+as_factor.microbial_kitchen_quantity <- function(x, ...) {
   return(forcats::as_factor(as.character(x)))
 }
