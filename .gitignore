@@ -43,3 +43,5 @@ packrat/src/
 !docs/**/*.png
 inst/doc
 docs
+doc
+Meta
