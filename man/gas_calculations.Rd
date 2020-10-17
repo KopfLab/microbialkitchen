@@ -4,25 +4,23 @@
 \alias{gas_calculations}
 \alias{calculate_ideal_gas_molarity}
 \alias{calculate_ideal_gas_amount}
-\alias{calculate_solubility}
+\alias{calculate_gas_solubility}
 \title{General gas calculations}
 \usage{
 calculate_ideal_gas_molarity(pressure, temperature)
 
 calculate_ideal_gas_amount(pressure, temperature, volume)
 
-calculate_solubility(gas, temperature)
+calculate_gas_solubility(gas, temperature)
 }
 \arguments{
 \item{pressure}{the pressure quantity of the gas}
 
-\item{temperature}{the temperature quantity of the gas}
+\item{temperature}{temperature quantity}
 
 \item{volume}{the volume quantity of the gas}
 
 \item{gas}{name of the gas}
-
-\item{temperature}{temperature quantity}
 }
 \description{
 General gas calculations
@@ -33,7 +31,7 @@ General gas calculations
 
 \item \code{calculate_ideal_gas_amount}: calculates the amount of an ideal gas at a specific pressure, temperature and volume. Returns an amount quantity.
 
-\item \code{calculate_solubility}: calculates Henry's law solubility constant for a gas at a specific temperature. Henry's law constants are from: Sander, R. Compilation of Henry's law constants (version 4.0) for water as solvent. Atmos Chem Phys 15, 4399–4981 (2015). https://www.atmos-chem-phys.net/15/4399/2015/. Returns a solubility quantity.
+\item \code{calculate_gas_solubility}: calculates Henry's law solubility constant for a gas at a specific temperature. Henry's law constants are from: Sander, R. Compilation of Henry's law constants (version 4.0) for water as solvent. Atmos Chem Phys 15, 4399–4981 (2015). https://www.atmos-chem-phys.net/15/4399/2015/. Returns a solubility quantity.
 }}
 
 \concept{calculations}

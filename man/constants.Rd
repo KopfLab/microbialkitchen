@@ -2,24 +2,24 @@
 % Please edit documentation in R/constants.R
 \name{constants}
 \alias{constants}
-\alias{get_mediachemtools_constant}
-\alias{get_mediachemtools_constants}
+\alias{get_microbialkitchen_constant}
+\alias{get_microbialkitchen_constants}
 \title{Constants}
 \usage{
-get_mediachemtools_constant(name)
+get_microbialkitchen_constant(name)
 
-get_mediachemtools_constants()
+get_microbialkitchen_constants()
 }
 \arguments{
 \item{name}{name of the constant}
 }
 \description{
-List and retrieve constants used in mediachemtools.
+List and retrieve constants used in microbialkitchen.
 }
 \section{Functions}{
 \itemize{
-\item \code{get_mediachemtools_constant}: get the value of a constant
+\item \code{get_microbialkitchen_constant}: get the value of a constant
 
-\item \code{get_mediachemtools_constants}: list all constants
+\item \code{get_microbialkitchen_constants}: list all constants
 }}
 

@@ -1,5 +1,5 @@
-title: MediaChemTools
-url: http://kopflab.github.io/mediachemtools/
+title: microbialkitchen
+url: https://microbialkitchen.kopflab.org/
 template:
   params:
     bootswatch: simplex
@@ -15,7 +15,7 @@ development:
   version_tooltip: "in active development"
 
 navbar:
-  title: mediachemtools
+  title: microbialkitchen
   type: default
   left:
   - text: "Reference"
@@ -24,7 +24,7 @@ navbar:
     href: articles/quantities.html
   - text: "Operations"
     href: articles/operations.html
-  - text: "Carbonate Chemistry"
+  - text: "Carbonate Buffering"
     menu:
       - text: "Equations"
         href: articles/carbonate_chemistry_equations.html
@@ -32,6 +32,6 @@ navbar:
         href: articles/carbonate_chemistry_examples.html
   right:
   - icon: fa-github fa-lg
-    href: https://github.com/kopflab/mediachemtools
+    href: https://github.com/kopflab/microbialkitchen
     
 
