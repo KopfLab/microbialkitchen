@@ -19,9 +19,13 @@ vignette: >
 ---
 
 ```{r, message=FALSE}
-library(tidyverse) # load tidyverse tools
 library(microbialkitchen) # load the library
 ```
+
+```{r, includ=FALSE}
+knitr::opts_chunk$set(fig.width = 7, fig.height = 4)
+```
+
 
 # Units & Metric Scaling
 
@@ -37,15 +41,13 @@ qty(100, "mM") %>% base_metric() # scale to the base unit (here M)
 qty(100, "mg") %>% scale_metric("k")
 ```
 
-The actual numeric value of a quantity can be retrieved via the `get_qty_value()` function which takes an optional parameter to specify which unit the value should be retrieved in (by default it is the unit that the quantity is currently in). Additionally, a transformation function can be specified for easy log or other transformations.
+The actual numeric value of a quantity can be retrieved via the `get_qty_value()` function which takes an optional parameter to specify which unit the value should be retrieved in (by default it is the unit that the quantity is currently in). 
 
 ```{r}
 qty(100, "mg") %>% get_qty_value() # returns 100
 qty(0.1, "g") %>% get_qty_value() # returns 100 because the units are "mg"
 qty(0.1, "g") %>% get_qty_value("g") # better to be specific upon retrieval
-qty(0.1, "g") %>% get_qty_value("g", log10) # applies a log10 transform
 qty(0.1, "g") %>% get_qty_value("kg") # can use any valid unit
-qty(0.1, "g") %>% get_qty_value("kg", sqrt) # and any transformation
 qty(0, "C") %>% get_qty_value("F") # or use it for unit conversion
 qty(760, "Torr") %>% get_qty_value("atm") # or use it for unit conversion
 ```
@@ -59,15 +61,14 @@ qty(0:10, "C") %>% get_qty_text("F")
 qty(760, "Torr") %>% get_qty_text("atm")
 ```
 
-To include this type of quantity text in axis tickmark labels, color/shape/linetype scale labels or facet labels, generate a labeller function using `make_qty_text_labeller()` and use it as the `labels` parameter for scales or the `labeller` parameter for facets.
+To retrieve each quantity in it's ideal metric scaling, use `get_qty_text_each()`.
 
 ```{r}
-# generate labellers for plotting purposes
-q <- qty(c(0.1, 1, 1000), "g")
-standard_units_labeller <- make_qty_text_labeller(q)
-standard_units_labeller(q)
-specific_units_labeller <- make_qty_text_labeller(q, "g")
-specific_units_labeller(q)
+# without "each" 
+qty(c(0.1, 1, 1000), "g") %>% get_qty_text()
+
+# with "each"
+qty(c(0.1, 1, 1000), "g") %>% get_qty_text_each()
 ```
 
 The units of a quantity object can also be retrieved directly with the `get_qty_units()` function for a single quantity, list of quantities as well as entire data frames (see details on the latter in the [data frames section](#data-frames)).
@@ -80,15 +81,6 @@ x <- list(
   c = qty(100, "mbar")
 ) 
 x %>% get_qty_units()
-```
-
-For easy construction of plot axis or legend labels, the function `get_qty_units_with_label()` further provides an easy way to combine labels with the units. By default (for lists and data frames), it uses the names of the list variable/data frame columns (see details on the latter in the [data frames section](#data-frames)).
-
-```{r}
-qty(5000, "g") %>% get_qty_units_with_label("weight")
-x %>% get_qty_units_with_label()
-x %>% get_qty_units_with_label("same label")
-x %>% get_qty_units_with_label(c("apple", "banana", "carrot"))
 ```
 
 # Arithmetic
@@ -179,11 +171,11 @@ abs(x - x2) < qty(1, "fg") # absolute difference smaller than 1 femtogram
 ```
 
 
-# Data Frames (Tibbles)
+# Data Frames
 
-Quantities are fully supported in dplyr type data frames and the type and units of a quantity are displayed underneath the column headers, e.g. `V<mL>` to indicate a quantity column that is a volume and has the units of `mL`.
+Quantities are fully supported in dplyr type data frames (tibbles) and the type and units of a quantity are displayed underneath the column headers, e.g. `V<mL>` to indicate a quantity column that is a volume and has the units of `mL`.
 
-```{r}
+```{r, message=FALSE}
 tibble(
   weight = qty(1:5, "mg"),
   volume = qty(20, "mL")
@@ -219,7 +211,86 @@ df %>% make_qty_units_explicit(weight = "g", conc = "mM")
 df %>% make_qty_units_explicit(weight = "g", conc = "mM", prefix = ".", suffix = "")
 ```
 
+# Plotting
 
+Quantities are automatically plotted with proper axis labels if used in `ggplot`.
+
+```{r}
+# example data set
+library(dplyr)
+library(tidyr)
+df <- 
+  crossing(
+    conc = qty(c(0.1, 25), "mM"),
+    volume = qty(c(0.2, 90, 400), "mL")
+  ) %>% 
+  mutate(
+    amount = conc * volume
+  )
+df
+```
+
+By default, units are included in the x and y axes titles if a quantity is being plotted. Discrete quantities used for other aesthetics can be converted to a factor using `as_factor` which automatically includes the units.
+
+```{r}
+library(ggplot2)
+df %>% mutate(conc = as_factor(conc)) %>% 
+  ggplot() +
+  aes(x = volume, y = amount, color = conc) +
+  geom_line() +
+  facet_wrap(~conc, scales = "free")
+```
+
+Alternatively, the unit can be specified using the `scale_x_qty()` and `scale_y_qty()` functions and the `unit` parameter to the `as_factor` function. Units must be valid for the quantities that are plotted.
+
+```{r}
+df %>% mutate(conc = as_factor(conc, unit = "M")) %>% 
+  ggplot() +
+  aes(x = volume, y = amount, color = conc) +
+  geom_line() +
+  facet_wrap(~conc, scales = "free") +
+  scale_x_qty(unit = "L") +
+  scale_y_qty(unit = "mmol")
+```
+
+It is also possible to use the `each` parameter in `scale_x_qty()` and `scale_y_qty()` as well as the `as_factor` function to use the ideal metric units for each value. For the axes, this switches from including the unit in the axis title to the individual axis values.
+
+```{r}
+df %>%
+  mutate(conc = as_factor(conc, each = TRUE)) %>% 
+  ggplot() +
+  aes(x = volume, y = amount, color = conc) +
+  geom_line() +
+  facet_wrap(~conc, scales = "free") +
+  scale_x_qty(each = TRUE) +
+  scale_y_qty(each = TRUE)
+```
+
+It is also possible to combine `each` and a specific `unit` for the `scale_x_qty()` and `scale_y_qty()` functions. This leads to individual axis value labels in the desired unit.
+
+```{r}
+df %>%
+  mutate(conc = as_factor(conc, each = TRUE)) %>% 
+  ggplot() +
+  aes(x = volume, y = amount, color = conc) +
+  geom_line() +
+  facet_wrap(~conc, scales = "free") +
+  scale_x_qty(unit = "L", each = TRUE) +
+  scale_y_qty(unit = "mmol", each = TRUE)
+```
+
+Lastly, the `scale_x_qty()` and `scale_y_qty()` support all axis transformations supported by `scale_x_continuous()` and `scale_y_continuous()`. For example the `log10` transform can be used like this:
+
+```{r}
+df %>%
+  mutate(conc = as_factor(conc, each = TRUE)) %>% 
+  ggplot() +
+  aes(x = volume, y = amount, color = conc) +
+  geom_line() +
+  facet_wrap(~conc, scales = "free") +
+  scale_x_qty(trans = "log10", each = TRUE) +
+  scale_y_qty(trans = "log10", each = TRUE)
+```
 
 # Concatenation
 

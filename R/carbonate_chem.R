@@ -161,7 +161,7 @@ calculate_open_system_pH <- function(
   `H2CO3*.M` <- get_qty_value(`H2CO3*`, unit = "M")
   alkalinity.M <- get_qty_value(alkalinity, unit = "M")
   result <- 
-    dplyr::data_frame(`H2CO3*.M`, buffer.M, buffer_pKa, alkalinity.M, pKa1, pKa2, pKw) %>% 
+    tibble(`H2CO3*.M`, buffer.M, buffer_pKa, alkalinity.M, pKa1, pKa2, pKw) %>% 
     dplyr::mutate(
       pH = mapply(
         function(`H2CO3*.M`, buffer.M, buffer_pKa, alkalinity.M, pKa1, pKa2, pKw) {
@@ -263,7 +263,7 @@ calculate_closed_system_pH <- function(
   temperature.K <- get_qty_value(temperature, "K")
   alkalinity.M <- get_qty_value(alkalinity, unit = "M")
   result <- 
-    dplyr::data_frame(TIC.mol, V_liquid.L, V_gas.L, pKa1, pKa2, pKw, buffer.M, buffer_pKa, temperature.K, solubility.M_bar, alkalinity.M) %>% 
+    tibble(TIC.mol, V_liquid.L, V_gas.L, pKa1, pKa2, pKw, buffer.M, buffer_pKa, temperature.K, solubility.M_bar, alkalinity.M) %>% 
     dplyr::mutate(
       pH = mapply(
         function(TIC.mol, V_liquid.L, V_gas.L, pKa1, pKa2, pKw, buffer.M, buffer_pKa, temperature.K, solubility.M_bar, alkalinity.M) {

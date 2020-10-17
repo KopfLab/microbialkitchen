@@ -12,154 +12,154 @@ qty_vec_arith_base <- function(op, x, y, to = x, unit = get_qty_units(to), class
   best_metric(new_qty(vctrs::vec_arith_base(op, x, y), unit = unit, class = class))
 }
 
-#' vec_arith for microbial_kitchen_quantity objects
+#' vec_arith for mk_quantity objects
 #' @rdname vec_arith
 #' @inheritParams vctrs::vec_arith
-#' @method vec_arith microbial_kitchen_quantity
+#' @method vec_arith mk_quantity
 #' @export
-#' @export vec_arith.microbial_kitchen_quantity
-vec_arith.microbial_kitchen_quantity <- function(op, x, y, ...) {
-  UseMethod("vec_arith.microbial_kitchen_quantity", y)
+#' @export vec_arith.mk_quantity
+vec_arith.mk_quantity <- function(op, x, y, ...) {
+  UseMethod("vec_arith.mk_quantity", y)
 }
 
-#' @method vec_arith.microbial_kitchen_quantity default
+#' @method vec_arith.mk_quantity default
 #' @export
-vec_arith.microbial_kitchen_quantity.default <- function(op, x, y, ...)
+vec_arith.mk_quantity.default <- function(op, x, y, ...)
   vctrs::stop_incompatible_op(op, x, y)
 
-#' vec_arith for microbial_kitchen_amount objects
+#' vec_arith for mk_amount objects
 #' @rdname vec_arith
 #' @inheritParams vctrs::vec_arith
-#' @method vec_arith microbial_kitchen_amount
+#' @method vec_arith mk_amount
 #' @export
-#' @export vec_arith.microbial_kitchen_amount
-vec_arith.microbial_kitchen_amount <- function(op, x, y, ...) {
-  UseMethod("vec_arith.microbial_kitchen_amount", y)
+#' @export vec_arith.mk_amount
+vec_arith.mk_amount <- function(op, x, y, ...) {
+  UseMethod("vec_arith.mk_amount", y)
 }
 
-#' @method vec_arith.microbial_kitchen_amount default
+#' @method vec_arith.mk_amount default
 #' @export
-vec_arith.microbial_kitchen_amount.default <- function(op, x, y, ...)
+vec_arith.mk_amount.default <- function(op, x, y, ...)
   vctrs::stop_incompatible_op(op, x, y)
 
-#' vec_arith for microbial_kitchen_mass objects
+#' vec_arith for mk_mass objects
 #' @rdname vec_arith
 #' @inheritParams vctrs::vec_arith
-#' @method vec_arith microbial_kitchen_mass
+#' @method vec_arith mk_mass
 #' @export
-#' @export vec_arith.microbial_kitchen_mass
-vec_arith.microbial_kitchen_mass <- function(op, x, y, ...) {
-  UseMethod("vec_arith.microbial_kitchen_mass", y)
+#' @export vec_arith.mk_mass
+vec_arith.mk_mass <- function(op, x, y, ...) {
+  UseMethod("vec_arith.mk_mass", y)
 }
 
-#' @method vec_arith.microbial_kitchen_mass default
+#' @method vec_arith.mk_mass default
 #' @export
-vec_arith.microbial_kitchen_mass.default <- function(op, x, y, ...)
+vec_arith.mk_mass.default <- function(op, x, y, ...)
   vctrs::stop_incompatible_op(op, x, y)
 
-#' vec_arith for microbial_kitchen_molecular_weight objects
+#' vec_arith for mk_molecular_weight objects
 #' @rdname vec_arith
 #' @inheritParams vctrs::vec_arith
-#' @method vec_arith microbial_kitchen_molecular_weight
+#' @method vec_arith mk_molecular_weight
 #' @export
-#' @export vec_arith.microbial_kitchen_molecular_weight
-vec_arith.microbial_kitchen_molecular_weight <- function(op, x, y, ...) {
-  UseMethod("vec_arith.microbial_kitchen_molecular_weight", y)
+#' @export vec_arith.mk_molecular_weight
+vec_arith.mk_molecular_weight <- function(op, x, y, ...) {
+  UseMethod("vec_arith.mk_molecular_weight", y)
 }
 
-#' @method vec_arith.microbial_kitchen_molecular_weight default
+#' @method vec_arith.mk_molecular_weight default
 #' @export
-vec_arith.microbial_kitchen_molecular_weight.default <- function(op, x, y, ...)
+vec_arith.mk_molecular_weight.default <- function(op, x, y, ...)
   vctrs::stop_incompatible_op(op, x, y)
 
-#' vec_arith for microbial_kitchen_molarity_concentration objects
+#' vec_arith for mk_molarity_concentration objects
 #' @rdname vec_arith
 #' @inheritParams vctrs::vec_arith
-#' @method vec_arith microbial_kitchen_molarity_concentration
+#' @method vec_arith mk_molarity_concentration
 #' @export
-#' @export vec_arith.microbial_kitchen_molarity_concentration
-vec_arith.microbial_kitchen_molarity_concentration <- function(op, x, y, ...) {
-  UseMethod("vec_arith.microbial_kitchen_molarity_concentration", y)
+#' @export vec_arith.mk_molarity_concentration
+vec_arith.mk_molarity_concentration <- function(op, x, y, ...) {
+  UseMethod("vec_arith.mk_molarity_concentration", y)
 }
 
-#' @method vec_arith.microbial_kitchen_molarity_concentration default
+#' @method vec_arith.mk_molarity_concentration default
 #' @export
-vec_arith.microbial_kitchen_molarity_concentration.default <- function(op, x, y, ...)
+vec_arith.mk_molarity_concentration.default <- function(op, x, y, ...)
   vctrs::stop_incompatible_op(op, x, y)
 
-#' vec_arith for microbial_kitchen_mass_concentration objects
+#' vec_arith for mk_mass_concentration objects
 #' @rdname vec_arith
 #' @inheritParams vctrs::vec_arith
-#' @method vec_arith microbial_kitchen_mass_concentration
+#' @method vec_arith mk_mass_concentration
 #' @export
-#' @export vec_arith.microbial_kitchen_mass_concentration
-vec_arith.microbial_kitchen_mass_concentration <- function(op, x, y, ...) {
-  UseMethod("vec_arith.microbial_kitchen_mass_concentration", y)
+#' @export vec_arith.mk_mass_concentration
+vec_arith.mk_mass_concentration <- function(op, x, y, ...) {
+  UseMethod("vec_arith.mk_mass_concentration", y)
 }
 
-#' @method vec_arith.microbial_kitchen_mass_concentration default
+#' @method vec_arith.mk_mass_concentration default
 #' @export
-vec_arith.microbial_kitchen_mass_concentration.default <- function(op, x, y, ...)
+vec_arith.mk_mass_concentration.default <- function(op, x, y, ...)
   vctrs::stop_incompatible_op(op, x, y)
 
-#' vec_arith for microbial_kitchen_volume objects
+#' vec_arith for mk_volume objects
 #' @rdname vec_arith
 #' @inheritParams vctrs::vec_arith
-#' @method vec_arith microbial_kitchen_volume
+#' @method vec_arith mk_volume
 #' @export
-#' @export vec_arith.microbial_kitchen_volume
-vec_arith.microbial_kitchen_volume <- function(op, x, y, ...) {
-  UseMethod("vec_arith.microbial_kitchen_volume", y)
+#' @export vec_arith.mk_volume
+vec_arith.mk_volume <- function(op, x, y, ...) {
+  UseMethod("vec_arith.mk_volume", y)
 }
 
-#' @method vec_arith.microbial_kitchen_volume default
+#' @method vec_arith.mk_volume default
 #' @export
-vec_arith.microbial_kitchen_volume.default <- function(op, x, y, ...)
+vec_arith.mk_volume.default <- function(op, x, y, ...)
   vctrs::stop_incompatible_op(op, x, y)
 
-#' vec_arith for microbial_kitchen_pressure objects
+#' vec_arith for mk_pressure objects
 #' @rdname vec_arith
 #' @inheritParams vctrs::vec_arith
-#' @method vec_arith microbial_kitchen_pressure
+#' @method vec_arith mk_pressure
 #' @export
-#' @export vec_arith.microbial_kitchen_pressure
-vec_arith.microbial_kitchen_pressure <- function(op, x, y, ...) {
-  UseMethod("vec_arith.microbial_kitchen_pressure", y)
+#' @export vec_arith.mk_pressure
+vec_arith.mk_pressure <- function(op, x, y, ...) {
+  UseMethod("vec_arith.mk_pressure", y)
 }
 
-#' @method vec_arith.microbial_kitchen_pressure default
+#' @method vec_arith.mk_pressure default
 #' @export
-vec_arith.microbial_kitchen_pressure.default <- function(op, x, y, ...)
+vec_arith.mk_pressure.default <- function(op, x, y, ...)
   vctrs::stop_incompatible_op(op, x, y)
 
-#' vec_arith for microbial_kitchen_gas_solubility objects
+#' vec_arith for mk_gas_solubility objects
 #' @rdname vec_arith
 #' @inheritParams vctrs::vec_arith
-#' @method vec_arith microbial_kitchen_gas_solubility
+#' @method vec_arith mk_gas_solubility
 #' @export
-#' @export vec_arith.microbial_kitchen_gas_solubility
-vec_arith.microbial_kitchen_gas_solubility <- function(op, x, y, ...) {
-  UseMethod("vec_arith.microbial_kitchen_gas_solubility", y)
+#' @export vec_arith.mk_gas_solubility
+vec_arith.mk_gas_solubility <- function(op, x, y, ...) {
+  UseMethod("vec_arith.mk_gas_solubility", y)
 }
 
-#' @method vec_arith.microbial_kitchen_gas_solubility default
+#' @method vec_arith.mk_gas_solubility default
 #' @export
-vec_arith.microbial_kitchen_gas_solubility.default <- function(op, x, y, ...)
+vec_arith.mk_gas_solubility.default <- function(op, x, y, ...)
   vctrs::stop_incompatible_op(op, x, y)
 
-#' vec_arith for microbial_kitchen_temperature objects
+#' vec_arith for mk_temperature objects
 #' @rdname vec_arith
 #' @inheritParams vctrs::vec_arith
-#' @method vec_arith microbial_kitchen_temperature
+#' @method vec_arith mk_temperature
 #' @export
-#' @export vec_arith.microbial_kitchen_temperature
-vec_arith.microbial_kitchen_temperature <- function(op, x, y, ...) {
-  UseMethod("vec_arith.microbial_kitchen_temperature", y)
+#' @export vec_arith.mk_temperature
+vec_arith.mk_temperature <- function(op, x, y, ...) {
+  UseMethod("vec_arith.mk_temperature", y)
 }
 
-#' @method vec_arith.microbial_kitchen_temperature default
+#' @method vec_arith.mk_temperature default
 #' @export
-vec_arith.microbial_kitchen_temperature.default <- function(op, x, y, ...)
+vec_arith.mk_temperature.default <- function(op, x, y, ...)
   vctrs::stop_incompatible_op(op, x, y)
 
 # comparisons =======================
@@ -203,9 +203,9 @@ qty_numeric_divide_multiply <- function(op, x, y) {
   )
 }
 
-#' @method vec_arith.numeric microbial_kitchen_quantity
+#' @method vec_arith.numeric mk_quantity
 #' @export
-vec_arith.numeric.microbial_kitchen_quantity <- function(op, x, y, ...) {
+vec_arith.numeric.mk_quantity <- function(op, x, y, ...) {
   # regular numbers can be multiplied with all quantities
   switch(
     op,
@@ -214,63 +214,63 @@ vec_arith.numeric.microbial_kitchen_quantity <- function(op, x, y, ...) {
   )
 }
 
-#' @method vec_arith.microbial_kitchen_quantity numeric
+#' @method vec_arith.mk_quantity numeric
 #' @export
-vec_arith.microbial_kitchen_quantity.numeric <- function(op, x, y, ...) {
+vec_arith.mk_quantity.numeric <- function(op, x, y, ...) {
   qty_numeric_divide_multiply(op, x, y)
 }
 
-#' @method vec_arith.microbial_kitchen_amount numeric
+#' @method vec_arith.mk_amount numeric
 #' @export
-vec_arith.microbial_kitchen_amount.numeric <- function(op, x, y, ...) {
+vec_arith.mk_amount.numeric <- function(op, x, y, ...) {
   qty_numeric_divide_multiply(op, x, y)
 }
 
-#' @method vec_arith.microbial_kitchen_mass numeric
+#' @method vec_arith.mk_mass numeric
 #' @export
-vec_arith.microbial_kitchen_mass.numeric <- function(op, x, y, ...) {
+vec_arith.mk_mass.numeric <- function(op, x, y, ...) {
   qty_numeric_divide_multiply(op, x, y)
 }
 
-#' @method vec_arith.microbial_kitchen_molecular_weight numeric
+#' @method vec_arith.mk_molecular_weight numeric
 #' @export
-vec_arith.microbial_kitchen_molecular_weight.numeric <- function(op, x, y, ...) {
+vec_arith.mk_molecular_weight.numeric <- function(op, x, y, ...) {
   qty_numeric_divide_multiply(op, x, y)
 }
 
-#' @method vec_arith.microbial_kitchen_molarity_concentration numeric
+#' @method vec_arith.mk_molarity_concentration numeric
 #' @export
-vec_arith.microbial_kitchen_molarity_concentration.numeric <- function(op, x, y, ...) {
+vec_arith.mk_molarity_concentration.numeric <- function(op, x, y, ...) {
   qty_numeric_divide_multiply(op, x, y)
 }
 
-#' @method vec_arith.microbial_kitchen_mass_concentration numeric
+#' @method vec_arith.mk_mass_concentration numeric
 #' @export
-vec_arith.microbial_kitchen_mass_concentration.numeric <- function(op, x, y, ...) {
+vec_arith.mk_mass_concentration.numeric <- function(op, x, y, ...) {
   qty_numeric_divide_multiply(op, x, y)
 }
 
-#' @method vec_arith.microbial_kitchen_volume numeric
+#' @method vec_arith.mk_volume numeric
 #' @export
-vec_arith.microbial_kitchen_volume.numeric <- function(op, x, y, ...) {
+vec_arith.mk_volume.numeric <- function(op, x, y, ...) {
   qty_numeric_divide_multiply(op, x, y)
 }
 
-#' @method vec_arith.microbial_kitchen_pressure numeric
+#' @method vec_arith.mk_pressure numeric
 #' @export
-vec_arith.microbial_kitchen_pressure.numeric <- function(op, x, y, ...) {
+vec_arith.mk_pressure.numeric <- function(op, x, y, ...) {
   qty_numeric_divide_multiply(op, x, y)
 }
 
-#' @method vec_arith.microbial_kitchen_gas_solubility numeric
+#' @method vec_arith.mk_gas_solubility numeric
 #' @export
-vec_arith.microbial_kitchen_gas_solubility.numeric <- function(op, x, y, ...) {
+vec_arith.mk_gas_solubility.numeric <- function(op, x, y, ...) {
   qty_numeric_divide_multiply(op, x, y)
 }
 
-#' @method vec_arith.microbial_kitchen_temperature numeric
+#' @method vec_arith.mk_temperature numeric
 #' @export
-vec_arith.microbial_kitchen_temperature.numeric <- function(op, x, y, ...) {
+vec_arith.mk_temperature.numeric <- function(op, x, y, ...) {
   qty_numeric_divide_multiply(op, x, y)
 }
 
@@ -301,63 +301,63 @@ qty_qty_plus_minus_divide <- function(op, x, y) {
   )
 }
 
-#' @method vec_arith.microbial_kitchen_quantity microbial_kitchen_quantity
+#' @method vec_arith.mk_quantity mk_quantity
 #' @export
-vec_arith.microbial_kitchen_quantity.microbial_kitchen_quantity <- function(op, x, y, ...) {
+vec_arith.mk_quantity.mk_quantity <- function(op, x, y, ...) {
   qty_qty_plus_minus_divide(op, x, y)
 }
 
-#' @method vec_arith.microbial_kitchen_amount microbial_kitchen_amount
+#' @method vec_arith.mk_amount mk_amount
 #' @export
-vec_arith.microbial_kitchen_amount.microbial_kitchen_amount <- function(op, x, y, ...) {
+vec_arith.mk_amount.mk_amount <- function(op, x, y, ...) {
   qty_qty_plus_minus_divide(op, x, y)
 }
 
-#' @method vec_arith.microbial_kitchen_mass microbial_kitchen_mass
+#' @method vec_arith.mk_mass mk_mass
 #' @export
-vec_arith.microbial_kitchen_mass.microbial_kitchen_mass <- function(op, x, y, ...) {
+vec_arith.mk_mass.mk_mass <- function(op, x, y, ...) {
   qty_qty_plus_minus_divide(op, x, y)
 }
 
-#' @method vec_arith.microbial_kitchen_molecular_weight microbial_kitchen_molecular_weight
+#' @method vec_arith.mk_molecular_weight mk_molecular_weight
 #' @export
-vec_arith.microbial_kitchen_molecular_weight.microbial_kitchen_molecular_weight <- function(op, x, y, ...) {
+vec_arith.mk_molecular_weight.mk_molecular_weight <- function(op, x, y, ...) {
   qty_qty_plus_minus_divide(op, x, y)
 }
 
-#' @method vec_arith.microbial_kitchen_molarity_concentration microbial_kitchen_molarity_concentration
+#' @method vec_arith.mk_molarity_concentration mk_molarity_concentration
 #' @export
-vec_arith.microbial_kitchen_molarity_concentration.microbial_kitchen_molarity_concentration <- function(op, x, y, ...) {
+vec_arith.mk_molarity_concentration.mk_molarity_concentration <- function(op, x, y, ...) {
   qty_qty_plus_minus_divide(op, x, y)
 }
 
-#' @method vec_arith.microbial_kitchen_mass_concentration microbial_kitchen_mass_concentration
+#' @method vec_arith.mk_mass_concentration mk_mass_concentration
 #' @export
-vec_arith.microbial_kitchen_mass_concentration.microbial_kitchen_mass_concentration <- function(op, x, y, ...) {
+vec_arith.mk_mass_concentration.mk_mass_concentration <- function(op, x, y, ...) {
   qty_qty_plus_minus_divide(op, x, y)
 }
 
-#' @method vec_arith.microbial_kitchen_volume microbial_kitchen_volume
+#' @method vec_arith.mk_volume mk_volume
 #' @export
-vec_arith.microbial_kitchen_volume.microbial_kitchen_volume <- function(op, x, y, ...) {
+vec_arith.mk_volume.mk_volume <- function(op, x, y, ...) {
   qty_qty_plus_minus_divide(op, x, y)
 }
 
-#' @method vec_arith.microbial_kitchen_pressure microbial_kitchen_pressure
+#' @method vec_arith.mk_pressure mk_pressure
 #' @export
-vec_arith.microbial_kitchen_pressure.microbial_kitchen_pressure <- function(op, x, y, ...) {
+vec_arith.mk_pressure.mk_pressure <- function(op, x, y, ...) {
   qty_qty_plus_minus_divide(op, x, y)
 }
 
-#' @method vec_arith.microbial_kitchen_gas_solubility microbial_kitchen_gas_solubility
+#' @method vec_arith.mk_gas_solubility mk_gas_solubility
 #' @export
-vec_arith.microbial_kitchen_gas_solubility.microbial_kitchen_gas_solubility <- function(op, x, y, ...) {
+vec_arith.mk_gas_solubility.mk_gas_solubility <- function(op, x, y, ...) {
   qty_qty_plus_minus_divide(op, x, y)
 }
 
-#' @method vec_arith.microbial_kitchen_temperature microbial_kitchen_temperature
+#' @method vec_arith.mk_temperature mk_temperature
 #' @export
-vec_arith.microbial_kitchen_temperature.microbial_kitchen_temperature <- function(op, x, y, ...) {
+vec_arith.mk_temperature.mk_temperature <- function(op, x, y, ...) {
   qty_qty_plus_minus_divide(op, x, y)
 }
 
@@ -373,18 +373,18 @@ vec_arith.microbial_kitchen_temperature.microbial_kitchen_temperature <- functio
 #' @name arithmetic
 NULL
 
-#' @method vec_arith.microbial_kitchen_amount microbial_kitchen_volume
+#' @method vec_arith.mk_amount mk_volume
 #' @export
-vec_arith.microbial_kitchen_amount.microbial_kitchen_volume <- function(op, x, y, ...) {
+vec_arith.mk_amount.mk_volume <- function(op, x, y, ...) {
   switch(
     op,
     "/" = qty_vec_arith_base(op, base_metric(x), base_metric(y), to = molarity_concentration()),
     vctrs::stop_incompatible_op(op, x, y)
   )
 }
-#' @method vec_arith.microbial_kitchen_amount microbial_kitchen_molarity_concentration
+#' @method vec_arith.mk_amount mk_molarity_concentration
 #' @export
-vec_arith.microbial_kitchen_amount.microbial_kitchen_molarity_concentration <- function(op, x, y, ...) {
+vec_arith.mk_amount.mk_molarity_concentration <- function(op, x, y, ...) {
   switch(
     op,
     "/" = qty_vec_arith_base(op, base_metric(x), base_metric(y), to = volume()),
@@ -392,18 +392,18 @@ vec_arith.microbial_kitchen_amount.microbial_kitchen_molarity_concentration <- f
   )
 }
 
-#' @method vec_arith.microbial_kitchen_volume microbial_kitchen_molarity_concentration
+#' @method vec_arith.mk_volume mk_molarity_concentration
 #' @export
-vec_arith.microbial_kitchen_volume.microbial_kitchen_molarity_concentration <- function(op, x, y, ...) {
+vec_arith.mk_volume.mk_molarity_concentration <- function(op, x, y, ...) {
   switch(
     op,
     "*" = qty_vec_arith_base(op, base_metric(x), base_metric(y), to = amount()),
     vctrs::stop_incompatible_op(op, x, y)
   )
 }
-#' @method vec_arith.microbial_kitchen_molarity_concentration microbial_kitchen_volume
+#' @method vec_arith.mk_molarity_concentration mk_volume
 #' @export
-vec_arith.microbial_kitchen_molarity_concentration.microbial_kitchen_volume <- function(op, x, y, ...) {
+vec_arith.mk_molarity_concentration.mk_volume <- function(op, x, y, ...) {
   switch(
     op,
     "*" = qty_vec_arith_base(op, base_metric(x), base_metric(y), to = amount()),
@@ -423,18 +423,18 @@ vec_arith.microbial_kitchen_molarity_concentration.microbial_kitchen_volume <- f
 #' @name arithmetic
 NULL
 
-#' @method vec_arith.microbial_kitchen_mass microbial_kitchen_volume
+#' @method vec_arith.mk_mass mk_volume
 #' @export
-vec_arith.microbial_kitchen_mass.microbial_kitchen_volume <- function(op, x, y, ...) {
+vec_arith.mk_mass.mk_volume <- function(op, x, y, ...) {
   switch(
     op,
     "/" = qty_vec_arith_base(op, base_metric(x), base_metric(y), to = mass_concentration()),
     vctrs::stop_incompatible_op(op, x, y)
   )
 }
-#' @method vec_arith.microbial_kitchen_mass microbial_kitchen_mass_concentration
+#' @method vec_arith.mk_mass mk_mass_concentration
 #' @export
-vec_arith.microbial_kitchen_mass.microbial_kitchen_mass_concentration <- function(op, x, y, ...) {
+vec_arith.mk_mass.mk_mass_concentration <- function(op, x, y, ...) {
   switch(
     op,
     "/" = qty_vec_arith_base(op, base_metric(x), base_metric(y), to = volume()),
@@ -442,18 +442,18 @@ vec_arith.microbial_kitchen_mass.microbial_kitchen_mass_concentration <- functio
   )
 }
 
-#' @method vec_arith.microbial_kitchen_volume microbial_kitchen_mass_concentration
+#' @method vec_arith.mk_volume mk_mass_concentration
 #' @export
-vec_arith.microbial_kitchen_volume.microbial_kitchen_mass_concentration <- function(op, x, y, ...) {
+vec_arith.mk_volume.mk_mass_concentration <- function(op, x, y, ...) {
   switch(
     op,
     "*" = qty_vec_arith_base(op, base_metric(x), base_metric(y), to = mass()),
     vctrs::stop_incompatible_op(op, x, y)
   )
 }
-#' @method vec_arith.microbial_kitchen_mass_concentration microbial_kitchen_volume
+#' @method vec_arith.mk_mass_concentration mk_volume
 #' @export
-vec_arith.microbial_kitchen_mass_concentration.microbial_kitchen_volume <- function(op, x, y, ...) {
+vec_arith.mk_mass_concentration.mk_volume <- function(op, x, y, ...) {
   switch(
     op,
     "*" = qty_vec_arith_base(op, base_metric(x), base_metric(y), to = mass()),
@@ -473,18 +473,18 @@ vec_arith.microbial_kitchen_mass_concentration.microbial_kitchen_volume <- funct
 #' @name arithmetic
 NULL
 
-#' @method vec_arith.microbial_kitchen_mass microbial_kitchen_molecular_weight
+#' @method vec_arith.mk_mass mk_molecular_weight
 #' @export
-vec_arith.microbial_kitchen_mass.microbial_kitchen_molecular_weight <- function(op, x, y, ...) {
+vec_arith.mk_mass.mk_molecular_weight <- function(op, x, y, ...) {
   switch(
     op,
     "/" = qty_vec_arith_base(op, base_metric(x), base_metric(y), to = amount()),
     vctrs::stop_incompatible_op(op, x, y)
   )
 }
-#' @method vec_arith.microbial_kitchen_mass microbial_kitchen_amount
+#' @method vec_arith.mk_mass mk_amount
 #' @export
-vec_arith.microbial_kitchen_mass.microbial_kitchen_amount <- function(op, x, y, ...) {
+vec_arith.mk_mass.mk_amount <- function(op, x, y, ...) {
   switch(
     op,
     "/" = qty_vec_arith_base(op, base_metric(x), base_metric(y), to = molecular_weight()),
@@ -492,18 +492,18 @@ vec_arith.microbial_kitchen_mass.microbial_kitchen_amount <- function(op, x, y, 
   )
 }
 
-#' @method vec_arith.microbial_kitchen_amount microbial_kitchen_molecular_weight
+#' @method vec_arith.mk_amount mk_molecular_weight
 #' @export
-vec_arith.microbial_kitchen_amount.microbial_kitchen_molecular_weight <- function(op, x, y, ...) {
+vec_arith.mk_amount.mk_molecular_weight <- function(op, x, y, ...) {
   switch(
     op,
     "*" = qty_vec_arith_base(op, base_metric(x), base_metric(y), to = mass()),
     vctrs::stop_incompatible_op(op, x, y)
   )
 }
-#' @method vec_arith.microbial_kitchen_molecular_weight microbial_kitchen_amount
+#' @method vec_arith.mk_molecular_weight mk_amount
 #' @export
-vec_arith.microbial_kitchen_molecular_weight.microbial_kitchen_amount <- function(op, x, y, ...) {
+vec_arith.mk_molecular_weight.mk_amount <- function(op, x, y, ...) {
   switch(
     op,
     "*" = qty_vec_arith_base(op, base_metric(x), base_metric(y), to = mass()),
@@ -523,18 +523,18 @@ vec_arith.microbial_kitchen_molecular_weight.microbial_kitchen_amount <- functio
 #' @name arithmetic
 NULL
 
-#' @method vec_arith.microbial_kitchen_molarity_concentration microbial_kitchen_pressure
+#' @method vec_arith.mk_molarity_concentration mk_pressure
 #' @export
-vec_arith.microbial_kitchen_molarity_concentration.microbial_kitchen_pressure <- function(op, x, y, ...) {
+vec_arith.mk_molarity_concentration.mk_pressure <- function(op, x, y, ...) {
   switch(
     op,
     "/" = qty_vec_arith_base(op, base_metric(x), base_metric(y), to = gas_solubility()),
     vctrs::stop_incompatible_op(op, x, y)
   )
 }
-#' @method vec_arith.microbial_kitchen_molarity_concentration microbial_kitchen_gas_solubility
+#' @method vec_arith.mk_molarity_concentration mk_gas_solubility
 #' @export
-vec_arith.microbial_kitchen_molarity_concentration.microbial_kitchen_gas_solubility <- function(op, x, y, ...) {
+vec_arith.mk_molarity_concentration.mk_gas_solubility <- function(op, x, y, ...) {
   switch(
     op,
     "/" = qty_vec_arith_base(op, base_metric(x), base_metric(y), to = pressure()),
@@ -542,18 +542,18 @@ vec_arith.microbial_kitchen_molarity_concentration.microbial_kitchen_gas_solubil
   )
 }
 
-#' @method vec_arith.microbial_kitchen_gas_solubility microbial_kitchen_pressure
+#' @method vec_arith.mk_gas_solubility mk_pressure
 #' @export
-vec_arith.microbial_kitchen_gas_solubility.microbial_kitchen_pressure <- function(op, x, y, ...) {
+vec_arith.mk_gas_solubility.mk_pressure <- function(op, x, y, ...) {
   switch(
     op,
     "*" = qty_vec_arith_base(op, base_metric(x), base_metric(y), to = molarity_concentration()),
     vctrs::stop_incompatible_op(op, x, y)
   )
 }
-#' @method vec_arith.microbial_kitchen_pressure microbial_kitchen_gas_solubility
+#' @method vec_arith.mk_pressure mk_gas_solubility
 #' @export
-vec_arith.microbial_kitchen_pressure.microbial_kitchen_gas_solubility <- function(op, x, y, ...) {
+vec_arith.mk_pressure.mk_gas_solubility <- function(op, x, y, ...) {
   switch(
     op,
     "*" = qty_vec_arith_base(op, base_metric(x), base_metric(y), to = molarity_concentration()),
