@@ -450,9 +450,6 @@ vec_ptype2.double.mk_quantity <- function(x, y, ..., x_arg = "x", y_arg = "y") d
 #' @export
 vec_cast.double.mk_quantity <- function(x, to, ...) get_value(x, ...)
 
-#' @method vec_ptype2.double mk_amount
-#' @export
-vec_ptype2.double.mk_amount <- function(x, y, ..., x_arg = "x", y_arg = "y") double()
 #' @method vec_cast.double mk_amount
 #' @export
 vec_cast.double.mk_amount <- function(x, to, ...) {
@@ -542,16 +539,18 @@ vec_cast.double.mk_temperature <- function(x, to, ...) {
 #' qty(0:10, "C") %>% get_qty_text("F")
 #' qty(760, "Torr") %>% get_qty_text("atm")
 get_qty_text <- function(q, unit = get_qty_units(q), signif = 5) {
-  return(get_text(q, unit, signif))
+  text <- sprintf("%s %s", base::signif(get_qty_value(q, unit = unit), signif), unit)
+  text[is.na(q)] <- NA_character_
+  return(text)
 }
 
-#' @describeIn quantity_data S3 implementation of \code{\link[base]{as.character}} with optional \code{unit} argument
+#' @describeIn quantity_data S3 implementation of \code{\link[base]{as.character}} with optional \code{unit} and \code{signif} argument
 #' @examples
 #' qty(760, "Torr") %>% as.character("atm")
 #' @method as.character mk_quantity
 #' @export
-as.character.mk_quantity <- function(q, unit = get_qty_units(q), ...) {
-  vec_cast.character(q, unit = unit, ...)
+as.character.mk_quantity <- function(q, unit = get_qty_units(q), signif = 5, ...) {
+  get_qty_text(q, unit, signif)
 }
 
 #' @describeIn quantity_data get each value of a quantity in the best metric unit with the unit appended. Note that if a value is zero, it will use the unit of the next smallest value for this number.
@@ -566,87 +565,10 @@ get_qty_text_each <- function(q, signif = 5) {
   is_zero <- is_near_zero(q)
   smallest_non_zero <- min(abs(q[!is_zero]))
   nearest_zero_unit <- get_qty_units(best_metric(q[which(abs(q) == smallest_non_zero)[1]]))
-  text <- purrr::map_chr(q, ~get_text(best_metric(.x), signif = signif))
-  text[is_zero] <- get_text(q[is_zero], nearest_zero_unit)
+  text <- purrr::map_chr(q, ~get_qty_text(best_metric(.x), signif = signif))
+  text[is_zero] <- get_qty_text(q[is_zero], nearest_zero_unit)
   return(text)
 }
-
-# helper function for getting text representation
-get_text <- function(q, unit = get_qty_units(q), signif = 5, ...) {
-  text <- sprintf("%s %s", base::signif(get_qty_value(q, unit = unit), signif), unit)
-  text[is.na(q)] <- NA_character_
-  return(text)
-}
-
-#' @method vec_ptype2.character mk_quantity
-#' @export
-vec_ptype2.character.mk_quantity <- function(x, y, ..., x_arg = "x", y_arg = "y") character()
-#' @method vec_cast.character mk_quantity
-#' @export
-vec_cast.character.mk_quantity <- function(x, to, ...) { get_text(x, ...) }
-
-#' @method vec_ptype2.character mk_amount
-#' @export
-vec_ptype2.character.mk_amount <- function(x, y, ..., x_arg = "x", y_arg = "y") character()
-#' @method vec_cast.character mk_amount
-#' @export
-vec_cast.character.mk_amount <- function(x, to, ...) { get_text(x, ...) }
-
-#' @method vec_ptype2.character mk_mass
-#' @export
-vec_ptype2.character.mk_mass <- function(x, y, ..., x_arg = "x", y_arg = "y") character()
-#' @method vec_cast.character mk_mass
-#' @export
-vec_cast.character.mk_mass <- function(x, to, ...) { get_text(x, ...) }
-
-#' @method vec_ptype2.character mk_molecular_weight
-#' @export
-vec_ptype2.character.mk_molecular_weight <- function(x, y, ..., x_arg = "x", y_arg = "y") character()
-#' @method vec_cast.character mk_molecular_weight
-#' @export
-vec_cast.character.mk_molecular_weight <- function(x, to, ...) { get_text(x, ...) }
-
-#' @method vec_ptype2.character mk_molarity_concentration
-#' @export
-vec_ptype2.character.mk_molarity_concentration <- function(x, y, ..., x_arg = "x", y_arg = "y") character()
-#' @method vec_cast.character mk_molarity_concentration
-#' @export
-vec_cast.character.mk_molarity_concentration <- function(x, to, ...) { get_text(x, ...) }
-
-#' @method vec_ptype2.character mk_mass_concentration
-#' @export
-vec_ptype2.character.mk_mass_concentration <- function(x, y, ..., x_arg = "x", y_arg = "y") character()
-#' @method vec_cast.character mk_mass_concentration
-#' @export
-vec_cast.character.mk_mass_concentration <- function(x, to, ...) { get_text(x, ...) }
-
-#' @method vec_ptype2.character mk_volume
-#' @export
-vec_ptype2.character.mk_volume <- function(x, y, ..., x_arg = "x", y_arg = "y") character()
-#' @method vec_cast.character mk_volume
-#' @export
-vec_cast.character.mk_volume <- function(x, to, ...) { get_text(x, ...) }
-
-#' @method vec_ptype2.character mk_pressure
-#' @export
-vec_ptype2.character.mk_pressure <- function(x, y, ..., x_arg = "x", y_arg = "y") character()
-#' @method vec_cast.character mk_pressure
-#' @export
-vec_cast.character.mk_pressure <- function(x, to, ...) { get_text(x, ...) }
-
-#' @method vec_ptype2.character mk_gas_solubility
-#' @export
-vec_ptype2.character.mk_gas_solubility <- function(x, y, ..., x_arg = "x", y_arg = "y") character()
-#' @method vec_cast.character mk_gas_solubility
-#' @export
-vec_cast.character.mk_gas_solubility <- function(x, to, ...) { get_text(x, ...) }
-
-#' @method vec_ptype2.character mk_temperature
-#' @export
-vec_ptype2.character.mk_temperature <- function(x, y, ..., x_arg = "x", y_arg = "y") character()
-#' @method vec_cast.character mk_temperature
-#' @export
-vec_cast.character.mk_temperature <- function(x, to, ...) { get_text(x, ...) }
 
 # type casts: to factor ====
 
@@ -656,9 +578,11 @@ generics::as.factor
 
 #' @method as.factor mk_quantity
 #' @export
-as.factor.mk_quantity <- function(x, unit = get_qty_units(x), ...) {
-  x <- as.character(x, unit = unit)
-  return(generics::as.factor(x, ...))
+as.factor.mk_quantity <- function(x, each = FALSE, ...) {
+  if (each) 
+    generics::as.factor(get_qty_text_each(x))
+  else
+    generics::as.factor(as.character(x, ...))
 }
 
 
@@ -668,9 +592,11 @@ forcats::as_factor
 
 #' @method as_factor mk_quantity
 #' @export
-as_factor.mk_quantity <- function(x, unit = get_qty_units(x), ...) {
-  x <- as.character(x, unit = unit)
-  forcats::as_factor(x, ...)
+as_factor.mk_quantity <- function(x, each = FALSE, ...) {
+  if (each) 
+    forcats::as_factor(get_qty_text_each(x))
+  else
+    forcats::as_factor(as.character(x, ...))
 }
 
 # type casts: to same quantity type (=c) ====
