@@ -2,7 +2,7 @@ Package: microbialkitchen
 Type: Package
 Title: Culture Media Tools
 Description: Package to simplify working with defined culture medium.
-Version: 0.4.1
+Version: 0.4.2
 Authors@R: person("Sebastian", "Kopf", email = "sebastian.kopf@colorado.edu",
     role = c("aut", "cre"))
 URL: https://github.com/kopflab/microbialkitchen
@@ -16,6 +16,9 @@ Imports:
     purrr,
     forcats,
     tibble,
+    pillar,
+    ggplot2,
+    scales,
     dplyr,
     tidyr,
     vctrs,
@@ -23,7 +26,7 @@ Imports:
     stringr
 Suggests:
     tidyverse,
-    plotly,
+    cowplot,
     knitr,
     rmarkdown,
     testthat
