@@ -1071,7 +1071,9 @@ scale_metric <- function (q, prefix = "") {
 #' @export
 best_metric <- function(q) {
   if (!is_qty(q)) stop("not a known type of quantity: ", class(q)[1], call. = FALSE)
-  if(all(is.na(q) | is_near_zero(q) | is.infinite(q))) return(q)
+  is_zero <- is_near_zero(q)
+  q[is_zero] <- 0.0
+  if(all(is.na(q) | is_zero | is.infinite(q))) return(q)
   prefix <- get_best_metric_prefix(vctrs::vec_data(base_metric(q)))
   return(scale_metric(q, prefix = prefix))
 }

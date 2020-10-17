@@ -42,7 +42,8 @@ test_that("Testing that arithemtic calculations of units are working", {
   expect_error(1 - qty(2, "C"), "not permitted", class = "vctrs_error_incompatible_op")
   expect_error(qty(2, "C") - qty(1, "g"), "not permitted", class = "vctrs_error_incompatible_op")
   expect_equal({q <- qty(1, "kg") + qty(5, "g") - qty(0.0003, "Mg"); get_qty_units(q)}, "g")
-  expect_equal(get_qty_value(q), 705) # there's a rounding problem wiht machine error otherwise
+  expect_equal(get_qty_value(q), 705) 
+  expect_equal(qty(0.3, "mg") - qty(200, "µg") - qty(100, "µg"), qty(0, "g"))
   
   # division
   expect_error(qty(2, "C") / qty(1, "g"), "not permitted", class = "vctrs_error_incompatible_op")
