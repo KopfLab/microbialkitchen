@@ -4,7 +4,7 @@
 # Microbial Kitchen (formerly MediaChemTools)
 
 [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/microbialkitchen)](https://cran.r-project.org/package=microbialkitchen)
-[![Git\_Hub\_Version](https://img.shields.io/badge/GitHub-0.4.0-orange.svg?style=flat-square)](/commits)
+[![Git\_Hub\_Version](https://img.shields.io/badge/GitHub-0.4.2-orange.svg?style=flat-square)](/commits)
 [![Documentation](https://img.shields.io/badge/docs-online-green.svg)](https://microbialkitchen.kopflab.org/reference/)
 [![codecov](https://codecov.io/github/KopfLab/microbialkitchen/branch/master/graphs/badge.svg)](https://codecov.io/github/Kopflab/microbialkitchen)
 [![R build
