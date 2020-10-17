@@ -9,7 +9,7 @@
 \alias{get_qty_text_each}
 \title{Get quantity data}
 \usage{
-get_qty_value(x, unit = NULL, transform = identity)
+get_qty_value(x, unit = NULL)
 
 \method{as.double}{mk_quantity}(x, unit = NULL, ...)
 

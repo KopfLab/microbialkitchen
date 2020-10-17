@@ -397,7 +397,7 @@ NULL
 #' qty(0, "C") %>% get_qty_value("F")
 #' qty(760, "Torr") %>% get_qty_value("atm")
 #' @export
-get_qty_value <- function(x, unit = NULL, transform = identity) {
+get_qty_value <- function(x, unit = NULL) {
   as.numeric(x, unit)
 }
 
