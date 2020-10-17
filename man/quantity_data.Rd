@@ -24,7 +24,7 @@ get_qty_text_each(x, signif = 5)
 
 \item{unit}{which units to retrieve quantity data in (by default the unit the quantity is in)}
 
-\item{transform}{whether to transform the value with an additional function once in the desired units. Common transformation examples are log10 and log (natural log) but custom transformations are also possible. Default is NO transformation (\link{identity}).}
+\item{...}{additional parameters for the generics}
 
 \item{signif}{number of significant digits for printing the quantity}
 }

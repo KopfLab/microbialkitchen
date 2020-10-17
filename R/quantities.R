@@ -389,7 +389,6 @@ NULL
 #' @param x quantities
 #' @param unit which units to retrieve quantity data in (by default the unit the quantity is in)
 #' @describeIn quantity_data get the value of a quantity in the desired unit. By default returns the quantity in the units it is in. Functionally equivalent to \code{\link[base]{as.numeric}} and \code{\link[base]{as.double}}.
-#' @param transform whether to transform the value with an additional function once in the desired units. Common transformation examples are log10 and log (natural log) but custom transformations are also possible. Default is NO transformation (\link{identity}).
 #' @examples
 #' # quantity value examples
 #' qty(0.1, "g") %>% get_qty_value()
@@ -403,6 +402,7 @@ get_qty_value <- function(x, unit = NULL, transform = identity) {
 }
 
 #' @describeIn quantity_data S3 extension of \code{\link[base]{as.numeric}} and \link[base]{as.double} with optional \code{unit} argument
+#' @param ... additional parameters for the generics
 #' @examples
 #' qty(760, "Torr") %>% as.numeric("atm")
 #' @method as.double mk_quantity
