@@ -81,7 +81,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">microbialkitchen</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="in active development">0.4.1</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="in active development">0.4.2</span>
       </span>
     </div>
 
@@ -218,7 +218,7 @@
       </tr><tr>
         
         <td>
-          <p><code><a href="quantity_data.html">get_qty_value()</a></code> <code><a href="quantity_data.html">as.double(<i>&lt;microbial_kitchen_quantity&gt;</i>)</a></code> <code><a href="quantity_data.html">get_qty_text()</a></code> <code><a href="quantity_data.html">as.character(<i>&lt;microbial_kitchen_quantity&gt;</i>)</a></code> </p>
+          <p><code><a href="quantity_data.html">get_qty_value()</a></code> <code><a href="quantity_data.html">as.double(<i>&lt;mk_quantity&gt;</i>)</a></code> <code><a href="quantity_data.html">get_qty_text()</a></code> <code><a href="quantity_data.html">as.character(<i>&lt;mk_quantity&gt;</i>)</a></code> <code><a href="quantity_data.html">get_qty_text_each()</a></code> </p>
         </td>
         <td><p>Get quantity data</p></td>
       </tr><tr>
@@ -230,33 +230,33 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="scale_qty.html">scale_x_qty()</a></code> <code><a href="scale_qty.html">scale_y_qty()</a></code> </p>
+        </td>
+        <td><p>ggplot scales for quantities</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="speciation.html">calculate_DIC()</a></code> <code><a href="speciation.html">calculate_carbonic_acid()</a></code> <code><a href="speciation.html">calculate_bicarbonate()</a></code> <code><a href="speciation.html">calculate_carbonate()</a></code> </p>
         </td>
         <td><p>Speciation functions</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="vec_arith.html">vec_arith(<i>&lt;microbial_kitchen_quantity&gt;</i>)</a></code> <code><a href="vec_arith.html">vec_arith(<i>&lt;microbial_kitchen_amount&gt;</i>)</a></code> <code><a href="vec_arith.html">vec_arith(<i>&lt;microbial_kitchen_mass&gt;</i>)</a></code> <code><a href="vec_arith.html">vec_arith(<i>&lt;microbial_kitchen_molecular_weight&gt;</i>)</a></code> <code><a href="vec_arith.html">vec_arith(<i>&lt;microbial_kitchen_molarity_concentration&gt;</i>)</a></code> <code><a href="vec_arith.html">vec_arith(<i>&lt;microbial_kitchen_mass_concentration&gt;</i>)</a></code> <code><a href="vec_arith.html">vec_arith(<i>&lt;microbial_kitchen_volume&gt;</i>)</a></code> <code><a href="vec_arith.html">vec_arith(<i>&lt;microbial_kitchen_pressure&gt;</i>)</a></code> <code><a href="vec_arith.html">vec_arith(<i>&lt;microbial_kitchen_gas_solubility&gt;</i>)</a></code> <code><a href="vec_arith.html">vec_arith(<i>&lt;microbial_kitchen_temperature&gt;</i>)</a></code> </p>
+          <p><code><a href="vec_arith.html">vec_arith(<i>&lt;mk_quantity&gt;</i>)</a></code> <code><a href="vec_arith.html">vec_arith(<i>&lt;mk_amount&gt;</i>)</a></code> <code><a href="vec_arith.html">vec_arith(<i>&lt;mk_mass&gt;</i>)</a></code> <code><a href="vec_arith.html">vec_arith(<i>&lt;mk_molecular_weight&gt;</i>)</a></code> <code><a href="vec_arith.html">vec_arith(<i>&lt;mk_molarity_concentration&gt;</i>)</a></code> <code><a href="vec_arith.html">vec_arith(<i>&lt;mk_mass_concentration&gt;</i>)</a></code> <code><a href="vec_arith.html">vec_arith(<i>&lt;mk_volume&gt;</i>)</a></code> <code><a href="vec_arith.html">vec_arith(<i>&lt;mk_pressure&gt;</i>)</a></code> <code><a href="vec_arith.html">vec_arith(<i>&lt;mk_gas_solubility&gt;</i>)</a></code> <code><a href="vec_arith.html">vec_arith(<i>&lt;mk_temperature&gt;</i>)</a></code> </p>
         </td>
-        <td><p>vec_arith for microbial_kitchen_quantity objects</p></td>
+        <td><p>vec_arith for mk_quantity objects</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="vec_cast.html">vec_cast(<i>&lt;microbial_kitchen_quantity&gt;</i>)</a></code> <code><a href="vec_cast.html">vec_cast(<i>&lt;microbial_kitchen_amount&gt;</i>)</a></code> <code><a href="vec_cast.html">vec_cast(<i>&lt;microbial_kitchen_mass&gt;</i>)</a></code> <code><a href="vec_cast.html">vec_cast(<i>&lt;microbial_kitchen_molecular_weight&gt;</i>)</a></code> <code><a href="vec_cast.html">vec_cast(<i>&lt;microbial_kitchen_molarity_concentration&gt;</i>)</a></code> <code><a href="vec_cast.html">vec_cast(<i>&lt;microbial_kitchen_mass_concentration&gt;</i>)</a></code> <code><a href="vec_cast.html">vec_cast(<i>&lt;microbial_kitchen_volume&gt;</i>)</a></code> <code><a href="vec_cast.html">vec_cast(<i>&lt;microbial_kitchen_pressure&gt;</i>)</a></code> <code><a href="vec_cast.html">vec_cast(<i>&lt;microbial_kitchen_gas_solubility&gt;</i>)</a></code> <code><a href="vec_cast.html">vec_cast(<i>&lt;microbial_kitchen_temperature&gt;</i>)</a></code> </p>
+          <p><code><a href="vec_cast.html">vec_cast(<i>&lt;mk_quantity&gt;</i>)</a></code> <code><a href="vec_cast.html">vec_cast(<i>&lt;mk_amount&gt;</i>)</a></code> <code><a href="vec_cast.html">vec_cast(<i>&lt;mk_mass&gt;</i>)</a></code> <code><a href="vec_cast.html">vec_cast(<i>&lt;mk_molecular_weight&gt;</i>)</a></code> <code><a href="vec_cast.html">vec_cast(<i>&lt;mk_molarity_concentration&gt;</i>)</a></code> <code><a href="vec_cast.html">vec_cast(<i>&lt;mk_mass_concentration&gt;</i>)</a></code> <code><a href="vec_cast.html">vec_cast(<i>&lt;mk_volume&gt;</i>)</a></code> <code><a href="vec_cast.html">vec_cast(<i>&lt;mk_pressure&gt;</i>)</a></code> <code><a href="vec_cast.html">vec_cast(<i>&lt;mk_gas_solubility&gt;</i>)</a></code> <code><a href="vec_cast.html">vec_cast(<i>&lt;mk_temperature&gt;</i>)</a></code> </p>
         </td>
-        <td><p>vec_cast for microbial_kitchen_quantity objects</p></td>
+        <td><p>vec_cast for mk_quantity objects</p></td>
       </tr><tr>
         
         <td>
-          <p><code><a href="vec_ptype2.html">vec_ptype2(<i>&lt;microbial_kitchen_quantity&gt;</i>)</a></code> <code><a href="vec_ptype2.html">vec_ptype2(<i>&lt;microbial_kitchen_amount&gt;</i>)</a></code> <code><a href="vec_ptype2.html">vec_ptype2(<i>&lt;microbial_kitchen_mass&gt;</i>)</a></code> <code><a href="vec_ptype2.html">vec_ptype2(<i>&lt;microbial_kitchen_molecular_weight&gt;</i>)</a></code> <code><a href="vec_ptype2.html">vec_ptype2(<i>&lt;microbial_kitchen_molarity_concentration&gt;</i>)</a></code> <code><a href="vec_ptype2.html">vec_ptype2(<i>&lt;microbial_kitchen_mass_concentration&gt;</i>)</a></code> <code><a href="vec_ptype2.html">vec_ptype2(<i>&lt;microbial_kitchen_volume&gt;</i>)</a></code> <code><a href="vec_ptype2.html">vec_ptype2(<i>&lt;microbial_kitchen_pressure&gt;</i>)</a></code> <code><a href="vec_ptype2.html">vec_ptype2(<i>&lt;microbial_kitchen_gas_solubility&gt;</i>)</a></code> <code><a href="vec_ptype2.html">vec_ptype2(<i>&lt;microbial_kitchen_temperature&gt;</i>)</a></code> </p>
+          <p><code><a href="vec_ptype2.html">vec_ptype2(<i>&lt;mk_quantity&gt;</i>)</a></code> <code><a href="vec_ptype2.html">vec_ptype2(<i>&lt;mk_amount&gt;</i>)</a></code> <code><a href="vec_ptype2.html">vec_ptype2(<i>&lt;mk_mass&gt;</i>)</a></code> <code><a href="vec_ptype2.html">vec_ptype2(<i>&lt;mk_molecular_weight&gt;</i>)</a></code> <code><a href="vec_ptype2.html">vec_ptype2(<i>&lt;mk_molarity_concentration&gt;</i>)</a></code> <code><a href="vec_ptype2.html">vec_ptype2(<i>&lt;mk_mass_concentration&gt;</i>)</a></code> <code><a href="vec_ptype2.html">vec_ptype2(<i>&lt;mk_volume&gt;</i>)</a></code> <code><a href="vec_ptype2.html">vec_ptype2(<i>&lt;mk_pressure&gt;</i>)</a></code> <code><a href="vec_ptype2.html">vec_ptype2(<i>&lt;mk_gas_solubility&gt;</i>)</a></code> <code><a href="vec_ptype2.html">vec_ptype2(<i>&lt;mk_temperature&gt;</i>)</a></code> </p>
         </td>
         <td><p>vec_ptype2 for microbial kitchen objects</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="visualization.html">make_qty_text_labeller()</a></code> </p>
-        </td>
-        <td><p>Visualization functions</p></td>
       </tr>
     </tbody>
     </table>

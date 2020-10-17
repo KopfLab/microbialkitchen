@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">microbialkitchen</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="in active development">0.4.1</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="in active development">0.4.2</span>
       </span>
     </div>
 
@@ -142,21 +142,23 @@
     <p>Get data from quantity objects including their values (equivalent of <a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a>) and text representations (equivalent of <a href='https://rdrr.io/r/base/character.html'>as.character</a>).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_qty_value</span><span class='op'>(</span><span class='va'>q</span>, unit <span class='op'>=</span> <span class='fu'><a href='quantity_units.html'>get_qty_units</a></span><span class='op'>(</span><span class='va'>q</span><span class='op'>)</span>, transform <span class='op'>=</span> <span class='va'>identity</span><span class='op'>)</span>
+    <pre class="usage"><span class='fu'>get_qty_value</span><span class='op'>(</span><span class='va'>x</span>, unit <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 
-<span class='co'># S3 method for microbial_kitchen_quantity</span>
-<span class='fu'><a href='https://rdrr.io/r/base/double.html'>as.double</a></span><span class='op'>(</span><span class='va'>x</span>, unit <span class='op'>=</span> <span class='fu'><a href='quantity_units.html'>get_qty_units</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
+<span class='co'># S3 method for mk_quantity</span>
+<span class='fu'><a href='https://rdrr.io/r/base/double.html'>as.double</a></span><span class='op'>(</span><span class='va'>x</span>, unit <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='fu'>get_qty_text</span><span class='op'>(</span><span class='va'>q</span>, unit <span class='op'>=</span> <span class='fu'><a href='quantity_units.html'>get_qty_units</a></span><span class='op'>(</span><span class='va'>q</span><span class='op'>)</span>, signif <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>
+<span class='fu'>get_qty_text</span><span class='op'>(</span><span class='va'>x</span>, unit <span class='op'>=</span> <span class='fu'><a href='quantity_units.html'>get_qty_units</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>, signif <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>
 
-<span class='co'># S3 method for microbial_kitchen_quantity</span>
-<span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span><span class='op'>(</span><span class='va'>x</span>, unit <span class='op'>=</span> <span class='fu'><a href='quantity_units.html'>get_qty_units</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+<span class='co'># S3 method for mk_quantity</span>
+<span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span><span class='op'>(</span><span class='va'>x</span>, unit <span class='op'>=</span> <span class='fu'><a href='quantity_units.html'>get_qty_units</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>, signif <span class='op'>=</span> <span class='fl'>5</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='fu'>get_qty_text_each</span><span class='op'>(</span><span class='va'>x</span>, signif <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>q</th>
+      <th>x</th>
       <td><p>quantities</p></td>
     </tr>
     <tr>
@@ -164,8 +166,8 @@
       <td><p>which units to retrieve quantity data in (by default the unit the quantity is in)</p></td>
     </tr>
     <tr>
-      <th>transform</th>
-      <td><p>whether to transform the value with an additional function once in the desired units. Common transformation examples are log10 and log (natural log) but custom transformations are also possible. Default is NO transformation (<a href='https://rdrr.io/r/base/identity.html'>identity</a>).</p></td>
+      <th>...</th>
+      <td><p>additional parameters for the generics</p></td>
     </tr>
     <tr>
       <th>signif</th>
@@ -178,9 +180,10 @@
     
 <ul>
 <li><p><code>get_qty_value</code>: get the value of a quantity in the desired unit. By default returns the quantity in the units it is in. Functionally equivalent to <code><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></code> and <code><a href='https://rdrr.io/r/base/double.html'>as.double</a></code>.</p></li>
-<li><p><code>as.double.microbial_kitchen_quantity</code>: S3 extension of <code><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></code> and <a href='https://rdrr.io/r/base/double.html'>as.double</a> with optional <code>unit</code> argument</p></li>
+<li><p><code>as.double.mk_quantity</code>: S3 extension of <code><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></code> and <a href='https://rdrr.io/r/base/double.html'>as.double</a> with optional <code>unit</code> argument</p></li>
 <li><p><code>get_qty_text</code>: get the value of the quantity in the desired unit as a text string with the unit appended. Functionally equivalent to <code><a href='https://rdrr.io/r/base/character.html'>as.character</a></code>.</p></li>
-<li><p><code>as.character.microbial_kitchen_quantity</code>: S3 implementation of <code><a href='https://rdrr.io/r/base/character.html'>as.character</a></code> with optional <code>unit</code> argument</p></li>
+<li><p><code>as.character.mk_quantity</code>: S3 implementation of <code><a href='https://rdrr.io/r/base/character.html'>as.character</a></code> with optional <code>unit</code> and <code>signif</code> argument</p></li>
+<li><p><code>get_qty_text_each</code>: get each value of a quantity in the best metric unit with the unit appended. Note that if a value is zero, it will use the unit of the next smallest value for this number.</p></li>
 </ul>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -195,8 +198,7 @@
     <pre class="examples"><div class='input'><span class='co'># quantity value examples</span>
 <span class='fu'><a href='quantities.html'>qty</a></span><span class='op'>(</span><span class='fl'>0.1</span>, <span class='st'>"g"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'>get_qty_value</span><span class='op'>(</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] 100</div><div class='input'><span class='fu'><a href='quantities.html'>qty</a></span><span class='op'>(</span><span class='fl'>0.1</span>, <span class='st'>"g"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'>get_qty_value</span><span class='op'>(</span><span class='st'>"g"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] 0.1</div><div class='input'><span class='fu'><a href='quantities.html'>qty</a></span><span class='op'>(</span><span class='fl'>0.1</span>, <span class='st'>"g"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'>get_qty_value</span><span class='op'>(</span><span class='st'>"g"</span>, <span class='va'>log10</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] -1</div><div class='input'><span class='fu'><a href='quantities.html'>qty</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='st'>"C"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'>get_qty_value</span><span class='op'>(</span><span class='st'>"F"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] 0.1</div><div class='input'><span class='fu'><a href='quantities.html'>qty</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='st'>"C"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'>get_qty_value</span><span class='op'>(</span><span class='st'>"F"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] 32</div><div class='input'><span class='fu'><a href='quantities.html'>qty</a></span><span class='op'>(</span><span class='fl'>760</span>, <span class='st'>"Torr"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'>get_qty_value</span><span class='op'>(</span><span class='st'>"atm"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] 1</div><div class='input'><span class='fu'><a href='quantities.html'>qty</a></span><span class='op'>(</span><span class='fl'>760</span>, <span class='st'>"Torr"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='st'>"atm"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] 1</div><div class='input'>
@@ -207,7 +209,11 @@
 </div><div class='output co'>#&gt;  [1] "32 F"   "33.8 F" "35.6 F" "37.4 F" "39.2 F" "41 F"   "42.8 F" "44.6 F"
 #&gt;  [9] "46.4 F" "48.2 F" "50 F"  </div><div class='input'><span class='fu'><a href='quantities.html'>qty</a></span><span class='op'>(</span><span class='fl'>760</span>, <span class='st'>"Torr"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'>get_qty_text</span><span class='op'>(</span><span class='st'>"atm"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; [1] "1 atm"</div><div class='input'><span class='fu'><a href='quantities.html'>qty</a></span><span class='op'>(</span><span class='fl'>760</span>, <span class='st'>"Torr"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>as.character</a></span><span class='op'>(</span><span class='st'>"atm"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] "1 atm"</div></pre>
+</div><div class='output co'>#&gt; [1] "1 atm"</div><div class='input'>
+<span class='co'># each quantity text example</span>
+<span class='fu'><a href='quantities.html'>qty</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0.1</span>, <span class='fl'>10</span>, <span class='fl'>1000</span><span class='op'>)</span>, <span class='st'>"mg"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'>get_qty_text</span><span class='op'>(</span><span class='op'>)</span> <span class='co'># 0.1mg 10mg 1000mg</span>
+</div><div class='output co'>#&gt; [1] "0 mg"    "0.1 mg"  "10 mg"   "1000 mg"</div><div class='input'><span class='fu'><a href='quantities.html'>qty</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0.1</span>, <span class='fl'>10</span>, <span class='fl'>1000</span><span class='op'>)</span>, <span class='st'>"mg"</span><span class='op'>)</span> <span class='op'>%&gt;%</span> <span class='fu'>get_qty_text_each</span><span class='op'>(</span><span class='op'>)</span> <span class='co'># 0ug 100ug 10mg 1g</span>
+</div><div class='output co'>#&gt; [1] "0 µg"   "100 µg" "10 mg"  "1 g"   </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>vec_arith for microbial_kitchen_quantity objects — vec_arith.microbial_kitchen_quantity • microbialkitchen</title>
+<title>vec_arith for mk_quantity objects — vec_arith.mk_quantity • microbialkitchen</title>
 
 
 <!-- jquery -->
@@ -39,17 +39,17 @@
 
 
 
-<meta property="og:title" content="vec_arith for microbial_kitchen_quantity objects — vec_arith.microbial_kitchen_quantity" />
-<meta property="og:description" content="vec_arith for microbial_kitchen_quantity objects
-vec_arith for microbial_kitchen_amount objects
-vec_arith for microbial_kitchen_mass objects
-vec_arith for microbial_kitchen_molecular_weight objects
-vec_arith for microbial_kitchen_molarity_concentration objects
-vec_arith for microbial_kitchen_mass_concentration objects
-vec_arith for microbial_kitchen_volume objects
-vec_arith for microbial_kitchen_pressure objects
-vec_arith for microbial_kitchen_gas_solubility objects
-vec_arith for microbial_kitchen_temperature objects" />
+<meta property="og:title" content="vec_arith for mk_quantity objects — vec_arith.mk_quantity" />
+<meta property="og:description" content="vec_arith for mk_quantity objects
+vec_arith for mk_amount objects
+vec_arith for mk_mass objects
+vec_arith for mk_molecular_weight objects
+vec_arith for mk_molarity_concentration objects
+vec_arith for mk_mass_concentration objects
+vec_arith for mk_volume objects
+vec_arith for mk_pressure objects
+vec_arith for mk_gas_solubility objects
+vec_arith for mk_temperature objects" />
 
 
 
@@ -91,7 +91,7 @@ vec_arith for microbial_kitchen_temperature objects" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">microbialkitchen</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="in active development">0.4.1</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="in active development">0.4.2</span>
       </span>
     </div>
 
@@ -142,52 +142,52 @@ vec_arith for microbial_kitchen_temperature objects" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>vec_arith for microbial_kitchen_quantity objects</h1>
+    <h1>vec_arith for mk_quantity objects</h1>
     <small class="dont-index">Source: <a href='https://github.com/kopflab/microbialkitchen/blob/master/R/arithmetic.R'><code>R/arithmetic.R</code></a></small>
     <div class="hidden name"><code>vec_arith.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>vec_arith for microbial_kitchen_quantity objects</p>
-<p>vec_arith for microbial_kitchen_amount objects</p>
-<p>vec_arith for microbial_kitchen_mass objects</p>
-<p>vec_arith for microbial_kitchen_molecular_weight objects</p>
-<p>vec_arith for microbial_kitchen_molarity_concentration objects</p>
-<p>vec_arith for microbial_kitchen_mass_concentration objects</p>
-<p>vec_arith for microbial_kitchen_volume objects</p>
-<p>vec_arith for microbial_kitchen_pressure objects</p>
-<p>vec_arith for microbial_kitchen_gas_solubility objects</p>
-<p>vec_arith for microbial_kitchen_temperature objects</p>
+    <p>vec_arith for mk_quantity objects</p>
+<p>vec_arith for mk_amount objects</p>
+<p>vec_arith for mk_mass objects</p>
+<p>vec_arith for mk_molecular_weight objects</p>
+<p>vec_arith for mk_molarity_concentration objects</p>
+<p>vec_arith for mk_mass_concentration objects</p>
+<p>vec_arith for mk_volume objects</p>
+<p>vec_arith for mk_pressure objects</p>
+<p>vec_arith for mk_gas_solubility objects</p>
+<p>vec_arith for mk_temperature objects</p>
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for microbial_kitchen_quantity</span>
+    <pre class="usage"><span class='co'># S3 method for mk_quantity</span>
 <span class='fu'>vec_arith</span><span class='op'>(</span><span class='va'>op</span>, <span class='va'>x</span>, <span class='va'>y</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='co'># S3 method for microbial_kitchen_amount</span>
+<span class='co'># S3 method for mk_amount</span>
 <span class='fu'>vec_arith</span><span class='op'>(</span><span class='va'>op</span>, <span class='va'>x</span>, <span class='va'>y</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='co'># S3 method for microbial_kitchen_mass</span>
+<span class='co'># S3 method for mk_mass</span>
 <span class='fu'>vec_arith</span><span class='op'>(</span><span class='va'>op</span>, <span class='va'>x</span>, <span class='va'>y</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='co'># S3 method for microbial_kitchen_molecular_weight</span>
+<span class='co'># S3 method for mk_molecular_weight</span>
 <span class='fu'>vec_arith</span><span class='op'>(</span><span class='va'>op</span>, <span class='va'>x</span>, <span class='va'>y</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='co'># S3 method for microbial_kitchen_molarity_concentration</span>
+<span class='co'># S3 method for mk_molarity_concentration</span>
 <span class='fu'>vec_arith</span><span class='op'>(</span><span class='va'>op</span>, <span class='va'>x</span>, <span class='va'>y</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='co'># S3 method for microbial_kitchen_mass_concentration</span>
+<span class='co'># S3 method for mk_mass_concentration</span>
 <span class='fu'>vec_arith</span><span class='op'>(</span><span class='va'>op</span>, <span class='va'>x</span>, <span class='va'>y</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='co'># S3 method for microbial_kitchen_volume</span>
+<span class='co'># S3 method for mk_volume</span>
 <span class='fu'>vec_arith</span><span class='op'>(</span><span class='va'>op</span>, <span class='va'>x</span>, <span class='va'>y</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='co'># S3 method for microbial_kitchen_pressure</span>
+<span class='co'># S3 method for mk_pressure</span>
 <span class='fu'>vec_arith</span><span class='op'>(</span><span class='va'>op</span>, <span class='va'>x</span>, <span class='va'>y</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='co'># S3 method for microbial_kitchen_gas_solubility</span>
+<span class='co'># S3 method for mk_gas_solubility</span>
 <span class='fu'>vec_arith</span><span class='op'>(</span><span class='va'>op</span>, <span class='va'>x</span>, <span class='va'>y</span>, <span class='va'>...</span><span class='op'>)</span>
 
-<span class='co'># S3 method for microbial_kitchen_temperature</span>
+<span class='co'># S3 method for mk_temperature</span>
 <span class='fu'>vec_arith</span><span class='op'>(</span><span class='va'>op</span>, <span class='va'>x</span>, <span class='va'>y</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>

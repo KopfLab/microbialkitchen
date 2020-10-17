@@ -46,6 +46,9 @@
     <loc>https://microbialkitchen.kopflab.org//reference/reexports.html</loc>
   </url>
   <url>
+    <loc>https://microbialkitchen.kopflab.org//reference/scale_qty.html</loc>
+  </url>
+  <url>
     <loc>https://microbialkitchen.kopflab.org//reference/speciation.html</loc>
   </url>
   <url>
@@ -56,9 +59,6 @@
   </url>
   <url>
     <loc>https://microbialkitchen.kopflab.org//reference/vec_ptype2.html</loc>
-  </url>
-  <url>
-    <loc>https://microbialkitchen.kopflab.org//reference/visualization.html</loc>
   </url>
   <url>
     <loc>https://microbialkitchen.kopflab.org//articles/carbonate_chemistry_equations.html</loc>
