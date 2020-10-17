@@ -48,7 +48,6 @@ Get data from quantity objects including their values (equivalent of \link[base]
 # quantity value examples
 qty(0.1, "g") \%>\% get_qty_value()
 qty(0.1, "g") \%>\% get_qty_value("g")
-qty(0.1, "g") \%>\% get_qty_value("g", log10)
 qty(0, "C") \%>\% get_qty_value("F")
 qty(760, "Torr") \%>\% get_qty_value("atm")
 qty(760, "Torr") \%>\% as.numeric("atm")
