@@ -386,7 +386,7 @@ is_temperature <- function(q) { is(q, "mk_temperature") }
 #' @family quantity functions
 NULL
 
-#' @param q quantities
+#' @param x quantities
 #' @param unit which units to retrieve quantity data in (by default the unit the quantity is in)
 #' @describeIn quantity_data get the value of a quantity in the desired unit. By default returns the quantity in the units it is in. Functionally equivalent to \code{\link[base]{as.numeric}} and \code{\link[base]{as.double}}.
 #' @param transform whether to transform the value with an additional function once in the desired units. Common transformation examples are log10 and log (natural log) but custom transformations are also possible. Default is NO transformation (\link{identity}).
@@ -398,8 +398,8 @@ NULL
 #' qty(0, "C") %>% get_qty_value("F")
 #' qty(760, "Torr") %>% get_qty_value("atm")
 #' @export
-get_qty_value <- function(q, unit = get_qty_units(q), transform = identity) {
-  vec_cast.double(q, unit = unit, transform = transform)
+get_qty_value <- function(x, unit = NULL, transform = identity) {
+  as.numeric(x, unit)
 }
 
 #' @describeIn quantity_data S3 extension of \code{\link[base]{as.numeric}} and \link[base]{as.double} with optional \code{unit} argument
@@ -407,123 +407,41 @@ get_qty_value <- function(q, unit = get_qty_units(q), transform = identity) {
 #' qty(760, "Torr") %>% as.numeric("atm")
 #' @method as.double mk_quantity
 #' @export
-as.double.mk_quantity <- function(q, unit = get_qty_units(q), ...) {
-  vec_cast.double(q, unit = unit, ...)
+as.double.mk_quantity <- function(x, unit = NULL, ...) {
+  if (is.null(unit)) return(vctrs::vec_data(x))
+  prefix <- get_unit_prefix(unit, get_base_unit(x))
+  scaling <- get_metric_scale_factor(x, prefix)
+  return(vctrs::vec_data(x) * scaling)
 }
 
-# helper functions for value retrieval
-get_value <- function(q, unit = get_qty_units(q), transform = identity, ...) {
-  if (identical(unit, get_qty_units(q))) return(transform(vctrs::vec_data(q)))
-  prefix <- get_unit_prefix(unit, get_base_unit(q))
-  scaling <- get_metric_scale_factor(q, prefix)
-  return(transform(vctrs::vec_data(q) * scaling))
-}
-
-get_pressure_value <- function(q, unit = get_qty_units(q), transform = identity, ...) {
-  if (identical(unit, get_qty_units(q))) return(transform(vctrs::vec_data(q)))
+#' @method as.double mk_pressure
+#' @export
+as.double.mk_pressure <- function(x, unit = NULL, ...) {
+  if (is.null(unit)) return(vctrs::vec_data(x))
   unit_conversion <- get_pressure_unit_conversion(unit)
-  prefix <- get_unit_prefix(unit_conversion$unit, get_base_unit(q))
-  scaling <- get_metric_scale_factor(q, prefix)/unit_conversion$conversion
-  return(transform(vctrs::vec_data(q) * scaling))
+  prefix <- get_unit_prefix(unit_conversion$unit, get_base_unit(x))
+  scaling <- get_metric_scale_factor(x, prefix)/unit_conversion$conversion
+  return(vctrs::vec_data(x) * scaling)
 }
 
-get_gas_solubility_value <- function(q, unit = get_qty_units(q), transform = identity, ...) {
-  if (identical(unit, get_qty_units(q))) return(transform(vctrs::vec_data(q)))
+#' @method as.double mk_pressure
+#' @export
+as.double.mk_gas_solubility <- function(x, unit = NULL, ...) {
+  if (is.null(unit)) return(vctrs::vec_data(x))
   unit_conversion <- get_gas_solubility_unit_conversion(unit)
-  prefix <- get_unit_prefix(unit_conversion$unit, get_base_unit(q))
-  scaling <- get_metric_scale_factor(q, prefix)/unit_conversion$conversion
-  return(transform(vctrs::vec_data(q) * scaling))
+  prefix <- get_unit_prefix(unit_conversion$unit, get_base_unit(x))
+  scaling <- get_metric_scale_factor(x, prefix)/unit_conversion$conversion
+  return(vctrs::vec_data(x) * scaling)
 }
 
-get_temperature_value <- function(q, unit = get_qty_units(q), transform = identity, ...) {
-  if (identical(unit, get_qty_units(q))) return(transform(vctrs::vec_data(q)))
+#' @method as.double mk_pressure
+#' @export
+as.double.mk_temperature  <- function(x, unit = NULL, ...) {
+  if (is.null(unit)) return(vctrs::vec_data(x))
   unit_conversion <- get_temperature_unit_conversion(unit)
-  prefix <- get_unit_prefix(unit_conversion$unit, get_base_unit(q))
-  scaling <- get_metric_scale_factor(q, prefix)
-  return(transform(unit_conversion$conversion_back(vctrs::vec_data(q) * scaling)))
-}
-
-#' @method vec_ptype2.double mk_quantity
-#' @export
-vec_ptype2.double.mk_quantity <- function(x, y, ..., x_arg = "x", y_arg = "y") double()
-#' @method vec_cast.double mk_quantity
-#' @export
-vec_cast.double.mk_quantity <- function(x, to, ...) get_value(x, ...)
-
-#' @method vec_cast.double mk_amount
-#' @export
-vec_cast.double.mk_amount <- function(x, to, ...) {
-  get_value(x, ...)
-}
-
-#' @method vec_ptype2.double mk_mass
-#' @export
-vec_ptype2.double.mk_mass <- function(x, y, ..., x_arg = "x", y_arg = "y") double()
-#' @method vec_cast.double mk_mass
-#' @export
-vec_cast.double.mk_mass <- function(x, to, ...) {
-  get_value(x, ...)
-}
-
-#' @method vec_ptype2.double mk_molecular_weight
-#' @export
-vec_ptype2.double.mk_molecular_weight <- function(x, y, ..., x_arg = "x", y_arg = "y") double()
-#' @method vec_cast.double mk_molecular_weight
-#' @export
-vec_cast.double.mk_molecular_weight <- function(x, to, ...) get_value(x, ...)
-
-#' @method vec_ptype2.double mk_molarity_concentration
-#' @export
-vec_ptype2.double.mk_molarity_concentration <- function(x, y, ..., x_arg = "x", y_arg = "y") double()
-#' @method vec_cast.double mk_molarity_concentration
-#' @export
-vec_cast.double.mk_molarity_concentration <- function(x, to, ...) {
-  get_value(x, ...)
-}
-
-#' @method vec_ptype2.double mk_mass_concentration
-#' @export
-vec_ptype2.double.mk_mass_concentration <- function(x, y, ..., x_arg = "x", y_arg = "y") double()
-#' @method vec_cast.double mk_mass_concentration
-#' @export
-vec_cast.double.mk_mass_concentration <- function(x, to, ...) {
-  get_value(x, ...)
-}
-
-#' @method vec_ptype2.double mk_volume
-#' @export
-vec_ptype2.double.mk_volume <- function(x, y, ..., x_arg = "x", y_arg = "y") double()
-#' @method vec_cast.double mk_volume
-#' @export
-vec_cast.double.mk_volume <- function(x, to, ...) {
-  get_value(x, ...)
-}
-
-#' @method vec_ptype2.double mk_pressure
-#' @export
-vec_ptype2.double.mk_pressure <- function(x, y, ..., x_arg = "x", y_arg = "y") double()
-#' @method vec_cast.double mk_pressure
-#' @export
-vec_cast.double.mk_pressure <- function(x, to, ...) {
-  get_pressure_value(x, ...)
-}
-
-#' @method vec_ptype2.double mk_gas_solubility
-#' @export
-vec_ptype2.double.mk_gas_solubility <- function(x, y, ..., x_arg = "x", y_arg = "y") double()
-#' @method vec_cast.double mk_gas_solubility
-#' @export
-vec_cast.double.mk_gas_solubility <- function(x, to, ...) {
-  get_gas_solubility_value(x, ...)
-}
-
-#' @method vec_ptype2.double mk_temperature
-#' @export
-vec_ptype2.double.mk_temperature <- function(x, y, ..., x_arg = "x", y_arg = "y") double()
-#' @method vec_cast.double mk_temperature
-#' @export
-vec_cast.double.mk_temperature <- function(x, to, ...) {
-  get_temperature_value(x, ...)
+  prefix <- get_unit_prefix(unit_conversion$unit, get_base_unit(x))
+  scaling <- get_metric_scale_factor(x, prefix)
+  return(unit_conversion$conversion_back(vctrs::vec_data(x) * scaling))
 }
 
 # type casts: to text (=as.character) =====
@@ -538,10 +456,8 @@ vec_cast.double.mk_temperature <- function(x, to, ...) {
 #' qty(0.1, "g") %>% get_qty_text("g")
 #' qty(0:10, "C") %>% get_qty_text("F")
 #' qty(760, "Torr") %>% get_qty_text("atm")
-get_qty_text <- function(q, unit = get_qty_units(q), signif = 5) {
-  text <- sprintf("%s %s", base::signif(get_qty_value(q, unit = unit), signif), unit)
-  text[is.na(q)] <- NA_character_
-  return(text)
+get_qty_text <- function(x, unit = get_qty_units(x), signif = 5) {
+  as.character(x, unit = unit, signif = signif)
 }
 
 #' @describeIn quantity_data S3 implementation of \code{\link[base]{as.character}} with optional \code{unit} and \code{signif} argument
@@ -549,8 +465,10 @@ get_qty_text <- function(q, unit = get_qty_units(q), signif = 5) {
 #' qty(760, "Torr") %>% as.character("atm")
 #' @method as.character mk_quantity
 #' @export
-as.character.mk_quantity <- function(q, unit = get_qty_units(q), signif = 5, ...) {
-  get_qty_text(q, unit, signif)
+as.character.mk_quantity <- function(x, unit = get_qty_units(x), signif = 5, ...) {
+  text <- sprintf("%s %s", base::signif(get_qty_value(x, unit = unit), signif), unit)
+  text[is.na(x)] <- NA_character_
+  return(text)
 }
 
 #' @describeIn quantity_data get each value of a quantity in the best metric unit with the unit appended. Note that if a value is zero, it will use the unit of the next smallest value for this number.
@@ -561,12 +479,12 @@ as.character.mk_quantity <- function(q, unit = get_qty_units(q), signif = 5, ...
 #' qty(c(0, 0.1, 10, 1000), "mg") %>% get_qty_text() # 0.1mg 10mg 1000mg
 #' qty(c(0, 0.1, 10, 1000), "mg") %>% get_qty_text_each() # 0ug 100ug 10mg 1g
 #' @export
-get_qty_text_each <- function(q, signif = 5) {
-  is_zero <- is_near_zero(q)
-  smallest_non_zero <- min(abs(q[!is_zero]))
-  nearest_zero_unit <- get_qty_units(best_metric(q[which(abs(q) == smallest_non_zero)[1]]))
-  text <- purrr::map_chr(q, ~get_qty_text(best_metric(.x), signif = signif))
-  text[is_zero] <- get_qty_text(q[is_zero], nearest_zero_unit)
+get_qty_text_each <- function(x, signif = 5) {
+  is_zero <- is_near_zero(x)
+  smallest_non_zero <- min(abs(x[!is_zero]))
+  nearest_zero_unit <- get_qty_units(best_metric(x[which(abs(x) == smallest_non_zero)[1]]))
+  text <- purrr::map_chr(x, ~as.character(best_metric(.x), signif = signif))
+  text[is_zero] <- as.character(x[is_zero], nearest_zero_unit)
   return(text)
 }
 
@@ -951,7 +869,9 @@ vec_cast.mk_temperature.mk_temperature <- function(x, to, ...) {
 # check if a quantity is near zero
 is_near_zero <- function(q) {
   # don't support numbers smaller than 0.001 femto
-  abs(vctrs::vec_data(scale_metric(q, "f"))) < 1e-3
+  is_zero <- abs(vctrs::vec_data(scale_metric(q, "f"))) < 1e-3
+  is_zero[is.na(is_zero)] <- FALSE
+  return(is_zero)
 }
 
 # get all metric prefixes

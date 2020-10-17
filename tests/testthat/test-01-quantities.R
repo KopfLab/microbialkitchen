@@ -19,7 +19,6 @@ test_that("Testing that units work and can be metric scaled", {
   expect_error({a <- molarity_concentration(1, "mM"); attr(a, "unit") <- "J"; scale_metric(a, "m")}, "not a valid unit")
   expect_equal(scale_metric(molarity_concentration(1, "mM"), "n") %>% get_qty_units(), "nM")
   expect_equal(scale_metric(molarity_concentration(1, "mM"), "n") %>% get_qty_value(), 1e6)
-  expect_equal(scale_metric(molarity_concentration(1, "mM"), "n") %>% get_qty_value(transform = log10), 6)
   expect_equal(scale_metric(molarity_concentration(1, "M"), "m") %>% get_qty_value(), 1e3)
   expect_equal(scale_metric(molarity_concentration(1, paste0(micro, "M")), "") %>% get_qty_value(), 1e-6)
   expect_error(base_metric(1), "not a known type of quantity")
@@ -43,13 +42,10 @@ test_that("Testing that units work and can be metric scaled", {
   expect_equal(mass_concentration(0.1, "ng/L") %>% as.numeric(), 100)
   expect_equal(mass_concentration(0.1, "ng/L") %>% as.character(), "100 pg/L")
   expect_equal(mass_concentration(0.1, "ng/L") %>% get_qty_value(), 100)
-  expect_equal(mass_concentration(0.1, "ng/L") %>% get_qty_value(transform = log10), 2)
   expect_equal(mass_concentration(0.1, "ng/L") %>% get_qty_value("ng/L"), 0.1)
   expect_equal(mass_concentration(0.1, "ng/L") %>% as.numeric("ng/L"), 0.1)
   expect_equal(mass_concentration(0.1, "ng/L") %>% get_qty_text("ng/L"), "0.1 ng/L")
   expect_equal(mass_concentration(0.1, "ng/L") %>% as.character("ng/L"), "0.1 ng/L")
-  expect_equal(mass_concentration(0.1, "ng/L") %>% get_qty_value("ng/L", log10), -1)
-  expect_equal(mass_concentration(0.1, "ng/L") %>% get_qty_value("ng/L", function(x) x*10), 1)
 
   # amount
   expect_error(amount(1, "J"), "not a known amount unit")
