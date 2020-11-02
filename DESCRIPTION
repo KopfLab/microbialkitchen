@@ -21,7 +21,7 @@ Imports:
     scales,
     dplyr,
     tidyr,
-    vctrs,
+    vctrs (>= 0.3.4),
     stringi,
     stringr
 Suggests:
