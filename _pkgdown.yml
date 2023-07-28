@@ -10,9 +10,7 @@ home:
   strip_header: true
 
 development:
-  mode: unreleased
-  version_label: danger
-  version_tooltip: "in active development"
+  mode: devel
 
 navbar:
   title: microbialkitchen
