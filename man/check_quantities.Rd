@@ -42,27 +42,27 @@ These functions check whether something is a specific type of quantity.
 }
 \section{Functions}{
 \itemize{
-\item \code{is_qty}: check whether something is any quantity
+\item \code{is_qty()}: check whether something is any quantity
 
-\item \code{is_amount}: check whether something is an amount quantity
+\item \code{is_amount()}: check whether something is an amount quantity
 
-\item \code{is_mass}: check whether something is an amount quantity
+\item \code{is_mass()}: check whether something is an amount quantity
 
-\item \code{is_molecular_weight}: check whether something is a molecular weight quantity
+\item \code{is_molecular_weight()}: check whether something is a molecular weight quantity
 
-\item \code{is_molarity_concentration}: check whether something is a molarity concentration quantity
+\item \code{is_molarity_concentration()}: check whether something is a molarity concentration quantity
 
-\item \code{is_mass_concentration}: check whether something is a mass concentration quantity
+\item \code{is_mass_concentration()}: check whether something is a mass concentration quantity
 
-\item \code{is_volume}: check whether something is a volume quantity
+\item \code{is_volume()}: check whether something is a volume quantity
 
-\item \code{is_pressure}: check whether something is a pressure quantity
+\item \code{is_pressure()}: check whether something is a pressure quantity
 
-\item \code{is_gas_solubility}: check whether something is a gas solubility quantity
+\item \code{is_gas_solubility()}: check whether something is a gas solubility quantity
 
-\item \code{is_temperature}: check whether something is a temperature quantity
+\item \code{is_temperature()}: check whether something is a temperature quantity
+
 }}
-
 \seealso{
 Other quantity functions: 
 \code{\link{make_qty_units_explicit}()},

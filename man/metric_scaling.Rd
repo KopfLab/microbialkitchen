@@ -23,14 +23,14 @@ These functions simplify scaling between different metric prefixes.
 }
 \section{Functions}{
 \itemize{
-\item \code{scale_metric}: scale to a specific metrix prefix (from whatever the quantity is currently in)
+\item \code{scale_metric()}: scale to a specific metrix prefix (from whatever the quantity is currently in)
 
-\item \code{best_metric}: convert to best metric prefix (i.e. one that gives at least 1 significant digit before the decimal),
+\item \code{best_metric()}: convert to best metric prefix (i.e. one that gives at least 1 significant digit before the decimal),
 if the quantity has a vector of values, scales to the best metric prefix for the median of all values
 
-\item \code{base_metric}: convert to base metric prefix of microbialkitchen (i.e. to mol, L, etc.)
-}}
+\item \code{base_metric()}: convert to base metric prefix of microbialkitchen (i.e. to mol, L, etc.)
 
+}}
 \seealso{
 Other quantity functions: 
 \code{\link{check_quantities}},

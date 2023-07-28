@@ -34,9 +34,7 @@
 \method{vec_ptype2}{mk_temperature}(x, y, ...)
 }
 \arguments{
-\item{x}{Vector types.}
-
-\item{y}{Vector types.}
+\item{x, y}{Vector types.}
 
 \item{...}{These dots are for future extensions and must be empty.}
 }

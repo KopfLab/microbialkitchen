@@ -27,11 +27,11 @@ General gas calculations
 }
 \section{Functions}{
 \itemize{
-\item \code{calculate_ideal_gas_molarity}: calculate the gas phase equivalent concentration of an ideal gas at a specific temperature (i.e. mol of gas / L of volume). Returns a molarity quantity.
+\item \code{calculate_ideal_gas_molarity()}: calculate the gas phase equivalent concentration of an ideal gas at a specific temperature (i.e. mol of gas / L of volume). Returns a molarity quantity.
 
-\item \code{calculate_ideal_gas_amount}: calculates the amount of an ideal gas at a specific pressure, temperature and volume. Returns an amount quantity.
+\item \code{calculate_ideal_gas_amount()}: calculates the amount of an ideal gas at a specific pressure, temperature and volume. Returns an amount quantity.
 
-\item \code{calculate_gas_solubility}: calculates Henry's law solubility constant for a gas at a specific temperature. Henry's law constants are from: Sander, R. Compilation of Henry's law constants (version 4.0) for water as solvent. Atmos Chem Phys 15, 4399–4981 (2015). https://www.atmos-chem-phys.net/15/4399/2015/. Returns a solubility quantity.
+\item \code{calculate_gas_solubility()}: calculates Henry's law solubility constant for a gas at a specific temperature. Henry's law constants are from: Sander, R. Compilation of Henry's law constants (version 4.0) for water as solvent. Atmos Chem Phys 15, 4399–4981 (2015). https://www.atmos-chem-phys.net/15/4399/2015/. Returns a solubility quantity.
+
 }}
-
 \concept{calculations}

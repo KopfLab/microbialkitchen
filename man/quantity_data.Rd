@@ -33,17 +33,17 @@ Get data from quantity objects including their values (equivalent of \link[base]
 }
 \section{Functions}{
 \itemize{
-\item \code{get_qty_value}: get the value of a quantity in the desired unit. By default returns the quantity in the units it is in. Functionally equivalent to \code{\link[base]{as.numeric}} and \code{\link[base]{as.double}}.
+\item \code{get_qty_value()}: get the value of a quantity in the desired unit. By default returns the quantity in the units it is in. Functionally equivalent to \code{\link[base]{as.numeric}} and \code{\link[base]{as.double}}.
 
-\item \code{as.double.mk_quantity}: S3 extension of \code{\link[base]{as.numeric}} and \link[base]{as.double} with optional \code{unit} argument
+\item \code{as.double(mk_quantity)}: S3 extension of \code{\link[base]{as.numeric}} and \link[base]{as.double} with optional \code{unit} argument
 
-\item \code{get_qty_text}: get the value of the quantity in the desired unit as a text string with the unit appended. Functionally equivalent to \code{\link[base]{as.character}}.
+\item \code{get_qty_text()}: get the value of the quantity in the desired unit as a text string with the unit appended. Functionally equivalent to \code{\link[base]{as.character}}.
 
-\item \code{as.character.mk_quantity}: S3 implementation of \code{\link[base]{as.character}} with optional \code{unit} and \code{signif} argument
+\item \code{as.character(mk_quantity)}: S3 implementation of \code{\link[base]{as.character}} with optional \code{unit} and \code{signif} argument
 
-\item \code{get_qty_text_each}: get each value of a quantity in the best metric unit with the unit appended. Note that if a value is zero, it will use the unit of the next smallest value for this number.
+\item \code{get_qty_text_each()}: get each value of a quantity in the best metric unit with the unit appended. Note that if a value is zero, it will use the unit of the next smallest value for this number.
+
 }}
-
 \examples{
 # quantity value examples
 qty(0.1, "g") \%>\% get_qty_value()

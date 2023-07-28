@@ -18,8 +18,8 @@ List and retrieve constants used in microbialkitchen.
 }
 \section{Functions}{
 \itemize{
-\item \code{get_microbialkitchen_constant}: get the value of a constant
+\item \code{get_microbialkitchen_constant()}: get the value of a constant
 
-\item \code{get_microbialkitchen_constants}: list all constants
+\item \code{get_microbialkitchen_constants()}: list all constants
+
 }}
-
