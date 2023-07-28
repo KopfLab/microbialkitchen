@@ -1,11 +1,14 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# Microbial Kitchen (formerly MediaChemTools)
+# Microbial Kitchen
+
+<!-- badges: start -->
 
 [![R-CMD-check](https://github.com/KopfLab/microbialkitchen/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/KopfLab/microbialkitchen/actions/workflows/R-CMD-check.yaml)
 [![Documentation](https://img.shields.io/badge/docs-online-green.svg)](https://microbialkitchen.kopflab.org/reference/)
 [![codecov](https://codecov.io/github/KopfLab/microbialkitchen/branch/master/graphs/badge.svg)](https://codecov.io/github/Kopflab/microbialkitchen)
+<!-- badges: end -->
 
 ## About
 
