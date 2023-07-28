@@ -3,14 +3,9 @@
 
 # Microbial Kitchen (formerly MediaChemTools)
 
-[![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/microbialkitchen)](https://cran.r-project.org/package=microbialkitchen)
-[![Git\_Hub\_Version](https://img.shields.io/badge/GitHub-0.4.2-orange.svg?style=flat-square)](/commits)
+[![R-CMD-check](https://github.com/KopfLab/microbialkitchen/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/KopfLab/microbialkitchen/actions/workflows/R-CMD-check.yaml)
 [![Documentation](https://img.shields.io/badge/docs-online-green.svg)](https://microbialkitchen.kopflab.org/reference/)
 [![codecov](https://codecov.io/github/KopfLab/microbialkitchen/branch/master/graphs/badge.svg)](https://codecov.io/github/Kopflab/microbialkitchen)
-[![R build
-status](https://github.com/KopfLab/microbialkitchen/workflows/R-CMD-check/badge.svg)](https://github.com/KopfLab/microbialkitchen/actions)
-[![Binder](https://img.shields.io/badge/launch-Jupyter-orange.svg)](https://mybinder.org/v2/gh/KopfLab/microbialkitchen/binder?urlpath=lab)
-[![Binder](https://img.shields.io/badge/launch-RStudio-blue.svg)](https://mybinder.org/v2/gh/KopfLab/microbialkitchen/binder?urlpath=rstudio)
 
 ## About
 
@@ -42,24 +37,17 @@ devtools::install_github("KopfLab/microbialkitchen")
 
 ## Functionality
 
-  - [function
-    reference](https://microbialkitchen.kopflab.org/reference/) for
-    details on all functions
-  - [quantities
-    vignette](https://microbialkitchen.kopflab.org/articles/quantities.html)
-    on built-in chemical quantities
-  - [operations
-    vignette](https://microbialkitchen.kopflab.org/articles/operations.html)
-    on working with quantities
-  - carbonate chemistry vignettes for working with carbonate buffered
-    media systems:
-      - [equations
-        vignette](https://microbialkitchen.kopflab.org/articles/carbonate_chemistry_equations.html)
-      - [examples
-        vignette](https://microbialkitchen.kopflab.org/articles/carbonate_chemistry_examples.html)
-
-Explore all functionality and vignettes of the **microbialkitchen**
-package interactively on [binder](https://mybinder.org/):
-
-[![Binder](https://img.shields.io/badge/launch-Jupyter-orange.svg)](https://mybinder.org/v2/gh/KopfLab/microbialkitchen/binder?urlpath=lab)
-[![Binder](https://img.shields.io/badge/launch-RStudio-blue.svg)](https://mybinder.org/v2/gh/KopfLab/microbialkitchen/binder?urlpath=rstudio)
+- [function reference](https://microbialkitchen.kopflab.org/reference/)
+  for details on all functions
+- [quantities
+  vignette](https://microbialkitchen.kopflab.org/articles/quantities.html)
+  on built-in chemical quantities
+- [operations
+  vignette](https://microbialkitchen.kopflab.org/articles/operations.html)
+  on working with quantities
+- carbonate chemistry vignettes for working with carbonate buffered
+  media systems:
+  - [equations
+    vignette](https://microbialkitchen.kopflab.org/articles/carbonate_chemistry_equations.html)
+  - [examples
+    vignette](https://microbialkitchen.kopflab.org/articles/carbonate_chemistry_examples.html)

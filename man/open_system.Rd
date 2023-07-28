@@ -60,11 +60,11 @@ Functions to calculate pH and alkalinity in an open, carbonate-buffered system a
 }
 \section{Functions}{
 \itemize{
-\item \code{calculate_open_system_pH}: calculate the pH of an open system. Returns pH.
+\item \code{calculate_open_system_pH()}: calculate the pH of an open system. Returns pH.
 
-\item \code{calculate_open_system_alkalinity}: calculates the alkalinity of an open system that is carbonate buffered and has an optional additional weak acid/base buffer. Returns the alkalinity as a molarity quantity. positive = excess cations, negative = excess anions.
+\item \code{calculate_open_system_alkalinity()}: calculates the alkalinity of an open system that is carbonate buffered and has an optional additional weak acid/base buffer. Returns the alkalinity as a molarity quantity. positive = excess cations, negative = excess anions.
+
 }}
-
 \examples{
 calculate_open_system_pH(pCO2 = qty(100, "mbar"))
 }

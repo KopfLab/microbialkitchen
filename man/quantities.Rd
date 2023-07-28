@@ -41,9 +41,9 @@ The following types of quantities are supported.
 }
 \section{Functions}{
 \itemize{
-\item \code{qty}: generate a quantity object
-}}
+\item \code{qty()}: generate a quantity object
 
+}}
 \examples{
 qty(0.045, "mmol/L")
 qty(200, "mbar")

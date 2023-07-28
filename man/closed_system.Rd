@@ -87,15 +87,15 @@ Functions to calculate pH, alkalinity, total inorganic carbon and pCO2 in a clos
 }
 \section{Functions}{
 \itemize{
-\item \code{calculate_closed_system_pH}: calculate the pH of a closed system. Returns pH.
+\item \code{calculate_closed_system_pH()}: calculate the pH of a closed system. Returns pH.
 
-\item \code{calculate_closed_system_alkalinity}: calculates the alkalinity of a closed system that is carbonate buffered and has an optional additional weak acid/base buffer. Returns the alkalinity as a molarity quantity. positive = excess cations, negative = excess anions.
+\item \code{calculate_closed_system_alkalinity()}: calculates the alkalinity of a closed system that is carbonate buffered and has an optional additional weak acid/base buffer. Returns the alkalinity as a molarity quantity. positive = excess cations, negative = excess anions.
 
-\item \code{calculate_closed_system_TIC}: calculates total inorganic carbon (TIC) in a closed system at equilibrium. Returns TIC as an amount quantity.
+\item \code{calculate_closed_system_TIC()}: calculates total inorganic carbon (TIC) in a closed system at equilibrium. Returns TIC as an amount quantity.
 
-\item \code{calculate_closed_system_pCO2}: calculates the partial pressure of CO2 in the headspace (gas phase) of a closed system at equilibrium. Returns a pressure quantity.
+\item \code{calculate_closed_system_pCO2()}: calculates the partial pressure of CO2 in the headspace (gas phase) of a closed system at equilibrium. Returns a pressure quantity.
+
 }}
-
 \seealso{
 Other carbonate chemistry: 
 \code{\link{open_system}},

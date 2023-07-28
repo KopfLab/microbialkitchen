@@ -75,15 +75,15 @@ Calculate dissolved inorganic carbon (DIC) and individual carbonate species in a
 }
 \section{Functions}{
 \itemize{
-\item \code{calculate_DIC}: calculates the concentration of dissolved inorganic carbon based on pH and either pCO2 or H2CO3*. Returns DIC as a molarity quantity.
+\item \code{calculate_DIC()}: calculates the concentration of dissolved inorganic carbon based on pH and either pCO2 or H2CO3*. Returns DIC as a molarity quantity.
 
-\item \code{calculate_carbonic_acid}: calculates the concentration of carbonic acid (H2CO3*) based on pH and either pCO2 or DIC. Returns carbonic acid as a molarity quantity.
+\item \code{calculate_carbonic_acid()}: calculates the concentration of carbonic acid (H2CO3*) based on pH and either pCO2 or DIC. Returns carbonic acid as a molarity quantity.
 
-\item \code{calculate_bicarbonate}: calculates the concentration of bicarbonate based on pH and either pCO2 or DIC. Returns bicarbonate concentration as a molarity quantity.
+\item \code{calculate_bicarbonate()}: calculates the concentration of bicarbonate based on pH and either pCO2 or DIC. Returns bicarbonate concentration as a molarity quantity.
 
-\item \code{calculate_carbonate}: calculates the concentration of carbonate based on pH and either pCO2 or DIC. Returns carbonate concentration as a molarity quantity.
+\item \code{calculate_carbonate()}: calculates the concentration of carbonate based on pH and either pCO2 or DIC. Returns carbonate concentration as a molarity quantity.
+
 }}
-
 \examples{
 calculate_DIC(pH = 7.0, pCO2 = qty(0.4, "mbar"))
 calculate_DIC(pH = 7.0, pCO2 = qty(0.4, "mbar"), temperature = qty(0, "C"))

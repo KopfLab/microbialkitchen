@@ -20,11 +20,11 @@ Work with quantity units.
 }
 \section{Functions}{
 \itemize{
-\item \code{get_qty_units}: get units from a quantity, list of quantities or data frame (returns NA for objects/columns that are not quantities)
+\item \code{get_qty_units()}: get units from a quantity, list of quantities or data frame (returns NA for objects/columns that are not quantities)
 
-\item \code{get_qty_units_with_label}: get units from a quantity, list of quantities or data frame, with a custom label in the format \code{label [units]}. Objects/columns that are not quantities simply return the label with out the [units] part.
+\item \code{get_qty_units_with_label()}: get units from a quantity, list of quantities or data frame, with a custom label in the format \code{label [units]}. Objects/columns that are not quantities simply return the label with out the [units] part.
+
 }}
-
 \examples{
 
 # quantity units examples

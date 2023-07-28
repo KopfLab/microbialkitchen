@@ -15,13 +15,9 @@ version <- as.character(packageVersion("microbialkitchen"))
 
 # Microbial Kitchen (formerly MediaChemTools)
 
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/microbialkitchen)](https://cran.r-project.org/package=microbialkitchen)
-[![Git_Hub_Version](https://img.shields.io/badge/GitHub-`r version`-orange.svg?style=flat-square)](/commits)
+[![R-CMD-check](https://github.com/KopfLab/microbialkitchen/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/KopfLab/microbialkitchen/actions/workflows/R-CMD-check.yaml)
 [![Documentation](https://img.shields.io/badge/docs-online-green.svg)](https://microbialkitchen.kopflab.org/reference/)
 [![codecov](https://codecov.io/github/KopfLab/microbialkitchen/branch/master/graphs/badge.svg)](https://codecov.io/github/Kopflab/microbialkitchen) 
-[![R build status](https://github.com/KopfLab/microbialkitchen/workflows/R-CMD-check/badge.svg)](https://github.com/KopfLab/microbialkitchen/actions)
-[![Binder](https://img.shields.io/badge/launch-Jupyter-orange.svg)](https://mybinder.org/v2/gh/KopfLab/microbialkitchen/binder?urlpath=lab)
-[![Binder](https://img.shields.io/badge/launch-RStudio-blue.svg)](https://mybinder.org/v2/gh/KopfLab/microbialkitchen/binder?urlpath=rstudio)
 
 ## About
 
@@ -45,7 +41,3 @@ devtools::install_github("KopfLab/microbialkitchen")
     - [equations vignette](https://microbialkitchen.kopflab.org/articles/carbonate_chemistry_equations.html)
     - [examples vignette](https://microbialkitchen.kopflab.org/articles/carbonate_chemistry_examples.html)
 
-Explore all functionality and vignettes of the **microbialkitchen** package interactively on [binder](https://mybinder.org/):
-
-[![Binder](https://img.shields.io/badge/launch-Jupyter-orange.svg)](https://mybinder.org/v2/gh/KopfLab/microbialkitchen/binder?urlpath=lab)
-[![Binder](https://img.shields.io/badge/launch-RStudio-blue.svg)](https://mybinder.org/v2/gh/KopfLab/microbialkitchen/binder?urlpath=rstudio)
