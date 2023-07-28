@@ -25,6 +25,8 @@
 </script>
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -37,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">microbialkitchen</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="in active development">0.4.2</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.4.3</span>
       </span>
     </div>
 
@@ -53,7 +55,7 @@
   <a href="articles/operations.html">Operations</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Carbonate Buffering
      
     <span class="caret"></span>
@@ -70,7 +72,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/kopflab/microbialkitchen">
+  <a href="https://github.com/kopflab/microbialkitchen" class="external-link">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -87,25 +89,25 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="microbial-kitchen-formerly-mediachemtools" class="section level1">
+<div class="section level1">
 
-
-<div id="about" class="section level2">
-<h2 class="hasAnchor">
-<a href="#about" class="anchor"></a>About</h2>
+<p><a href="https://github.com/KopfLab/microbialkitchen/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/KopfLab/microbialkitchen/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a> <a href="https://microbialkitchen.kopflab.org/reference/"><img src="https://img.shields.io/badge/docs-online-green.svg" alt="Documentation"></a> <a href="https://codecov.io/github/Kopflab/microbialkitchen" class="external-link"><img src="https://codecov.io/github/KopfLab/microbialkitchen/branch/master/graphs/badge.svg" alt="codecov"></a></p>
+<div class="section level2">
+<h2 id="about">About<a class="anchor" aria-label="anchor" href="#about"></a>
+</h2>
 <p>The <strong><a href="https://microbialkitchen.kopflab.org/">microbialkitchen</a></strong> package is a collection of tools to simplify working with the chemical composition and speciation of defined culture media for microbial physiology and environmental microbiology research. It includes a wide range of general purpose functionality for chemical applications including built-in, data-frame-compatible <a href="https://microbialkitchen.kopflab.org/articles/quantities.html">chemical quantities</a> (volume, mass, molarity, temperature, pressure, etc.) that automatically keep track of their units and metric scaling, as well as more specialized tools for the assembly and comparison of culturing media recipes, pH buffering strategies and aqueous speciation. All basic data types and operations are fully implemented, documented and ready to use. However, since the package is still in active development and some syntax and function names may change.</p>
 </div>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
 <p>You can install <strong><a href="https://microbialkitchen.kopflab.org/">microbialkitchen</a></strong> from github with the devtools package.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="co"># install.packages("devtools") </span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"KopfLab/microbialkitchen"</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># install.packages("devtools") </span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"KopfLab/microbialkitchen"</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div id="functionality" class="section level2">
-<h2 class="hasAnchor">
-<a href="#functionality" class="anchor"></a>Functionality</h2>
+<div class="section level2">
+<h2 id="functionality">Functionality<a class="anchor" aria-label="anchor" href="#functionality"></a>
+</h2>
 <ul>
 <li>
 <a href="https://microbialkitchen.kopflab.org/reference/">function reference</a> for details on all functions</li>
@@ -120,57 +122,55 @@
 </ul>
 </li>
 </ul>
-<p>Explore all functionality and vignettes of the <strong>microbialkitchen</strong> package interactively on <a href="https://mybinder.org/">binder</a>:</p>
-<p><a href="https://mybinder.org/v2/gh/KopfLab/microbialkitchen/binder?urlpath=lab"><img src="https://img.shields.io/badge/launch-Jupyter-orange.svg" alt="Binder"></a> <a href="https://mybinder.org/v2/gh/KopfLab/microbialkitchen/binder?urlpath=rstudio"><img src="https://img.shields.io/badge/launch-RStudio-blue.svg" alt="Binder"></a></p>
 </div>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Browse source code at <br><a href="https://github.com/kopflab/microbialkitchen/">https://​github.com/​kopflab/​microbialkitchen/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/kopflab/microbialkitchen/issues">https://​github.com/​kopflab/​microbialkitchen/​issues</a>
-</li>
+<li><a href="https://github.com/kopflab/microbialkitchen/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/kopflab/microbialkitchen/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li>GPL (&gt;= 2) </li>
 </ul>
 </div>
+
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html#citation">Citing microbialkitchen</a></li>
+</ul>
+</div>
+
 <div class="developers">
-<h2>Developers</h2>
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>Sebastian Kopf <br><small class="roles"> Author, maintainer </small>  </li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
-<ul class="list-unstyled">
-<li><a href="https://cran.r-project.org/package=microbialkitchen"><img src="http://www.r-pkg.org/badges/version/microbialkitchen" alt="CRAN_Status_Badge"></a></li>
-<li><a href="/commits"><img src="https://img.shields.io/badge/GitHub-0.4.2-orange.svg?style=flat-square" alt="Git_Hub_Version"></a></li>
-<li><a href="https://microbialkitchen.kopflab.org/reference/"><img src="https://img.shields.io/badge/docs-online-green.svg" alt="Documentation"></a></li>
-<li><a href="https://codecov.io/github/Kopflab/microbialkitchen"><img src="https://codecov.io/github/KopfLab/microbialkitchen/branch/master/graphs/badge.svg" alt="codecov"></a></li>
-<li><a href="https://github.com/KopfLab/microbialkitchen/actions"><img src="https://github.com/KopfLab/microbialkitchen/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
-<li><a href="https://mybinder.org/v2/gh/KopfLab/microbialkitchen/binder?urlpath=lab"><img src="https://img.shields.io/badge/launch-Jupyter-orange.svg" alt="Binder"></a></li>
-<li><a href="https://mybinder.org/v2/gh/KopfLab/microbialkitchen/binder?urlpath=rstudio"><img src="https://img.shields.io/badge/launch-RStudio-blue.svg" alt="Binder"></a></li>
-</ul>
-</div>
-</div>
+
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Sebastian Kopf.</p>
+  <p></p>
+<p>Developed by Sebastian Kopf.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
@@ -178,6 +178,8 @@
 
   
 
+
+  
 
   </body>
 </html>

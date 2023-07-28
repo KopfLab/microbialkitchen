@@ -1,75 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://microbialkitchen.kopflab.org//index.html</loc>
+    <loc>https://microbialkitchen.kopflab.org/404.html</loc>
   </url>
   <url>
-    <loc>https://microbialkitchen.kopflab.org//reference/arithmetic.html</loc>
+    <loc>https://microbialkitchen.kopflab.org/articles/carbonate_chemistry_equations.html</loc>
   </url>
   <url>
-    <loc>https://microbialkitchen.kopflab.org//reference/c_qty.html</loc>
+    <loc>https://microbialkitchen.kopflab.org/articles/carbonate_chemistry_examples.html</loc>
   </url>
   <url>
-    <loc>https://microbialkitchen.kopflab.org//reference/check_quantities.html</loc>
+    <loc>https://microbialkitchen.kopflab.org/articles/index.html</loc>
   </url>
   <url>
-    <loc>https://microbialkitchen.kopflab.org//reference/closed_system.html</loc>
+    <loc>https://microbialkitchen.kopflab.org/articles/operations.html</loc>
   </url>
   <url>
-    <loc>https://microbialkitchen.kopflab.org//reference/constants.html</loc>
+    <loc>https://microbialkitchen.kopflab.org/articles/quantities.html</loc>
   </url>
   <url>
-    <loc>https://microbialkitchen.kopflab.org//reference/gas_calculations.html</loc>
+    <loc>https://microbialkitchen.kopflab.org/authors.html</loc>
   </url>
   <url>
-    <loc>https://microbialkitchen.kopflab.org//reference/make_qty_units_explicit.html</loc>
+    <loc>https://microbialkitchen.kopflab.org/index.html</loc>
   </url>
   <url>
-    <loc>https://microbialkitchen.kopflab.org//reference/metric_scaling.html</loc>
+    <loc>https://microbialkitchen.kopflab.org/reference/arithmetic.html</loc>
   </url>
   <url>
-    <loc>https://microbialkitchen.kopflab.org//reference/microbialkitchen-package.html</loc>
+    <loc>https://microbialkitchen.kopflab.org/reference/c_qty.html</loc>
   </url>
   <url>
-    <loc>https://microbialkitchen.kopflab.org//reference/open_system.html</loc>
+    <loc>https://microbialkitchen.kopflab.org/reference/check_quantities.html</loc>
   </url>
   <url>
-    <loc>https://microbialkitchen.kopflab.org//reference/quantities.html</loc>
+    <loc>https://microbialkitchen.kopflab.org/reference/closed_system.html</loc>
   </url>
   <url>
-    <loc>https://microbialkitchen.kopflab.org//reference/quantity_data.html</loc>
+    <loc>https://microbialkitchen.kopflab.org/reference/constants.html</loc>
   </url>
   <url>
-    <loc>https://microbialkitchen.kopflab.org//reference/quantity_units.html</loc>
+    <loc>https://microbialkitchen.kopflab.org/reference/gas_calculations.html</loc>
   </url>
   <url>
-    <loc>https://microbialkitchen.kopflab.org//reference/reexports.html</loc>
+    <loc>https://microbialkitchen.kopflab.org/reference/index.html</loc>
   </url>
   <url>
-    <loc>https://microbialkitchen.kopflab.org//reference/scale_qty.html</loc>
+    <loc>https://microbialkitchen.kopflab.org/reference/make_qty_units_explicit.html</loc>
   </url>
   <url>
-    <loc>https://microbialkitchen.kopflab.org//reference/speciation.html</loc>
+    <loc>https://microbialkitchen.kopflab.org/reference/metric_scaling.html</loc>
   </url>
   <url>
-    <loc>https://microbialkitchen.kopflab.org//reference/vec_arith.html</loc>
+    <loc>https://microbialkitchen.kopflab.org/reference/microbialkitchen-package.html</loc>
   </url>
   <url>
-    <loc>https://microbialkitchen.kopflab.org//reference/vec_cast.html</loc>
+    <loc>https://microbialkitchen.kopflab.org/reference/open_system.html</loc>
   </url>
   <url>
-    <loc>https://microbialkitchen.kopflab.org//reference/vec_ptype2.html</loc>
+    <loc>https://microbialkitchen.kopflab.org/reference/quantities.html</loc>
   </url>
   <url>
-    <loc>https://microbialkitchen.kopflab.org//articles/carbonate_chemistry_equations.html</loc>
+    <loc>https://microbialkitchen.kopflab.org/reference/quantity_data.html</loc>
   </url>
   <url>
-    <loc>https://microbialkitchen.kopflab.org//articles/carbonate_chemistry_examples.html</loc>
+    <loc>https://microbialkitchen.kopflab.org/reference/quantity_units.html</loc>
   </url>
   <url>
-    <loc>https://microbialkitchen.kopflab.org//articles/operations.html</loc>
+    <loc>https://microbialkitchen.kopflab.org/reference/reexports.html</loc>
   </url>
   <url>
-    <loc>https://microbialkitchen.kopflab.org//articles/quantities.html</loc>
+    <loc>https://microbialkitchen.kopflab.org/reference/scale_qty.html</loc>
+  </url>
+  <url>
+    <loc>https://microbialkitchen.kopflab.org/reference/speciation.html</loc>
+  </url>
+  <url>
+    <loc>https://microbialkitchen.kopflab.org/reference/vec_arith.html</loc>
+  </url>
+  <url>
+    <loc>https://microbialkitchen.kopflab.org/reference/vec_cast.html</loc>
+  </url>
+  <url>
+    <loc>https://microbialkitchen.kopflab.org/reference/vec_ptype2.html</loc>
   </url>
 </urlset>

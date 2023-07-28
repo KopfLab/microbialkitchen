@@ -25,6 +25,8 @@
 </script>
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -37,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">microbialkitchen</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="in active development">0.4.2</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">0.4.3</span>
       </span>
     </div>
 
@@ -53,7 +55,7 @@
   <a href="../articles/operations.html">Operations</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Carbonate Buffering
      
     <span class="caret"></span>
@@ -70,7 +72,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/kopflab/microbialkitchen">
+  <a href="https://github.com/kopflab/microbialkitchen" class="external-link">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -85,520 +87,547 @@
 
       
 
-      </header><script src="carbonate_chemistry_examples_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Carbonate Chemistry Examples</h1>
             
-            <h4 class="date">2020-10-17</h4>
+            <h4 data-toc-skip class="date">2023-07-28</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/kopflab/microbialkitchen/blob/master/vignettes/carbonate_chemistry_examples.Rmd"><code>vignettes/carbonate_chemistry_examples.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/kopflab/microbialkitchen/blob/HEAD/vignettes/carbonate_chemistry_examples.Rmd" class="external-link"><code>vignettes/carbonate_chemistry_examples.Rmd</code></a></small>
       <div class="hidden name"><code>carbonate_chemistry_examples.Rmd</code></div>
 
     </div>
 
     
     
-<p>This vignette provides examples of the carbonate chemistry tools implemented by the <strong>microbialkitchen</strong> package to explore carbonate solubility and pH control in open and closed media systems. See the <a href="carbonate_chemistry_equations.html">carbonate chemistry equations vignette</a> for conceptual background.</p>
-<div id="co2-solubility" class="section level1">
-<h1 class="hasAnchor">
-<a href="#co2-solubility" class="anchor"></a>CO2 solubility</h1>
-<p><a href="carbonate_chemistry_equations.html#co_2-solubility">See equations</a>.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="va">solubilities</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>
-  temperature <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fl">0</span>, to <span class="op">=</span> <span class="fl">40</span>, by <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="st">"C"</span><span class="op">)</span>,
-  solubility <span class="op">=</span> <span class="fu"><a href="../reference/gas_calculations.html">calculate_gas_solubility</a></span><span class="op">(</span><span class="st">"CO2"</span>, <span class="va">temperature</span><span class="op">)</span>
-<span class="op">)</span>
-
-<span class="va">solubilities</span> <span class="op">%&gt;%</span> 
-  <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">aes</span><span class="op">(</span><span class="va">temperature</span>, <span class="va">solubility</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_line</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="../reference/scale_qty.html">scale_x_qty</a></span><span class="op">(</span>unit <span class="op">=</span> <span class="st">"C"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">theme_bw</span><span class="op">(</span><span class="op">)</span></pre></div>
+<p>This vignette provides examples of the carbonate chemistry tools
+implemented by the <strong>microbialkitchen</strong> package to explore
+carbonate solubility and pH control in open and closed media systems.
+See the <a href="carbonate_chemistry_equations.html">carbonate chemistry
+equations vignette</a> for conceptual background.</p>
+<div class="section level2">
+<h2 id="co2-solubility">CO2 solubility<a class="anchor" aria-label="anchor" href="#co2-solubility"></a>
+</h2>
+<p><a href="carbonate_chemistry_equations.html#co_2-solubility">See
+equations</a>.</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">solubilities</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
+<span>  temperature <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span>from <span class="op">=</span> <span class="fl">0</span>, to <span class="op">=</span> <span class="fl">40</span>, by <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="st">"C"</span><span class="op">)</span>,</span>
+<span>  solubility <span class="op">=</span> <span class="fu"><a href="../reference/gas_calculations.html">calculate_gas_solubility</a></span><span class="op">(</span><span class="st">"CO2"</span>, <span class="va">temperature</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">solubilities</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">aes</span><span class="op">(</span><span class="va">temperature</span>, <span class="va">solubility</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_line</span><span class="op">(</span>size <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/scale_qty.html">scale_x_qty</a></span><span class="op">(</span>unit <span class="op">=</span> <span class="st">"C"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">theme_bw</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.</span></span>
+<span><span class="co">## <span style="color: #00BBBB;">ℹ</span> Please use `linewidth` instead.</span></span>
+<span><span class="co">## <span style="color: #555555;">This warning is displayed once every 8 hours.</span></span></span>
+<span><span class="co">## <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
+<span><span class="co">## <span style="color: #555555;">generated.</span></span></span></code></pre>
 <p><img src="carbonate_chemistry_examples_files/figure-html/henry-1.png" width="768"></p>
 </div>
-<div id="speciation" class="section level1">
-<h1 class="hasAnchor">
-<a href="#speciation" class="anchor"></a>Speciation</h1>
-<p><a href="carbonate_chemistry_equations.html#speciation">See equations</a>.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="co"># calculate</span>
-<span class="va">df_speciation</span> <span class="op">&lt;-</span>
-  <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>
-    pH <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">14</span>, by <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span>,
-    DIC <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">10</span>, <span class="st">"mM"</span><span class="op">)</span>,
-    `H2CO3*` <span class="op">=</span> <span class="fu"><a href="../reference/speciation.html">calculate_carbonic_acid</a></span><span class="op">(</span><span class="va">pH</span>, DIC <span class="op">=</span> <span class="va">DIC</span><span class="op">)</span>,
-    HCO3 <span class="op">=</span> <span class="fu"><a href="../reference/speciation.html">calculate_bicarbonate</a></span><span class="op">(</span><span class="va">pH</span>, DIC <span class="op">=</span> <span class="va">DIC</span><span class="op">)</span>,
-    CO3 <span class="op">=</span> <span class="fu"><a href="../reference/speciation.html">calculate_carbonate</a></span><span class="op">(</span><span class="va">pH</span>, DIC <span class="op">=</span> <span class="va">DIC</span><span class="op">)</span>
-  <span class="op">)</span>
-
-<span class="co"># visualize</span>
-<span class="va">df_speciation</span> <span class="op">%&gt;%</span>
-  <span class="co"># pivoting longer for the concentration columns</span>
-  <span class="fu">pivot_longer</span><span class="op">(</span>
-    names_to <span class="op">=</span> <span class="st">"Species"</span>, values_to <span class="op">=</span> <span class="st">"Concentration"</span>, 
-    cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">`H2CO3*`</span>, <span class="va">HCO3</span>, <span class="va">CO3</span><span class="op">)</span>
-  <span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">aes</span><span class="op">(</span><span class="va">pH</span>, <span class="va">Concentration</span>, color <span class="op">=</span> <span class="va">Species</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">scale_x_continuous</span><span class="op">(</span>expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">14</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="../reference/scale_qty.html">scale_y_qty</a></span><span class="op">(</span>each <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">theme_bw</span><span class="op">(</span><span class="op">)</span></pre></div>
+<div class="section level2">
+<h2 id="speciation">Speciation<a class="anchor" aria-label="anchor" href="#speciation"></a>
+</h2>
+<p><a href="carbonate_chemistry_equations.html#speciation">See
+equations</a>.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># calculate</span></span>
+<span><span class="va">df_speciation</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
+<span>    pH <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">14</span>, by <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span>,</span>
+<span>    DIC <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">10</span>, <span class="st">"mM"</span><span class="op">)</span>,</span>
+<span>    `H2CO3*` <span class="op">=</span> <span class="fu"><a href="../reference/speciation.html">calculate_carbonic_acid</a></span><span class="op">(</span><span class="va">pH</span>, DIC <span class="op">=</span> <span class="va">DIC</span><span class="op">)</span>,</span>
+<span>    HCO3 <span class="op">=</span> <span class="fu"><a href="../reference/speciation.html">calculate_bicarbonate</a></span><span class="op">(</span><span class="va">pH</span>, DIC <span class="op">=</span> <span class="va">DIC</span><span class="op">)</span>,</span>
+<span>    CO3 <span class="op">=</span> <span class="fu"><a href="../reference/speciation.html">calculate_carbonate</a></span><span class="op">(</span><span class="va">pH</span>, DIC <span class="op">=</span> <span class="va">DIC</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="co"># visualize</span></span>
+<span><span class="va">df_speciation</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="co"># pivoting longer for the concentration columns</span></span>
+<span>  <span class="fu">pivot_longer</span><span class="op">(</span></span>
+<span>    names_to <span class="op">=</span> <span class="st">"Species"</span>, values_to <span class="op">=</span> <span class="st">"Concentration"</span>, </span>
+<span>    cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">`H2CO3*`</span>, <span class="va">HCO3</span>, <span class="va">CO3</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">aes</span><span class="op">(</span><span class="va">pH</span>, <span class="va">Concentration</span>, color <span class="op">=</span> <span class="va">Species</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_x_continuous</span><span class="op">(</span>expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">14</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/scale_qty.html">scale_y_qty</a></span><span class="op">(</span>each <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">theme_bw</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="carbonate_chemistry_examples_files/figure-html/speciation-1.png" width="768"></p>
 </div>
-<div id="open-system" class="section level1">
-<h1 class="hasAnchor">
-<a href="#open-system" class="anchor"></a>Open system</h1>
-<p><a href="carbonate_chemistry_equations.html#open-system">See equations</a>.</p>
-<div id="co2-only" class="section level2">
-<h2 class="hasAnchor">
-<a href="#co2-only" class="anchor"></a>CO2 only</h2>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="co"># range of pCO2s</span>
-<span class="va">pCO2s</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>
-  pCO2 <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">5</span>, by<span class="op">=</span><span class="fl">0.1</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">20</span>, by<span class="op">=</span><span class="fl">1</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">20</span>, <span class="fl">200</span>, by<span class="op">=</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span>, <span class="st">"mbar"</span><span class="op">)</span>
-<span class="op">)</span>
-<span class="co"># range of temperature</span>
-<span class="va">temperatures</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>
-  temperature <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">25</span>, <span class="fl">37</span><span class="op">)</span>, <span class="st">"C"</span><span class="op">)</span>
-<span class="op">)</span>
-
-<span class="co"># calculate for all combinations</span>
-<span class="va">df_pH_vs_pCO2</span> <span class="op">&lt;-</span>
-  <span class="fu">crossing</span><span class="op">(</span><span class="va">pCO2s</span>, <span class="va">temperatures</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">mutate</span><span class="op">(</span>
-    pH <span class="op">=</span> <span class="fu"><a href="../reference/open_system.html">calculate_open_system_pH</a></span><span class="op">(</span><span class="va">pCO2</span>, temp <span class="op">=</span> <span class="va">temperature</span><span class="op">)</span>,
-    DIC <span class="op">=</span> <span class="fu"><a href="../reference/speciation.html">calculate_DIC</a></span><span class="op">(</span><span class="va">pH</span>, <span class="va">pCO2</span>, temp <span class="op">=</span> <span class="va">temperature</span><span class="op">)</span>,
-    CO2 <span class="op">=</span> <span class="fu"><a href="../reference/gas_calculations.html">calculate_ideal_gas_molarity</a></span><span class="op">(</span><span class="va">pCO2</span>, temp <span class="op">=</span> <span class="va">temperature</span><span class="op">)</span>
-  <span class="op">)</span></pre></div>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="va">df_pH_vs_pCO2</span> <span class="op">%&gt;%</span>
-  <span class="co"># pivoting longer mixed data types requires explicit units first</span>
-  <span class="fu"><a href="../reference/make_qty_units_explicit.html">make_qty_units_explicit</a></span><span class="op">(</span>DIC <span class="op">=</span> <span class="st">"mM"</span>, CO2 <span class="op">=</span> <span class="st">"mM"</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">pivot_longer</span><span class="op">(</span>
-    cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">pH</span>, <span class="va">`DIC [mM]`</span>, <span class="va">`CO2 [mM]`</span><span class="op">)</span>, 
-    names_to <span class="op">=</span> <span class="st">"var"</span>, values_to <span class="op">=</span> <span class="st">"value"</span>
-  <span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="va">var</span> <span class="op">==</span> <span class="st">"pH"</span> <span class="op">&amp;</span> <span class="va">value</span> <span class="op">&gt;</span> <span class="fl">5.5</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">mutate</span><span class="op">(</span>temperature <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/as_factor.html">as_factor</a></span><span class="op">(</span><span class="va">temperature</span>, unit <span class="op">=</span> <span class="st">"C"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">aes</span><span class="op">(</span><span class="va">pCO2</span>, <span class="va">value</span>, color <span class="op">=</span> <span class="va">temperature</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="../reference/scale_qty.html">scale_x_qty</a></span><span class="op">(</span>expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">scale_color_brewer</span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Set1"</span><span class="op">)</span> <span class="op">+</span>  
-  <span class="fu">facet_grid</span><span class="op">(</span><span class="va">var</span><span class="op">~</span><span class="va">.</span>, scales <span class="op">=</span> <span class="st">"free_y"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">expand_limits</span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">theme_bw</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">labs</span><span class="op">(</span>y <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></pre></div>
+<div class="section level2">
+<h2 id="open-system">Open system<a class="anchor" aria-label="anchor" href="#open-system"></a>
+</h2>
+<p><a href="carbonate_chemistry_equations.html#open-system">See
+equations</a>.</p>
+<div class="section level3">
+<h3 id="co2-only">CO2 only<a class="anchor" aria-label="anchor" href="#co2-only"></a>
+</h3>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># range of pCO2s</span></span>
+<span><span class="va">pCO2s</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
+<span>  pCO2 <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">5</span>, by<span class="op">=</span><span class="fl">0.1</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">20</span>, by<span class="op">=</span><span class="fl">1</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">20</span>, <span class="fl">200</span>, by<span class="op">=</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span>, <span class="st">"mbar"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co"># range of temperature</span></span>
+<span><span class="va">temperatures</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
+<span>  temperature <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">25</span>, <span class="fl">37</span><span class="op">)</span>, <span class="st">"C"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># calculate for all combinations</span></span>
+<span><span class="va">df_pH_vs_pCO2</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu">crossing</span><span class="op">(</span><span class="va">pCO2s</span>, <span class="va">temperatures</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">mutate</span><span class="op">(</span></span>
+<span>    pH <span class="op">=</span> <span class="fu"><a href="../reference/open_system.html">calculate_open_system_pH</a></span><span class="op">(</span><span class="va">pCO2</span>, temp <span class="op">=</span> <span class="va">temperature</span><span class="op">)</span>,</span>
+<span>    DIC <span class="op">=</span> <span class="fu"><a href="../reference/speciation.html">calculate_DIC</a></span><span class="op">(</span><span class="va">pH</span>, <span class="va">pCO2</span>, temp <span class="op">=</span> <span class="va">temperature</span><span class="op">)</span>,</span>
+<span>    CO2 <span class="op">=</span> <span class="fu"><a href="../reference/gas_calculations.html">calculate_ideal_gas_molarity</a></span><span class="op">(</span><span class="va">pCO2</span>, temp <span class="op">=</span> <span class="va">temperature</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">df_pH_vs_pCO2</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="co"># pivoting longer mixed data types requires explicit units first</span></span>
+<span>  <span class="fu"><a href="../reference/make_qty_units_explicit.html">make_qty_units_explicit</a></span><span class="op">(</span>DIC <span class="op">=</span> <span class="st">"mM"</span>, CO2 <span class="op">=</span> <span class="st">"mM"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">pivot_longer</span><span class="op">(</span></span>
+<span>    cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">pH</span>, <span class="va">`DIC [mM]`</span>, <span class="va">`CO2 [mM]`</span><span class="op">)</span>, </span>
+<span>    names_to <span class="op">=</span> <span class="st">"var"</span>, values_to <span class="op">=</span> <span class="st">"value"</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="op">(</span><span class="va">var</span> <span class="op">==</span> <span class="st">"pH"</span> <span class="op">&amp;</span> <span class="va">value</span> <span class="op">&gt;</span> <span class="fl">5.5</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">mutate</span><span class="op">(</span>temperature <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/as_factor.html" class="external-link">as_factor</a></span><span class="op">(</span><span class="va">temperature</span>, unit <span class="op">=</span> <span class="st">"C"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">aes</span><span class="op">(</span><span class="va">pCO2</span>, <span class="va">value</span>, color <span class="op">=</span> <span class="va">temperature</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/scale_qty.html">scale_x_qty</a></span><span class="op">(</span>expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_color_brewer</span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Set1"</span><span class="op">)</span> <span class="op">+</span>  </span>
+<span>  <span class="fu">facet_grid</span><span class="op">(</span><span class="va">var</span><span class="op">~</span><span class="va">.</span>, scales <span class="op">=</span> <span class="st">"free_y"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">expand_limits</span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">theme_bw</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">labs</span><span class="op">(</span>y <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
 <p><img src="carbonate_chemistry_examples_files/figure-html/pH%20vs%20pCO2-1.png" width="768"></p>
 </div>
-<div id="adjusting-ph-with-alkalinity" class="section level2">
-<h2 class="hasAnchor">
-<a href="#adjusting-ph-with-alkalinity" class="anchor"></a>Adjusting pH with alkalinity</h2>
-<div class="sourceCode" id="cb5"><pre class="downlit">
-<span class="co"># to calculate how much base (NaOH or NaHCO3) to add</span>
-<span class="fu"><a href="../reference/open_system.html">calculate_open_system_alkalinity</a></span><span class="op">(</span>pH <span class="op">=</span> <span class="fl">6.8</span>, pCO2 <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">0.4</span>, <span class="st">"mbar"</span><span class="op">)</span><span class="op">)</span></pre></div>
-<pre><code>## &lt;C (molarity concentration) in 'µM'[1]&gt;
-## [1] 41.67307</code></pre>
-<div class="sourceCode" id="cb7"><pre class="downlit">
-<span class="fu"><a href="../reference/open_system.html">calculate_open_system_alkalinity</a></span><span class="op">(</span>pH <span class="op">=</span> <span class="fl">6.8</span>, pCO2 <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">50</span>, <span class="st">"mbar"</span><span class="op">)</span><span class="op">)</span></pre></div>
-<pre><code>## &lt;C (molarity concentration) in 'mM'[1]&gt;
-## [1] 5.220963</code></pre>
-<div class="sourceCode" id="cb9"><pre class="downlit">
-<span class="fu"><a href="../reference/open_system.html">calculate_open_system_alkalinity</a></span><span class="op">(</span>pH <span class="op">=</span> <span class="fl">6.8</span>, pCO2 <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">200</span>, <span class="st">"mbar"</span><span class="op">)</span><span class="op">)</span></pre></div>
-<pre><code>## &lt;C (molarity concentration) in 'mM'[1]&gt;
-## [1] 20.88414</code></pre>
-<div class="sourceCode" id="cb11"><pre class="downlit">
-<span class="co"># to calculate pH with addition of a specific amount of base</span>
-<span class="fu"><a href="../reference/open_system.html">calculate_open_system_pH</a></span><span class="op">(</span>pCO2 <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">0.4</span>, <span class="st">"mbar"</span><span class="op">)</span>, alkalinity <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">5</span>, <span class="st">"mM"</span><span class="op">)</span><span class="op">)</span></pre></div>
-<pre><code>## [1] 8.848121</code></pre>
-<div class="sourceCode" id="cb13"><pre class="downlit">
-<span class="fu"><a href="../reference/open_system.html">calculate_open_system_pH</a></span><span class="op">(</span>pCO2 <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">50</span>, <span class="st">"mbar"</span><span class="op">)</span>, alkalinity <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">5</span>, <span class="st">"mM"</span><span class="op">)</span><span class="op">)</span></pre></div>
-<pre><code>## [1] 6.781229</code></pre>
-<div class="sourceCode" id="cb15"><pre class="downlit">
-<span class="fu"><a href="../reference/open_system.html">calculate_open_system_pH</a></span><span class="op">(</span>pCO2 <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">200</span>, <span class="st">"mbar"</span><span class="op">)</span>, alkalinity <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">5</span>, <span class="st">"mM"</span><span class="op">)</span><span class="op">)</span></pre></div>
-<pre><code>## [1] 6.179416</code></pre>
-<div class="sourceCode" id="cb17"><pre class="downlit">
-<span class="co"># to calculate pH with addition of a specific amount of acid</span>
-<span class="fu"><a href="../reference/open_system.html">calculate_open_system_pH</a></span><span class="op">(</span>pCO2 <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">0.4</span>, <span class="st">"mbar"</span><span class="op">)</span>, alkalinity <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="st">"nM"</span><span class="op">)</span><span class="op">)</span></pre></div>
-<pre><code>## [1] 5.589293</code></pre>
-<div class="sourceCode" id="cb19"><pre class="downlit">
-<span class="fu"><a href="../reference/open_system.html">calculate_open_system_pH</a></span><span class="op">(</span>pCO2 <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">50</span>, <span class="st">"mbar"</span><span class="op">)</span>, alkalinity <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="st">"nM"</span><span class="op">)</span><span class="op">)</span></pre></div>
-<pre><code>## [1] 4.541239</code></pre>
-<div class="sourceCode" id="cb21"><pre class="downlit">
-<span class="fu"><a href="../reference/open_system.html">calculate_open_system_pH</a></span><span class="op">(</span>pCO2 <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">200</span>, <span class="st">"mbar"</span><span class="op">)</span>, alkalinity <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="st">"nM"</span><span class="op">)</span><span class="op">)</span></pre></div>
-<pre><code>## [1] 4.240209</code></pre>
-<div id="visualization" class="section level3">
-<h3 class="hasAnchor">
-<a href="#visualization" class="anchor"></a>Visualization</h3>
-<div class="sourceCode" id="cb23"><pre class="downlit">
-<span class="co"># range of pCO2s</span>
-<span class="va">pCO2s</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>pCO2 <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.4</span>, <span class="fl">50</span>, <span class="fl">200</span><span class="op">)</span>, <span class="st">"mbar"</span><span class="op">)</span><span class="op">)</span>
-<span class="co"># range of temperature</span>
-<span class="va">temperatures</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>temperature <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">25</span>, <span class="fl">37</span><span class="op">)</span>, <span class="st">"C"</span><span class="op">)</span><span class="op">)</span>
-
-<span class="co"># calculate for all combinations</span>
-<span class="va">zero</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">0</span>, <span class="st">"mM"</span><span class="op">)</span>
-<span class="va">df_base_vs_pH</span> <span class="op">&lt;-</span>
-  <span class="fu">crossing</span><span class="op">(</span><span class="va">pCO2s</span>, <span class="va">temperatures</span>, pH <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">7.5</span>, by <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">mutate</span><span class="op">(</span>
-    ions <span class="op">=</span> <span class="fu"><a href="../reference/open_system.html">calculate_open_system_alkalinity</a></span><span class="op">(</span><span class="va">pH</span>, <span class="va">pCO2</span>, temp <span class="op">=</span> <span class="va">temperature</span><span class="op">)</span>,
-    `Add base (e.g. NaOH)` <span class="op">=</span> <span class="fu">case_when</span><span class="op">(</span><span class="va">ions</span> <span class="op">&gt;</span> <span class="va">zero</span> <span class="op">~</span> <span class="va">ions</span>, <span class="cn">TRUE</span> <span class="op">~</span> <span class="va">zero</span><span class="op">)</span>,
-    `Add acid (e.g. HCl)` <span class="op">=</span> <span class="fu">case_when</span><span class="op">(</span><span class="va">ions</span> <span class="op">&lt;</span> <span class="va">zero</span> <span class="op">~</span> <span class="op">-</span><span class="fl">1</span><span class="op">*</span><span class="va">ions</span>, <span class="cn">TRUE</span> <span class="op">~</span> <span class="va">zero</span><span class="op">)</span>,
-    DIC <span class="op">=</span> <span class="fu"><a href="../reference/speciation.html">calculate_DIC</a></span><span class="op">(</span><span class="va">pH</span>, <span class="va">pCO2</span>, temp <span class="op">=</span> <span class="va">temperature</span><span class="op">)</span>
-  <span class="op">)</span>
-
-<span class="va">p</span> <span class="op">&lt;-</span> <span class="va">df_base_vs_pH</span> <span class="op">%&gt;%</span>
-  <span class="fu">pivot_longer</span><span class="op">(</span>
-    cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">`Add base (e.g. NaOH)`</span>, <span class="va">`Add acid (e.g. HCl)`</span>, <span class="va">`DIC`</span><span class="op">)</span>,
-    names_to <span class="op">=</span> <span class="st">"var"</span>, values_to <span class="op">=</span> <span class="st">"concentration"</span>
-  <span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">concentration</span> <span class="op">&gt;</span> <span class="va">zero</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">mutate</span><span class="op">(</span>
-    temperature <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/as_factor.html">as_factor</a></span><span class="op">(</span><span class="va">temperature</span>, unit <span class="op">=</span> <span class="st">"C"</span><span class="op">)</span>,
-    panel <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/as_factor.html">as_factor</a></span><span class="op">(</span><span class="va">pCO2</span>, unit <span class="op">=</span> <span class="st">"mbar"</span><span class="op">)</span>
-  <span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">aes</span><span class="op">(</span><span class="va">pH</span>, <span class="va">concentration</span>, color <span class="op">=</span> <span class="va">var</span>, linetype <span class="op">=</span> <span class="va">temperature</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_vline</span><span class="op">(</span>xintercept <span class="op">=</span> <span class="fl">7</span>, color <span class="op">=</span> <span class="st">"black"</span>, size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">scale_x_continuous</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">14</span>, expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="../reference/scale_qty.html">scale_y_qty</a></span><span class="op">(</span>each <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">scale_color_brewer</span><span class="op">(</span><span class="st">"Component"</span>, palette <span class="op">=</span> <span class="st">"Set1"</span><span class="op">)</span> <span class="op">+</span>  
-  <span class="fu">facet_wrap</span><span class="op">(</span><span class="op">~</span><span class="va">panel</span>, nrow <span class="op">=</span> <span class="fl">1</span>, scales <span class="op">=</span> <span class="st">"free_y"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">theme_bw</span><span class="op">(</span><span class="op">)</span>
-<span class="va">p</span></pre></div>
+<div class="section level3">
+<h3 id="adjusting-ph-with-alkalinity">Adjusting pH with alkalinity<a class="anchor" aria-label="anchor" href="#adjusting-ph-with-alkalinity"></a>
+</h3>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># to calculate how much base (NaOH or NaHCO3) to add</span></span>
+<span><span class="fu"><a href="../reference/open_system.html">calculate_open_system_alkalinity</a></span><span class="op">(</span>pH <span class="op">=</span> <span class="fl">6.8</span>, pCO2 <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">0.4</span>, <span class="st">"mbar"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## &lt;mk_molarity_concentration[1]&gt;</span></span>
+<span><span class="co">## [1] 41.67307</span></span></code></pre>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/open_system.html">calculate_open_system_alkalinity</a></span><span class="op">(</span>pH <span class="op">=</span> <span class="fl">6.8</span>, pCO2 <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">50</span>, <span class="st">"mbar"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## &lt;mk_molarity_concentration[1]&gt;</span></span>
+<span><span class="co">## [1] 5.220963</span></span></code></pre>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/open_system.html">calculate_open_system_alkalinity</a></span><span class="op">(</span>pH <span class="op">=</span> <span class="fl">6.8</span>, pCO2 <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">200</span>, <span class="st">"mbar"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## &lt;mk_molarity_concentration[1]&gt;</span></span>
+<span><span class="co">## [1] 20.88414</span></span></code></pre>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># to calculate pH with addition of a specific amount of base</span></span>
+<span><span class="fu"><a href="../reference/open_system.html">calculate_open_system_pH</a></span><span class="op">(</span>pCO2 <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">0.4</span>, <span class="st">"mbar"</span><span class="op">)</span>, alkalinity <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">5</span>, <span class="st">"mM"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 8.848121</span></span></code></pre>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/open_system.html">calculate_open_system_pH</a></span><span class="op">(</span>pCO2 <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">50</span>, <span class="st">"mbar"</span><span class="op">)</span>, alkalinity <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">5</span>, <span class="st">"mM"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 6.781229</span></span></code></pre>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/open_system.html">calculate_open_system_pH</a></span><span class="op">(</span>pCO2 <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">200</span>, <span class="st">"mbar"</span><span class="op">)</span>, alkalinity <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">5</span>, <span class="st">"mM"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 6.179416</span></span></code></pre>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># to calculate pH with addition of a specific amount of acid</span></span>
+<span><span class="fu"><a href="../reference/open_system.html">calculate_open_system_pH</a></span><span class="op">(</span>pCO2 <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">0.4</span>, <span class="st">"mbar"</span><span class="op">)</span>, alkalinity <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="st">"nM"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 5.589293</span></span></code></pre>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/open_system.html">calculate_open_system_pH</a></span><span class="op">(</span>pCO2 <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">50</span>, <span class="st">"mbar"</span><span class="op">)</span>, alkalinity <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="st">"nM"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 4.541239</span></span></code></pre>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/open_system.html">calculate_open_system_pH</a></span><span class="op">(</span>pCO2 <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">200</span>, <span class="st">"mbar"</span><span class="op">)</span>, alkalinity <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="st">"nM"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] 4.240209</span></span></code></pre>
+<div class="section level4">
+<h4 id="visualization">Visualization<a class="anchor" aria-label="anchor" href="#visualization"></a>
+</h4>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># range of pCO2s</span></span>
+<span><span class="va">pCO2s</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>pCO2 <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.4</span>, <span class="fl">50</span>, <span class="fl">200</span><span class="op">)</span>, <span class="st">"mbar"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co"># range of temperature</span></span>
+<span><span class="va">temperatures</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>temperature <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">25</span>, <span class="fl">37</span><span class="op">)</span>, <span class="st">"C"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># calculate for all combinations</span></span>
+<span><span class="va">zero</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">0</span>, <span class="st">"mM"</span><span class="op">)</span></span>
+<span><span class="va">df_base_vs_pH</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu">crossing</span><span class="op">(</span><span class="va">pCO2s</span>, <span class="va">temperatures</span>, pH <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">7.5</span>, by <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">mutate</span><span class="op">(</span></span>
+<span>    ions <span class="op">=</span> <span class="fu"><a href="../reference/open_system.html">calculate_open_system_alkalinity</a></span><span class="op">(</span><span class="va">pH</span>, <span class="va">pCO2</span>, temp <span class="op">=</span> <span class="va">temperature</span><span class="op">)</span>,</span>
+<span>    `Add base (e.g. NaOH)` <span class="op">=</span> <span class="fu">case_when</span><span class="op">(</span><span class="va">ions</span> <span class="op">&gt;</span> <span class="va">zero</span> <span class="op">~</span> <span class="va">ions</span>, <span class="cn">TRUE</span> <span class="op">~</span> <span class="va">zero</span><span class="op">)</span>,</span>
+<span>    `Add acid (e.g. HCl)` <span class="op">=</span> <span class="fu">case_when</span><span class="op">(</span><span class="va">ions</span> <span class="op">&lt;</span> <span class="va">zero</span> <span class="op">~</span> <span class="op">-</span><span class="fl">1</span><span class="op">*</span><span class="va">ions</span>, <span class="cn">TRUE</span> <span class="op">~</span> <span class="va">zero</span><span class="op">)</span>,</span>
+<span>    DIC <span class="op">=</span> <span class="fu"><a href="../reference/speciation.html">calculate_DIC</a></span><span class="op">(</span><span class="va">pH</span>, <span class="va">pCO2</span>, temp <span class="op">=</span> <span class="va">temperature</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="va">df_base_vs_pH</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">pivot_longer</span><span class="op">(</span></span>
+<span>    cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">`Add base (e.g. NaOH)`</span>, <span class="va">`Add acid (e.g. HCl)`</span>, <span class="va">`DIC`</span><span class="op">)</span>,</span>
+<span>    names_to <span class="op">=</span> <span class="st">"var"</span>, values_to <span class="op">=</span> <span class="st">"concentration"</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">concentration</span> <span class="op">&gt;</span> <span class="va">zero</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">mutate</span><span class="op">(</span></span>
+<span>    temperature <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/as_factor.html" class="external-link">as_factor</a></span><span class="op">(</span><span class="va">temperature</span>, unit <span class="op">=</span> <span class="st">"C"</span><span class="op">)</span>,</span>
+<span>    panel <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/as_factor.html" class="external-link">as_factor</a></span><span class="op">(</span><span class="va">pCO2</span>, unit <span class="op">=</span> <span class="st">"mbar"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">aes</span><span class="op">(</span><span class="va">pH</span>, <span class="va">concentration</span>, color <span class="op">=</span> <span class="va">var</span>, linetype <span class="op">=</span> <span class="va">temperature</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_vline</span><span class="op">(</span>xintercept <span class="op">=</span> <span class="fl">7</span>, color <span class="op">=</span> <span class="st">"black"</span>, size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_x_continuous</span><span class="op">(</span>breaks <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">14</span>, expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/scale_qty.html">scale_y_qty</a></span><span class="op">(</span>each <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_color_brewer</span><span class="op">(</span><span class="st">"Component"</span>, palette <span class="op">=</span> <span class="st">"Set1"</span><span class="op">)</span> <span class="op">+</span>  </span>
+<span>  <span class="fu">facet_wrap</span><span class="op">(</span><span class="op">~</span><span class="va">panel</span>, nrow <span class="op">=</span> <span class="fl">1</span>, scales <span class="op">=</span> <span class="st">"free_y"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">theme_bw</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">p</span></span></code></pre></div>
 <p><img src="carbonate_chemistry_examples_files/figure-html/unbalanced%20ions%20for%20pH-1.png" width="864"></p>
 </div>
-<div id="log-scale" class="section level3">
-<h3 class="hasAnchor">
-<a href="#log-scale" class="anchor"></a>Log scale</h3>
-<div class="sourceCode" id="cb24"><pre class="downlit">
-<span class="co"># easier to see in log space and equal y axis + a vertical line</span>
-<span class="va">p_log</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span>
-  <span class="fu"><a href="../reference/scale_qty.html">scale_y_qty</a></span><span class="op">(</span>each <span class="op">=</span> <span class="cn">TRUE</span>, trans <span class="op">=</span> <span class="st">"log10"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">facet_wrap</span><span class="op">(</span><span class="op">~</span><span class="va">panel</span>, nrow <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></pre></div>
-<pre><code>## Scale for 'y' is already present. Adding another scale for 'y', which will
-## replace the existing scale.</code></pre>
-<div class="sourceCode" id="cb26"><pre class="downlit">
-<span class="va">p_log</span></pre></div>
+<div class="section level4">
+<h4 id="log-scale">Log scale<a class="anchor" aria-label="anchor" href="#log-scale"></a>
+</h4>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># easier to see in log space and equal y axis + a vertical line</span></span>
+<span><span class="va">p_log</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/scale_qty.html">scale_y_qty</a></span><span class="op">(</span>each <span class="op">=</span> <span class="cn">TRUE</span>, trans <span class="op">=</span> <span class="st">"log10"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">facet_wrap</span><span class="op">(</span><span class="op">~</span><span class="va">panel</span>, nrow <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Scale for <span style="color: #00BB00;">y</span> is already present.</span></span>
+<span><span class="co">## Adding another scale for <span style="color: #00BB00;">y</span>, which will replace the existing scale.</span></span></code></pre>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">p_log</span></span></code></pre></div>
 <p><img src="carbonate_chemistry_examples_files/figure-html/unbalanced%20ions%20for%20pH%20-%20log%20scale-1.png" width="864"></p>
 </div>
 </div>
-<div id="adjusting-ph-with-a-buffer" class="section level2">
-<h2 class="hasAnchor">
-<a href="#adjusting-ph-with-a-buffer" class="anchor"></a>Adjusting pH with a buffer</h2>
+<div class="section level3">
+<h3 id="adjusting-ph-with-a-buffer">Adjusting pH with a buffer<a class="anchor" aria-label="anchor" href="#adjusting-ph-with-a-buffer"></a>
+</h3>
 <p>For simplicty keeping temperature constant at the default (25C).</p>
-<div class="sourceCode" id="cb27"><pre class="downlit">
-<span class="va">buffer</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">10</span>, <span class="fl">50</span><span class="op">)</span>, <span class="st">"mM"</span><span class="op">)</span>
-<span class="co"># to calculate how much base (NaOH or NaHCO3) to add</span>
-<span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>
-  buffer <span class="op">=</span> <span class="va">buffer</span>,
-  add <span class="op">=</span> <span class="fu"><a href="../reference/open_system.html">calculate_open_system_alkalinity</a></span><span class="op">(</span>
-    pH <span class="op">=</span> <span class="fl">6.8</span>,
-    pCO2 <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">50</span>, <span class="st">"mbar"</span><span class="op">)</span>,
-    buffer <span class="op">=</span> <span class="va">buffer</span>,
-    buffer_pKa <span class="op">=</span> <span class="fl">7.5</span>
-  <span class="op">)</span>
-<span class="op">)</span>
-<span class="va">df</span></pre></div>
-<pre><code>## # A tibble: 3 x 2
-##    buffer     add
-##   &lt;C[mM]&gt; &lt;C[mM]&gt;
-## 1       1    5.39
-## 2      10    6.88
-## 3      50   13.5</code></pre>
-<div class="sourceCode" id="cb29"><pre class="downlit">
-<span class="co"># what if buffer is mono-sodium? (negative means HCl or other strong acid required instead of base)</span>
-<span class="va">df</span> <span class="op">%&gt;%</span> <span class="fu">mutate</span><span class="op">(</span>add_if_salt_buffer <span class="op">=</span> <span class="va">add</span> <span class="op">-</span> <span class="va">buffer</span><span class="op">)</span></pre></div>
-<pre><code>## # A tibble: 3 x 3
-##    buffer     add add_if_salt_buffer
-##   &lt;C[mM]&gt; &lt;C[mM]&gt;            &lt;C[mM]&gt;
-## 1       1    5.39               4.39
-## 2      10    6.88              -3.12
-## 3      50   13.5              -36.5</code></pre>
-<div class="sourceCode" id="cb31"><pre class="downlit">
-<span class="co"># to calculate pH with addition of a specific buffer</span>
-<span class="va">df</span> <span class="op">%&gt;%</span>
-  <span class="fu">mutate</span><span class="op">(</span>
-    pH <span class="op">=</span> <span class="fu"><a href="../reference/open_system.html">calculate_open_system_pH</a></span><span class="op">(</span>
-      pCO2 <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">50</span>, <span class="st">"mbar"</span><span class="op">)</span>,
-      buffer <span class="op">=</span> <span class="va">buffer</span>,
-      alkalinity <span class="op">=</span> <span class="va">add</span>,
-      buffer_pKa <span class="op">=</span> <span class="fl">7.5</span>
-    <span class="op">)</span>
-  <span class="op">)</span></pre></div>
-<pre><code>## # A tibble: 3 x 3
-##    buffer     add    pH
-##   &lt;C[mM]&gt; &lt;C[mM]&gt; &lt;dbl&gt;
-## 1       1    5.39  6.80
-## 2      10    6.88  6.80
-## 3      50   13.5   6.80</code></pre>
-<div id="different-concentrations-of-weak-acid-same-pka" class="section level3">
-<h3 class="hasAnchor">
-<a href="#different-concentrations-of-weak-acid-same-pka" class="anchor"></a>Different concentrations of weak acid (same pKa)</h3>
-<div class="sourceCode" id="cb33"><pre class="downlit">
-<span class="co"># range of pCO2s</span>
-<span class="va">pCO2s</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>pCO2 <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.4</span>, <span class="fl">50</span>, <span class="fl">200</span><span class="op">)</span>, <span class="st">"mbar"</span><span class="op">)</span><span class="op">)</span>
-<span class="co"># range of buffers</span>
-<span class="va">buffers</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>
-  buffer <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">20</span>, <span class="fl">20</span>, <span class="fl">20</span>, <span class="fl">50</span><span class="op">)</span>, <span class="st">"mM"</span><span class="op">)</span>,
-  buffer_pKa <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">7.5</span>, <span class="fl">7.5</span>, <span class="fl">9</span>, <span class="fl">6</span>, <span class="fl">7.5</span><span class="op">)</span>
-<span class="op">)</span>
-
-<span class="co"># calculate for all combinations</span>
-<span class="va">df_base_w_buffer_vs_pH</span> <span class="op">&lt;-</span>
-  <span class="fu">crossing</span><span class="op">(</span><span class="va">pCO2s</span>, <span class="va">buffers</span>, pH <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">7.5</span>, by <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">mutate</span><span class="op">(</span>
-    ions <span class="op">=</span> <span class="fu"><a href="../reference/open_system.html">calculate_open_system_alkalinity</a></span><span class="op">(</span><span class="va">pH</span>, <span class="va">pCO2</span>, buffer <span class="op">=</span> <span class="va">buffer</span>, buffer_pKa <span class="op">=</span> <span class="va">buffer_pKa</span><span class="op">)</span>,
-    `Add base (e.g. NaOH)` <span class="op">=</span> <span class="fu">case_when</span><span class="op">(</span><span class="va">ions</span> <span class="op">&gt;</span> <span class="va">zero</span> <span class="op">~</span> <span class="va">ions</span>, <span class="cn">TRUE</span> <span class="op">~</span> <span class="va">zero</span><span class="op">)</span>,
-    `Add acid (e.g. HCl)` <span class="op">=</span> <span class="fu">case_when</span><span class="op">(</span><span class="va">ions</span> <span class="op">&lt;</span> <span class="va">zero</span> <span class="op">~</span> <span class="op">-</span><span class="fl">1</span><span class="op">*</span><span class="va">ions</span>, <span class="cn">TRUE</span> <span class="op">~</span> <span class="va">zero</span><span class="op">)</span>,
-    DIC <span class="op">=</span> <span class="fu"><a href="../reference/speciation.html">calculate_DIC</a></span><span class="op">(</span><span class="va">pH</span>, <span class="va">pCO2</span><span class="op">)</span>
-  <span class="op">)</span>
-
-<span class="co"># visualize</span>
-<span class="va">plot_df</span> <span class="op">&lt;-</span> <span class="va">df_base_w_buffer_vs_pH</span> <span class="op">%&gt;%</span>
-  <span class="fu">pivot_longer</span><span class="op">(</span>
-    cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">`Add base (e.g. NaOH)`</span>, <span class="va">`Add acid (e.g. HCl)`</span>, <span class="va">`DIC`</span><span class="op">)</span>,
-    names_to <span class="op">=</span> <span class="st">"var"</span>, values_to <span class="op">=</span> <span class="st">"concentration"</span>
-  <span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">mutate</span><span class="op">(</span>
-    panel <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/as_factor.html">as_factor</a></span><span class="op">(</span><span class="va">pCO2</span>, unit <span class="op">=</span> <span class="st">"mbar"</span><span class="op">)</span>,
-    Buffer <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"%s (pkA=%s)"</span>, <span class="va">buffer</span>, <span class="va">buffer_pKa</span><span class="op">)</span>
-  <span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">concentration</span> <span class="op">&gt;</span> <span class="va">zero</span><span class="op">)</span>
-
-<span class="va">p_log</span> <span class="op">%+%</span> 
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">plot_df</span>, <span class="va">buffer_pKa</span> <span class="op">==</span> <span class="fl">7.5</span><span class="op">)</span> <span class="op">%+%</span>
-  <span class="fu">aes</span><span class="op">(</span>linetype <span class="op">=</span> <span class="va">Buffer</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Different concentrations of a weak acid buffer"</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">buffer</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">10</span>, <span class="fl">50</span><span class="op">)</span>, <span class="st">"mM"</span><span class="op">)</span></span>
+<span><span class="co"># to calculate how much base (NaOH or NaHCO3) to add</span></span>
+<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
+<span>  buffer <span class="op">=</span> <span class="va">buffer</span>,</span>
+<span>  add <span class="op">=</span> <span class="fu"><a href="../reference/open_system.html">calculate_open_system_alkalinity</a></span><span class="op">(</span></span>
+<span>    pH <span class="op">=</span> <span class="fl">6.8</span>,</span>
+<span>    pCO2 <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">50</span>, <span class="st">"mbar"</span><span class="op">)</span>,</span>
+<span>    buffer <span class="op">=</span> <span class="va">buffer</span>,</span>
+<span>    buffer_pKa <span class="op">=</span> <span class="fl">7.5</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">df</span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 3 × 2</span></span></span>
+<span><span class="co">##       buffer        add</span></span>
+<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;mk_mlrt_&gt;</span> <span style="color: #949494; font-style: italic;">&lt;mk_mlrt_&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span>          1       5.39</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">2</span>         10       6.88</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">3</span>         50      13.5</span></span></code></pre>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># what if buffer is mono-sodium? (negative means HCl or other strong acid required instead of base)</span></span>
+<span><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">mutate</span><span class="op">(</span>add_if_salt_buffer <span class="op">=</span> <span class="va">add</span> <span class="op">-</span> <span class="va">buffer</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 3 × 3</span></span></span>
+<span><span class="co">##       buffer        add add_if_salt_buffer</span></span>
+<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;mk_mlrt_&gt;</span> <span style="color: #949494; font-style: italic;">&lt;mk_mlrt_&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;mk_mlrt_&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span>          1       5.39               4.39</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">2</span>         10       6.88              -<span style="color: #BB0000;">3.12</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">3</span>         50      13.5              -<span style="color: #BB0000;">36.5</span></span></span></code></pre>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># to calculate pH with addition of a specific buffer</span></span>
+<span><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">mutate</span><span class="op">(</span></span>
+<span>    pH <span class="op">=</span> <span class="fu"><a href="../reference/open_system.html">calculate_open_system_pH</a></span><span class="op">(</span></span>
+<span>      pCO2 <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">50</span>, <span class="st">"mbar"</span><span class="op">)</span>,</span>
+<span>      buffer <span class="op">=</span> <span class="va">buffer</span>,</span>
+<span>      alkalinity <span class="op">=</span> <span class="va">add</span>,</span>
+<span>      buffer_pKa <span class="op">=</span> <span class="fl">7.5</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 3 × 3</span></span></span>
+<span><span class="co">##       buffer        add    pH</span></span>
+<span><span class="co">##   <span style="color: #949494; font-style: italic;">&lt;mk_mlrt_&gt;</span> <span style="color: #949494; font-style: italic;">&lt;mk_mlrt_&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">1</span>          1       5.39  6.80</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">2</span>         10       6.88  6.80</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">3</span>         50      13.5   6.80</span></span></code></pre>
+<div class="section level4">
+<h4 id="different-concentrations-of-weak-acid-same-pka">Different concentrations of weak acid (same pKa)<a class="anchor" aria-label="anchor" href="#different-concentrations-of-weak-acid-same-pka"></a>
+</h4>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># range of pCO2s</span></span>
+<span><span class="va">pCO2s</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>pCO2 <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.4</span>, <span class="fl">50</span>, <span class="fl">200</span><span class="op">)</span>, <span class="st">"mbar"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co"># range of buffers</span></span>
+<span><span class="va">buffers</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
+<span>  buffer <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">20</span>, <span class="fl">20</span>, <span class="fl">20</span>, <span class="fl">50</span><span class="op">)</span>, <span class="st">"mM"</span><span class="op">)</span>,</span>
+<span>  buffer_pKa <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">7.5</span>, <span class="fl">7.5</span>, <span class="fl">9</span>, <span class="fl">6</span>, <span class="fl">7.5</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># calculate for all combinations</span></span>
+<span><span class="va">df_base_w_buffer_vs_pH</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu">crossing</span><span class="op">(</span><span class="va">pCO2s</span>, <span class="va">buffers</span>, pH <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">7.5</span>, by <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">mutate</span><span class="op">(</span></span>
+<span>    ions <span class="op">=</span> <span class="fu"><a href="../reference/open_system.html">calculate_open_system_alkalinity</a></span><span class="op">(</span><span class="va">pH</span>, <span class="va">pCO2</span>, buffer <span class="op">=</span> <span class="va">buffer</span>, buffer_pKa <span class="op">=</span> <span class="va">buffer_pKa</span><span class="op">)</span>,</span>
+<span>    `Add base (e.g. NaOH)` <span class="op">=</span> <span class="fu">case_when</span><span class="op">(</span><span class="va">ions</span> <span class="op">&gt;</span> <span class="va">zero</span> <span class="op">~</span> <span class="va">ions</span>, <span class="cn">TRUE</span> <span class="op">~</span> <span class="va">zero</span><span class="op">)</span>,</span>
+<span>    `Add acid (e.g. HCl)` <span class="op">=</span> <span class="fu">case_when</span><span class="op">(</span><span class="va">ions</span> <span class="op">&lt;</span> <span class="va">zero</span> <span class="op">~</span> <span class="op">-</span><span class="fl">1</span><span class="op">*</span><span class="va">ions</span>, <span class="cn">TRUE</span> <span class="op">~</span> <span class="va">zero</span><span class="op">)</span>,</span>
+<span>    DIC <span class="op">=</span> <span class="fu"><a href="../reference/speciation.html">calculate_DIC</a></span><span class="op">(</span><span class="va">pH</span>, <span class="va">pCO2</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="co"># visualize</span></span>
+<span><span class="va">plot_df</span> <span class="op">&lt;-</span> <span class="va">df_base_w_buffer_vs_pH</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">pivot_longer</span><span class="op">(</span></span>
+<span>    cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">`Add base (e.g. NaOH)`</span>, <span class="va">`Add acid (e.g. HCl)`</span>, <span class="va">`DIC`</span><span class="op">)</span>,</span>
+<span>    names_to <span class="op">=</span> <span class="st">"var"</span>, values_to <span class="op">=</span> <span class="st">"concentration"</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu">mutate</span><span class="op">(</span></span>
+<span>    panel <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/as_factor.html" class="external-link">as_factor</a></span><span class="op">(</span><span class="va">pCO2</span>, unit <span class="op">=</span> <span class="st">"mbar"</span><span class="op">)</span>,</span>
+<span>    Buffer <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sprintf.html" class="external-link">sprintf</a></span><span class="op">(</span><span class="st">"%s (pkA=%s)"</span>, <span class="va">buffer</span>, <span class="va">buffer_pKa</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">concentration</span> <span class="op">&gt;</span> <span class="va">zero</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">p_log</span> <span class="op">%+%</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">plot_df</span>, <span class="va">buffer_pKa</span> <span class="op">==</span> <span class="fl">7.5</span><span class="op">)</span> <span class="op">%+%</span></span>
+<span>  <span class="fu">aes</span><span class="op">(</span>linetype <span class="op">=</span> <span class="va">Buffer</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Different concentrations of a weak acid buffer"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="carbonate_chemistry_examples_files/figure-html/unbalanced%20ions%20for%20pH%20with%20buffer-1.png" width="864"></p>
 </div>
-<div id="same-concentration-of-weak-acid-different-pka" class="section level3">
-<h3 class="hasAnchor">
-<a href="#same-concentration-of-weak-acid-different-pka" class="anchor"></a>Same concentration of weak acid (different pKa)</h3>
-<div class="sourceCode" id="cb34"><pre class="downlit">
-<span class="va">p_log</span> <span class="op">%+%</span> 
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">plot_df</span>, <span class="va">buffer</span> <span class="op">==</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">20</span>, <span class="st">"mM"</span><span class="op">)</span><span class="op">)</span> <span class="op">%+%</span>
-    <span class="fu">aes</span><span class="op">(</span>linetype <span class="op">=</span> <span class="va">Buffer</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Same concentration of a weak acid buffer with different pKa"</span><span class="op">)</span></pre></div>
+<div class="section level4">
+<h4 id="same-concentration-of-weak-acid-different-pka">Same concentration of weak acid (different pKa)<a class="anchor" aria-label="anchor" href="#same-concentration-of-weak-acid-different-pka"></a>
+</h4>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">p_log</span> <span class="op">%+%</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">plot_df</span>, <span class="va">buffer</span> <span class="op">==</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">20</span>, <span class="st">"mM"</span><span class="op">)</span><span class="op">)</span> <span class="op">%+%</span></span>
+<span>    <span class="fu">aes</span><span class="op">(</span>linetype <span class="op">=</span> <span class="va">Buffer</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Same concentration of a weak acid buffer with different pKa"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="carbonate_chemistry_examples_files/figure-html/unbalanced%20ions%20for%20pH%20with%20buffer%20difference%20pKa-1.png" width="864"></p>
 </div>
-<div id="different-concentration-of-salt-buffer-same-pka" class="section level3">
-<h3 class="hasAnchor">
-<a href="#different-concentration-of-salt-buffer-same-pka" class="anchor"></a>Different concentration of salt buffer (same pKa)</h3>
-<p>If the buffer is a salt instead of an acid, it contributes to the alkalinity.</p>
-<div class="sourceCode" id="cb35"><pre class="downlit">
-<span class="va">plot_df2</span> <span class="op">&lt;-</span>
-  <span class="fu">crossing</span><span class="op">(</span><span class="va">pCO2s</span>, <span class="va">buffers</span>, pH <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">7.5</span>, by <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">mutate</span><span class="op">(</span>
-    ions <span class="op">=</span> <span class="fu"><a href="../reference/open_system.html">calculate_open_system_alkalinity</a></span><span class="op">(</span><span class="va">pH</span>, <span class="va">pCO2</span>, buffer <span class="op">=</span> <span class="va">buffer</span>, buffer_pKa <span class="op">=</span> <span class="va">buffer_pKa</span><span class="op">)</span> <span class="op">-</span> <span class="va">buffer</span>,
-    `Add base (e.g. NaOH)` <span class="op">=</span> <span class="fu">case_when</span><span class="op">(</span><span class="va">ions</span> <span class="op">&gt;</span> <span class="va">zero</span> <span class="op">~</span> <span class="va">ions</span>, <span class="cn">TRUE</span> <span class="op">~</span> <span class="va">zero</span><span class="op">)</span>,
-    `Add acid (e.g. HCl)` <span class="op">=</span> <span class="fu">case_when</span><span class="op">(</span><span class="va">ions</span> <span class="op">&lt;</span> <span class="va">zero</span> <span class="op">~</span> <span class="op">-</span><span class="fl">1</span><span class="op">*</span><span class="va">ions</span>, <span class="cn">TRUE</span> <span class="op">~</span> <span class="va">zero</span><span class="op">)</span>,
-    DIC <span class="op">=</span> <span class="fu"><a href="../reference/speciation.html">calculate_DIC</a></span><span class="op">(</span><span class="va">pH</span>, <span class="va">pCO2</span><span class="op">)</span>
-  <span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">pivot_longer</span><span class="op">(</span>
-    cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">`Add base (e.g. NaOH)`</span>, <span class="va">`Add acid (e.g. HCl)`</span>, <span class="va">`DIC`</span><span class="op">)</span>,
-    names_to <span class="op">=</span> <span class="st">"var"</span>, values_to <span class="op">=</span> <span class="st">"concentration"</span>
-  <span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="fu">mutate</span><span class="op">(</span>
-    panel <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/as_factor.html">as_factor</a></span><span class="op">(</span><span class="va">pCO2</span>, unit <span class="op">=</span> <span class="st">"mbar"</span><span class="op">)</span>,
-    buffer <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"%s (pkA=%s)"</span>, <span class="va">buffer</span>, <span class="va">buffer_pKa</span><span class="op">)</span>
-  <span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">concentration</span> <span class="op">&gt;</span> <span class="va">zero</span><span class="op">)</span>
-
-<span class="va">p_log</span> <span class="op">%+%</span> 
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">plot_df2</span>, <span class="va">buffer_pKa</span> <span class="op">==</span> <span class="fl">7.5</span><span class="op">)</span> <span class="op">%+%</span>
-  <span class="fu">aes</span><span class="op">(</span>linetype <span class="op">=</span> <span class="va">buffer</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Different concentrations of a mono-valent salt buffer"</span><span class="op">)</span></pre></div>
+<div class="section level4">
+<h4 id="different-concentration-of-salt-buffer-same-pka">Different concentration of salt buffer (same pKa)<a class="anchor" aria-label="anchor" href="#different-concentration-of-salt-buffer-same-pka"></a>
+</h4>
+<p>If the buffer is a salt instead of an acid, it contributes to the
+alkalinity.</p>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">plot_df2</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu">crossing</span><span class="op">(</span><span class="va">pCO2s</span>, <span class="va">buffers</span>, pH <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">7.5</span>, by <span class="op">=</span> <span class="fl">0.05</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">mutate</span><span class="op">(</span></span>
+<span>    ions <span class="op">=</span> <span class="fu"><a href="../reference/open_system.html">calculate_open_system_alkalinity</a></span><span class="op">(</span><span class="va">pH</span>, <span class="va">pCO2</span>, buffer <span class="op">=</span> <span class="va">buffer</span>, buffer_pKa <span class="op">=</span> <span class="va">buffer_pKa</span><span class="op">)</span> <span class="op">-</span> <span class="va">buffer</span>,</span>
+<span>    `Add base (e.g. NaOH)` <span class="op">=</span> <span class="fu">case_when</span><span class="op">(</span><span class="va">ions</span> <span class="op">&gt;</span> <span class="va">zero</span> <span class="op">~</span> <span class="va">ions</span>, <span class="cn">TRUE</span> <span class="op">~</span> <span class="va">zero</span><span class="op">)</span>,</span>
+<span>    `Add acid (e.g. HCl)` <span class="op">=</span> <span class="fu">case_when</span><span class="op">(</span><span class="va">ions</span> <span class="op">&lt;</span> <span class="va">zero</span> <span class="op">~</span> <span class="op">-</span><span class="fl">1</span><span class="op">*</span><span class="va">ions</span>, <span class="cn">TRUE</span> <span class="op">~</span> <span class="va">zero</span><span class="op">)</span>,</span>
+<span>    DIC <span class="op">=</span> <span class="fu"><a href="../reference/speciation.html">calculate_DIC</a></span><span class="op">(</span><span class="va">pH</span>, <span class="va">pCO2</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">pivot_longer</span><span class="op">(</span></span>
+<span>    cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">`Add base (e.g. NaOH)`</span>, <span class="va">`Add acid (e.g. HCl)`</span>, <span class="va">`DIC`</span><span class="op">)</span>,</span>
+<span>    names_to <span class="op">=</span> <span class="st">"var"</span>, values_to <span class="op">=</span> <span class="st">"concentration"</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu">mutate</span><span class="op">(</span></span>
+<span>    panel <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/as_factor.html" class="external-link">as_factor</a></span><span class="op">(</span><span class="va">pCO2</span>, unit <span class="op">=</span> <span class="st">"mbar"</span><span class="op">)</span>,</span>
+<span>    buffer <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sprintf.html" class="external-link">sprintf</a></span><span class="op">(</span><span class="st">"%s (pkA=%s)"</span>, <span class="va">buffer</span>, <span class="va">buffer_pKa</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">concentration</span> <span class="op">&gt;</span> <span class="va">zero</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">p_log</span> <span class="op">%+%</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">plot_df2</span>, <span class="va">buffer_pKa</span> <span class="op">==</span> <span class="fl">7.5</span><span class="op">)</span> <span class="op">%+%</span></span>
+<span>  <span class="fu">aes</span><span class="op">(</span>linetype <span class="op">=</span> <span class="va">buffer</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Different concentrations of a mono-valent salt buffer"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="carbonate_chemistry_examples_files/figure-html/unbalanced%20ions%20for%20pH%20with%20different%20buffer%20concs-1.png" width="864"></p>
 </div>
 </div>
-<div id="ph-difference-upon-atmosphere-switching" class="section level2">
-<h2 class="hasAnchor">
-<a href="#ph-difference-upon-atmosphere-switching" class="anchor"></a>pH difference upon atmosphere switching</h2>
-<p>A rare environmental but common laboratory scenario is the sometimes unexpected change in pH upon shifting from standard atmospheric CO2 (400ppm, let’s face reality…) to some artifical higher CO2 atmosphere without adjusting anything else.</p>
-<div class="sourceCode" id="cb36"><pre class="downlit">
-<span class="va">df_pH_switch</span> <span class="op">&lt;-</span>
-  <span class="va">df_base_w_buffer_vs_pH</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="../reference/quantity_data.html">get_qty_value</a></span><span class="op">(</span><span class="va">pCO2</span>, <span class="st">"mbar"</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0.4</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">rename</span><span class="op">(</span>init_pCO2 <span class="op">=</span> <span class="va">pCO2</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">crossing</span><span class="op">(</span>pCO2 <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">50</span>, <span class="fl">200</span><span class="op">)</span>, <span class="st">"mbar"</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">mutate</span><span class="op">(</span>
-    `new pH` <span class="op">=</span> <span class="fu"><a href="../reference/open_system.html">calculate_open_system_pH</a></span><span class="op">(</span>
-      pCO2 <span class="op">=</span> <span class="va">pCO2</span>, buffer <span class="op">=</span> <span class="va">buffer</span>, buffer_pKa <span class="op">=</span> <span class="va">buffer_pKa</span>, alkalinity <span class="op">=</span> <span class="va">ions</span>
-    <span class="op">)</span>,
-    `pH difference` <span class="op">=</span> <span class="va">`new pH`</span> <span class="op">-</span> <span class="va">pH</span>,
-    panel <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/as_factor.html">as_factor</a></span><span class="op">(</span><span class="va">pCO2</span>, unit <span class="op">=</span> <span class="st">"mbar"</span><span class="op">)</span>
-  <span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">pivot_longer</span><span class="op">(</span>
-    cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">`new pH`</span>, <span class="va">`pH difference`</span><span class="op">)</span>,
-    names_to <span class="op">=</span> <span class="st">"var"</span>, values_to <span class="op">=</span> <span class="st">"value"</span>, 
-  <span class="op">)</span>
-
-<span class="va">p</span> <span class="op">%+%</span> 
-  <span class="fu">mutate</span><span class="op">(</span><span class="va">df_pH_switch</span>, buffer <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/as_factor.html">as_factor</a></span><span class="op">(</span><span class="va">buffer</span><span class="op">)</span><span class="op">)</span> <span class="op">%+%</span>
-  <span class="fu">aes</span><span class="op">(</span>y <span class="op">=</span> <span class="va">value</span>, color <span class="op">=</span> <span class="va">buffer</span>, linetype <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/as_factor.html">as_factor</a></span><span class="op">(</span><span class="va">buffer_pKa</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">facet_grid</span><span class="op">(</span><span class="va">var</span><span class="op">~</span><span class="va">panel</span>, scales <span class="op">=</span> <span class="st">"free_y"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">scale_color_brewer</span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Set1"</span><span class="op">)</span> <span class="op">+</span>  
-  <span class="fu">scale_linetype_manual</span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">labs</span><span class="op">(</span>linetype <span class="op">=</span> <span class="st">"pKa"</span>, y <span class="op">=</span> <span class="st">""</span><span class="op">)</span></pre></div>
-<pre><code>## Scale for 'colour' is already present. Adding another scale for 'colour',
-## which will replace the existing scale.</code></pre>
+<div class="section level3">
+<h3 id="ph-difference-upon-atmosphere-switching">pH difference upon atmosphere switching<a class="anchor" aria-label="anchor" href="#ph-difference-upon-atmosphere-switching"></a>
+</h3>
+<p>A rare environmental but common laboratory scenario is the sometimes
+unexpected change in pH upon shifting from standard atmospheric CO2
+(400ppm, let’s face reality…) to some artifical higher CO2 atmosphere
+without adjusting anything else.</p>
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">df_pH_switch</span> <span class="op">&lt;-</span></span>
+<span>  <span class="va">df_base_w_buffer_vs_pH</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="../reference/quantity_data.html">get_qty_value</a></span><span class="op">(</span><span class="va">pCO2</span>, <span class="st">"mbar"</span><span class="op">)</span> <span class="op">==</span> <span class="fl">0.4</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">rename</span><span class="op">(</span>init_pCO2 <span class="op">=</span> <span class="va">pCO2</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">crossing</span><span class="op">(</span>pCO2 <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">50</span>, <span class="fl">200</span><span class="op">)</span>, <span class="st">"mbar"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">mutate</span><span class="op">(</span></span>
+<span>    `new pH` <span class="op">=</span> <span class="fu"><a href="../reference/open_system.html">calculate_open_system_pH</a></span><span class="op">(</span></span>
+<span>      pCO2 <span class="op">=</span> <span class="va">pCO2</span>, buffer <span class="op">=</span> <span class="va">buffer</span>, buffer_pKa <span class="op">=</span> <span class="va">buffer_pKa</span>, alkalinity <span class="op">=</span> <span class="va">ions</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    `pH difference` <span class="op">=</span> <span class="va">`new pH`</span> <span class="op">-</span> <span class="va">pH</span>,</span>
+<span>    panel <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/as_factor.html" class="external-link">as_factor</a></span><span class="op">(</span><span class="va">pCO2</span>, unit <span class="op">=</span> <span class="st">"mbar"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">pivot_longer</span><span class="op">(</span></span>
+<span>    cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">`new pH`</span>, <span class="va">`pH difference`</span><span class="op">)</span>,</span>
+<span>    names_to <span class="op">=</span> <span class="st">"var"</span>, values_to <span class="op">=</span> <span class="st">"value"</span>, </span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="va">p</span> <span class="op">%+%</span> </span>
+<span>  <span class="fu">mutate</span><span class="op">(</span><span class="va">df_pH_switch</span>, buffer <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/as_factor.html" class="external-link">as_factor</a></span><span class="op">(</span><span class="va">buffer</span><span class="op">)</span><span class="op">)</span> <span class="op">%+%</span></span>
+<span>  <span class="fu">aes</span><span class="op">(</span>y <span class="op">=</span> <span class="va">value</span>, color <span class="op">=</span> <span class="va">buffer</span>, linetype <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/as_factor.html" class="external-link">as_factor</a></span><span class="op">(</span><span class="va">buffer_pKa</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">facet_grid</span><span class="op">(</span><span class="va">var</span><span class="op">~</span><span class="va">panel</span>, scales <span class="op">=</span> <span class="st">"free_y"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_color_brewer</span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"Set1"</span><span class="op">)</span> <span class="op">+</span>  </span>
+<span>  <span class="fu">scale_linetype_manual</span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span>linetype <span class="op">=</span> <span class="st">"pKa"</span>, y <span class="op">=</span> <span class="st">""</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Scale for <span style="color: #00BB00;">colour</span> is already present.</span></span>
+<span><span class="co">## Adding another scale for <span style="color: #00BB00;">colour</span>, which will replace the existing scale.</span></span></code></pre>
 <p><img src="carbonate_chemistry_examples_files/figure-html/pH%20change%20vs%20pCO2%20and%20acid%20base%20with%20buffer-1.png" width="768"></p>
 </div>
 </div>
-<div id="closed-system" class="section level1">
-<h1 class="hasAnchor">
-<a href="#closed-system" class="anchor"></a>Closed system</h1>
-<p><a href="carbonate_chemistry_equations.html#closed-system">See equations</a>.</p>
-<div id="co2-consumption" class="section level2">
-<h2 class="hasAnchor">
-<a href="#co2-consumption" class="anchor"></a>CO2 consumption</h2>
-<p>Scenario: media is equilibrated with an initial CO2 pressure and adjusted to a specific starting pH (which requires the appropriate addition of alkalinity) in presence or absence of a pH buffer. Then the vessel is closed off and has a starting total inorganic carbon from its headspace and liquid that can then be consumed. Here a few parameters are explored but additional variation will arise from changes in buffer concentration, pKa and the proportion of headspace to liquid.</p>
-<div class="sourceCode" id="cb38"><pre class="downlit">
-<span class="va">df_CO2_consumption</span> <span class="op">&lt;-</span>
-  <span class="fu">crossing</span><span class="op">(</span>
-    <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>
-      <span class="co"># initial medium</span>
-      pH_start <span class="op">=</span> <span class="fl">7</span>,
-      pCO2_start <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.4</span>, <span class="fl">50</span>, <span class="fl">200</span><span class="op">)</span>, <span class="st">"mbar"</span><span class="op">)</span>
-    <span class="op">)</span>,
-    <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>
-      <span class="co"># buffer</span>
-      buffer <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">50</span><span class="op">)</span>, <span class="st">"mM"</span><span class="op">)</span>,
-      pKa <span class="op">=</span> <span class="fl">7.5</span>
-    <span class="op">)</span>
-  <span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">mutate</span><span class="op">(</span>
-    <span class="co"># required alkalinity for pH</span>
-    pH_start <span class="op">=</span> <span class="fl">7</span>,
-    alkalinity <span class="op">=</span> <span class="fu"><a href="../reference/open_system.html">calculate_open_system_alkalinity</a></span><span class="op">(</span>
-      pH <span class="op">=</span> <span class="va">pH_start</span>, pCO2 <span class="op">=</span> <span class="va">pCO2_start</span>,
-      buffer <span class="op">=</span> <span class="va">buffer</span>, buffer_pKa <span class="op">=</span> <span class="va">pKa</span><span class="op">)</span>,
-    <span class="co"># close off</span>
-    V_liquid <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">10</span>, <span class="st">"mL"</span><span class="op">)</span>,
-    V_gas <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">10</span>, <span class="st">"mL"</span><span class="op">)</span>,
-    TIC_start <span class="op">=</span> <span class="fu"><a href="../reference/closed_system.html">calculate_closed_system_TIC</a></span><span class="op">(</span>pH <span class="op">=</span> <span class="va">pH_start</span>, pCO2 <span class="op">=</span> <span class="va">pCO2_start</span>, V_liquid <span class="op">=</span> <span class="va">V_liquid</span>, V_gas <span class="op">=</span> <span class="va">V_gas</span><span class="op">)</span>
-  <span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="co"># range of TIC used up (%)</span>
-  <span class="fu">crossing</span><span class="op">(</span>TIC_used <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, by <span class="op">=</span> <span class="fl">0.01</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="co"># calculation of system at each point</span>
-  <span class="fu">mutate</span><span class="op">(</span>
-    TIC <span class="op">=</span> <span class="va">TIC_start</span> <span class="op">*</span> <span class="op">(</span><span class="fl">1</span><span class="op">-</span><span class="va">TIC_used</span><span class="op">)</span>,
-    pH <span class="op">=</span> <span class="fu"><a href="../reference/closed_system.html">calculate_closed_system_pH</a></span><span class="op">(</span>
-      TIC <span class="op">=</span> <span class="va">TIC</span>, V_liquid <span class="op">=</span> <span class="va">V_liquid</span>, V_gas <span class="op">=</span> <span class="va">V_gas</span>,
-      alkalinity <span class="op">=</span> <span class="va">alkalinity</span>, buffer <span class="op">=</span> <span class="va">buffer</span>, buffer_pKa <span class="op">=</span> <span class="va">pKa</span><span class="op">)</span>,
-    pCO2 <span class="op">=</span> <span class="fu"><a href="../reference/closed_system.html">calculate_closed_system_pCO2</a></span><span class="op">(</span>pH <span class="op">=</span> <span class="va">pH</span>, TIC <span class="op">=</span> <span class="va">TIC</span>, V_liquid <span class="op">=</span> <span class="va">V_liquid</span>, V_gas <span class="op">=</span> <span class="va">V_gas</span><span class="op">)</span>,
-    DIC <span class="op">=</span> <span class="fu"><a href="../reference/speciation.html">calculate_DIC</a></span><span class="op">(</span><span class="va">pH</span>, pCO2 <span class="op">=</span> <span class="va">pCO2</span><span class="op">)</span>,
-    `H2CO3*` <span class="op">=</span> <span class="fu"><a href="../reference/speciation.html">calculate_carbonic_acid</a></span><span class="op">(</span><span class="va">pH</span>, DIC <span class="op">=</span> <span class="va">DIC</span><span class="op">)</span>,
-    HCO3 <span class="op">=</span> <span class="fu"><a href="../reference/speciation.html">calculate_bicarbonate</a></span><span class="op">(</span><span class="va">pH</span>, DIC <span class="op">=</span> <span class="va">DIC</span><span class="op">)</span>,
-    CO3 <span class="op">=</span> <span class="fu"><a href="../reference/speciation.html">calculate_carbonate</a></span><span class="op">(</span><span class="va">pH</span>, DIC <span class="op">=</span> <span class="va">DIC</span><span class="op">)</span>
-  <span class="op">)</span> <span class="op">%&gt;%</span>
-   <span class="fu">mutate</span><span class="op">(</span>
-    pCO2_start <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/as_factor.html">as_factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"%s CO2"</span>, <span class="va">pCO2_start</span><span class="op">)</span><span class="op">)</span>,
-    buffer <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"%s (pkA=%s)"</span>, <span class="va">buffer</span>, <span class="va">pKa</span><span class="op">)</span>,
-  <span class="op">)</span>
-
-<span class="co"># visualize</span>
-<span class="va">p_base</span> <span class="op">&lt;-</span>
-  <span class="va">df_CO2_consumption</span> <span class="op">%&gt;%</span>
-  <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">aes</span><span class="op">(</span><span class="va">TIC_used</span>, linetype <span class="op">=</span> <span class="va">buffer</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu"><a href="../reference/scale_qty.html">scale_y_qty</a></span><span class="op">(</span>each <span class="op">=</span> <span class="cn">TRUE</span>, trans <span class="op">=</span> <span class="st">"log10"</span>, expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">scale_x_continuous</span><span class="op">(</span>
-    labels <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"%.0f%%"</span>, <span class="fl">100</span><span class="op">*</span><span class="va">x</span><span class="op">)</span>, 
-    expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">facet_wrap</span><span class="op">(</span><span class="op">~</span><span class="va">pCO2_start</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">theme_bw</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">theme</span><span class="op">(</span>panel.grid.minor <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">labs</span><span class="op">(</span><span class="st">"TIC consumed"</span><span class="op">)</span>
-
-<span class="va">p_IC</span> <span class="op">&lt;-</span> <span class="va">p_base</span> <span class="op">%+%</span>
-  <span class="fu">aes</span><span class="op">(</span>y <span class="op">=</span> <span class="va">concentration</span>, color <span class="op">=</span> <span class="va">species</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_line</span><span class="op">(</span>
-    data <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span><span class="op">)</span>
-      <span class="va">df</span> <span class="op">%&gt;%</span> <span class="fu">pivot_longer</span><span class="op">(</span>
-        cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">DIC</span>, <span class="va">`H2CO3*`</span>, <span class="va">HCO3</span>, <span class="va">CO3</span><span class="op">)</span>,
-        names_to <span class="op">=</span> <span class="st">"species"</span>,
-        values_to <span class="op">=</span> <span class="st">"concentration"</span>,
-      <span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">concentration</span> <span class="op">&gt;</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">1</span>, <span class="st">"nM"</span><span class="op">)</span><span class="op">)</span>
-  <span class="op">)</span>
-
-<span class="va">p_pH</span> <span class="op">&lt;-</span> <span class="va">p_base</span> <span class="op">%+%</span> 
-  <span class="fu">aes</span><span class="op">(</span>y <span class="op">=</span> <span class="va">pH</span>, color <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">scale_y_continuous</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">theme</span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span>
-
-<span class="va">p_CO2</span> <span class="op">&lt;-</span> <span class="va">p_base</span> <span class="op">%+%</span>
-  <span class="fu">aes</span><span class="op">(</span>y <span class="op">=</span> <span class="va">pCO2</span>, color <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_line</span><span class="op">(</span>data <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">df</span>, <span class="va">pCO2</span> <span class="op">&gt;</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">1e-7</span>, <span class="st">"bar"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">theme</span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span>
-
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://wilkelab.org/cowplot/">cowplot</a></span><span class="op">)</span>
-<span class="fu"><a href="https://wilkelab.org/cowplot/reference/plot_grid.html">plot_grid</a></span><span class="op">(</span><span class="va">p_pH</span>, <span class="va">p_IC</span>, <span class="va">p_CO2</span>, ncol <span class="op">=</span> <span class="fl">1</span>, align <span class="op">=</span> <span class="st">"v"</span>, axis <span class="op">=</span> <span class="st">"lr"</span><span class="op">)</span></pre></div>
+<div class="section level2">
+<h2 id="closed-system">Closed system<a class="anchor" aria-label="anchor" href="#closed-system"></a>
+</h2>
+<p><a href="carbonate_chemistry_equations.html#closed-system">See
+equations</a>.</p>
+<div class="section level3">
+<h3 id="co2-consumption">CO2 consumption<a class="anchor" aria-label="anchor" href="#co2-consumption"></a>
+</h3>
+<p>Scenario: media is equilibrated with an initial CO2 pressure and
+adjusted to a specific starting pH (which requires the appropriate
+addition of alkalinity) in presence or absence of a pH buffer. Then the
+vessel is closed off and has a starting total inorganic carbon from its
+headspace and liquid that can then be consumed. Here a few parameters
+are explored but additional variation will arise from changes in buffer
+concentration, pKa and the proportion of headspace to liquid.</p>
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">df_CO2_consumption</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu">crossing</span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
+<span>      <span class="co"># initial medium</span></span>
+<span>      pH_start <span class="op">=</span> <span class="fl">7</span>,</span>
+<span>      pCO2_start <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.4</span>, <span class="fl">50</span>, <span class="fl">200</span><span class="op">)</span>, <span class="st">"mbar"</span><span class="op">)</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
+<span>      <span class="co"># buffer</span></span>
+<span>      buffer <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">50</span><span class="op">)</span>, <span class="st">"mM"</span><span class="op">)</span>,</span>
+<span>      pKa <span class="op">=</span> <span class="fl">7.5</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">mutate</span><span class="op">(</span></span>
+<span>    <span class="co"># required alkalinity for pH</span></span>
+<span>    pH_start <span class="op">=</span> <span class="fl">7</span>,</span>
+<span>    alkalinity <span class="op">=</span> <span class="fu"><a href="../reference/open_system.html">calculate_open_system_alkalinity</a></span><span class="op">(</span></span>
+<span>      pH <span class="op">=</span> <span class="va">pH_start</span>, pCO2 <span class="op">=</span> <span class="va">pCO2_start</span>,</span>
+<span>      buffer <span class="op">=</span> <span class="va">buffer</span>, buffer_pKa <span class="op">=</span> <span class="va">pKa</span><span class="op">)</span>,</span>
+<span>    <span class="co"># close off</span></span>
+<span>    V_liquid <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">10</span>, <span class="st">"mL"</span><span class="op">)</span>,</span>
+<span>    V_gas <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">10</span>, <span class="st">"mL"</span><span class="op">)</span>,</span>
+<span>    TIC_start <span class="op">=</span> <span class="fu"><a href="../reference/closed_system.html">calculate_closed_system_TIC</a></span><span class="op">(</span>pH <span class="op">=</span> <span class="va">pH_start</span>, pCO2 <span class="op">=</span> <span class="va">pCO2_start</span>, V_liquid <span class="op">=</span> <span class="va">V_liquid</span>, V_gas <span class="op">=</span> <span class="va">V_gas</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="co"># range of TIC used up (%)</span></span>
+<span>  <span class="fu">crossing</span><span class="op">(</span>TIC_used <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, by <span class="op">=</span> <span class="fl">0.01</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="co"># calculation of system at each point</span></span>
+<span>  <span class="fu">mutate</span><span class="op">(</span></span>
+<span>    TIC <span class="op">=</span> <span class="va">TIC_start</span> <span class="op">*</span> <span class="op">(</span><span class="fl">1</span><span class="op">-</span><span class="va">TIC_used</span><span class="op">)</span>,</span>
+<span>    pH <span class="op">=</span> <span class="fu"><a href="../reference/closed_system.html">calculate_closed_system_pH</a></span><span class="op">(</span></span>
+<span>      TIC <span class="op">=</span> <span class="va">TIC</span>, V_liquid <span class="op">=</span> <span class="va">V_liquid</span>, V_gas <span class="op">=</span> <span class="va">V_gas</span>,</span>
+<span>      alkalinity <span class="op">=</span> <span class="va">alkalinity</span>, buffer <span class="op">=</span> <span class="va">buffer</span>, buffer_pKa <span class="op">=</span> <span class="va">pKa</span><span class="op">)</span>,</span>
+<span>    pCO2 <span class="op">=</span> <span class="fu"><a href="../reference/closed_system.html">calculate_closed_system_pCO2</a></span><span class="op">(</span>pH <span class="op">=</span> <span class="va">pH</span>, TIC <span class="op">=</span> <span class="va">TIC</span>, V_liquid <span class="op">=</span> <span class="va">V_liquid</span>, V_gas <span class="op">=</span> <span class="va">V_gas</span><span class="op">)</span>,</span>
+<span>    DIC <span class="op">=</span> <span class="fu"><a href="../reference/speciation.html">calculate_DIC</a></span><span class="op">(</span><span class="va">pH</span>, pCO2 <span class="op">=</span> <span class="va">pCO2</span><span class="op">)</span>,</span>
+<span>    `H2CO3*` <span class="op">=</span> <span class="fu"><a href="../reference/speciation.html">calculate_carbonic_acid</a></span><span class="op">(</span><span class="va">pH</span>, DIC <span class="op">=</span> <span class="va">DIC</span><span class="op">)</span>,</span>
+<span>    HCO3 <span class="op">=</span> <span class="fu"><a href="../reference/speciation.html">calculate_bicarbonate</a></span><span class="op">(</span><span class="va">pH</span>, DIC <span class="op">=</span> <span class="va">DIC</span><span class="op">)</span>,</span>
+<span>    CO3 <span class="op">=</span> <span class="fu"><a href="../reference/speciation.html">calculate_carbonate</a></span><span class="op">(</span><span class="va">pH</span>, DIC <span class="op">=</span> <span class="va">DIC</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>   <span class="fu">mutate</span><span class="op">(</span></span>
+<span>    pCO2_start <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/as_factor.html" class="external-link">as_factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html" class="external-link">sprintf</a></span><span class="op">(</span><span class="st">"%s CO2"</span>, <span class="va">pCO2_start</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    buffer <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sprintf.html" class="external-link">sprintf</a></span><span class="op">(</span><span class="st">"%s (pkA=%s)"</span>, <span class="va">buffer</span>, <span class="va">pKa</span><span class="op">)</span>,</span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="co"># visualize</span></span>
+<span><span class="va">p_base</span> <span class="op">&lt;-</span></span>
+<span>  <span class="va">df_CO2_consumption</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">aes</span><span class="op">(</span><span class="va">TIC_used</span>, linetype <span class="op">=</span> <span class="va">buffer</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/scale_qty.html">scale_y_qty</a></span><span class="op">(</span>each <span class="op">=</span> <span class="cn">TRUE</span>, trans <span class="op">=</span> <span class="st">"log10"</span>, expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_x_continuous</span><span class="op">(</span></span>
+<span>    labels <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/sprintf.html" class="external-link">sprintf</a></span><span class="op">(</span><span class="st">"%.0f%%"</span>, <span class="fl">100</span><span class="op">*</span><span class="va">x</span><span class="op">)</span>, </span>
+<span>    expand <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">facet_wrap</span><span class="op">(</span><span class="op">~</span><span class="va">pCO2_start</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">theme_bw</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">theme</span><span class="op">(</span>panel.grid.minor <span class="op">=</span> <span class="fu">element_blank</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu">labs</span><span class="op">(</span><span class="st">"TIC consumed"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">p_IC</span> <span class="op">&lt;-</span> <span class="va">p_base</span> <span class="op">%+%</span></span>
+<span>  <span class="fu">aes</span><span class="op">(</span>y <span class="op">=</span> <span class="va">concentration</span>, color <span class="op">=</span> <span class="va">species</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_line</span><span class="op">(</span></span>
+<span>    data <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span>
+<span>      <span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">pivot_longer</span><span class="op">(</span></span>
+<span>        cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">DIC</span>, <span class="va">`H2CO3*`</span>, <span class="va">HCO3</span>, <span class="va">CO3</span><span class="op">)</span>,</span>
+<span>        names_to <span class="op">=</span> <span class="st">"species"</span>,</span>
+<span>        values_to <span class="op">=</span> <span class="st">"concentration"</span>,</span>
+<span>      <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">concentration</span> <span class="op">&gt;</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">1</span>, <span class="st">"nM"</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="va">p_pH</span> <span class="op">&lt;-</span> <span class="va">p_base</span> <span class="op">%+%</span> </span>
+<span>  <span class="fu">aes</span><span class="op">(</span>y <span class="op">=</span> <span class="va">pH</span>, color <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_line</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">scale_y_continuous</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">theme</span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">p_CO2</span> <span class="op">&lt;-</span> <span class="va">p_base</span> <span class="op">%+%</span></span>
+<span>  <span class="fu">aes</span><span class="op">(</span>y <span class="op">=</span> <span class="va">pCO2</span>, color <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">geom_line</span><span class="op">(</span>data <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">df</span>, <span class="va">pCO2</span> <span class="op">&gt;</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">1e-7</span>, <span class="st">"bar"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">theme</span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://wilkelab.org/cowplot/" class="external-link">cowplot</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/plot_grid.html" class="external-link">plot_grid</a></span><span class="op">(</span><span class="va">p_pH</span>, <span class="va">p_IC</span>, <span class="va">p_CO2</span>, ncol <span class="op">=</span> <span class="fl">1</span>, align <span class="op">=</span> <span class="st">"v"</span>, axis <span class="op">=</span> <span class="st">"lr"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="carbonate_chemistry_examples_files/figure-html/CO2%20consumption-1.png" width="864"></p>
 </div>
-<div id="co2-production" class="section level2">
-<h2 class="hasAnchor">
-<a href="#co2-production" class="anchor"></a>CO2 production</h2>
-<p>Scenario: media with organic substrate (e.g. a sugar) is adjusted to an initial starting pH (which requires the appropriate addition of alkalinity) in presence or absence of a pH buffer. Then the vessel is closed off and CO2 is produced from the organic substrate (assuming the entire organic pool is respirable).</p>
-<div class="sourceCode" id="cb39"><pre class="downlit">
-<span class="va">df_CO2_production</span> <span class="op">&lt;-</span>
-  <span class="fu">crossing</span><span class="op">(</span>
-    <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>
-      <span class="co"># initial medium</span>
-      pH_start <span class="op">=</span> <span class="fl">7</span>,
-      Corg <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">10</span>, <span class="fl">100</span><span class="op">)</span>, <span class="st">"mM"</span><span class="op">)</span> <span class="co"># respirable carbon molarity</span>
-    <span class="op">)</span>,
-    <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>
-      <span class="co"># buffer</span>
-      buffer <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">50</span><span class="op">)</span>, <span class="st">"mM"</span><span class="op">)</span>,
-      pKa <span class="op">=</span> <span class="fl">7.5</span>
-    <span class="op">)</span>
-  <span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">mutate</span><span class="op">(</span>
-    <span class="co"># required alkalinity for pH adjustment</span>
-    pH_start <span class="op">=</span> <span class="fl">7</span>,
-    pCO2_start <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">0.4</span>, <span class="st">"mbar"</span><span class="op">)</span>, <span class="co"># atmospheric</span>
-    alkalinity <span class="op">=</span> <span class="fu"><a href="../reference/open_system.html">calculate_open_system_alkalinity</a></span><span class="op">(</span>
-      pH <span class="op">=</span> <span class="va">pH_start</span>, pCO2 <span class="op">=</span> <span class="va">pCO2_start</span>,
-      buffer <span class="op">=</span> <span class="va">buffer</span>, buffer_pKa <span class="op">=</span> <span class="va">pKa</span><span class="op">)</span>,
-    <span class="co"># close off</span>
-    V_liquid <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">10</span>, <span class="st">"mL"</span><span class="op">)</span>,
-    V_gas <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">10</span>, <span class="st">"mL"</span><span class="op">)</span>,
-    TIC_start <span class="op">=</span> <span class="fu"><a href="../reference/closed_system.html">calculate_closed_system_TIC</a></span><span class="op">(</span>pH <span class="op">=</span> <span class="va">pH_start</span>, pCO2 <span class="op">=</span> <span class="va">pCO2_start</span>, V_liquid <span class="op">=</span> <span class="va">V_liquid</span>, V_gas <span class="op">=</span> <span class="va">V_gas</span><span class="op">)</span>
-  <span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="co"># range of organics respired (%)</span>
-  <span class="fu">crossing</span><span class="op">(</span>Corg_used <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, by <span class="op">=</span> <span class="fl">0.01</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="co"># calculation of system at each point</span>
-  <span class="fu">mutate</span><span class="op">(</span>
-    TIC <span class="op">=</span> <span class="va">TIC_start</span> <span class="op">+</span> <span class="va">Corg</span> <span class="op">*</span> <span class="va">V_liquid</span> <span class="op">*</span> <span class="va">Corg_used</span>,
-    pH <span class="op">=</span> <span class="fu"><a href="../reference/closed_system.html">calculate_closed_system_pH</a></span><span class="op">(</span>
-      TIC <span class="op">=</span> <span class="va">TIC</span>, V_liquid <span class="op">=</span> <span class="va">V_liquid</span>, V_gas <span class="op">=</span> <span class="va">V_gas</span>,
-      alkalinity <span class="op">=</span> <span class="va">alkalinity</span>, buffer <span class="op">=</span> <span class="va">buffer</span>, buffer_pKa <span class="op">=</span> <span class="va">pKa</span><span class="op">)</span>,
-    pCO2 <span class="op">=</span> <span class="fu"><a href="../reference/closed_system.html">calculate_closed_system_pCO2</a></span><span class="op">(</span>pH <span class="op">=</span> <span class="va">pH</span>, TIC <span class="op">=</span> <span class="va">TIC</span>, V_liquid <span class="op">=</span> <span class="va">V_liquid</span>, V_gas <span class="op">=</span> <span class="va">V_gas</span><span class="op">)</span>,
-    DIC <span class="op">=</span> <span class="fu"><a href="../reference/speciation.html">calculate_DIC</a></span><span class="op">(</span><span class="va">pH</span>, pCO2 <span class="op">=</span> <span class="va">pCO2</span><span class="op">)</span>,
-    `H2CO3*` <span class="op">=</span> <span class="fu"><a href="../reference/speciation.html">calculate_carbonic_acid</a></span><span class="op">(</span><span class="va">pH</span>, DIC <span class="op">=</span> <span class="va">DIC</span><span class="op">)</span>,
-    HCO3 <span class="op">=</span> <span class="fu"><a href="../reference/speciation.html">calculate_bicarbonate</a></span><span class="op">(</span><span class="va">pH</span>, DIC <span class="op">=</span> <span class="va">DIC</span><span class="op">)</span>,
-    CO3 <span class="op">=</span> <span class="fu"><a href="../reference/speciation.html">calculate_carbonate</a></span><span class="op">(</span><span class="va">pH</span>, DIC <span class="op">=</span> <span class="va">DIC</span><span class="op">)</span>
-  <span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">mutate</span><span class="op">(</span>
-    Corg <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/as_factor.html">as_factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"%s org. C"</span>, <span class="va">Corg</span><span class="op">)</span><span class="op">)</span>,
-    buffer <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op">(</span><span class="st">"%s (pkA=%s)"</span>, <span class="va">buffer</span>, <span class="va">pKa</span><span class="op">)</span>,
-  <span class="op">)</span>
-
-<span class="co"># plots</span>
-<span class="va">p_IC_b</span> <span class="op">&lt;-</span> <span class="va">p_IC</span> <span class="op">%+%</span> <span class="va">df_CO2_production</span> <span class="op">%+%</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">Corg_used</span><span class="op">)</span> <span class="op">+</span> <span class="fu">facet_wrap</span><span class="op">(</span><span class="op">~</span><span class="va">Corg</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Organic C consumed"</span><span class="op">)</span>
-<span class="va">p_pH_b</span> <span class="op">&lt;-</span> <span class="va">p_pH</span> <span class="op">%+%</span> <span class="va">df_CO2_production</span> <span class="op">%+%</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">Corg_used</span><span class="op">)</span> <span class="op">+</span> <span class="fu">facet_wrap</span><span class="op">(</span><span class="op">~</span><span class="va">Corg</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Organic C consumed"</span><span class="op">)</span>
-<span class="va">p_CO2_b</span> <span class="op">&lt;-</span> <span class="va">p_CO2</span> <span class="op">%+%</span> <span class="va">df_CO2_production</span> <span class="op">%+%</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">Corg_used</span><span class="op">)</span> <span class="op">+</span> <span class="fu">facet_wrap</span><span class="op">(</span><span class="op">~</span><span class="va">Corg</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Organic C consumed"</span><span class="op">)</span>
-
-<span class="fu"><a href="https://wilkelab.org/cowplot/reference/plot_grid.html">plot_grid</a></span><span class="op">(</span><span class="va">p_pH</span>, <span class="va">p_IC</span>, <span class="va">p_CO2</span>, ncol <span class="op">=</span> <span class="fl">1</span>, align <span class="op">=</span> <span class="st">"v"</span>, axis <span class="op">=</span> <span class="st">"lr"</span><span class="op">)</span></pre></div>
+<div class="section level3">
+<h3 id="co2-production">CO2 production<a class="anchor" aria-label="anchor" href="#co2-production"></a>
+</h3>
+<p>Scenario: media with organic substrate (e.g. a sugar) is adjusted to
+an initial starting pH (which requires the appropriate addition of
+alkalinity) in presence or absence of a pH buffer. Then the vessel is
+closed off and CO2 is produced from the organic substrate (assuming the
+entire organic pool is respirable).</p>
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">df_CO2_production</span> <span class="op">&lt;-</span></span>
+<span>  <span class="fu">crossing</span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
+<span>      <span class="co"># initial medium</span></span>
+<span>      pH_start <span class="op">=</span> <span class="fl">7</span>,</span>
+<span>      Corg <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">10</span>, <span class="fl">100</span><span class="op">)</span>, <span class="st">"mM"</span><span class="op">)</span> <span class="co"># respirable carbon molarity</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
+<span>      <span class="co"># buffer</span></span>
+<span>      buffer <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">50</span><span class="op">)</span>, <span class="st">"mM"</span><span class="op">)</span>,</span>
+<span>      pKa <span class="op">=</span> <span class="fl">7.5</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">mutate</span><span class="op">(</span></span>
+<span>    <span class="co"># required alkalinity for pH adjustment</span></span>
+<span>    pH_start <span class="op">=</span> <span class="fl">7</span>,</span>
+<span>    pCO2_start <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">0.4</span>, <span class="st">"mbar"</span><span class="op">)</span>, <span class="co"># atmospheric</span></span>
+<span>    alkalinity <span class="op">=</span> <span class="fu"><a href="../reference/open_system.html">calculate_open_system_alkalinity</a></span><span class="op">(</span></span>
+<span>      pH <span class="op">=</span> <span class="va">pH_start</span>, pCO2 <span class="op">=</span> <span class="va">pCO2_start</span>,</span>
+<span>      buffer <span class="op">=</span> <span class="va">buffer</span>, buffer_pKa <span class="op">=</span> <span class="va">pKa</span><span class="op">)</span>,</span>
+<span>    <span class="co"># close off</span></span>
+<span>    V_liquid <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">10</span>, <span class="st">"mL"</span><span class="op">)</span>,</span>
+<span>    V_gas <span class="op">=</span> <span class="fu"><a href="../reference/quantities.html">qty</a></span><span class="op">(</span><span class="fl">10</span>, <span class="st">"mL"</span><span class="op">)</span>,</span>
+<span>    TIC_start <span class="op">=</span> <span class="fu"><a href="../reference/closed_system.html">calculate_closed_system_TIC</a></span><span class="op">(</span>pH <span class="op">=</span> <span class="va">pH_start</span>, pCO2 <span class="op">=</span> <span class="va">pCO2_start</span>, V_liquid <span class="op">=</span> <span class="va">V_liquid</span>, V_gas <span class="op">=</span> <span class="va">V_gas</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="co"># range of organics respired (%)</span></span>
+<span>  <span class="fu">crossing</span><span class="op">(</span>Corg_used <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, by <span class="op">=</span> <span class="fl">0.01</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="co"># calculation of system at each point</span></span>
+<span>  <span class="fu">mutate</span><span class="op">(</span></span>
+<span>    TIC <span class="op">=</span> <span class="va">TIC_start</span> <span class="op">+</span> <span class="va">Corg</span> <span class="op">*</span> <span class="va">V_liquid</span> <span class="op">*</span> <span class="va">Corg_used</span>,</span>
+<span>    pH <span class="op">=</span> <span class="fu"><a href="../reference/closed_system.html">calculate_closed_system_pH</a></span><span class="op">(</span></span>
+<span>      TIC <span class="op">=</span> <span class="va">TIC</span>, V_liquid <span class="op">=</span> <span class="va">V_liquid</span>, V_gas <span class="op">=</span> <span class="va">V_gas</span>,</span>
+<span>      alkalinity <span class="op">=</span> <span class="va">alkalinity</span>, buffer <span class="op">=</span> <span class="va">buffer</span>, buffer_pKa <span class="op">=</span> <span class="va">pKa</span><span class="op">)</span>,</span>
+<span>    pCO2 <span class="op">=</span> <span class="fu"><a href="../reference/closed_system.html">calculate_closed_system_pCO2</a></span><span class="op">(</span>pH <span class="op">=</span> <span class="va">pH</span>, TIC <span class="op">=</span> <span class="va">TIC</span>, V_liquid <span class="op">=</span> <span class="va">V_liquid</span>, V_gas <span class="op">=</span> <span class="va">V_gas</span><span class="op">)</span>,</span>
+<span>    DIC <span class="op">=</span> <span class="fu"><a href="../reference/speciation.html">calculate_DIC</a></span><span class="op">(</span><span class="va">pH</span>, pCO2 <span class="op">=</span> <span class="va">pCO2</span><span class="op">)</span>,</span>
+<span>    `H2CO3*` <span class="op">=</span> <span class="fu"><a href="../reference/speciation.html">calculate_carbonic_acid</a></span><span class="op">(</span><span class="va">pH</span>, DIC <span class="op">=</span> <span class="va">DIC</span><span class="op">)</span>,</span>
+<span>    HCO3 <span class="op">=</span> <span class="fu"><a href="../reference/speciation.html">calculate_bicarbonate</a></span><span class="op">(</span><span class="va">pH</span>, DIC <span class="op">=</span> <span class="va">DIC</span><span class="op">)</span>,</span>
+<span>    CO3 <span class="op">=</span> <span class="fu"><a href="../reference/speciation.html">calculate_carbonate</a></span><span class="op">(</span><span class="va">pH</span>, DIC <span class="op">=</span> <span class="va">DIC</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu">mutate</span><span class="op">(</span></span>
+<span>    Corg <span class="op">=</span> <span class="fu"><a href="https://forcats.tidyverse.org/reference/as_factor.html" class="external-link">as_factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sprintf.html" class="external-link">sprintf</a></span><span class="op">(</span><span class="st">"%s org. C"</span>, <span class="va">Corg</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    buffer <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sprintf.html" class="external-link">sprintf</a></span><span class="op">(</span><span class="st">"%s (pkA=%s)"</span>, <span class="va">buffer</span>, <span class="va">pKa</span><span class="op">)</span>,</span>
+<span>  <span class="op">)</span></span>
+<span></span>
+<span><span class="co"># plots</span></span>
+<span><span class="va">p_IC_b</span> <span class="op">&lt;-</span> <span class="va">p_IC</span> <span class="op">%+%</span> <span class="va">df_CO2_production</span> <span class="op">%+%</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">Corg_used</span><span class="op">)</span> <span class="op">+</span> <span class="fu">facet_wrap</span><span class="op">(</span><span class="op">~</span><span class="va">Corg</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Organic C consumed"</span><span class="op">)</span></span>
+<span><span class="va">p_pH_b</span> <span class="op">&lt;-</span> <span class="va">p_pH</span> <span class="op">%+%</span> <span class="va">df_CO2_production</span> <span class="op">%+%</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">Corg_used</span><span class="op">)</span> <span class="op">+</span> <span class="fu">facet_wrap</span><span class="op">(</span><span class="op">~</span><span class="va">Corg</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Organic C consumed"</span><span class="op">)</span></span>
+<span><span class="va">p_CO2_b</span> <span class="op">&lt;-</span> <span class="va">p_CO2</span> <span class="op">%+%</span> <span class="va">df_CO2_production</span> <span class="op">%+%</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">Corg_used</span><span class="op">)</span> <span class="op">+</span> <span class="fu">facet_wrap</span><span class="op">(</span><span class="op">~</span><span class="va">Corg</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Organic C consumed"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/plot_grid.html" class="external-link">plot_grid</a></span><span class="op">(</span><span class="va">p_pH</span>, <span class="va">p_IC</span>, <span class="va">p_CO2</span>, ncol <span class="op">=</span> <span class="fl">1</span>, align <span class="op">=</span> <span class="st">"v"</span>, axis <span class="op">=</span> <span class="st">"lr"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="carbonate_chemistry_examples_files/figure-html/CO2%20production-1.png" width="864"></p>
 </div>
 </div>
@@ -615,11 +644,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Sebastian Kopf.</p>
+  <p></p>
+<p>Developed by Sebastian Kopf.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
@@ -627,6 +658,8 @@
 
   
 
+
+  
 
   </body>
 </html>
