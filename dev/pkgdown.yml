@@ -1,0 +1,13 @@
+pandoc: 2.19.2
+pkgdown: 2.0.7
+pkgdown_sha: ~
+articles:
+  carbonate_chemistry_equations: carbonate_chemistry_equations.html
+  carbonate_chemistry_examples: carbonate_chemistry_examples.html
+  operations: operations.html
+  quantities: quantities.html
+last_built: 2023-07-28T14:19Z
+urls:
+  reference: https://microbialkitchen.kopflab.org/reference
+  article: https://microbialkitchen.kopflab.org/articles
+
