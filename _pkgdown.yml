@@ -10,7 +10,7 @@ home:
   strip_header: true
 
 development:
-  mode: devel
+  mode: auto
 
 navbar:
   title: microbialkitchen
